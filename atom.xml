@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Claude Chan</title>
+  
+  <subtitle>Claude Chan的个人博客</subtitle>
+  <link href="https://claudechan1228.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://claudechan1228.github.io/"/>
+  <updated>2024-06-06T14:43:10.333Z</updated>
+  <id>https://claudechan1228.github.io/</id>
+  
+  <author>
+    <name>Claude Chan</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SAP如何删除一个已经释放的请求</title>
+    <link href="https://claudechan1228.github.io/2024/05/14/009-sap-ru-he-shan-chu-yi-ge-yi-jing-shi-fang-de-qing-qiu/"/>
+    <id>https://claudechan1228.github.io/2024/05/14/009-sap-ru-he-shan-chu-yi-ge-yi-jing-shi-fang-de-qing-qiu/</id>
+    <published>2024-05-14T06:23:00.000Z</published>
+    <updated>2024-06-06T14:43:10.333Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;SAP如何删除一个已经释放的请求&quot;&gt;&lt;a href=&quot;#SAP如何删除一个已经释放的请求&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/categories/SAP/"/>
+    
+    <category term="版本控制" scheme="https://claudechan1228.github.io/categories/SAP/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"/>
+    
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/tags/SAP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ABAP Program模板</title>
+    <link href="https://claudechan1228.github.io/2024/02/16/005-abap-program-mo-ban/"/>
+    <id>https://claudechan1228.github.io/2024/02/16/005-abap-program-mo-ban/</id>
+    <published>2024-02-16T05:25:00.000Z</published>
+    <updated>2024-06-25T10:57:45.043Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;复杂模板&quot;&gt;&lt;a href=&quot;#复杂模板&quot; class=&quot;headerlink&quot; title=&quot;复杂模板&quot;&gt;&lt;/a&gt;复杂模板&lt;/h1&gt;&lt;pre&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/categories/SAP/"/>
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/"/>
+    
+    <category term="模板" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/%E6%A8%A1%E6%9D%BF/"/>
+    
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/tags/ABAP/"/>
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/tags/SAP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SAP权限对象的使用</title>
+    <link href="https://claudechan1228.github.io/2024/02/16/004-quan-xian-dui-xiang-de-shi-yong/"/>
+    <id>https://claudechan1228.github.io/2024/02/16/004-quan-xian-dui-xiang-de-shi-yong/</id>
+    <published>2024-02-16T04:57:00.000Z</published>
+    <updated>2024-02-16T05:22:17.396Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;通过事务码&lt;code&gt;su21&lt;/code&gt;维护权限对象。&lt;/p&gt;
+&lt;h1 id=&quot;创建权限对象&quot;&gt;&lt;a href=&quot;#创建权限对象&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/categories/SAP/"/>
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/"/>
+    
+    <category term="权限" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/%E6%9D%83%E9%99%90/"/>
+    
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/tags/ABAP/"/>
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/tags/SAP/"/>
+    
+    <category term="权限" scheme="https://claudechan1228.github.io/tags/%E6%9D%83%E9%99%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>跳过事务码权限检查</title>
+    <link href="https://claudechan1228.github.io/2024/01/27/003-tiao-guo-shi-wu-ma-quan-xian-jian-cha/"/>
+    <id>https://claudechan1228.github.io/2024/01/27/003-tiao-guo-shi-wu-ma-quan-xian-jian-cha/</id>
+    <published>2024-01-27T06:02:00.000Z</published>
+    <updated>2024-02-16T04:57:52.280Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;当使用某个事务码而无法通过权限检验时，我们可以通过调试事务码权限校验函数&lt;code&gt;auth_check_tcode&lt;/code&gt;来跳过权限校验：&lt;/p&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/categories/SAP/"/>
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/"/>
+    
+    <category term="权限" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/%E6%9D%83%E9%99%90/"/>
+    
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/tags/ABAP/"/>
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/tags/SAP/"/>
+    
+    <category term="权限" scheme="https://claudechan1228.github.io/tags/%E6%9D%83%E9%99%90/"/>
+    
+    <category term="调试" scheme="https://claudechan1228.github.io/tags/%E8%B0%83%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>内表分组</title>
+    <link href="https://claudechan1228.github.io/2024/01/27/002-nei-biao-fen-zu/"/>
+    <id>https://claudechan1228.github.io/2024/01/27/002-nei-biao-fen-zu/</id>
+    <published>2024-01-27T04:56:00.000Z</published>
+    <updated>2024-06-25T10:33:54.136Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在低版本的740语法中，对内表分组可以通过在循环中使用&lt;code&gt;AT NEW&lt;/code&gt;的方式来实现。&lt;/p&gt;
+&lt;p&gt;新版本的740语法中提供了分组循环的功能：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;ABAP&quot;&gt;SELECT *
+  INTO TABLE</summary>
+        
+      
+    
+    
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/categories/SAP/"/>
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/"/>
+    
+    <category term="语法" scheme="https://claudechan1228.github.io/categories/SAP/ABAP/%E8%AF%AD%E6%B3%95/"/>
+    
+    
+    <category term="代码" scheme="https://claudechan1228.github.io/tags/%E4%BB%A3%E7%A0%81/"/>
+    
+    <category term="ABAP" scheme="https://claudechan1228.github.io/tags/ABAP/"/>
+    
+    <category term="SAP" scheme="https://claudechan1228.github.io/tags/SAP/"/>
+    
+  </entry>
+  
+</feed>
