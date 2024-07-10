@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>SAP如何删除一个已经释放的请求</title>
+      <link href="/2024/05/14/009-SAP%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%B7%B2%E7%BB%8F%E9%87%8A%E6%94%BE%E7%9A%84%E8%AF%B7%E6%B1%82/"/>
+      <url>/2024/05/14/009-SAP%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%B7%B2%E7%BB%8F%E9%87%8A%E6%94%BE%E7%9A%84%E8%AF%B7%E6%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SAP如何删除一个已经释放的请求"><a href="#SAP如何删除一个已经释放的请求" class="headerlink" title="SAP如何删除一个已经释放的请求"></a>SAP如何删除一个已经释放的请求</h1><blockquote><blockquote><p>本文章转载自知乎链接：<a href="https://zhuanlan.zhihu.com/p/425479956">https://zhuanlan.zhihu.com/p/425479956</a></p></blockquote></blockquote><p data-first-child="" data-pid="mk_QyHjZ">当你搜到这个文章的时候，说明你做了羞羞的事情哦～（或者正在准备做羞羞的事情）。</p><p data-pid="qrXvKqZG">此处声明<b>：本帖仅进行可操作性和纯技术讨论，由此造成的一切后果，由读者承担！</b></p><p data-pid="7zrpH-O0">今天在测试系统做了一个包了数据库表条目的请求，想在测试机的两个client之间进行传输（测试系统创建请求，一般项目严格禁止，此为偷懒和不规范操作），但是手残，习惯性点了释放，这回可好，stms下会看到这个qas的请求，好吧，动手删除吧。话不多说直接上操作。</p><p class="ztext-empty-paragraph"><br/></p><p data-pid="_gq0H-wf">1、请求： SBTK900030已释放，现在要将该请求删除</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141630440.jpeg?imageSlim" alt="image"></p><p data-pid="X9F1tVSD">2、se38运行程序RDDIT076，输入已经释放的请求号，点击运行。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141630922.jpeg?imageSlim" alt="image"></p><p data-pid="X6k-yZZ8">3、执行后看到要删除的请求号，进行双击</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631164.jpeg?imageSlim" alt="image"></p><p data-pid="xFa7iU0p">4、在弹出框中点击&ldquo;修改&ldquo;按钮，将请求的状态R（已释放）修改为D（可修改），点击保存。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631869.jpeg?imageSlim" alt="image"></p><p data-pid="gnEJbg9g">5、执行SE10（se01/Se09无所谓，能看到就行），查看请求状态是否变更为可修改</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631481.jpeg?imageSlim" alt="image"></p><p data-pid="TP4CciTy">6、选中请求，点击删除按钮，将请求删除，得到提示，请求已删除</p><figcaption>原理是将请求从数据库E070、E071（巴拉巴拉具体有哪些忘记了）的表里面删除</figcaption><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631514.jpeg?imageSlim" alt="&lt;figcaption&gt;原理是将请求从数据库E070、E071（巴拉巴拉具体有哪些忘记了）的表里面删除&lt;/figcaption&gt;"></p><p data-pid="3jt7Md23">7、相信深知sap请求底层逻辑的你，一定会问一个问题，那释放后的文件是否也随之删除了呢，让我们看下后台文件路径是否还存在该请求的释放文件。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631235.jpeg?imageSlim" alt="image"></p><p data-pid="C7nT63Wv">不巧的是，在/usr/sap/trans/cofiles文件夹下，该请求依然存在；那不用说data文件夹中也存在相应的文件。但是该请求在stms中不会被拉取到（除非手工添加，这个会拉过来的哦，碰到大佬要搞你），如果想要彻底将文件删除，这个时候，需要参照另一篇帖子：<b>如何删除SAP服务器文件夹中的文件（文章还未写，后续补充），<i>慎用，这狠可能是你从删库到跑路的开始。</i></b></p><p class="ztext-empty-paragraph"><br/></p><p data-pid="Id61rTac"><b><i>根据Note：</i></b>3132029的描述，如果使用了Security Vulnerability（这个我猜就是漏洞管控，因为这个程序本身认为是个漏洞），这个程序就不能用了：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631610.jpeg?imageSlim" alt="image"></p><p data-pid="xgMJN2tx">然后也不建议再进行修改请求属性，需要新增请求进行处理，但是&mdash;&mdash;如果确实需要修改，那就改E070表，人家也说了，不能这么做（如果你非要这么做？我可告诉你了，我不管，就这意思）。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202405141631518.jpeg?imageSlim" alt="image"></p><p></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> 版本控制 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ABAP Program模板</title>
+      <link href="/2024/02/16/005-ABAP%20Program%E6%A8%A1%E6%9D%BF/"/>
+      <url>/2024/02/16/005-ABAP%20Program%E6%A8%A1%E6%9D%BF/</url>
+      
+        <content type="html"><![CDATA[<h1 id="复杂模板"><a href="#复杂模板" class="headerlink" title="复杂模板"></a>复杂模板</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 程序名：ZTEST_004</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 抬头：</span><br><span class="line">*&amp; 程序类型： 报表/表单/批导/后台JOB/函数/增强</span><br><span class="line">*&amp; 描述： </span><br><span class="line">*&amp; 修改记录：</span><br><span class="line">*&amp; 日期         修改人   请求号       业务顾问  修改内容</span><br><span class="line">*&amp; 2024-06-25   张三     ED3k000000   李四     新建</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">REPORT ztest_004.</span><br><span class="line"></span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; INCLUDE</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">INCLUDE ztest_004_top    .  &quot;Type/Data</span><br><span class="line">INCLUDE ztest_004_sel    .  &quot;Selection screen</span><br><span class="line">INCLUDE ztest_004_lcl    .  &quot;Class</span><br><span class="line">INCLUDE ztest_004_frm    .  &quot;Form</span><br><span class="line">INCLUDE ztest_004_pbo    .  &quot;Screen PBO</span><br><span class="line">INCLUDE ztest_004_pai    .  &quot;Screen PAI</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 初始化处理</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">INITIALIZATION.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 选择屏幕控制</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">AT SELECTION-SCREEN OUTPUT.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 参数输入检查</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">AT SELECTION-SCREEN.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 程序开始处理</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">START-OF-SELECTION.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 程序结束处理</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">END-OF-SELECTION.</span><br></pre></td></tr></table></figure><h1 id="简单模板"><a href="#简单模板" class="headerlink" title="简单模板"></a>简单模板</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 程序名：ZTEST_005</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">*&amp; 抬头：</span><br><span class="line">*&amp; 程序类型： 报表/表单/批导/后台JOB/函数/增强</span><br><span class="line">*&amp; 描述： </span><br><span class="line">*&amp; 修改记录：</span><br><span class="line">*&amp; 日期         修改人   请求号       业务顾问  修改内容</span><br><span class="line">*&amp; 2024-06-25   张三     ED3k000000   李四     新建</span><br><span class="line">*&amp;---------------------------------------------------------------------*</span><br><span class="line">REPORT ZTEST_005.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**********************************************************************</span><br><span class="line">*数据类型定义</span><br><span class="line">**********************************************************************</span><br><span class="line">include ZTEST_005_top.</span><br><span class="line"></span><br><span class="line">**********************************************************************</span><br><span class="line">*屏幕处理</span><br><span class="line">**********************************************************************</span><br><span class="line">include ZTEST_005_sel.</span><br><span class="line"></span><br><span class="line">**********************************************************************</span><br><span class="line">*主程序入口</span><br><span class="line">**********************************************************************</span><br><span class="line">include ZTEST_005_main.</span><br><span class="line"></span><br><span class="line">**********************************************************************</span><br><span class="line">*包含</span><br><span class="line">**********************************************************************</span><br><span class="line">include ZTEST_005_frm.</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> ABAP </category>
+          
+          <category> 模板 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> ABAP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SAP权限对象的使用</title>
+      <link href="/2024/02/16/004-%E6%9D%83%E9%99%90%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+      <url>/2024/02/16/004-%E6%9D%83%E9%99%90%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p>通过事务码<code>su21</code>维护权限对象。</p><h1 id="创建权限对象"><a href="#创建权限对象" class="headerlink" title="创建权限对象"></a>创建权限对象</h1><p>填入对象、文本、类，再维护权限字段点击保存即完成了权限对象的创建。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202402161312641.png?imageSlim" alt="image-20240216131201563"></p><h2 id="权限字段"><a href="#权限字段" class="headerlink" title="权限字段"></a>权限字段</h2><p>权限对象为权限字段的集合，我们通过权限对象中的权限字段来校验使用者所属的角色是否可以通过该字段的校验，可以同时校验一个或多个字段。</p><p>通过事务码<code>su20</code>来维护权限字段。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202402161318154.png?imageSlim" alt="image-20240216131813115"></p><h1 id="在代码中使用权限对象"><a href="#在代码中使用权限对象" class="headerlink" title="在代码中使用权限对象"></a>在代码中使用权限对象</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AUTHORITY-CHECK OBJECT &#x27;ZWERKS&#x27; ID &#x27;WERKS&#x27; FIELD &#x27;2001&#x27;.</span><br><span class="line">IF sy-subrc &lt;&gt; 0.</span><br><span class="line"> MESSAGE &#x27;No Authorization!&#x27; TYPE &#x27;E&#x27;.</span><br><span class="line">ENDIF.</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> ABAP </category>
+          
+          <category> 权限 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> ABAP </tag>
+            
+            <tag> 权限 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>跳过事务码权限检查</title>
+      <link href="/2024/01/27/003-%E8%B7%B3%E8%BF%87%E4%BA%8B%E5%8A%A1%E7%A0%81%E6%9D%83%E9%99%90%E6%A3%80%E6%9F%A5/"/>
+      <url>/2024/01/27/003-%E8%B7%B3%E8%BF%87%E4%BA%8B%E5%8A%A1%E7%A0%81%E6%9D%83%E9%99%90%E6%A3%80%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<p>当使用某个事务码而无法通过权限检验时，我们可以通过调试事务码权限校验函数<code>auth_check_tcode</code>来跳过权限校验：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271409351.png?imageSlim" alt="image-20240127140927287"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> ABAP </category>
+          
+          <category> 权限 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> ABAP </tag>
+            
+            <tag> 权限 </tag>
+            
+            <tag> 调试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>内表分组</title>
+      <link href="/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/"/>
+      <url>/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/</url>
+      
+        <content type="html"><![CDATA[<p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>的方式来实现。</p><p>新版本的740语法中提供了分组循环的功能：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">  INTO TABLE @DATA(lt_sflight)</span><br><span class="line">  FROM sflight</span><br><span class="line">  UP TO 100 ROWS.</span><br><span class="line"></span><br><span class="line">  &quot;分组循环</span><br><span class="line">  LOOP AT lt_sflight INTO DATA(lw_sflight)</span><br><span class="line">    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )</span><br><span class="line">    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象</span><br><span class="line"></span><br><span class="line">    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid</span><br><span class="line">      &quot;业务逻辑</span><br><span class="line">      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).</span><br><span class="line">        WRITE / lw_sflight_group-carrid.</span><br><span class="line">        EXIT.</span><br><span class="line">      ENDLOOP.</span><br><span class="line"></span><br><span class="line">    ENDIF.</span><br><span class="line"></span><br><span class="line">  ENDLOOP.</span><br></pre></td></tr></table></figure><p>程序输出：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271331564.png?imageSlim" alt="image-20240127133134500"></p><p>底表数据：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271332832.png?imageSlim" alt="image-20240127133226703"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> ABAP </category>
+          
+          <category> 语法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> ABAP </tag>
+            
+            <tag> 代码 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
