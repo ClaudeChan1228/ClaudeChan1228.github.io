@@ -23,7 +23,7 @@
 
 <link href="/css/style.css?v=1.1.0" rel="stylesheet">
 
-<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+<link href="/css/hl_theme/github.css?v=1.1.0" rel="stylesheet">
 
 <link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
 
@@ -122,7 +122,17 @@
                 
                     
     <li>
-        <div data-rel="SAP&lt;---&gt;版本控制">
+        <div data-rel="SAP&lt;---&gt;ABAP">
+            <i class="fold iconfont icon-right"></i>
+            ABAP
+            <small>(5)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="SAP&lt;---&gt;ABAP&lt;---&gt;版本控制">
             
             版本控制
             <small>(1)</small>
@@ -130,16 +140,6 @@
         
     </li>
 
-                
-                    
-    <li>
-        <div data-rel="SAP&lt;---&gt;ABAP">
-            <i class="fold iconfont icon-right"></i>
-            ABAP
-            <small>(4)</small>
-        </div>
-        
-            <ul class="sub hide">
                 
                     
     <li>
@@ -224,7 +224,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="5">
-<input type="hidden" id="yelog_site_word_count" value="1.3k">
+<input type="hidden" id="yelog_site_word_count" value="766">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -270,6 +270,10 @@
     <div class="tag-wrapper">
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>版本</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>代码</a>
             </li>
         
@@ -301,20 +305,20 @@
     <nav id="title-list-nav">
         
         
-        <a  class="全部文章 SAP 版本控制 "
-           href="/2024/05/14/009-SAP%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%B7%B2%E7%BB%8F%E9%87%8A%E6%94%BE%E7%9A%84%E8%AF%B7%E6%B1%82/"
-           data-tag="SAP"
+        <a  class="全部文章 SAP ABAP 版本控制 "
+           href="/2024/07/13/001-%E5%9B%9E%E9%80%80%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%B7/"
+           data-tag="版本"
            data-author="" >
-            <span class="post-title" title="SAP如何删除一个已经释放的请求">SAP如何删除一个已经释放的请求</span>
-            <span class="post-date" title="2024-05-14 14:23:00">2024/05/14</span>
+            <span class="post-title" title="已发布的请求号再利用">已发布的请求号再利用</span>
+            <span class="post-date" title="2024-07-13 12:56:00">2024/07/13</span>
         </a>
         
         
         <a  class="全部文章 SAP ABAP 模板 "
-           href="/2024/02/16/005-ABAP%20Program%E6%A8%A1%E6%9D%BF/"
+           href="/2024/02/16/005-ABAP%20List%20Program%E6%A8%A1%E6%9D%BF/"
            data-tag="SAP,ABAP"
            data-author="" >
-            <span class="post-title" title="ABAP Program模板">ABAP Program模板</span>
+            <span class="post-title" title="ABAP List Program模板">ABAP List Program模板</span>
             <span class="post-date" title="2024-02-16 13:25:00">2024/02/16</span>
         </a>
         
@@ -440,7 +444,26 @@
       
         <p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>的方式来实现。</p>
 <p>新版本的740语法中提供了分组循环的功能：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">  INTO TABLE @DATA(lt_sflight)</span><br><span class="line">  FROM sflight</span><br><span class="line">  UP TO 100 ROWS.</span><br><span class="line"></span><br><span class="line">  &quot;分组循环</span><br><span class="line">  LOOP AT lt_sflight INTO DATA(lw_sflight)</span><br><span class="line">    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )</span><br><span class="line">    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象</span><br><span class="line"></span><br><span class="line">    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid</span><br><span class="line">      &quot;业务逻辑</span><br><span class="line">      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).</span><br><span class="line">        WRITE / lw_sflight_group-carrid.</span><br><span class="line">        EXIT.</span><br><span class="line">      ENDLOOP.</span><br><span class="line"></span><br><span class="line">    ENDIF.</span><br><span class="line"></span><br><span class="line">  ENDLOOP.</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight ABAP">SELECT *
+  INTO TABLE @DATA(lt_sflight)
+  FROM sflight
+  UP TO 100 ROWS.
+
+  &quot;分组循环
+  LOOP AT lt_sflight INTO DATA(lw_sflight)
+    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )
+    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象
+
+    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid
+      &quot;业务逻辑
+      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).
+        WRITE / lw_sflight_group-carrid.
+        EXIT.
+      ENDLOOP.
+
+    ENDIF.
+
+  ENDLOOP.</code></pre>
 
 <p>程序输出：</p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271331564.png?imageSlim" alt="image-20240127133134500"></p>
@@ -554,7 +577,7 @@
         border-right: 1px solid #C3CCD0;
         text-align: right;
         color: #AAA;
-        background-color: #fafafa;
+        background-color: ;
     }
     .pre-numbering.widther {
         width: 35px;

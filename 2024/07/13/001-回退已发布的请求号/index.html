@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Claude Chan</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Claude Chan">
+  <title>已发布的请求号再利用 | Claude Chan</title>
+  <meta name="keywords" content=" 版本 ">
+  <meta name="description" content="已发布的请求号再利用 | Claude Chan">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Oops～，我崩溃了！找不到你想要的页面 :(">
 <meta property="og:type" content="website">
@@ -56,7 +56,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -365,12 +365,64 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-001-回退已发布的请求号" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B"><span class="toc-text">个人简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F"><span class="toc-text">联系方式</span></a></li></ol>
+        <h1 class="article-title">已发布的请求号再利用</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SAP">SAP</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;ABAP">ABAP</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;ABAP&lt;---&gt;版本控制">版本控制</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">版本</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-07-13 14:47:35'>2024-07-13 12:56</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:167</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%B7%B2%E5%8F%91%E5%B8%83%E8%AF%B7%E6%B1%82%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-text">修改已发布请求的状态</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E8%AF%B7%E6%B1%82"><span class="toc-text">发布请求</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -383,16 +435,36 @@
     }
 </style>
 </div>
-            <h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>陈伍圆（Claude Chan），福建人。</p>
-<p>本科毕业于福建厦门集美，目前任职于某新能源企业IT开发。</p>
-<h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
-<li>QQ：1505414319</li>
-<li>邮箱：<a href="mailto:&#x63;&#108;&#97;&#x75;&#100;&#101;&#x63;&#x68;&#x61;&#110;&#x31;&#x32;&#x32;&#x38;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;">&#x63;&#108;&#97;&#x75;&#100;&#101;&#x63;&#x68;&#x61;&#110;&#x31;&#x32;&#x32;&#x38;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a>或<a href="mailto:&#49;&#x35;&#x30;&#53;&#52;&#49;&#x34;&#x33;&#x31;&#57;&#x40;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;">&#49;&#x35;&#x30;&#53;&#52;&#49;&#x34;&#x33;&#x31;&#57;&#x40;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;</a></li>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>从开发环境发布到测试环境的请求可以利用此方法实现在开发环境继续使用已发布的请求。</p>
+<h1 id="修改已发布请求的状态"><a href="#修改已发布请求的状态" class="headerlink" title="修改已发布请求的状态"></a>修改已发布请求的状态</h1><ul>
+<li>se38运行程序RDDIT076</li>
+<li>输入需要调整的请求号</li>
+<li>将请求的状态从R改为D</li>
 </ul>
+<p>之后该请求就可以继续在开发环境使用了。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407131447537.png" alt="image-20240713140702081"></p>
+<h1 id="发布请求"><a href="#发布请求" class="headerlink" title="发布请求"></a>发布请求</h1><p>在发布本次调整后的请求，需要将主请求属性中的请请求到处时间字段EXPORT_TIMESTAMP删除。（第一次删除可能弹出警告，确认后再次删除该字段即可）删除该字段后请求就可以正常发布。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407131447067.png" alt="image-20240713141223096"></p>
 
-        </article>
-        
-        
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -401,11 +473,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
