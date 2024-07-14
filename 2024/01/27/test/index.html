@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Claude Chan</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Claude Chan">
+  <title>test | Claude Chan</title>
+  <meta name="keywords" content=" 代码 , ABAP , SAP ">
+  <meta name="description" content="test | Claude Chan">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Oops～，我崩溃了！找不到你想要的页面 :(">
 <meta property="og:type" content="website">
@@ -56,7 +56,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -402,12 +402,68 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B"><span class="toc-text">个人简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F"><span class="toc-text">联系方式</span></a></li></ol>
+        <h1 class="article-title">test</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SAP">SAP</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;ABAP">ABAP</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;ABAP&lt;---&gt;语法">语法</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">代码</a>
+            
+            <a class="color5">ABAP</a>
+            
+            <a class="color4">SAP</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-07-14 15:28:40'>2024-01-27 12:56</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:133</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
     
 <style>
     .left-col .switch-btn,
@@ -420,15 +476,53 @@
     }
 </style>
 </div>
-            <h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p>
-<h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
-<li>QQ：1505414319</li>
-<li>邮箱：<a href="mailto:&#x63;&#108;&#x61;&#x75;&#x64;&#x65;&#99;&#x68;&#x61;&#x6e;&#x31;&#50;&#x32;&#x38;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x63;&#108;&#x61;&#x75;&#x64;&#x65;&#99;&#x68;&#x61;&#x6e;&#x31;&#50;&#x32;&#x38;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;</a>或<a href="mailto:&#49;&#x35;&#x30;&#53;&#52;&#x31;&#52;&#51;&#x31;&#x39;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#x6d;">&#49;&#x35;&#x30;&#53;&#52;&#x31;&#52;&#51;&#x31;&#x39;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#x6d;</a></li>
-</ul>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>的方式来实现。</p>
+<p>新版本的740语法中提供了分组循环的功能：</p>
+<pre><code class="highlight ABAP">SELECT *
+  INTO TABLE @DATA(lt_sflight)
+  FROM sflight
+  UP TO 100 ROWS.
 
-        </article>
-        
-        
+  &quot;分组循环
+  LOOP AT lt_sflight INTO DATA(lw_sflight)
+    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )
+    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象
+
+    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid
+      &quot;业务逻辑
+      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).
+        WRITE / lw_sflight_group-carrid.
+        EXIT.
+      ENDLOOP.
+
+    ENDIF.
+
+  ENDLOOP.</code></pre>
+
+<p>程序输出：</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271331564.png?imageSlim" alt="image-20240127133134500"></p>
+<p>底表数据：</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271332832.png?imageSlim" alt="image-20240127133226703"></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -437,11 +531,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
