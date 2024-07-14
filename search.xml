@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ABAP 7.52环境搭建</title>
+      <link href="/2024/07/13/006-ABAP%207.52%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+      <url>/2024/07/13/006-ABAP%207.52%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      
+        <content type="html"><![CDATA[<p>在VMware虚拟机中安装OpenSUSE系统，在该系统上安装并启动SAP服务。</p><h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul><li>VMware16pro虚拟机</li><li><a href="https://download.opensuse.org/distribution/leap/15.1/iso/">OpenSUSE 15.1系统</a>（3.8G那个）</li><li><a href="https://winscp.net/eng/download.php#google_vignette">WinSCP（在主机和虚拟机之间传输文件的工具）</a></li><li><a href="https://developers.sap.com/trials-downloads.html">ABAP 7.52安装文件</a>（网页上找到<strong>SAP NetWeaver AS ABAP Developer Edition 7.52 SP04</strong>，将该标题下的ABAP安装文件part1~part11及License共12个压缩包下载下来）</li></ul><p><a href="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html">可参考的SAP官方安装文档</a></p><h1 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h1><h2 id="安装VMware"><a href="#安装VMware" class="headerlink" title="安装VMware"></a>安装VMware</h2><h2 id="在VMware中安装OpenSUSE系统"><a href="#在VMware中安装OpenSUSE系统" class="headerlink" title="在VMware中安装OpenSUSE系统"></a>在VMware中安装OpenSUSE系统</h2><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132226712.png" alt="image-20240713222612606"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132227131.png" alt="image-20240713222702989"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132228334.png" alt="image-20240713222814248"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132228983.png"></p><p>推荐硬盘100G以上，内存10G以上</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132229273.png" alt="image-20240713222929210"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132231813.png" alt="image-20240713223127564"></p><p>前三步自动初始化，结束后从第四步Welcome开始，Next</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132234329.png" alt="image-20240713223428020"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132235459.png" alt="image-20240713223516185"></p><p>额外的在线仓库，默认勾选》Next，这一步根据网络状况会需要个三四分钟</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132236662.png" alt="image-20240713223618373"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132240619.png" alt="image-20240713224021330"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132240806.png" alt="image-20240713224059550"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132241300.png"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242531.png" alt="image-20240713224204288"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242171.png" alt="image-20240713224220921"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242697.png" alt="image-20240713224240436"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132243702.png" alt="image-20240713224345854"></p><p>注意：创建系统账号，密码注意不要设置的太简单也尽量不使用特殊符号，否则有可能会导致后续安装SAP服务失败。（我这边设置的Opensuse151）</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132245964.png" alt="image-20240713224553653"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132248899.png" alt="image-20240713224812628"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132248016.png" alt="image-20240713224838772"></p><p>安装OpenSUSE系统的最后一步。这边耗时比较久，几十分钟甚至两三个小时。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132249140.png" alt="image-20240713224904849"></p><p>安装成功后会自动启动系统</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141102247.png" alt="image-20240714110248109"></p><h2 id="在OpenSUSE安装相关的工具包并进行环境配置"><a href="#在OpenSUSE安装相关的工具包并进行环境配置" class="headerlink" title="在OpenSUSE安装相关的工具包并进行环境配置"></a>在OpenSUSE安装相关的工具包并进行环境配置</h2><p>由于我个人试用，并没有开启代理，如果有需要开启代理的可以参考<a href="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html">官方文档</a>进行设置。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141327395.png" alt="image-20240714132704107"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141328296.png" alt="image-20240714132829186"></p><p>回到桌面，运行YaST</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141329452.png" alt="image-20240714132915174"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141330343.png" alt="image-20240714133004102"></p><p>设置主机名vhcalnplci</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141332841.png" alt="image-20240714133231645"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141332805.png" alt="image-20240714133247682"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141334920.png" alt="image-20240714133443803"></p><p>下载uuidd和unrar</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141335723.png" alt="image-20240714133508533"></p><p>点Online Update后会有一个信息提示弹窗，点OK后搜索对应的应用下载即可</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141336455.png" alt="image-20240714133647320"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141338245.png" alt="image-20240714133822118"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141339679.png" alt="image-20240714133900484"></p><p>下载unrar同上</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141339465.png" alt="image-20240714133934299"></p><p>下载好后回到桌面应用栏运行Terminal</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141341598.png" alt="image-20240714134149001"></p><p>开启我们的uuidd服务</p><pre><code class="highlight shell">开启服务，运行后后提示输入密码sudo service uuidd start检查服务是否开启sudo service --status-all |grep uuiddrpm -qa | grep libaio</code></pre><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141345488.png" alt="image-20240714134513361"></p><p>修改主机名为vhcalnplci</p><pre><code class="highlight shell">sudo nano /etc/hostname修改好后按Ctrl+O，然后按回车进行保存，最后按Ctrl+X退出</code></pre><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141347644.png" alt="image-20240714134723531"></p><pre><code class="highlight shell">可以输入以下命令查询当前主机sudo cat /etc/hostname输入以下命令重启网络sudo rcnetwork restart</code></pre><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141352419.png" alt="image-20240714135223286"></p><p>重启好后重启系统，检查主机名是否成功修改</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141353742.png" alt="image-20240714135357635"></p><p>配置IP</p><pre><code class="highlight shell">查询IPip -h addr show将IP记录下来</code></pre><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141355207.png" alt="image-20240714135519084"></p><p>在host文件中配置我们的IP</p><pre><code class="highlight shell">sudo nano /etc/hosts将IP配置进去192.168.160.135 vhcalnplci vhcalnplci.dummy.nodomain</code></pre><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141358947.png" alt="image-20240714135803816"></p><p>同理Ctrl+o再回车在Ctrl+X退出</p><p>接下来打开WinSCP将我们电脑上安装好的ABAP 7.52的相关文件解压并复制到虚拟机中</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141432805.png" alt="image-20240714143217734"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141401609.png" alt="image-20240714140110546"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141401414.png" alt="image-20240714140150342"></p><p>在虚拟机中&#x2F;home&#x2F;claude目录下新建一个abaptrial目录</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141403643.png" alt="image-20240714140316540"></p><p>将我们电脑的压缩包解压出来</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141404422.png" alt="image-20240714140427348"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141405508.png"></p><h2 id="在OpenSUSE中安装SAP服务"><a href="#在OpenSUSE中安装SAP服务" class="headerlink" title="在OpenSUSE中安装SAP服务"></a>在OpenSUSE中安装SAP服务</h2><p>OK接下来就可以回虚拟机进行最后一步安装SAP服务了</p><pre><code class="highlight shell">sudo -i输入密码，转为管理员权限cd..cd /home/claude/abaptrialchmod +x install.sh./install.sh</code></pre><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141415306.png" alt="image-20240714141506242"></p><p>运行完<code>./install.sh</code>后出来一个安装声明，滚轮滚到最后然后按ESC再按q退出</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141413681.png" alt="image-20240714141300508"></p><p>yes后输入两次密码开始安装，安装如果没有报错会需要个十来分钟</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141417764.png" alt="image-20240714141727696"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141429751.png" alt="image-20240714142956674"></p><p>第一次安装会因为证书问题安装失败，我们将之前解压出来的证书文件复制到图示目录中，并将该目录下原来的.lic证书文件删除</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141433104.png"></p><p>回到虚拟机中重复上面的安装命令</p><pre><code class="highlight shell">sudo -i输入密码，转为管理员权限cd..cd /home/claude/abaptrial./install.sh</code></pre><p>安装成功后显示如下<img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141440899.png" alt="image-20240714144007761"></p><h1 id="登录SAP-GUI"><a href="#登录SAP-GUI" class="headerlink" title="登录SAP GUI"></a>登录SAP GUI</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141454815.png" alt="image-20240714145432721"></p><p>账号：SAP*</p><p>密码：Down1oad</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141456289.png" alt="image-20240714145613239"></p><p>tcode输入slicense更换SAP访问KEY</p><p>右键删除这两个KEY&gt;Delete License，并复制上面的Active Hardware Key</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141457048.png" alt="image-20240714145728938"></p><p>访问<a href="https://go.support.sap.com/minisap/#/minisap">官方网址</a>，在下面输入我们的英文名、邮箱、我们上面复制的Hardware Key生成我们的License Key文件</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141500926.png" alt="image-20240714150017778"></p><p>安装我们的License Key文件，接下来我们就可以去001Client中进行ABAP 7.52的试用了</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141502488.png" alt="image-20240714150258383"></p><h1 id="SAP服务的开启和关闭"><a href="#SAP服务的开启和关闭" class="headerlink" title="SAP服务的开启和关闭"></a>SAP服务的开启和关闭</h1><p>在虚拟机的Terminal中：</p><pre><code class="highlight shell">切换至npladm用户su npladm开启SAP服务startsap关闭SAP服务stopsap</code></pre><h1 id="SAP相关账号"><a href="#SAP相关账号" class="headerlink" title="SAP相关账号"></a>SAP相关账号</h1><h2 id="Client-000"><a href="#Client-000" class="headerlink" title="Client 000"></a>Client 000</h2><table><thead><tr><th>User name</th><th>Password</th><th>Description</th></tr></thead><tbody><tr><td>DDIC</td><td>Down1oad</td><td>Data Dictionary User</td></tr><tr><td>SAP*</td><td>Down1oad</td><td>SAP Administrator</td></tr></tbody></table><h2 id="Client-001"><a href="#Client-001" class="headerlink" title="Client 001"></a>Client 001</h2><table><thead><tr><th>User name</th><th>Password</th><th>Description</th></tr></thead><tbody><tr><td>DDIC</td><td>Down1oad</td><td>Data Dictionary User</td></tr><tr><td>SAP*</td><td>Down1oad</td><td>SAP Administrator</td></tr><tr><td>DEVELOPER</td><td>Down1oad</td><td>Developer User</td></tr><tr><td>BWDEVELOPER</td><td>Down1oad</td><td>Developer User</td></tr></tbody></table>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> 系统 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境搭建 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>已发布的请求号再利用</title>
       <link href="/2024/07/13/001-%E5%9B%9E%E9%80%80%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%B7/"/>
       <url>/2024/07/13/001-%E5%9B%9E%E9%80%80%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%B7/</url>
@@ -53,9 +80,9 @@
       
         <tags>
             
-            <tag> SAP </tag>
-            
             <tag> ABAP </tag>
+            
+            <tag> SAP </tag>
             
         </tags>
       
@@ -84,9 +111,9 @@
       
         <tags>
             
-            <tag> SAP </tag>
-            
             <tag> ABAP </tag>
+            
+            <tag> SAP </tag>
             
             <tag> 权限 </tag>
             
@@ -117,9 +144,9 @@
       
         <tags>
             
-            <tag> SAP </tag>
-            
             <tag> ABAP </tag>
+            
+            <tag> SAP </tag>
             
             <tag> 权限 </tag>
             
@@ -152,11 +179,11 @@
       
         <tags>
             
-            <tag> SAP </tag>
+            <tag> 代码 </tag>
             
             <tag> ABAP </tag>
             
-            <tag> 代码 </tag>
+            <tag> SAP </tag>
             
         </tags>
       
