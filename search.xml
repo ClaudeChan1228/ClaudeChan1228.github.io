@@ -193,6 +193,39 @@
     
     <entry>
       <title>test</title>
+      <link href="/2024/01/27/test%20-%20%E5%89%AF%E6%9C%AC/"/>
+      <url>/2024/01/27/test%20-%20%E5%89%AF%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>的方式来实现。</p><p>新版本的740语法中提供了分组循环的功能：</p><pre><code class="highlight ABAP">SELECT *  INTO TABLE @DATA(lt_sflight)  FROM sflight  UP TO 100 ROWS.  &quot;分组循环  LOOP AT lt_sflight INTO DATA(lw_sflight)    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid      &quot;业务逻辑      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).        WRITE / lw_sflight_group-carrid.        EXIT.      ENDLOOP.    ENDIF.  ENDLOOP.</code></pre><p>程序输出：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271331564.png?imageSlim" alt="image-20240127133134500"></p><p>底表数据：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271332832.png?imageSlim" alt="image-20240127133226703"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> ABAP </category>
+          
+          <category> 语法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> ABAP </tag>
+            
+            <tag> 代码 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
       <link href="/2024/01/27/test/"/>
       <url>/2024/01/27/test/</url>
       
