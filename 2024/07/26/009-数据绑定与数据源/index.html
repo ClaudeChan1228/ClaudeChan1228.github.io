@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>[object Object] | Claude Chan</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="[object Object] | Claude Chan">
+  <title>数据绑定与数据源 | Claude Chan</title>
+  <meta name="keywords" content=" Fiori ">
+  <meta name="description" content="数据绑定与数据源 | Claude Chan">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Oops～，我崩溃了！找不到你想要的页面 :(">
 <meta property="og:type" content="website">
@@ -460,24 +460,43 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-009-数据绑定与数据源" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[object Object]</h1>
+        <h1 class="article-title">数据绑定与数据源</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SAP">SAP</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;Fiori">Fiori</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;Fiori&lt;---&gt;UI5Demo">UI5Demo</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color1">Fiori</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-03-12 22:55:32'>2024-07-10 13:38</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-27 16:19:09'>2024-07-26 22:19</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:0</span>
+        <span>字数:1.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -496,7 +515,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-text">数据绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%A8%A1%E5%9E%8B"><span class="toc-text">默认模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E6%A8%A1%E5%9E%8B"><span class="toc-text">命名模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#view-xml%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%A8%A1%E5%9E%8B%E7%9A%84-%E5%92%8C"><span class="toc-text">view.xml中获取模型的&gt;&#x2F;和&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E4%B8%A4%E7%A7%8D%E7%94%A8%E6%B3%95%EF%BC%9F"><span class="toc-text">为什么会有两种用法？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87JSON%E6%96%87%E4%BB%B6%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">通过JSON文件定义数据模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="toc-text">数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-OData-Service"><span class="toc-text">Remote OData Service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">模拟服务器</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -512,7 +531,171 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>本文将介绍SAP UI5 Demo WalkThrough中涉及到的数据绑定操作与数据源的设置与使用。</p>
+<h1 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h1><p>SAP UI5通过模型来绑定数据：</p>
+<ol>
+<li>默认模型</li>
+<li>命名模型</li>
+</ol>
+<h2 id="默认模型"><a href="#默认模型" class="headerlink" title="默认模型"></a>默认模型</h2><p>在WalkThrough 7的<code>Controller</code>的初始化方法中：</p>
+<pre><code class="highlight javascript"><span class="title function_">onInit</span>(<span class="params"></span>) &#123;
+   <span class="comment">// set data model on view</span>
+   <span class="keyword">const</span> oData = &#123;
+      recipient : &#123;
+         name : <span class="string">&quot;World&quot;</span>
+      &#125;
+   &#125;;
+   <span class="keyword">const</span> oModel = <span class="keyword">new</span> <span class="title class_">JSON</span>Model(oData);
+   <span class="variable language_">this</span>.<span class="title function_">getView</span>().<span class="title function_">setModel</span>(oModel);
+&#125;</code></pre>
+
+<p>代码通过<code>this.getView().setModel(oModel)</code>设置了视图的默认数据模型。当<code>setModel</code>方法的入参只有一个<code>Model</code>对象时，程序设置的模型即为视图的默认模型，在<code>view.xml</code>和<code>JavaScript</code>文件中可以通过如下方式来获取默认数据模型的内容：</p>
+<ul>
+<li><code>view.xml</code><ul>
+<li><code>&#123;/该模型的一级属性/该模型的二级属性/...&#125;</code></li>
+</ul>
+</li>
+<li><code>JavaScript</code><ul>
+<li><code>this.getView().getModel().getProperty(&quot;&#123;/该模型的一级属性/该模型的二级属性/...&#125;&quot;);</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="命名模型"><a href="#命名模型" class="headerlink" title="命名模型"></a>命名模型</h2><p>除默认数据模型外的其他的数据模型，在<code>set</code>和<code>get</code>的时候则需要指定它对应的模型名称。例如在WalkThrough 20 <code>InvoiceList.controller.js</code>中的代码：</p>
+<pre><code class="highlight javascript"><span class="title function_">onInit</span>(<span class="params"></span>) &#123;
+	<span class="keyword">const</span> oViewModel = <span class="keyword">new</span> <span class="title class_">JSON</span>Model(&#123;
+		<span class="attr">currency</span>: <span class="string">&quot;EUR&quot;</span>
+	&#125;);
+           <span class="comment">// 为防止歧义，我将view改为currency</span>
+	<span class="variable language_">this</span>.<span class="title function_">getView</span>().<span class="title function_">setModel</span>(oViewModel, <span class="string">&quot;currency&quot;</span>);
+&#125;</code></pre>
+
+<p>获取数据模型内容的时候同理需要加上对应模型的名称：</p>
+<ul>
+<li><code>view.xml</code><ul>
+<li><code>&#123;currency&gt;/该模型的一级属性/该模型的二级属性/...&#125;</code></li>
+</ul>
+</li>
+<li><code>JavaScript</code><ul>
+<li><code>this.getView().getModel(&quot;currency&quot;).getProperty(&quot;&#123;/该模型的一级属性/该模型的二级属性/...&#125;&quot;);</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="view-xml中获取模型的-和"><a href="#view-xml中获取模型的-和" class="headerlink" title="view.xml中获取模型的&gt;/和&gt;"></a><code>view.xml</code>中获取模型的<code>&gt;/</code>和<code>&gt;</code></h2><p>上述在<code>view.xml</code>获取模型内容使用了<code>&gt;/</code>，而<code>&gt;</code>也能用来获取模型内容。两者的区别如下：</p>
+<ul>
+<li><code>&gt;/</code>：绝对路径，确保从模型的根开始访问数据。</li>
+<li><code>&gt;</code>：相对路径，通常在绑定集合项或嵌套结构时使用。</li>
+</ul>
+<p><code>&gt;</code>的使用，需要有对应的上下文进行支持，例如在WalkThrough 21的<code>InvoiceList.view.xml</code>中：</p>
+<pre><code class="highlight xml"><span class="tag">&lt;<span class="name">List</span></span>
+<span class="tag">	<span class="attr">headerText</span>=<span class="string">&quot;&#123;i18n&gt;invoiceListTitle&#125;&quot;</span></span>
+<span class="tag">	<span class="attr">class</span>=<span class="string">&quot;sapUiResponsiveMargin&quot;</span></span>
+<span class="tag">	<span class="attr">width</span>=<span class="string">&quot;auto&quot;</span></span>
+<span class="tag">	<span class="attr">items</span>=<span class="string">&quot;&#123;invoice&gt;/Invoices&#125;&quot;</span></span>
+<span class="tag">&gt;</span>
+	<span class="tag">&lt;<span class="name">items</span>&gt;</span>
+		<span class="tag">&lt;<span class="name">ObjectListItem</span></span>
+<span class="tag">			<span class="attr">title</span>=<span class="string">&quot;&#123;invoice&gt;Quantity&#125; x &#123;invoice&gt;ProductName&#125;&quot;</span></span>
+<span class="tag">                 <span class="attr">......</span></span>
+<span class="tag">		/&gt;</span>
+	<span class="tag">&lt;/<span class="name">items</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">List</span>&gt;</span></code></pre>
+
+<p><code>items=&quot;&#123;invoice&gt;/Invoices&#125;&quot;</code>通过绝对路径获取到了<code>invoice</code>的模型内容，使得<code>&lt;items&gt;</code>中的<code>&gt;</code>有了上下文进行支持，因此在<code>&lt;items&gt;</code>中可以通过<code>title=&quot;&#123;invoice&gt;Quantity&#125; x &#123;invoice&gt;ProductName&#125;&quot;</code>来直接获取<code>Invoices</code>下的<code>Quantity</code>和<code>ProductName</code>。</p>
+<h3 id="为什么会有两种用法？"><a href="#为什么会有两种用法？" class="headerlink" title="为什么会有两种用法？"></a>为什么会有两种用法？</h3><ol>
+<li><strong>相对路径的灵活性</strong>：相对路径使得在绑定复杂结构时更为灵活。特别是在重复绑定的情况下（如列表中的项），相对路径使得每个绑定都相对于当前项。</li>
+<li><strong>绝对路径的明确性</strong>：绝对路径确保绑定的数据来自模型的根，可以避免由于上下文变化而导致的绑定问题。</li>
+</ol>
+<h2 id="通过JSON文件定义数据模型"><a href="#通过JSON文件定义数据模型" class="headerlink" title="通过JSON文件定义数据模型"></a>通过JSON文件定义数据模型</h2><p>WalkThrough 19中新建了一个<code>Invoices.json</code>文件，并在<code>manifest.json</code>加了如下配置：</p>
+<pre><code class="highlight json"><span class="attr">&quot;sap.ui5&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+    ...
+    <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+      ...
+      <span class="attr">&quot;invoice&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sap.ui.model.json.JSONModel&quot;</span><span class="punctuation">,</span>
+        <span class="attr">&quot;uri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Invoices.json&quot;</span>
+      <span class="punctuation">&#125;</span>
+      ...
+    <span class="punctuation">&#125;</span>
+  <span class="punctuation">&#125;</span></code></pre>
+
+<p>其作用是在UI5程序初始化期间程序会根据<code>manifest.json</code>中配置的model自动创建一个内容及结构指向<code>Invoices.json</code>、叫<code>invoice</code>的一个<code>JSONModel</code>类型的数据模型。</p>
+<p>等同于在<code>OnInit</code>方法中通过代码进行数据模型的创建：</p>
+<pre><code class="highlight javascript"><span class="title function_">onInit</span>(<span class="params"></span>) &#123;
+	<span class="keyword">const</span> oModel = <span class="keyword">new</span> <span class="title class_">JSON</span>Model(&#123;
+		...
+	&#125;);
+	<span class="variable language_">this</span>.<span class="title function_">getView</span>().<span class="title function_">setModel</span>(oModel, <span class="string">&quot;invoice`&quot;</span>);
+&#125;</code></pre>
+
+<h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p>前端Fiori项目通过访问后端数据源来获取数据。</p>
+<h2 id="Remote-OData-Service"><a href="#Remote-OData-Service" class="headerlink" title="Remote OData Service"></a>Remote OData Service</h2><p>OData是一种常用的Fiori项目获取后端数据的方式，在Fiori中通过OData访问后端数据源需要使用到<strong>代理中间件</strong>。</p>
+<p>在WalkThrough 25中提供了一个叫<a target="_blank" rel="noopener" href="http://help.sap.com/disclaimer?site=https://bestofui5.org/#/packages/ui5-middleware-simpleproxy">ui5-middleware-simpleproxy</a>的代理中间件和公共OData服务（Northwind OData service：<a target="_blank" rel="noopener" href="https://services.odata.org/V2/Northwind/Northwind.svc/%EF%BC%89%E4%BE%9B%E6%88%91%E4%BB%AC%E7%BB%83%E4%B9%A0%E4%BD%BF%E7%94%A8%E3%80%82">https://services.odata.org/V2/Northwind/Northwind.svc/）供我们练习使用。</a></p>
+<ol>
+<li><p>通过在Terminal中执行如下指令来安装该中间件的包：</p>
+<pre><code class="highlight shell">npm i -D ui5-middleware-simpleproxy</code></pre>
+</li>
+<li><p>在<code>ui5.yaml</code>中配置后端OData的服务器：</p>
+<pre><code class="highlight yaml"><span class="attr">server:</span>
+  <span class="attr">customMiddleware:</span>
+  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ui5-middleware-simpleproxy</span>
+    <span class="attr">afterMiddleware:</span> <span class="string">compression</span>
+    <span class="attr">mountPath:</span> <span class="string">/V2</span>
+    <span class="attr">configuration:</span>
+      <span class="attr">baseUri:</span> <span class="string">&quot;https://services.odata.org&quot;</span></code></pre>
+</li>
+<li><p>在<code>manifest.json</code>中配置数据源：</p>
+<pre><code class="highlight json"><span class="attr">&quot;sap.app&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+	...<span class="punctuation">,</span>
+	<span class="attr">&quot;dataSources&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+		<span class="attr">&quot;invoiceRemote&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+			<span class="attr">&quot;uri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;V2/Northwind/Northwind.svc/&quot;</span><span class="punctuation">,</span>
+			<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;OData&quot;</span><span class="punctuation">,</span>
+			<span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+				<span class="attr">&quot;odataVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0&quot;</span>
+			<span class="punctuation">&#125;</span>
+		<span class="punctuation">&#125;</span>
+	<span class="punctuation">&#125;</span>
+<span class="punctuation">&#125;</span><span class="punctuation">,</span>
+...</code></pre>
+</li>
+<li><p>在<code>manifest.json</code>中给数据模型注入数据：</p>
+<pre><code class="highlight json"><span class="attr">&quot;sap.ui5&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+	...
+	<span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+		...
+		<span class="attr">&quot;invoice&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>
+			<span class="attr">&quot;dataSource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;invoiceRemote&quot;</span>
+		<span class="punctuation">&#125;</span>
+	<span class="punctuation">&#125;</span>
+   <span class="punctuation">&#125;</span><span class="punctuation">,</span>
+	...</code></pre></li>
+</ol>
+<p>在WalkThrough 19中，项目通过<code>Invoices.json</code>来给<code>manifest.json</code>中创建的数据对象<code>invoice</code>填充数据，而到了WalkThrough 25项目可以通过代理去访问后端服务器的数据源来给<code>invoice</code>填充数据。</p>
+<h2 id="模拟服务器"><a href="#模拟服务器" class="headerlink" title="模拟服务器"></a>模拟服务器</h2><p>Mock Server模拟服务器可以为前端Fiori项目提供一个模拟的后端服务器使用，可以帮助前端开发人员进行独立开发和测试。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407271348038.png" alt="image-20240727134827970"></p>
+<ol>
+<li><p><code>test\mockServer.html</code>取代了<code>index.html</code>，通过启动<code>test\mockServer.html</code>来开启test mode测试模式。</p>
+</li>
+<li><p><code>test\mockServer.html</code>指定<code>test\initMockServer.js</code>为启动脚本。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407271406113.png"></p>
+</li>
+<li><p><code>test\initMockServer.js</code>相当于给项目的启动脚本做了一层中转：保证了项目的数据请求可以被拦截并转到Mock Server中，同时也加载原启动脚本使项目照常运行显示。</p>
+<ol>
+<li><p><code>mockserver.init();</code>启动模拟服务器、运行<code>localService\mockserver.js</code>脚本代码；</p>
+</li>
+<li><p><code>sap.ui.require([&quot;sap/ui/core/ComponentSupport&quot;]);</code>加载项目的原启动脚本；</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407271407615.png" alt="image-20240727140745534"></p>
+</li>
+</ol>
+</li>
+<li><p><code>localService\mockserver.js</code>初始化模拟服务器：</p>
+<ol>
+<li><code>rootUri: sap.ui.require.toUrl(&quot;ui5/walkthrough&quot;) + &quot;/V2/Northwind/Northwind.svc/&quot;</code>配置需要被拦截的请求；</li>
+<li><code>const sPath = sap.ui.require.toUrl(&quot;ui5/walkthrough/localService&quot;);</code>和<code>oMockServer.simulate(sPath + &quot;/metadata.xml&quot;, sPath + &quot;/mockdata&quot;);</code>加载了模拟返回的数据模型结构<code>localService\metadata.xml</code>与数据内容<code>localService\mockdata\Invoices.json</code>；</li>
+</ol>
+</li>
+</ol>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。 </span>
     </div>

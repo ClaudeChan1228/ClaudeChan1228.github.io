@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Claude Chan</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Claude Chan">
+  <title>WalkThrough 10 项目结构变化与Fiori项目初始化流程 | Claude Chan</title>
+  <meta name="keywords" content=" Fiori ">
+  <meta name="description" content="WalkThrough 10 项目结构变化与Fiori项目初始化流程 | Claude Chan">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Oops～，我崩溃了！找不到你想要的页面 :(">
 <meta property="og:type" content="website">
@@ -56,7 +56,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -458,12 +458,64 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-008-WalkThrough 10 项目结构变化" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B"><span class="toc-text">个人简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F"><span class="toc-text">联系方式</span></a></li></ol>
+        <h1 class="article-title">WalkThrough 10 项目结构变化与Fiori项目初始化流程</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SAP">SAP</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;Fiori">Fiori</a> > 
+            
+            <a  data-rel="SAP&lt;---&gt;Fiori&lt;---&gt;UI5Demo">UI5Demo</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color1">Fiori</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-07-27 16:17:24'>2024-07-24 18:55</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:437</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%98%E5%8C%96"><span class="toc-text">变化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fiori%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-text">Fiori项目初始化流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8index-html%EF%BC%8C%E5%8A%A0%E8%BD%BDSAP-UI5%E6%A0%B8%E5%BF%83%E5%BA%93"><span class="toc-text">启动index.html，加载SAP UI5核心库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD-ComponentSupport-%E6%A8%A1%E5%9D%97"><span class="toc-text">加载 ComponentSupport 模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E7%BB%84%E4%BB%B6%E6%A0%87%E8%AE%B0%E5%B9%B6%E5%8A%A0%E8%BD%BD%E7%BB%84%E4%BB%B6"><span class="toc-text">查找组件标记并加载组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%B9%B6%E6%89%A7%E8%A1%8C-Component-js"><span class="toc-text">加载并执行 Component.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-manifest-json"><span class="toc-text">读取 manifest.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%B7%AF%E7%94%B1%E5%92%8C%E6%A8%A1%E5%9E%8B"><span class="toc-text">初始化路由和模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%B9%B6%E6%98%BE%E7%A4%BA%E6%A0%B9%E8%A7%86%E5%9B%BE"><span class="toc-text">加载并显示根视图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%88%90%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">完成初始化</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -476,15 +528,46 @@
     }
 </style>
 </div>
-            <h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p>
-<h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
-<li>QQ：1505414319</li>
-<li>邮箱：<a href="mailto:&#99;&#108;&#97;&#117;&#x64;&#x65;&#99;&#x68;&#97;&#110;&#x31;&#50;&#50;&#x38;&#x40;&#x67;&#x6d;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;">&#99;&#108;&#97;&#117;&#x64;&#x65;&#99;&#x68;&#97;&#110;&#x31;&#50;&#50;&#x38;&#x40;&#x67;&#x6d;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a>或<a href="mailto:&#x31;&#53;&#48;&#53;&#52;&#49;&#x34;&#51;&#49;&#57;&#64;&#x71;&#113;&#46;&#99;&#111;&#x6d;">&#x31;&#53;&#48;&#53;&#52;&#49;&#x34;&#51;&#49;&#57;&#64;&#x71;&#113;&#46;&#99;&#111;&#x6d;</a></li>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="变化"><a href="#变化" class="headerlink" title="变化"></a>变化</h1><p>WalkThrough 10 相较于之前的QuickStart 3，在项目结构上主要有以下变化：</p>
+<ul>
+<li>移除了<code>index.js</code>，新增<code>Component.js</code><ul>
+<li><code>Component.js</code>取代了<code>index.js</code>，负责Fiori项目的初始化、配置和生命周期的管理</li>
+<li><code>index.html</code>中不再指定初始化脚本<code>index.js</code>，取而代之的是通过<code>module:sap/ui/core/ComponentSupport</code>模块来调用<code>Component.js</code>进行初始化</li>
 </ul>
+</li>
+<li><code>manifest.json</code>承担了更多的工作</li>
+</ul>
+<p>虽然 <code>manifest.json</code> 和 <code>Component.js</code> 都涉及某些配置和初始化工作，但它们在使用上是<strong>互补</strong>的。</p>
+<h1 id="Fiori项目初始化流程"><a href="#Fiori项目初始化流程" class="headerlink" title="Fiori项目初始化流程"></a>Fiori项目初始化流程</h1><h2 id="启动index-html，加载SAP-UI5核心库"><a href="#启动index-html，加载SAP-UI5核心库" class="headerlink" title="启动index.html，加载SAP UI5核心库"></a>启动<code>index.html</code>，加载SAP UI5核心库</h2><h2 id="加载-ComponentSupport-模块"><a href="#加载-ComponentSupport-模块" class="headerlink" title="加载 ComponentSupport 模块"></a>加载 <code>ComponentSupport</code> 模块</h2><p>通过<code>index.html</code>中的 <code>data-sap-ui-onInit=&quot;module:sap/ui/core/ComponentSupport&quot;</code> 属性会自动加载 <code>sap/ui/core/ComponentSupport</code> 模块。</p>
+<h2 id="查找组件标记并加载组件"><a href="#查找组件标记并加载组件" class="headerlink" title="查找组件标记并加载组件"></a>查找组件标记并加载组件</h2><p><code>ComponentSupport</code> 模块会查找页面中带有 <code>data-sap-ui-component</code> 属性的 HTML 元素，并根据 <code>data-name</code> 属性加载对应命名空间下的的组件。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407241928848.png" alt="image-20240724192847741"></p>
+<h2 id="加载并执行-Component-js"><a href="#加载并执行-Component-js" class="headerlink" title="加载并执行 Component.js"></a>加载并执行 <code>Component.js</code></h2><p><code>Component.js</code> 定义了应用程序组件的初始化逻辑。</p>
+<p><strong>其中的元数据（metadata）还定义了下一步会指向的 <code>manifest.json</code> 文件。</strong></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407241934589.png" alt="image-20240724193408485"></p>
+<h2 id="读取-manifest-json"><a href="#读取-manifest-json" class="headerlink" title="读取 manifest.json"></a>读取 <code>manifest.json</code></h2><p><code>manifest.json</code> 文件是应用程序的配置文件，包含应用的元数据、组件配置、路由配置、数据源等信息。</p>
+<h2 id="初始化路由和模型"><a href="#初始化路由和模型" class="headerlink" title="初始化路由和模型"></a>初始化路由和模型</h2><p>根据 <code>manifest.json</code> 中的配置，<code>Component.js</code> 中的初始化方法会设置路由、创建并设置模型。（目前的Demo项目中还未涉及到这一块的内容，后续的WalkThrough会有相应的介绍）</p>
+<h2 id="加载并显示根视图"><a href="#加载并显示根视图" class="headerlink" title="加载并显示根视图"></a>加载并显示根视图</h2><p>在 <code>manifest.json</code> 中，<code>rootView</code> 配置指定了应用程序的根视图。该视图会被加载并显示在页面上。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407241933487.png" alt="image-20240724193328401"></p>
+<h2 id="完成初始化"><a href="#完成初始化" class="headerlink" title="完成初始化"></a>完成初始化</h2>
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。 </span>
+    </div>
+</article>
 
-        </article>
-        
-        
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -493,11 +576,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
