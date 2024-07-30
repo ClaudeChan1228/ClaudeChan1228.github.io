@@ -4,6 +4,122 @@
   
     
     <entry>
+      <title>Fiori单元测试和集成测试</title>
+      <link href="/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/"/>
+      <url>/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/</url>
+      
+        <content type="html"><![CDATA[<ul><li>单元测试可以用来测试前端项目中的JavaScript逻辑处理功能，比如<code>model/formatter.js</code>中的<code>statusText</code>功能。</li><li>集成测试将我们需要的模块组合起来联动进行测试。</li></ul><p>SAP UI5 Demo中，官方提供了QUNIT模块和OPA5模块来协助开发者进行相关的测试。</p><h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301905536.png" alt="image-20240730190508628"></p><p>在test文件加下加入以下文件：</p><ul><li><code>unitTests.qunit.html</code>：用于引用QUNIT相关模块并启动测试页面。</li><li><code>unitTests.qunit.js</code>：QUNIT配置，并启动指定的测试脚本。</li><li><code>model/formatter.js</code>：测试脚本。与webapp文件夹下的<code>model/formatter.js</code>命名保持一致，用于测试webapp文件夹下的<code>model/formatter.js</code>中的具体功能。</li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301924690.png"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301924837.png" alt="image-20240730192445581"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301925096.png" alt="image-20240730192533750"></p><h1 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301929401.png" alt="image-20240730192903178"></p><p>在test文件加下加入以下文件：</p><ul><li><code>opaTests.qunit.html</code>：用于引用QUNIT相关模块并启动测试页面。</li><li><code>opaTests.qunit.js</code>：QUNIT配置，并启动指定的测试脚本。</li><li><code>NavigationJourney.js</code>：测试脚本。执行<code>pages/.App.js</code>中定义的测试动作。</li><li><code>pages/.App.js</code>：定义测试动作。</li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301933630.png" alt="image-20240730193316351"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301933317.png" alt="image-20240730193352035"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301935744.png" alt="image-20240730193514471"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301936599.png" alt="image-20240730193637276"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> Fiori </category>
+          
+          <category> UI5Demo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Fiori </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MM 企业结构概述和配置</title>
+      <link href="/2024/07/28/012-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E5%92%8C%E6%93%8D%E4%BD%9C/"/>
+      <url>/2024/07/28/012-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<h1 id="企业结构概述"><a href="#企业结构概述" class="headerlink" title="企业结构概述"></a>企业结构概述</h1><p>企业结构由以下组织单元构成：</p><ol><li>Client</li><li>公司代码</li><li>工厂</li><li>库存地点</li><li>采购组织</li><li>采购组</li></ol><p>他们的层级关系比如：</p><ol><li>Client <ol><li>公司代码 1<ol><li>工厂 1</li><li>工厂 2<ol><li>库存地点 1<ol><li>采购组织 1</li><li>采购组织 2<ol><li>采购组 1</li></ol></li></ol></li><li>库存地点 2</li></ol></li></ol></li><li>公司代码 2</li></ol></li></ol><h1 id="企业结构基础配置"><a href="#企业结构基础配置" class="headerlink" title="企业结构基础配置"></a>企业结构基础配置</h1><h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><h3 id="定义公司"><a href="#定义公司" class="headerlink" title="定义公司"></a>定义公司</h3><p>TCODE：OX15</p><p>VIEW：V_T880</p><p>TABLE：T880</p><h3 id="创建公司代码"><a href="#创建公司代码" class="headerlink" title="创建公司代码"></a>创建公司代码</h3><p>TCODE：OX02</p><p>VIEW：V_T001</p><p>TABLE：T001</p><h2 id="工厂"><a href="#工厂" class="headerlink" title="工厂"></a>工厂</h2><h3 id="创建工厂"><a href="#创建工厂" class="headerlink" title="创建工厂"></a>创建工厂</h3><p>TCODE：OX10</p><p>VIEW：V_T880</p><p>TABLE：T880</p><h2 id="库存地点"><a href="#库存地点" class="headerlink" title="库存地点"></a>库存地点</h2><h3 id="创建库存地点"><a href="#创建库存地点" class="headerlink" title="创建库存地点"></a>创建库存地点</h3><p>TCODE：OX09</p><p>VIEW：V_T001W</p><p>TABLE：T001W</p><h2 id="采购组织"><a href="#采购组织" class="headerlink" title="采购组织"></a>采购组织</h2><h3 id="创建采购组织"><a href="#创建采购组织" class="headerlink" title="创建采购组织"></a>创建采购组织</h3><p>TCOE：OX08</p><p>VIEW：V_T024E</p><p>TABLE：T024E</p><h2 id="采购组"><a href="#采购组" class="headerlink" title="采购组"></a>采购组</h2><h3 id="创建采购组"><a href="#创建采购组" class="headerlink" title="创建采购组"></a>创建采购组</h3><p>TCODE：OME4</p><p>VIEW：V_024</p><p>TABLE：T024</p><h1 id="企业结构关联关系-配置"><a href="#企业结构关联关系-配置" class="headerlink" title="企业结构关联关系 配置"></a>企业结构关联关系 配置</h1><h2 id="分配工厂到公司代码"><a href="#分配工厂到公司代码" class="headerlink" title="分配工厂到公司代码"></a>分配工厂到公司代码</h2><p>TCODE：OX18</p><p>VIEW：V_T001K_ASSIGN</p><p>TABLE：T001K+T001W+T001+TASSIGN_MM_T001W+T001W_EXT</p><h2 id="分配采购组织到公司代码"><a href="#分配采购组织到公司代码" class="headerlink" title="分配采购组织到公司代码"></a>分配采购组织到公司代码</h2><p>TCODE：OX01</p><p>VIEW：V_T024E_ASSIGN</p><p>TABLE：T024E+T001+TASSIGN_MM_EKORG</p><h2 id="分配采购组织到工厂"><a href="#分配采购组织到工厂" class="headerlink" title="分配采购组织到工厂"></a>分配采购组织到工厂</h2><p>TCODE：OX17</p><p>VIEW：W_T024W_ASSIGN</p><p>TABLE：T024W+T024E+T001W+TASSIG_MM_WERKS</p><h2 id="分配标准采购组织到工厂"><a href="#分配标准采购组织到工厂" class="headerlink" title="分配标准采购组织到工厂"></a>分配标准采购组织到工厂</h2><p>标准采购组织是一个默认的采购组织，如果想要让工厂有一个默认的采购组织，则需要把标准采购组织分配到工厂。</p><p>TCODE：OMKI</p><p>VIEW：V_001W_E</p><p>TABLE：T001W</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> MM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> MM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MM 采购流程概述</title>
+      <link href="/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/"/>
+      <url>/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="采购类型"><a href="#采购类型" class="headerlink" title="采购类型"></a>采购类型</h1><ol><li>基本采购</li><li>特殊采购</li></ol><h2 id="基本采购"><a href="#基本采购" class="headerlink" title="基本采购"></a>基本采购</h2><p>基本采购满足以下三要素：</p><ol><li>正确的数量</li><li>正确的价格</li><li>正确的时间</li></ol><h3 id="基本采购生命周期"><a href="#基本采购生命周期" class="headerlink" title="基本采购生命周期"></a>基本采购生命周期</h3><ol><li>收集需求</li><li>寻找、联系供应商</li><li>产品背景调查、样品试用</li><li>谈判</li><li>订单交易</li><li>使用、维保、废品处理</li><li>合同更新</li></ol><h3 id="基本采购流程活动"><a href="#基本采购流程活动" class="headerlink" title="基本采购流程活动"></a>基本采购流程活动</h3><ol><li>确定需求</li><li>招标</li><li>下采购订单</li><li>收货过账</li><li>发票对账</li><li>发票验真</li><li>付款给供应商</li></ol><h3 id="基本采购类型"><a href="#基本采购类型" class="headerlink" title="基本采购类型"></a>基本采购类型</h3><p>基本采购还可以继续细分：</p><ol><li>库存采购 or 直接消费采购</li><li>集团内部采购 or 向外部供应商采购</li></ol><h4 id="外部采购的三种形式"><a href="#外部采购的三种形式" class="headerlink" title="外部采购的三种形式"></a>外部采购的三种形式</h4><p>向外部供应商采购体现在IT系统中以以下三种形式展现：</p><ol><li>不定期的一次性订单</li><li>定期提供物料的长期合同</li><li>长期的计划协议和配送计划</li></ol><h2 id="特殊采购"><a href="#特殊采购" class="headerlink" title="特殊采购"></a>特殊采购</h2><p>特殊采购指采购的库存或者采购方式较为特殊：</p><ol><li>寄售库存</li><li>委外</li><li>管道</li><li>包装可回收库存</li><li>转包</li><li>公司内库存转移</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> MM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> MM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>英语生活对话：入境</title>
+      <link href="/2024/07/27/010-%E5%AE%9E%E7%94%A8%E8%8B%B1%E8%AF%AD%EF%BC%9A%E5%85%A5%E5%A2%83/"/>
+      <url>/2024/07/27/010-%E5%AE%9E%E7%94%A8%E8%8B%B1%E8%AF%AD%EF%BC%9A%E5%85%A5%E5%A2%83/</url>
+      
+        <content type="html"><![CDATA[<h1 id="出国入境-机场入境-过海关"><a href="#出国入境-机场入境-过海关" class="headerlink" title="出国入境&#x2F;机场入境&#x2F;过海关"></a>出国入境&#x2F;机场入境&#x2F;过海关</h1><p>学习视频：<a href="https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&vd_source=76f2600f20b34fd8c1acce7a8a39f08c">https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&amp;vd_source=76f2600f20b34fd8c1acce7a8a39f08c</a></p><p>常用单词和短语：</p><ol><li>passport<ol><li>护照</li></ol></li><li>document<ol><li>证件</li></ol></li><li>visit&#x2F;trip to…<ol><li>到访…</li></ol></li><li>purpose<ol><li>目的</li></ol></li><li>are you here for…<ol><li>你来这里是为了…</li></ol></li><li>pleasure<ol><li>娱乐</li></ol></li><li>conference<ol><li>会议</li></ol></li><li>vacation<ol><li>度假</li></ol></li><li>tourism<ol><li>旅游</li></ol></li><li>destination<ol><li>目的地</li></ol></li><li>have a connecting flight to…<ol><li>转机去…</li></ol></li><li>occupation<ol><li>职业</li><li>what do you do</li></ol></li><li>contact<ol><li>联系人</li><li>Do you know any one</li></ol></li><li>currency<ol><li>钱</li><li>money</li></ol></li><li>around&#x2F;about<ol><li>大概</li></ol></li><li>return ticket<ol><li>回程机票</li></ol></li><li>take off…<ol><li>拿下&#x2F;取下…</li></ol></li><li>look into…<ol><li>朝…看</li></ol></li><li>can you just…<ol><li>你能…吗</li><li>母语者常用</li></ol></li><li>declare<ol><li>申报</li></ol></li><li>you’ll all set<ol><li>手续都办完了，没问题了</li></ol></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 外语学习 </category>
+          
+          <category> 英语 </category>
+          
+          <category> 生活对话 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 英语 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据绑定与数据源</title>
       <link href="/2024/07/26/009-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
       <url>/2024/07/26/009-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%BA%90/</url>
@@ -102,7 +218,7 @@
           
           <category> SAP </category>
           
-          <category> 系统 </category>
+          <category> 系统配置 </category>
           
       </categories>
       
