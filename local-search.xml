@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>EXCEL单元格拆分</title>
+    <link href="/2024/08/01/016-EXCEL%20%E5%8D%95%E5%85%83%E6%A0%BC%E6%8B%86%E5%88%86/"/>
+    <url>/2024/08/01/016-EXCEL%20%E5%8D%95%E5%85%83%E6%A0%BC%E6%8B%86%E5%88%86/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>软件工具</category>
+      
+      <category>EXCEL</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>EXCEL</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>WINDOWS10系统语言包下载失败</title>
+    <link href="/2024/08/01/015-WINDOWS10%20%E7%B3%BB%E7%BB%9F%E8%AF%AD%E8%A8%80%E5%8C%85%E4%B8%8B%E8%BD%BD%E5%A4%B1%E8%B4%A5/"/>
+    <url>/2024/08/01/015-WINDOWS10%20%E7%B3%BB%E7%BB%9F%E8%AF%AD%E8%A8%80%E5%8C%85%E4%B8%8B%E8%BD%BD%E5%A4%B1%E8%B4%A5/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>软件工具</category>
+      
+      <category>WINDOWS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>windows</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Debug Fiori项目的JavaScript功能</title>
+    <link href="/2024/07/30/014-JavaScript%20Debug/"/>
+    <url>/2024/07/30/014-JavaScript%20Debug/</url>
+    
+    <content type="html"><![CDATA[<p>在一个Fiori前端页面中同时按下Ctrl+Shift+Alt+P呼出<strong>技术信息对话框</strong>，<strong>使用调试源</strong>勾选<strong>选择特定模块</strong>，点击<strong>确定</strong>后重新加载页面。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301945966.png" alt="image-20240730194536544"></p><p>此时可以看到url后多了一个参数<code>?sap-ui-debug=true</code></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301946292.png" alt="image-20240730194638104"></p><p>按F12或者点击检查查看源代码，即可在Source的标签页下看到Fiori项目的结构，在JavaScript文件中打断点进行调试。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301948748.png" alt="image-20240730194827368"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>Fiori</category>
+      
+      <category>UI5Demo</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Fiori</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Fiori单元测试和集成测试</title>
+    <link href="/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/"/>
+    <url>/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<ul><li>单元测试可以用来测试前端项目中的JavaScript逻辑处理功能，比如<code>model/formatter.js</code>中的<code>statusText</code>功能。</li><li>集成测试将我们需要的模块组合起来联动进行测试。</li></ul><p>SAP UI5 Demo中，官方提供了QUNIT模块和OPA5模块来协助开发者进行相关的测试。</p><h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301905536.png" alt="image-20240730190508628"></p><p>在test文件加下加入以下文件：</p><ul><li><code>unitTests.qunit.html</code>：用于引用QUNIT相关模块并启动测试页面。</li><li><code>unitTests.qunit.js</code>：QUNIT配置，并启动指定的测试脚本。</li><li><code>model/formatter.js</code>：测试脚本。与webapp文件夹下的<code>model/formatter.js</code>命名保持一致，用于测试webapp文件夹下的<code>model/formatter.js</code>中的具体功能。</li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301924690.png"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301924837.png" alt="image-20240730192445581"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301925096.png" alt="image-20240730192533750"></p><h1 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301929401.png" alt="image-20240730192903178"></p><p>在test文件加下加入以下文件：</p><ul><li><code>opaTests.qunit.html</code>：用于引用QUNIT相关模块并启动测试页面。</li><li><code>opaTests.qunit.js</code>：QUNIT配置，并启动指定的测试脚本。</li><li><code>NavigationJourney.js</code>：测试脚本。执行<code>pages/.App.js</code>中定义的测试动作。</li><li><code>pages/.App.js</code>：定义测试动作。</li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301933630.png" alt="image-20240730193316351"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301933317.png" alt="image-20240730193352035"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301935744.png" alt="image-20240730193514471"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301936599.png" alt="image-20240730193637276"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>Fiori</category>
+      
+      <category>UI5Demo</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Fiori</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MM 企业结构概述和配置</title>
+    <link href="/2024/07/28/012-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E5%92%8C%E6%93%8D%E4%BD%9C/"/>
+    <url>/2024/07/28/012-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
+    
+    <content type="html"><![CDATA[<h1 id="企业结构概述"><a href="#企业结构概述" class="headerlink" title="企业结构概述"></a>企业结构概述</h1><p>企业结构由以下组织单元构成：</p><ol><li>Client</li><li>公司代码</li><li>工厂</li><li>库存地点</li><li>采购组织</li><li>采购组</li></ol><p>他们的层级关系比如：</p><ol><li>Client <ol><li>公司代码 1<ol><li>工厂 1</li><li>工厂 2<ol><li>库存地点 1<ol><li>采购组织 1</li><li>采购组织 2<ol><li>采购组 1</li></ol></li></ol></li><li>库存地点 2</li></ol></li></ol></li><li>公司代码 2</li></ol></li></ol><h1 id="企业结构基础配置"><a href="#企业结构基础配置" class="headerlink" title="企业结构基础配置"></a>企业结构基础配置</h1><h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><h3 id="定义公司"><a href="#定义公司" class="headerlink" title="定义公司"></a>定义公司</h3><p>TCODE：OX15</p><p>VIEW：V_T880</p><p>TABLE：T880</p><h3 id="创建公司代码"><a href="#创建公司代码" class="headerlink" title="创建公司代码"></a>创建公司代码</h3><p>TCODE：OX02</p><p>VIEW：V_T001</p><p>TABLE：T001</p><h2 id="工厂"><a href="#工厂" class="headerlink" title="工厂"></a>工厂</h2><h3 id="创建工厂"><a href="#创建工厂" class="headerlink" title="创建工厂"></a>创建工厂</h3><p>TCODE：OX10</p><p>VIEW：V_T880</p><p>TABLE：T880</p><h2 id="库存地点"><a href="#库存地点" class="headerlink" title="库存地点"></a>库存地点</h2><h3 id="创建库存地点"><a href="#创建库存地点" class="headerlink" title="创建库存地点"></a>创建库存地点</h3><p>TCODE：OX09</p><p>VIEW：V_T001W</p><p>TABLE：T001W</p><h2 id="采购组织"><a href="#采购组织" class="headerlink" title="采购组织"></a>采购组织</h2><h3 id="创建采购组织"><a href="#创建采购组织" class="headerlink" title="创建采购组织"></a>创建采购组织</h3><p>TCOE：OX08</p><p>VIEW：V_T024E</p><p>TABLE：T024E</p><h2 id="采购组"><a href="#采购组" class="headerlink" title="采购组"></a>采购组</h2><h3 id="创建采购组"><a href="#创建采购组" class="headerlink" title="创建采购组"></a>创建采购组</h3><p>TCODE：OME4</p><p>VIEW：V_024</p><p>TABLE：T024</p><h1 id="企业结构关联关系-配置"><a href="#企业结构关联关系-配置" class="headerlink" title="企业结构关联关系 配置"></a>企业结构关联关系 配置</h1><h2 id="分配工厂到公司代码"><a href="#分配工厂到公司代码" class="headerlink" title="分配工厂到公司代码"></a>分配工厂到公司代码</h2><p>TCODE：OX18</p><p>VIEW：V_T001K_ASSIGN</p><p>TABLE：T001K+T001W+T001+TASSIGN_MM_T001W+T001W_EXT</p><h2 id="分配采购组织到公司代码"><a href="#分配采购组织到公司代码" class="headerlink" title="分配采购组织到公司代码"></a>分配采购组织到公司代码</h2><p>TCODE：OX01</p><p>VIEW：V_T024E_ASSIGN</p><p>TABLE：T024E+T001+TASSIGN_MM_EKORG</p><h2 id="分配采购组织到工厂"><a href="#分配采购组织到工厂" class="headerlink" title="分配采购组织到工厂"></a>分配采购组织到工厂</h2><p>TCODE：OX17</p><p>VIEW：W_T024W_ASSIGN</p><p>TABLE：T024W+T024E+T001W+TASSIG_MM_WERKS</p><h2 id="分配标准采购组织到工厂"><a href="#分配标准采购组织到工厂" class="headerlink" title="分配标准采购组织到工厂"></a>分配标准采购组织到工厂</h2><p>标准采购组织是一个默认的采购组织，如果想要让工厂有一个默认的采购组织，则需要把标准采购组织分配到工厂。</p><p>TCODE：OMKI</p><p>VIEW：V_001W_E</p><p>TABLE：T001W</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>MM</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SAP</tag>
+      
+      <tag>MM</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MM 采购流程概述</title>
+    <link href="/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/"/>
+    <url>/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="采购类型"><a href="#采购类型" class="headerlink" title="采购类型"></a>采购类型</h1><ol><li>基本采购</li><li>特殊采购</li></ol><h2 id="基本采购"><a href="#基本采购" class="headerlink" title="基本采购"></a>基本采购</h2><p>基本采购满足以下三要素：</p><ol><li>正确的数量</li><li>正确的价格</li><li>正确的时间</li></ol><h3 id="基本采购生命周期"><a href="#基本采购生命周期" class="headerlink" title="基本采购生命周期"></a>基本采购生命周期</h3><ol><li>收集需求</li><li>寻找、联系供应商</li><li>产品背景调查、样品试用</li><li>谈判</li><li>订单交易</li><li>使用、维保、废品处理</li><li>合同更新</li></ol><h3 id="基本采购流程活动"><a href="#基本采购流程活动" class="headerlink" title="基本采购流程活动"></a>基本采购流程活动</h3><ol><li>确定需求</li><li>招标</li><li>下采购订单</li><li>收货过账</li><li>发票对账</li><li>发票验真</li><li>付款给供应商</li></ol><h3 id="基本采购类型"><a href="#基本采购类型" class="headerlink" title="基本采购类型"></a>基本采购类型</h3><p>基本采购还可以继续细分：</p><ol><li>库存采购 or 直接消费采购</li><li>集团内部采购 or 向外部供应商采购</li></ol><h4 id="外部采购的三种形式"><a href="#外部采购的三种形式" class="headerlink" title="外部采购的三种形式"></a>外部采购的三种形式</h4><p>向外部供应商采购体现在IT系统中以以下三种形式展现：</p><ol><li>不定期的一次性订单</li><li>定期提供物料的长期合同</li><li>长期的计划协议和配送计划</li></ol><h2 id="特殊采购"><a href="#特殊采购" class="headerlink" title="特殊采购"></a>特殊采购</h2><p>特殊采购指采购的库存或者采购方式较为特殊：</p><ol><li>寄售库存</li><li>委外</li><li>管道</li><li>包装可回收库存</li><li>转包</li><li>公司内库存转移</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>MM</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SAP</tag>
+      
+      <tag>MM</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>英语生活对话：入境</title>
+    <link href="/2024/07/27/010-%E5%AE%9E%E7%94%A8%E8%8B%B1%E8%AF%AD%EF%BC%9A%E5%85%A5%E5%A2%83/"/>
+    <url>/2024/07/27/010-%E5%AE%9E%E7%94%A8%E8%8B%B1%E8%AF%AD%EF%BC%9A%E5%85%A5%E5%A2%83/</url>
+    
+    <content type="html"><![CDATA[<h1 id="出国入境-机场入境-过海关"><a href="#出国入境-机场入境-过海关" class="headerlink" title="出国入境&#x2F;机场入境&#x2F;过海关"></a>出国入境&#x2F;机场入境&#x2F;过海关</h1><p>学习视频：<a href="https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&vd_source=76f2600f20b34fd8c1acce7a8a39f08c">https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&amp;vd_source=76f2600f20b34fd8c1acce7a8a39f08c</a></p><p>常用单词和短语：</p><ol><li>passport<ol><li>护照</li></ol></li><li>document<ol><li>证件</li></ol></li><li>visit&#x2F;trip to…<ol><li>到访…</li></ol></li><li>purpose<ol><li>目的</li></ol></li><li>are you here for…<ol><li>你来这里是为了…</li></ol></li><li>pleasure<ol><li>娱乐</li></ol></li><li>conference<ol><li>会议</li></ol></li><li>vacation<ol><li>度假</li></ol></li><li>tourism<ol><li>旅游</li></ol></li><li>destination<ol><li>目的地</li></ol></li><li>have a connecting flight to…<ol><li>转机去…</li></ol></li><li>occupation<ol><li>职业</li><li>what do you do</li></ol></li><li>contact<ol><li>联系人</li><li>Do you know any one</li></ol></li><li>currency<ol><li>钱</li><li>money</li></ol></li><li>around&#x2F;about<ol><li>大概</li></ol></li><li>return ticket<ol><li>回程机票</li></ol></li><li>take off…<ol><li>拿下&#x2F;取下…</li></ol></li><li>look into…<ol><li>朝…看</li></ol></li><li>can you just…<ol><li>你能…吗</li><li>母语者常用</li></ol></li><li>declare<ol><li>申报</li></ol></li><li>you’ll all set<ol><li>手续都办完了，没问题了</li></ol></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>外语学习</category>
+      
+      <category>英语</category>
+      
+      <category>生活对话</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>英语</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>数据绑定与数据源</title>
+    <link href="/2024/07/26/009-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
+    <url>/2024/07/26/009-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%BA%90/</url>
+    
+    <content type="html"><![CDATA[<p>本文将介绍SAP UI5 Demo WalkThrough中涉及到的数据绑定操作与数据源的设置与使用。</p><h1 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h1><p>SAP UI5通过模型来绑定数据：</p><ol><li>默认模型</li><li>命名模型</li></ol><h2 id="默认模型"><a href="#默认模型" class="headerlink" title="默认模型"></a>默认模型</h2><p>在WalkThrough 7的<code>Controller</code>的初始化方法中：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">onInit</span>(<span class="hljs-params"></span>) &#123;<br>   <span class="hljs-comment">// set data model on view</span><br>   <span class="hljs-keyword">const</span> oData = &#123;<br>      recipient : &#123;<br>         name : <span class="hljs-string">&quot;World&quot;</span><br>      &#125;<br>   &#125;;<br>   <span class="hljs-keyword">const</span> oModel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">JSON</span>Model(oData);<br>   <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getView</span>().<span class="hljs-title function_">setModel</span>(oModel);<br>&#125;<br></code></pre></td></tr></table></figure><p>代码通过<code>this.getView().setModel(oModel)</code>设置了视图的默认数据模型。当<code>setModel</code>方法的入参只有一个<code>Model</code>对象时，程序设置的模型即为视图的默认模型，在<code>view.xml</code>和<code>JavaScript</code>文件中可以通过如下方式来获取默认数据模型的内容：</p><ul><li><code>view.xml</code><ul><li><code>&#123;/该模型的一级属性/该模型的二级属性/...&#125;</code></li></ul></li><li><code>JavaScript</code><ul><li><code>this.getView().getModel().getProperty(&quot;&#123;/该模型的一级属性/该模型的二级属性/...&#125;&quot;);</code></li></ul></li></ul><h2 id="命名模型"><a href="#命名模型" class="headerlink" title="命名模型"></a>命名模型</h2><p>除默认数据模型外的其他的数据模型，在<code>set</code>和<code>get</code>的时候则需要指定它对应的模型名称。例如在WalkThrough 20 <code>InvoiceList.controller.js</code>中的代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">onInit</span>(<span class="hljs-params"></span>) &#123;<br><span class="hljs-keyword">const</span> oViewModel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">JSON</span>Model(&#123;<br><span class="hljs-attr">currency</span>: <span class="hljs-string">&quot;EUR&quot;</span><br>&#125;);<br>           <span class="hljs-comment">// 为防止歧义，我将view改为currency</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getView</span>().<span class="hljs-title function_">setModel</span>(oViewModel, <span class="hljs-string">&quot;currency&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure><p>获取数据模型内容的时候同理需要加上对应模型的名称：</p><ul><li><code>view.xml</code><ul><li><code>&#123;currency&gt;/该模型的一级属性/该模型的二级属性/...&#125;</code></li></ul></li><li><code>JavaScript</code><ul><li><code>this.getView().getModel(&quot;currency&quot;).getProperty(&quot;&#123;/该模型的一级属性/该模型的二级属性/...&#125;&quot;);</code></li></ul></li></ul><h2 id="view-xml中获取模型的-和"><a href="#view-xml中获取模型的-和" class="headerlink" title="view.xml中获取模型的&gt;/和&gt;"></a><code>view.xml</code>中获取模型的<code>&gt;/</code>和<code>&gt;</code></h2><p>上述在<code>view.xml</code>获取模型内容使用了<code>&gt;/</code>，而<code>&gt;</code>也能用来获取模型内容。两者的区别如下：</p><ul><li><code>&gt;/</code>：绝对路径，确保从模型的根开始访问数据。</li><li><code>&gt;</code>：相对路径，通常在绑定集合项或嵌套结构时使用。</li></ul><p><code>&gt;</code>的使用，需要有对应的上下文进行支持，例如在WalkThrough 21的<code>InvoiceList.view.xml</code>中：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">List</span></span><br><span class="hljs-tag"><span class="hljs-attr">headerText</span>=<span class="hljs-string">&quot;&#123;i18n&gt;invoiceListTitle&#125;&quot;</span></span><br><span class="hljs-tag"><span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sapUiResponsiveMargin&quot;</span></span><br><span class="hljs-tag"><span class="hljs-attr">width</span>=<span class="hljs-string">&quot;auto&quot;</span></span><br><span class="hljs-tag"><span class="hljs-attr">items</span>=<span class="hljs-string">&quot;&#123;invoice&gt;/Invoices&#125;&quot;</span></span><br><span class="hljs-tag">&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">items</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">ObjectListItem</span></span><br><span class="hljs-tag"><span class="hljs-attr">title</span>=<span class="hljs-string">&quot;&#123;invoice&gt;Quantity&#125; x &#123;invoice&gt;ProductName&#125;&quot;</span></span><br><span class="hljs-tag">                 <span class="hljs-attr">......</span></span><br><span class="hljs-tag">/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">items</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">List</span>&gt;</span><br></code></pre></td></tr></table></figure><p><code>items=&quot;&#123;invoice&gt;/Invoices&#125;&quot;</code>通过绝对路径获取到了<code>invoice</code>的模型内容，使得<code>&lt;items&gt;</code>中的<code>&gt;</code>有了上下文进行支持，因此在<code>&lt;items&gt;</code>中可以通过<code>title=&quot;&#123;invoice&gt;Quantity&#125; x &#123;invoice&gt;ProductName&#125;&quot;</code>来直接获取<code>Invoices</code>下的<code>Quantity</code>和<code>ProductName</code>。</p><h3 id="为什么会有两种用法？"><a href="#为什么会有两种用法？" class="headerlink" title="为什么会有两种用法？"></a>为什么会有两种用法？</h3><ol><li><strong>相对路径的灵活性</strong>：相对路径使得在绑定复杂结构时更为灵活。特别是在重复绑定的情况下（如列表中的项），相对路径使得每个绑定都相对于当前项。</li><li><strong>绝对路径的明确性</strong>：绝对路径确保绑定的数据来自模型的根，可以避免由于上下文变化而导致的绑定问题。</li></ol><h2 id="通过JSON文件定义数据模型"><a href="#通过JSON文件定义数据模型" class="headerlink" title="通过JSON文件定义数据模型"></a>通过JSON文件定义数据模型</h2><p>WalkThrough 19中新建了一个<code>Invoices.json</code>文件，并在<code>manifest.json</code>加了如下配置：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;sap.ui5&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    ...<br>    <span class="hljs-attr">&quot;models&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      ...<br>      <span class="hljs-attr">&quot;invoice&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sap.ui.model.json.JSONModel&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;uri&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Invoices.json&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>      ...<br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>其作用是在UI5程序初始化期间程序会根据<code>manifest.json</code>中配置的model自动创建一个内容及结构指向<code>Invoices.json</code>、叫<code>invoice</code>的一个<code>JSONModel</code>类型的数据模型。</p><p>等同于在<code>OnInit</code>方法中通过代码进行数据模型的创建：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">onInit</span>(<span class="hljs-params"></span>) &#123;<br><span class="hljs-keyword">const</span> oModel = <span class="hljs-keyword">new</span> <span class="hljs-title class_">JSON</span>Model(&#123;<br>...<br>&#125;);<br><span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getView</span>().<span class="hljs-title function_">setModel</span>(oModel, <span class="hljs-string">&quot;invoice`&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure><h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p>前端Fiori项目通过访问后端数据源来获取数据。</p><h2 id="Remote-OData-Service"><a href="#Remote-OData-Service" class="headerlink" title="Remote OData Service"></a>Remote OData Service</h2><p>OData是一种常用的Fiori项目获取后端数据的方式，在Fiori中通过OData访问后端数据源需要使用到<strong>代理中间件</strong>。</p><p>在WalkThrough 25中提供了一个叫<a href="http://help.sap.com/disclaimer?site=https://bestofui5.org/#/packages/ui5-middleware-simpleproxy">ui5-middleware-simpleproxy</a>的代理中间件和公共OData服务（Northwind OData service：<a href="https://services.odata.org/V2/Northwind/Northwind.svc/%EF%BC%89%E4%BE%9B%E6%88%91%E4%BB%AC%E7%BB%83%E4%B9%A0%E4%BD%BF%E7%94%A8%E3%80%82">https://services.odata.org/V2/Northwind/Northwind.svc/）供我们练习使用。</a></p><ol><li><p>通过在Terminal中执行如下指令来安装该中间件的包：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm i -D ui5-middleware-simpleproxy<br></code></pre></td></tr></table></figure></li><li><p>在<code>ui5.yaml</code>中配置后端OData的服务器：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">customMiddleware:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">ui5-middleware-simpleproxy</span><br>    <span class="hljs-attr">afterMiddleware:</span> <span class="hljs-string">compression</span><br>    <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/V2</span><br>    <span class="hljs-attr">configuration:</span><br>      <span class="hljs-attr">baseUri:</span> <span class="hljs-string">&quot;https://services.odata.org&quot;</span><br></code></pre></td></tr></table></figure></li><li><p>在<code>manifest.json</code>中配置数据源：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;sap.app&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>...<span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;dataSources&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;invoiceRemote&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;uri&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;V2/Northwind/Northwind.svc/&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;OData&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;settings&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;odataVersion&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2.0&quot;</span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>...<br></code></pre></td></tr></table></figure></li><li><p>在<code>manifest.json</code>中给数据模型注入数据：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;sap.ui5&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>...<br><span class="hljs-attr">&quot;models&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>...<br><span class="hljs-attr">&quot;invoice&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;dataSource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;invoiceRemote&quot;</span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br>   <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>...<br></code></pre></td></tr></table></figure></li></ol><p>在WalkThrough 19中，项目通过<code>Invoices.json</code>来给<code>manifest.json</code>中创建的数据对象<code>invoice</code>填充数据，而到了WalkThrough 25项目可以通过代理去访问后端服务器的数据源来给<code>invoice</code>填充数据。</p><h2 id="模拟服务器"><a href="#模拟服务器" class="headerlink" title="模拟服务器"></a>模拟服务器</h2><p>Mock Server模拟服务器可以为前端Fiori项目提供一个模拟的后端服务器使用，可以帮助前端开发人员进行独立开发和测试。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407271348038.png" alt="image-20240727134827970"></p><ol><li><p><code>test\mockServer.html</code>取代了<code>index.html</code>，通过启动<code>test\mockServer.html</code>来开启test mode测试模式。</p></li><li><p><code>test\mockServer.html</code>指定<code>test\initMockServer.js</code>为启动脚本。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407271406113.png"></p></li><li><p><code>test\initMockServer.js</code>相当于给项目的启动脚本做了一层中转：保证了项目的数据请求可以被拦截并转到Mock Server中，同时也加载原启动脚本使项目照常运行显示。</p><ol><li><p><code>mockserver.init();</code>启动模拟服务器、运行<code>localService\mockserver.js</code>脚本代码；</p></li><li><p><code>sap.ui.require([&quot;sap/ui/core/ComponentSupport&quot;]);</code>加载项目的原启动脚本；</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407271407615.png" alt="image-20240727140745534"></p></li></ol></li><li><p><code>localService\mockserver.js</code>初始化模拟服务器：</p><ol><li><code>rootUri: sap.ui.require.toUrl(&quot;ui5/walkthrough&quot;) + &quot;/V2/Northwind/Northwind.svc/&quot;</code>配置需要被拦截的请求；</li><li><code>const sPath = sap.ui.require.toUrl(&quot;ui5/walkthrough/localService&quot;);</code>和<code>oMockServer.simulate(sPath + &quot;/metadata.xml&quot;, sPath + &quot;/mockdata&quot;);</code>加载了模拟返回的数据模型结构<code>localService\metadata.xml</code>与数据内容<code>localService\mockdata\Invoices.json</code>；</li></ol></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>Fiori</category>
+      
+      <category>UI5Demo</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Fiori</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>WalkThrough 10 项目结构变化与Fiori项目初始化流程</title>
+    <link href="/2024/07/24/008-WalkThrough%2010%20%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96/"/>
+    <url>/2024/07/24/008-WalkThrough%2010%20%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<h1 id="变化"><a href="#变化" class="headerlink" title="变化"></a>变化</h1><p>WalkThrough 10 相较于之前的QuickStart 3，在项目结构上主要有以下变化：</p><ul><li>移除了<code>index.js</code>，新增<code>Component.js</code><ul><li><code>Component.js</code>取代了<code>index.js</code>，负责Fiori项目的初始化、配置和生命周期的管理</li><li><code>index.html</code>中不再指定初始化脚本<code>index.js</code>，取而代之的是通过<code>module:sap/ui/core/ComponentSupport</code>模块来调用<code>Component.js</code>进行初始化</li></ul></li><li><code>manifest.json</code>承担了更多的工作</li></ul><p>虽然 <code>manifest.json</code> 和 <code>Component.js</code> 都涉及某些配置和初始化工作，但它们在使用上是<strong>互补</strong>的。</p><h1 id="Fiori项目初始化流程"><a href="#Fiori项目初始化流程" class="headerlink" title="Fiori项目初始化流程"></a>Fiori项目初始化流程</h1><h2 id="启动index-html，加载SAP-UI5核心库"><a href="#启动index-html，加载SAP-UI5核心库" class="headerlink" title="启动index.html，加载SAP UI5核心库"></a>启动<code>index.html</code>，加载SAP UI5核心库</h2><h2 id="加载-ComponentSupport-模块"><a href="#加载-ComponentSupport-模块" class="headerlink" title="加载 ComponentSupport 模块"></a>加载 <code>ComponentSupport</code> 模块</h2><p>通过<code>index.html</code>中的 <code>data-sap-ui-onInit=&quot;module:sap/ui/core/ComponentSupport&quot;</code> 属性会自动加载 <code>sap/ui/core/ComponentSupport</code> 模块。</p><h2 id="查找组件标记并加载组件"><a href="#查找组件标记并加载组件" class="headerlink" title="查找组件标记并加载组件"></a>查找组件标记并加载组件</h2><p><code>ComponentSupport</code> 模块会查找页面中带有 <code>data-sap-ui-component</code> 属性的 HTML 元素，并根据 <code>data-name</code> 属性加载对应命名空间下的的组件。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407241928848.png" alt="image-20240724192847741"></p><h2 id="加载并执行-Component-js"><a href="#加载并执行-Component-js" class="headerlink" title="加载并执行 Component.js"></a>加载并执行 <code>Component.js</code></h2><p><code>Component.js</code> 定义了应用程序组件的初始化逻辑。</p><p><strong>其中的元数据（metadata）还定义了下一步会指向的 <code>manifest.json</code> 文件。</strong></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407241934589.png" alt="image-20240724193408485"></p><h2 id="读取-manifest-json"><a href="#读取-manifest-json" class="headerlink" title="读取 manifest.json"></a>读取 <code>manifest.json</code></h2><p><code>manifest.json</code> 文件是应用程序的配置文件，包含应用的元数据、组件配置、路由配置、数据源等信息。</p><h2 id="初始化路由和模型"><a href="#初始化路由和模型" class="headerlink" title="初始化路由和模型"></a>初始化路由和模型</h2><p>根据 <code>manifest.json</code> 中的配置，<code>Component.js</code> 中的初始化方法会设置路由、创建并设置模型。（目前的Demo项目中还未涉及到这一块的内容，后续的WalkThrough会有相应的介绍）</p><h2 id="加载并显示根视图"><a href="#加载并显示根视图" class="headerlink" title="加载并显示根视图"></a>加载并显示根视图</h2><p>在 <code>manifest.json</code> 中，<code>rootView</code> 配置指定了应用程序的根视图。该视图会被加载并显示在页面上。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407241933487.png" alt="image-20240724193328401"></p><h2 id="完成初始化"><a href="#完成初始化" class="headerlink" title="完成初始化"></a>完成初始化</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>Fiori</category>
+      
+      <category>UI5Demo</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Fiori</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>QuikStart 1~3 项目结构变化</title>
+    <link href="/2024/07/20/007-QuikStart%201~3%20%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96/"/>
+    <url>/2024/07/20/007-QuikStart%201~3%20%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<h1 id="QuikStart1"><a href="#QuikStart1" class="headerlink" title="QuikStart1"></a>QuikStart1</h1><ol><li>项目通过<code>index.html</code>启动，其中将<code>index.js</code>指定为启动脚本</li><li><code>index.js</code>定义了页面的实际UI控件和功能逻辑，最后通过<code>placeAt</code>将<code>index.js</code>中的UI布局替换到<code>index.html</code>中</li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407212229549.png" alt="image-20240721222948438"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407212233095.png" alt="image-20240721223335992"></p><h1 id="QuikStart2"><a href="#QuikStart2" class="headerlink" title="QuikStart2"></a>QuikStart2</h1><p>QuikStart2中将QuikStart1中的<code>index.js</code>拆分为<code>index.js+App.view.xml+App.controller.js</code></p><ul><li><code>index.js</code>启动引导脚本<ul><li><code>App.view.xml</code>网页UI配置</li><li><code>App.controller.js</code>逻辑处理</li></ul></li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407212252722.png" alt="image-20240721225249608"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407212254473.png" alt="image-20240721225406362"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407212256271.png" alt="image-20240721225609194"></p><h1 id="QuikStart3"><a href="#QuikStart3" class="headerlink" title="QuikStart3"></a>QuikStart3</h1><p>QuikStart3相比于QuikStart2在项目结构上没有变化，而内容上的变化主要体现在View的UI配置上。</p><p>值得一提的是，在<code>index.html</code>中指定的项目启动脚本<code>data-sap-ui-on-init=&quot;module:ui5/quickstart/index&quot;</code>实际上是指定其中的<code>OnInit</code>方法来负责项目每次启动时初始化工作。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>Fiori</category>
+      
+      <category>UI5Demo</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Fiori</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ABAP 7.52环境搭建</title>
+    <link href="/2024/07/13/006-ABAP%207.52%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <url>/2024/07/13/006-ABAP%207.52%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[<p>在VMware虚拟机中安装OpenSUSE系统，在该系统上安装并启动SAP服务。</p><h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul><li>VMware16pro虚拟机</li><li><a href="https://download.opensuse.org/distribution/leap/15.1/iso/">OpenSUSE 15.1系统</a>（3.8G那个）</li><li><a href="https://winscp.net/eng/download.php#google_vignette">WinSCP（在主机和虚拟机之间传输文件的工具）</a></li><li><a href="https://developers.sap.com/trials-downloads.html">ABAP 7.52安装文件</a>（网页上找到<strong>SAP NetWeaver AS ABAP Developer Edition 7.52 SP04</strong>，将该标题下的ABAP安装文件part1~part11及License共12个压缩包下载下来）</li></ul><p><a href="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html">可参考的SAP官方安装文档</a></p><h1 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h1><h2 id="安装VMware"><a href="#安装VMware" class="headerlink" title="安装VMware"></a>安装VMware</h2><h2 id="在VMware中安装OpenSUSE系统"><a href="#在VMware中安装OpenSUSE系统" class="headerlink" title="在VMware中安装OpenSUSE系统"></a>在VMware中安装OpenSUSE系统</h2><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132226712.png" alt="image-20240713222612606"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132227131.png" alt="image-20240713222702989"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132228334.png" alt="image-20240713222814248"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132228983.png"></p><p>推荐硬盘100G以上，内存10G以上</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132229273.png" alt="image-20240713222929210"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132231813.png" alt="image-20240713223127564"></p><p>前三步自动初始化，结束后从第四步Welcome开始，Next</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132234329.png" alt="image-20240713223428020"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132235459.png" alt="image-20240713223516185"></p><p>额外的在线仓库，默认勾选》Next，这一步根据网络状况会需要个三四分钟</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132236662.png" alt="image-20240713223618373"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132240619.png" alt="image-20240713224021330"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132240806.png" alt="image-20240713224059550"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132241300.png"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242531.png" alt="image-20240713224204288"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242171.png" alt="image-20240713224220921"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242697.png" alt="image-20240713224240436"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132243702.png" alt="image-20240713224345854"></p><p>注意：创建系统账号，密码注意不要设置的太简单也尽量不使用特殊符号，否则有可能会导致后续安装SAP服务失败。（我这边设置的Opensuse151）</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132245964.png" alt="image-20240713224553653"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132248899.png" alt="image-20240713224812628"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132248016.png" alt="image-20240713224838772"></p><p>安装OpenSUSE系统的最后一步。这边耗时比较久，几十分钟甚至两三个小时。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132249140.png" alt="image-20240713224904849"></p><p>安装成功后会自动启动系统</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141102247.png" alt="image-20240714110248109"></p><h2 id="在OpenSUSE安装相关的工具包并进行环境配置"><a href="#在OpenSUSE安装相关的工具包并进行环境配置" class="headerlink" title="在OpenSUSE安装相关的工具包并进行环境配置"></a>在OpenSUSE安装相关的工具包并进行环境配置</h2><p>由于我个人试用，并没有开启代理，如果有需要开启代理的可以参考<a href="https://www.sap.com/documents/2019/09/c86f9218-687d-0010-87a3-c30de2ffd8ff.html">官方文档</a>进行设置。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141327395.png" alt="image-20240714132704107"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141328296.png" alt="image-20240714132829186"></p><p>回到桌面，运行YaST</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141329452.png" alt="image-20240714132915174"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141330343.png" alt="image-20240714133004102"></p><p>设置主机名vhcalnplci</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141332841.png" alt="image-20240714133231645"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141332805.png" alt="image-20240714133247682"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141334920.png" alt="image-20240714133443803"></p><p>下载uuidd和unrar</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141335723.png" alt="image-20240714133508533"></p><p>点Online Update后会有一个信息提示弹窗，点OK后搜索对应的应用下载即可</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141336455.png" alt="image-20240714133647320"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141338245.png" alt="image-20240714133822118"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141339679.png" alt="image-20240714133900484"></p><p>下载unrar同上</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141339465.png" alt="image-20240714133934299"></p><p>下载好后回到桌面应用栏运行Terminal</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141341598.png" alt="image-20240714134149001"></p><p>开启我们的uuidd服务</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">开启服务，运行后后提示输入密码<br>sudo service uuidd start<br>检查服务是否开启<br>sudo service --status-all |grep uuidd<br>rpm -qa | grep libaio<br></code></pre></td></tr></table></figure><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141345488.png" alt="image-20240714134513361"></p><p>修改主机名为vhcalnplci</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nano /etc/hostname<br>修改好后按Ctrl+O，然后按回车进行保存，最后按Ctrl+X退出<br></code></pre></td></tr></table></figure><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141347644.png" alt="image-20240714134723531"></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">可以输入以下命令查询当前主机<br>sudo cat /etc/hostname<br>输入以下命令重启网络<br>sudo rcnetwork restart<br></code></pre></td></tr></table></figure><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141352419.png" alt="image-20240714135223286"></p><p>重启好后重启系统，检查主机名是否成功修改</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141353742.png" alt="image-20240714135357635"></p><p>配置IP</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">查询IP<br>ip -h addr show<br>将IP记录下来<br></code></pre></td></tr></table></figure><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141355207.png" alt="image-20240714135519084"></p><p>在host文件中配置我们的IP</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nano /etc/hosts<br>将IP配置进去<br>192.168.160.135 vhcalnplci vhcalnplci.dummy.nodomain<br></code></pre></td></tr></table></figure><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141358947.png" alt="image-20240714135803816"></p><p>同理Ctrl+o再回车在Ctrl+X退出</p><p>接下来打开WinSCP将我们电脑上安装好的ABAP 7.52的相关文件解压并复制到虚拟机中</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141432805.png" alt="image-20240714143217734"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141401609.png" alt="image-20240714140110546"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141401414.png" alt="image-20240714140150342"></p><p>在虚拟机中&#x2F;home&#x2F;claude目录下新建一个abaptrial目录</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141403643.png" alt="image-20240714140316540"></p><p>将我们电脑的压缩包解压出来</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141404422.png" alt="image-20240714140427348"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141405508.png"></p><h2 id="在OpenSUSE中安装SAP服务"><a href="#在OpenSUSE中安装SAP服务" class="headerlink" title="在OpenSUSE中安装SAP服务"></a>在OpenSUSE中安装SAP服务</h2><p>OK接下来就可以回虚拟机进行最后一步安装SAP服务了</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo -i<br>输入密码，转为管理员权限<br>cd..<br>cd /home/claude/abaptrial<br>chmod +x install.sh<br>./install.sh<br></code></pre></td></tr></table></figure><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141415306.png" alt="image-20240714141506242"></p><p>运行完<code>./install.sh</code>后出来一个安装声明，滚轮滚到最后然后按ESC再按q退出</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141413681.png" alt="image-20240714141300508"></p><p>yes后输入两次密码开始安装，安装如果没有报错会需要个十来分钟</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141417764.png" alt="image-20240714141727696"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141429751.png" alt="image-20240714142956674"></p><p>第一次安装会因为证书问题安装失败，我们将之前解压出来的证书文件复制到图示目录中，并将该目录下原来的.lic证书文件删除</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141433104.png"></p><p>回到虚拟机中重复上面的安装命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo -i<br>输入密码，转为管理员权限<br>cd..<br>cd /home/claude/abaptrial<br>./install.sh<br></code></pre></td></tr></table></figure><p>安装成功后显示如下<img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141440899.png" alt="image-20240714144007761"></p><h1 id="登录SAP-GUI"><a href="#登录SAP-GUI" class="headerlink" title="登录SAP GUI"></a>登录SAP GUI</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141454815.png" alt="image-20240714145432721"></p><p>账号：SAP*</p><p>密码：Down1oad</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141456289.png" alt="image-20240714145613239"></p><p>tcode输入slicense更换SAP访问KEY</p><p>右键删除这两个KEY&gt;Delete License，并复制上面的Active Hardware Key</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141457048.png" alt="image-20240714145728938"></p><p>访问<a href="https://go.support.sap.com/minisap/#/minisap">官方网址</a>，在下面输入我们的英文名、邮箱、我们上面复制的Hardware Key生成我们的License Key文件</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141500926.png" alt="image-20240714150017778"></p><p>安装我们的License Key文件，接下来我们就可以去001Client中进行ABAP 7.52的试用了</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141502488.png" alt="image-20240714150258383"></p><h1 id="SAP服务的开启和关闭"><a href="#SAP服务的开启和关闭" class="headerlink" title="SAP服务的开启和关闭"></a>SAP服务的开启和关闭</h1><p>在虚拟机的Terminal中：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">切换至npladm用户<br>su npladm<br>开启SAP服务<br>startsap<br>关闭SAP服务<br>stopsap<br></code></pre></td></tr></table></figure><h1 id="SAP相关账号"><a href="#SAP相关账号" class="headerlink" title="SAP相关账号"></a>SAP相关账号</h1><h2 id="Client-000"><a href="#Client-000" class="headerlink" title="Client 000"></a>Client 000</h2><table><thead><tr><th>User name</th><th>Password</th><th>Description</th></tr></thead><tbody><tr><td>DDIC</td><td>Down1oad</td><td>Data Dictionary User</td></tr><tr><td>SAP*</td><td>Down1oad</td><td>SAP Administrator</td></tr></tbody></table><h2 id="Client-001"><a href="#Client-001" class="headerlink" title="Client 001"></a>Client 001</h2><table><thead><tr><th>User name</th><th>Password</th><th>Description</th></tr></thead><tbody><tr><td>DDIC</td><td>Down1oad</td><td>Data Dictionary User</td></tr><tr><td>SAP*</td><td>Down1oad</td><td>SAP Administrator</td></tr><tr><td>DEVELOPER</td><td>Down1oad</td><td>Developer User</td></tr><tr><td>BWDEVELOPER</td><td>Down1oad</td><td>Developer User</td></tr></tbody></table>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>系统配置</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>环境搭建</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>已发布的请求号再利用</title>
+    <link href="/2024/07/13/001-%E5%9B%9E%E9%80%80%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%B7/"/>
+    <url>/2024/07/13/001-%E5%9B%9E%E9%80%80%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%B7/</url>
+    
+    <content type="html"><![CDATA[<p>从开发环境发布到测试环境的请求可以利用此方法实现在开发环境继续使用已发布的请求。</p><h1 id="修改已发布请求的状态"><a href="#修改已发布请求的状态" class="headerlink" title="修改已发布请求的状态"></a>修改已发布请求的状态</h1><ul><li>se38运行程序RDDIT076</li><li>输入需要调整的请求号</li><li>将请求的状态从R改为D</li></ul><p>之后该请求就可以继续在开发环境使用了。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407131447537.png" alt="image-20240713140702081"></p><h1 id="发布请求"><a href="#发布请求" class="headerlink" title="发布请求"></a>发布请求</h1><p>在发布本次调整后的请求，需要将主请求属性中的请请求到处时间字段EXPORT_TIMESTAMP删除。（第一次删除可能弹出警告，确认后再次删除该字段即可）删除该字段后请求就可以正常发布。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407131447067.png" alt="image-20240713141223096"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>版本控制</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>版本</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ABAP List Program模板</title>
+    <link href="/2024/02/16/005-ABAP%20List%20Program%E6%A8%A1%E6%9D%BF/"/>
+    <url>/2024/02/16/005-ABAP%20List%20Program%E6%A8%A1%E6%9D%BF/</url>
+    
+    <content type="html"><![CDATA[<h1 id="复杂模板"><a href="#复杂模板" class="headerlink" title="复杂模板"></a>复杂模板</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">*&amp;---------------------------------------------------------------------*<br>*&amp; 程序名：ZTEST_004<br>*&amp;---------------------------------------------------------------------*<br>*&amp; 抬头：<br>*&amp; 程序类型： 报表/表单/批导/后台JOB/函数/增强<br>*&amp; 描述： <br>*&amp; 修改记录：<br>*&amp; 日期         修改人   请求号       业务顾问  修改内容<br>*&amp; 2024-06-25   张三     ED3k000000   李四     新建<br>*&amp;---------------------------------------------------------------------*<br>REPORT ztest_004.<br><br>*&amp;---------------------------------------------------------------------*<br>*&amp; INCLUDE<br>*&amp;---------------------------------------------------------------------*<br>INCLUDE ztest_004_top    .  &quot;Type/Data<br>INCLUDE ztest_004_sel    .  &quot;Selection screen<br>INCLUDE ztest_004_lcl    .  &quot;Class<br>INCLUDE ztest_004_frm    .  &quot;Form<br>INCLUDE ztest_004_pbo    .  &quot;Screen PBO<br>INCLUDE ztest_004_pai    .  &quot;Screen PAI<br><br><br><br>*&amp;---------------------------------------------------------------------*<br>*&amp; 初始化处理<br>*&amp;---------------------------------------------------------------------*<br>INITIALIZATION.<br><br>*&amp;---------------------------------------------------------------------*<br>*&amp; 选择屏幕控制<br>*&amp;---------------------------------------------------------------------*<br>AT SELECTION-SCREEN OUTPUT.<br><br>*&amp;---------------------------------------------------------------------*<br>*&amp; 参数输入检查<br>*&amp;---------------------------------------------------------------------*<br>AT SELECTION-SCREEN.<br><br>*&amp;---------------------------------------------------------------------*<br>*&amp; 程序开始处理<br>*&amp;---------------------------------------------------------------------*<br>START-OF-SELECTION.<br><br>*&amp;---------------------------------------------------------------------*<br>*&amp; 程序结束处理<br>*&amp;---------------------------------------------------------------------*<br>END-OF-SELECTION.<br></code></pre></td></tr></table></figure><h1 id="简单模板"><a href="#简单模板" class="headerlink" title="简单模板"></a>简单模板</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs abap">*&amp;---------------------------------------------------------------------*<br>*&amp; 程序名：ZTEST_005<br>*&amp;---------------------------------------------------------------------*<br>*&amp; 抬头：<br>*&amp; 程序类型： 报表/表单/批导/后台JOB/函数/增强<br>*&amp; 描述： <br>*&amp; 修改记录：<br>*&amp; 日期         修改人   请求号       业务顾问  修改内容<br>*&amp; 2024-06-25   张三     ED3k000000   李四     新建<br>*&amp;---------------------------------------------------------------------*<br>REPORT ZTEST_005.<br><br><br>**********************************************************************<br>*数据类型定义<br>**********************************************************************<br>include ZTEST_005_top.<br><br>**********************************************************************<br>*屏幕处理<br>**********************************************************************<br>include ZTEST_005_sel.<br><br>**********************************************************************<br>*主程序入口<br>**********************************************************************<br>include ZTEST_005_main.<br><br>**********************************************************************<br>*包含<br>**********************************************************************<br>include ZTEST_005_frm.<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>模板</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+      <tag>SAP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>SAP权限对象的使用</title>
+    <link href="/2024/02/16/004-%E6%9D%83%E9%99%90%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <url>/2024/02/16/004-%E6%9D%83%E9%99%90%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p>通过事务码<code>su21</code>维护权限对象。</p><h1 id="创建权限对象"><a href="#创建权限对象" class="headerlink" title="创建权限对象"></a>创建权限对象</h1><p>填入对象、文本、类，再维护权限字段点击保存即完成了权限对象的创建。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202402161312641.png?imageSlim" alt="image-20240216131201563"></p><h2 id="权限字段"><a href="#权限字段" class="headerlink" title="权限字段"></a>权限字段</h2><p>权限对象为权限字段的集合，我们通过权限对象中的权限字段来校验使用者所属的角色是否可以通过该字段的校验，可以同时校验一个或多个字段。</p><p>通过事务码<code>su20</code>来维护权限字段。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202402161318154.png?imageSlim" alt="image-20240216131813115"></p><h1 id="在代码中使用权限对象"><a href="#在代码中使用权限对象" class="headerlink" title="在代码中使用权限对象"></a>在代码中使用权限对象</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">AUTHORITY-CHECK OBJECT &#x27;ZWERKS&#x27; ID &#x27;WERKS&#x27; FIELD &#x27;2001&#x27;.<br>IF sy-subrc &lt;&gt; 0.<br> MESSAGE &#x27;No Authorization!&#x27; TYPE &#x27;E&#x27;.<br>ENDIF.<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>权限</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+      <tag>SAP</tag>
+      
+      <tag>权限</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>跳过事务码权限检查</title>
+    <link href="/2024/01/27/003-%E8%B7%B3%E8%BF%87%E4%BA%8B%E5%8A%A1%E7%A0%81%E6%9D%83%E9%99%90%E6%A3%80%E6%9F%A5/"/>
+    <url>/2024/01/27/003-%E8%B7%B3%E8%BF%87%E4%BA%8B%E5%8A%A1%E7%A0%81%E6%9D%83%E9%99%90%E6%A3%80%E6%9F%A5/</url>
+    
+    <content type="html"><![CDATA[<p>当使用某个事务码而无法通过权限检验时，我们可以通过调试事务码权限校验函数<code>auth_check_tcode</code>来跳过权限校验：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271409351.png?imageSlim" alt="image-20240127140927287"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>权限</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+      <tag>SAP</tag>
+      
+      <tag>权限</tag>
+      
+      <tag>调试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>内表分组</title>
+    <link href="/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/"/>
+    <url>/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/</url>
+    
+    <content type="html"><![CDATA[<p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>的方式来实现。</p><p>新版本的740语法中提供了分组循环的功能：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">SELECT *<br>  INTO TABLE @DATA(lt_sflight)<br>  FROM sflight<br>  UP TO 100 ROWS.<br><br>  &quot;分组循环<br>  LOOP AT lt_sflight INTO DATA(lw_sflight)<br>    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )<br>    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象<br><br>    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid<br>      &quot;业务逻辑<br>      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).<br>        WRITE / lw_sflight_group-carrid.<br>        EXIT.<br>      ENDLOOP.<br><br>    ENDIF.<br><br>  ENDLOOP.<br></code></pre></td></tr></table></figure><p>程序输出：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271331564.png?imageSlim" alt="image-20240127133134500"></p><p>底表数据：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271332832.png?imageSlim" alt="image-20240127133226703"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>语法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>代码</tag>
+      
+      <tag>ABAP</tag>
+      
+      <tag>SAP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+  
+  
+  <entry>
+    <title>404</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Claude Chan的个人博客介绍</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#x6c;&#x61;&#117;&#x64;&#101;&#x63;&#x68;&#97;&#x6e;&#x31;&#x32;&#x32;&#56;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;">&#x63;&#x6c;&#x61;&#117;&#x64;&#101;&#x63;&#x68;&#97;&#x6e;&#x31;&#x32;&#x32;&#56;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a>或<a href="mailto:&#49;&#53;&#x30;&#53;&#x34;&#x31;&#x34;&#51;&#49;&#57;&#x40;&#x71;&#113;&#x2e;&#99;&#111;&#x6d;">&#49;&#53;&#x30;&#53;&#x34;&#x31;&#x34;&#51;&#49;&#57;&#x40;&#x71;&#113;&#x2e;&#99;&#111;&#x6d;</a></li></ul>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>categories</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>tags</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>contact</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>friends</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>[object Object]</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+</search>
