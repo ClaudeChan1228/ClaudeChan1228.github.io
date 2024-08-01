@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Debug Fiori项目的JavaScript功能</title>
+      <link href="/2024/07/30/014-JavaScript%20Debug/"/>
+      <url>/2024/07/30/014-JavaScript%20Debug/</url>
+      
+        <content type="html"><![CDATA[<p>在一个Fiori前端页面中同时按下Ctrl+Shift+Alt+P呼出<strong>技术信息对话框</strong>，<strong>使用调试源</strong>勾选<strong>选择特定模块</strong>，点击<strong>确定</strong>后重新加载页面。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301945966.png" alt="image-20240730194536544"></p><p>此时可以看到url后多了一个参数<code>?sap-ui-debug=true</code></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301946292.png" alt="image-20240730194638104"></p><p>按F12或者点击检查查看源代码，即可在Source的标签页下看到Fiori项目的结构，在JavaScript文件中打断点进行调试。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301948748.png" alt="image-20240730194827368"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> Fiori </category>
+          
+          <category> UI5Demo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Fiori </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Fiori单元测试和集成测试</title>
       <link href="/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/"/>
       <url>/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/</url>
