@@ -26,69 +26,13 @@
 <meta property="og:site_name" content="Claude Chan">
 <meta property="og:description" content="在VMware虚拟机中安装OpenSUSE系统，在该系统上安装并启动SAP服务。 准备工作 VMware16pro虚拟机 OpenSUSE 15.1系统（3.8G那个） WinSCP（在主机和虚拟机之间传输文件的工具） ABAP 7.52安装文件（网页上找到SAP NetWeaver AS ABAP Developer Edition 7.52 SP04，将该标题下的ABAP安装文件part1~p">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132226712.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132227131.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132228334.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132228983.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132229273.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132231813.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132234329.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132235459.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132236662.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132240619.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132240806.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132241300.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242531.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242171.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132242697.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132243702.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132245964.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132248899.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132248016.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132249140.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141102247.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141327395.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141328296.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141329452.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141330343.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141332841.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141332805.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141334920.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141335723.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141336455.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141338245.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141339679.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141339465.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141341598.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141345488.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141347644.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141352419.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141353742.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141355207.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141358947.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141432805.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141401609.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141401414.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141403643.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141404422.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141405508.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141415306.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141413681.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141417764.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141429751.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141433104.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141440899.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141454815.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141456289.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141457048.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141500926.png">
-<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407141502488.png">
+<meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031457308.png">
 <meta property="article:published_time" content="2024-07-13T13:48:00.000Z">
-<meta property="article:modified_time" content="2024-07-27T11:40:07.611Z">
+<meta property="article:modified_time" content="2024-08-03T06:57:52.342Z">
 <meta property="article:author" content="Claude Chan">
-<meta property="article:tag" content="环境搭建">
+<meta property="article:tag" content="系统配置">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407132226712.png">
+<meta name="twitter:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031457308.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -564,7 +508,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="print-no-link">#环境搭建</a>
+        <a href="/tags/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" class="print-no-link">#系统配置</a>
       
     </div>
   
