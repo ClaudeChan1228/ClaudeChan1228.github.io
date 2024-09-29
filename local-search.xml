@@ -62,52 +62,23 @@
   
   
   <entry>
-    <title>EXCEL单元格拆分</title>
-    <link href="/2024/08/01/016-%E7%BC%96%E8%BE%91%E4%B8%AD-EXCEL%20%E5%8D%95%E5%85%83%E6%A0%BC%E6%8B%86%E5%88%86/"/>
-    <url>/2024/08/01/016-%E7%BC%96%E8%BE%91%E4%B8%AD-EXCEL%20%E5%8D%95%E5%85%83%E6%A0%BC%E6%8B%86%E5%88%86/</url>
+    <title>电脑系统问题</title>
+    <link href="/2024/08/01/015-%E7%94%B5%E8%84%91%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/"/>
+    <url>/2024/08/01/015-%E7%94%B5%E8%84%91%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="日语语言包下载失败"><a href="#日语语言包下载失败" class="headerlink" title="日语语言包下载失败"></a>日语语言包下载失败</h2><p>原因：Windows系统自动更新被禁用所导致。</p><p>解决：开启Windows系统自动更新。</p>]]></content>
     
     
     <categories>
       
-      <category>软件工具</category>
-      
-      <category>EXCEL</category>
+      <category>问题处理</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>EXCEL</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>WINDOWS10系统语言包下载失败</title>
-    <link href="/2024/08/01/015-%E7%BC%96%E8%BE%91%E4%B8%AD-WINDOWS10%20%E7%B3%BB%E7%BB%9F%E8%AF%AD%E8%A8%80%E5%8C%85%E4%B8%8B%E8%BD%BD%E5%A4%B1%E8%B4%A5/"/>
-    <url>/2024/08/01/015-%E7%BC%96%E8%BE%91%E4%B8%AD-WINDOWS10%20%E7%B3%BB%E7%BB%9F%E8%AF%AD%E8%A8%80%E5%8C%85%E4%B8%8B%E8%BD%BD%E5%A4%B1%E8%B4%A5/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    <categories>
-      
-      <category>软件工具</category>
-      
-      <category>WINDOWS</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>windows</tag>
+      <tag>系统</tag>
       
     </tags>
     
@@ -117,8 +88,8 @@
   
   <entry>
     <title>Debug Fiori项目的JavaScript功能</title>
-    <link href="/2024/07/30/014-JavaScript%20Debug/"/>
-    <url>/2024/07/30/014-JavaScript%20Debug/</url>
+    <link href="/2024/07/30/014-Debug%20Fiori%E9%A1%B9%E7%9B%AE%E7%9A%84JavaScript%E5%8A%9F%E8%83%BD/"/>
+    <url>/2024/07/30/014-Debug%20Fiori%E9%A1%B9%E7%9B%AE%E7%9A%84JavaScript%E5%8A%9F%E8%83%BD/</url>
     
     <content type="html"><![CDATA[<p>在一个Fiori前端页面中同时按下Ctrl+Shift+Alt+P呼出<strong>技术信息对话框</strong>，<strong>使用调试源</strong>勾选<strong>选择特定模块</strong>，点击<strong>确定</strong>后重新加载页面。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301945966.png" alt="image-20240730194536544"></p><p>此时可以看到url后多了一个参数<code>?sap-ui-debug=true</code></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301946292.png" alt="image-20240730194638104"></p><p>按F12或者点击检查查看源代码，即可在Source的标签页下看到Fiori项目的结构，在JavaScript文件中打断点进行调试。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301948748.png" alt="image-20240730194827368"></p>]]></content>
     
@@ -146,8 +117,8 @@
   
   <entry>
     <title>Fiori单元测试和集成测试</title>
-    <link href="/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/"/>
-    <url>/2024/07/30/013-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/</url>
+    <link href="/2024/07/30/013-Fiori%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/"/>
+    <url>/2024/07/30/013-Fiori%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95/</url>
     
     <content type="html"><![CDATA[<ul><li>单元测试可以用来测试前端项目中的JavaScript逻辑处理功能，比如<code>model/formatter.js</code>中的<code>statusText</code>功能。</li><li>集成测试将我们需要的模块组合起来联动进行测试。</li></ul><p>SAP UI5 Demo中，官方提供了QUNIT模块和OPA5模块来协助开发者进行相关的测试。</p><h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301905536.png" alt="image-20240730190508628"></p><p>在test文件加下加入以下文件：</p><ul><li><code>unitTests.qunit.html</code>：用于引用QUNIT相关模块并启动测试页面。</li><li><code>unitTests.qunit.js</code>：QUNIT配置，并启动指定的测试脚本。</li><li><code>model/formatter.js</code>：测试脚本。与webapp文件夹下的<code>model/formatter.js</code>命名保持一致，用于测试webapp文件夹下的<code>model/formatter.js</code>中的具体功能。</li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301924690.png"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301924837.png" alt="image-20240730192445581"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301925096.png" alt="image-20240730192533750"></p><h1 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h1><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301929401.png" alt="image-20240730192903178"></p><p>在test文件加下加入以下文件：</p><ul><li><code>opaTests.qunit.html</code>：用于引用QUNIT相关模块并启动测试页面。</li><li><code>opaTests.qunit.js</code>：QUNIT配置，并启动指定的测试脚本。</li><li><code>NavigationJourney.js</code>：测试脚本。执行<code>pages/.App.js</code>中定义的测试动作。</li><li><code>pages/.App.js</code>：定义测试动作。</li></ul><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301933630.png" alt="image-20240730193316351"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301933317.png" alt="image-20240730193352035"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301935744.png" alt="image-20240730193514471"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202407301936599.png" alt="image-20240730193637276"></p>]]></content>
     
@@ -175,8 +146,8 @@
   
   <entry>
     <title>MM 企业结构概述和配置</title>
-    <link href="/2024/07/28/012-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E5%92%8C%E6%93%8D%E4%BD%9C/"/>
-    <url>/2024/07/28/012-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
+    <link href="/2024/07/28/012-MM%20%E4%BC%81%E4%B8%9A%E7%BB%93%E6%9E%84%E9%85%8D%E7%BD%AE/"/>
+    <url>/2024/07/28/012-MM%20%E4%BC%81%E4%B8%9A%E7%BB%93%E6%9E%84%E9%85%8D%E7%BD%AE/</url>
     
     <content type="html"><![CDATA[<h1 id="企业结构概述"><a href="#企业结构概述" class="headerlink" title="企业结构概述"></a>企业结构概述</h1><p>企业结构由以下组织单元构成：</p><ol><li>Client</li><li>公司代码</li><li>工厂</li><li>库存地点</li><li>采购组织</li><li>采购组</li></ol><p>他们的层级关系比如：</p><ol><li>Client <ol><li>公司代码 1<ol><li>工厂 1</li><li>工厂 2<ol><li>库存地点 1<ol><li>采购组织 1</li><li>采购组织 2<ol><li>采购组 1</li></ol></li></ol></li><li>库存地点 2</li></ol></li></ol></li><li>公司代码 2</li></ol></li></ol><h1 id="企业结构基础配置"><a href="#企业结构基础配置" class="headerlink" title="企业结构基础配置"></a>企业结构基础配置</h1><h2 id="公司"><a href="#公司" class="headerlink" title="公司"></a>公司</h2><h3 id="定义公司"><a href="#定义公司" class="headerlink" title="定义公司"></a>定义公司</h3><p>TCODE：OX15</p><p>VIEW：V_T880</p><p>TABLE：T880</p><h3 id="创建公司代码"><a href="#创建公司代码" class="headerlink" title="创建公司代码"></a>创建公司代码</h3><p>TCODE：OX02</p><p>VIEW：V_T001</p><p>TABLE：T001</p><h2 id="工厂"><a href="#工厂" class="headerlink" title="工厂"></a>工厂</h2><h3 id="创建工厂"><a href="#创建工厂" class="headerlink" title="创建工厂"></a>创建工厂</h3><p>TCODE：OX10</p><p>VIEW：V_T880</p><p>TABLE：T880</p><h2 id="库存地点"><a href="#库存地点" class="headerlink" title="库存地点"></a>库存地点</h2><h3 id="创建库存地点"><a href="#创建库存地点" class="headerlink" title="创建库存地点"></a>创建库存地点</h3><p>TCODE：OX09</p><p>VIEW：V_T001W</p><p>TABLE：T001W</p><h2 id="采购组织"><a href="#采购组织" class="headerlink" title="采购组织"></a>采购组织</h2><h3 id="创建采购组织"><a href="#创建采购组织" class="headerlink" title="创建采购组织"></a>创建采购组织</h3><p>TCOE：OX08</p><p>VIEW：V_T024E</p><p>TABLE：T024E</p><h2 id="采购组"><a href="#采购组" class="headerlink" title="采购组"></a>采购组</h2><h3 id="创建采购组"><a href="#创建采购组" class="headerlink" title="创建采购组"></a>创建采购组</h3><p>TCODE：OME4</p><p>VIEW：V_024</p><p>TABLE：T024</p><h1 id="企业结构关联关系-配置"><a href="#企业结构关联关系-配置" class="headerlink" title="企业结构关联关系 配置"></a>企业结构关联关系 配置</h1><h2 id="分配工厂到公司代码"><a href="#分配工厂到公司代码" class="headerlink" title="分配工厂到公司代码"></a>分配工厂到公司代码</h2><p>TCODE：OX18</p><p>VIEW：V_T001K_ASSIGN</p><p>TABLE：T001K+T001W+T001+TASSIGN_MM_T001W+T001W_EXT</p><h2 id="分配采购组织到公司代码"><a href="#分配采购组织到公司代码" class="headerlink" title="分配采购组织到公司代码"></a>分配采购组织到公司代码</h2><p>TCODE：OX01</p><p>VIEW：V_T024E_ASSIGN</p><p>TABLE：T024E+T001+TASSIGN_MM_EKORG</p><h2 id="分配采购组织到工厂"><a href="#分配采购组织到工厂" class="headerlink" title="分配采购组织到工厂"></a>分配采购组织到工厂</h2><p>TCODE：OX17</p><p>VIEW：W_T024W_ASSIGN</p><p>TABLE：T024W+T024E+T001W+TASSIG_MM_WERKS</p><h2 id="分配标准采购组织到工厂"><a href="#分配标准采购组织到工厂" class="headerlink" title="分配标准采购组织到工厂"></a>分配标准采购组织到工厂</h2><p>标准采购组织是一个默认的采购组织，如果想要让工厂有一个默认的采购组织，则需要把标准采购组织分配到工厂。</p><p>TCODE：OMKI</p><p>VIEW：V_001W_E</p><p>TABLE：T001W</p>]]></content>
     
@@ -203,9 +174,9 @@
   
   
   <entry>
-    <title>MM 采购流程概述</title>
-    <link href="/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/"/>
-    <url>/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0/</url>
+    <title>MM 采购的形式</title>
+    <link href="/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E7%9A%84%E5%BD%A2%E5%BC%8F/"/>
+    <url>/2024/07/27/011-MM%20%E9%87%87%E8%B4%AD%E7%9A%84%E5%BD%A2%E5%BC%8F/</url>
     
     <content type="html"><![CDATA[<h1 id="采购类型"><a href="#采购类型" class="headerlink" title="采购类型"></a>采购类型</h1><ol><li>基本采购</li><li>特殊采购</li></ol><h2 id="基本采购"><a href="#基本采购" class="headerlink" title="基本采购"></a>基本采购</h2><p>基本采购满足以下三要素：</p><ol><li>正确的数量</li><li>正确的价格</li><li>正确的时间</li></ol><h3 id="基本采购生命周期"><a href="#基本采购生命周期" class="headerlink" title="基本采购生命周期"></a>基本采购生命周期</h3><ol><li>收集需求</li><li>寻找、联系供应商</li><li>产品背景调查、样品试用</li><li>谈判</li><li>订单交易</li><li>使用、维保、废品处理</li><li>合同更新</li></ol><h3 id="基本采购流程活动"><a href="#基本采购流程活动" class="headerlink" title="基本采购流程活动"></a>基本采购流程活动</h3><ol><li>确定需求</li><li>招标</li><li>下采购订单</li><li>收货过账</li><li>发票对账</li><li>发票验真</li><li>付款给供应商</li></ol><h3 id="基本采购类型"><a href="#基本采购类型" class="headerlink" title="基本采购类型"></a>基本采购类型</h3><p>基本采购还可以继续细分：</p><ol><li>库存采购 or 直接消费采购</li><li>集团内部采购 or 向外部供应商采购</li></ol><h4 id="外部采购的三种形式"><a href="#外部采购的三种形式" class="headerlink" title="外部采购的三种形式"></a>外部采购的三种形式</h4><p>向外部供应商采购体现在IT系统中以以下三种形式展现：</p><ol><li>不定期的一次性订单</li><li>定期提供物料的长期合同</li><li>长期的计划协议和配送计划</li></ol><h2 id="特殊采购"><a href="#特殊采购" class="headerlink" title="特殊采购"></a>特殊采购</h2><p>特殊采购指采购的库存或者采购方式较为特殊：</p><ol><li>寄售库存</li><li>委外</li><li>管道</li><li>包装可回收库存</li><li>转包</li><li>公司内库存转移</li></ol>]]></content>
     
@@ -233,8 +204,8 @@
   
   <entry>
     <title>英语生活对话：入境</title>
-    <link href="/2024/07/27/010-%E5%AE%9E%E7%94%A8%E8%8B%B1%E8%AF%AD%EF%BC%9A%E5%85%A5%E5%A2%83/"/>
-    <url>/2024/07/27/010-%E5%AE%9E%E7%94%A8%E8%8B%B1%E8%AF%AD%EF%BC%9A%E5%85%A5%E5%A2%83/</url>
+    <link href="/2024/07/27/010-%E8%8B%B1%E8%AF%AD%E7%94%9F%E6%B4%BB%E5%AF%B9%E8%AF%9D%EF%BC%9A%E5%85%A5%E5%A2%83/"/>
+    <url>/2024/07/27/010-%E8%8B%B1%E8%AF%AD%E7%94%9F%E6%B4%BB%E5%AF%B9%E8%AF%9D%EF%BC%9A%E5%85%A5%E5%A2%83/</url>
     
     <content type="html"><![CDATA[<h1 id="出国入境-机场入境-过海关"><a href="#出国入境-机场入境-过海关" class="headerlink" title="出国入境&#x2F;机场入境&#x2F;过海关"></a>出国入境&#x2F;机场入境&#x2F;过海关</h1><p>学习视频：<a href="https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&vd_source=76f2600f20b34fd8c1acce7a8a39f08c">https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&amp;vd_source=76f2600f20b34fd8c1acce7a8a39f08c</a></p><p>常用单词和短语：</p><ol><li>passport<ol><li>护照</li></ol></li><li>document<ol><li>证件</li></ol></li><li>visit&#x2F;trip to…<ol><li>到访…</li></ol></li><li>purpose<ol><li>目的</li></ol></li><li>are you here for…<ol><li>你来这里是为了…</li></ol></li><li>pleasure<ol><li>娱乐</li></ol></li><li>conference<ol><li>会议</li></ol></li><li>vacation<ol><li>度假</li></ol></li><li>tourism<ol><li>旅游</li></ol></li><li>destination<ol><li>目的地</li></ol></li><li>have a connecting flight to…<ol><li>转机去…</li></ol></li><li>occupation<ol><li>职业</li><li>what do you do</li></ol></li><li>contact<ol><li>联系人</li><li>Do you know any one</li></ol></li><li>currency<ol><li>钱</li><li>money</li></ol></li><li>around&#x2F;about<ol><li>大概</li></ol></li><li>return ticket<ol><li>回程机票</li></ol></li><li>take off…<ol><li>拿下&#x2F;取下…</li></ol></li><li>look into…<ol><li>朝…看</li></ol></li><li>can you just…<ol><li>你能…吗</li><li>母语者常用</li></ol></li><li>declare<ol><li>申报</li></ol></li><li>you’ll all set<ol><li>手续都办完了，没问题了</li></ol></li></ol>]]></content>
     
@@ -523,11 +494,22 @@
   
   
   <entry>
+    <title>404</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Claude Chan的个人博客介绍</title>
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#108;&#97;&#x75;&#x64;&#x65;&#99;&#104;&#97;&#x6e;&#x31;&#50;&#50;&#56;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x63;&#108;&#97;&#x75;&#x64;&#x65;&#99;&#104;&#97;&#x6e;&#x31;&#50;&#50;&#56;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>或<a href="mailto:&#49;&#53;&#48;&#53;&#x34;&#x31;&#52;&#51;&#49;&#57;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#109;">&#49;&#53;&#48;&#53;&#x34;&#x31;&#52;&#51;&#49;&#57;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#109;</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#x6c;&#97;&#117;&#x64;&#x65;&#x63;&#x68;&#97;&#110;&#x31;&#50;&#50;&#x38;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x63;&#x6c;&#97;&#117;&#x64;&#x65;&#x63;&#x68;&#97;&#110;&#x31;&#50;&#50;&#x38;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;</a>或<a href="mailto:&#49;&#x35;&#48;&#53;&#52;&#x31;&#x34;&#51;&#x31;&#57;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#49;&#x35;&#48;&#53;&#52;&#x31;&#x34;&#51;&#x31;&#57;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;</a></li></ul>]]></content>
     
   </entry>
   
@@ -545,7 +527,7 @@
   
   
   <entry>
-    <title>404</title>
+    <title>[object Object]</title>
     <link href="/"/>
     <url>/</url>
     
@@ -557,17 +539,6 @@
   
   <entry>
     <title>contact</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>[object Object]</title>
     <link href="/"/>
     <url>/</url>
     
