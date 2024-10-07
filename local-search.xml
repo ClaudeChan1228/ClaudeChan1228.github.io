@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>MM 采购申请</title>
+    <link href="/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7/"/>
+    <url>/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7/</url>
+    
+    <content type="html"><![CDATA[<h1 id="采购申请"><a href="#采购申请" class="headerlink" title="采购申请"></a>采购申请</h1><p>采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME51N</code></p></li><li><p><code>ME52N</code></p></li><li><p><code>ME53N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_REQUISITION_CREATE</strong><ul><li><strong>用途</strong>: 创建采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含采购申请的详细信息，如物料编号、数量、工厂等。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含要修改的采购申请行项目数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_GETDETAIL</strong><ul><li><strong>用途</strong>: 获取采购申请的详细信息</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，用于获取采购申请的详细数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_DELETE</strong><ul><li><strong>用途</strong>: 删除采购申请</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，删除指定的采购申请。</li></ul></li></ul></li></ol><p>创建采购申请还有一个BAPI<code>BAPI_PR_CREATE</code>，这个似乎用的比较多（我这边也是用这个）。</p><p>两个BAPI的区别可参考：</p><ol><li><a href="https://blog.csdn.net/wxyix7/article/details/132069125">https://blog.csdn.net/wxyix7/article/details/132069125</a></li><li><a href="https://www.cnblogs.com/BruceKing/p/14785856.html">https://www.cnblogs.com/BruceKing/p/14785856.html</a></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><p>在 SAP MM 模块中，采购申请的数据存储在以下几个主要底表中：</p><ol><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>MATNR</code>：物料编号</li><li><code>MENGE</code>：采购数量</li><li><code>WERKS</code>：工厂</li><li><code>BADAT</code>：需求日期</li></ul></li></ul></li><li><strong>EBKN</strong> - 采购申请账户分配表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>KOSTL</code>：成本中心</li><li><code>AUFNR</code>：订单号</li><li><code>SAKTO</code>：总账科目</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>：采购订单号（与采购申请结合使用时会包含采购申请数据）</li><li><code>EBELP</code>：采购订单项目</li><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410072130613.png" alt="image-20241007213031693"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>MM</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SAP</tag>
+      
+      <tag>MM</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MM 主数据</title>
     <link href="/2024/09/04/018-MM%20%E4%B8%BB%E6%95%B0%E6%8D%AE/"/>
     <url>/2024/09/04/018-MM%20%E4%B8%BB%E6%95%B0%E6%8D%AE/</url>
@@ -203,27 +232,25 @@
   
   
   <entry>
-    <title>英语生活对话：入境</title>
-    <link href="/2024/07/27/010-%E8%8B%B1%E8%AF%AD%E7%94%9F%E6%B4%BB%E5%AF%B9%E8%AF%9D%EF%BC%9A%E5%85%A5%E5%A2%83/"/>
-    <url>/2024/07/27/010-%E8%8B%B1%E8%AF%AD%E7%94%9F%E6%B4%BB%E5%AF%B9%E8%AF%9D%EF%BC%9A%E5%85%A5%E5%A2%83/</url>
+    <title>日语情景&gt;入关</title>
+    <link href="/2024/07/27/010-%E6%97%A5%E8%AF%AD%E6%83%85%E6%99%AF%E5%85%A5%E5%85%B3/"/>
+    <url>/2024/07/27/010-%E6%97%A5%E8%AF%AD%E6%83%85%E6%99%AF%E5%85%A5%E5%85%B3/</url>
     
-    <content type="html"><![CDATA[<h1 id="出国入境-机场入境-过海关"><a href="#出国入境-机场入境-过海关" class="headerlink" title="出国入境&#x2F;机场入境&#x2F;过海关"></a>出国入境&#x2F;机场入境&#x2F;过海关</h1><p>学习视频：<a href="https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&vd_source=76f2600f20b34fd8c1acce7a8a39f08c">https://www.bilibili.com/video/BV1GB4y1n7oD/?spm_id_from=333.337.search-card.all.click&amp;vd_source=76f2600f20b34fd8c1acce7a8a39f08c</a></p><p>常用单词和短语：</p><ol><li>passport<ol><li>护照</li></ol></li><li>document<ol><li>证件</li></ol></li><li>visit&#x2F;trip to…<ol><li>到访…</li></ol></li><li>purpose<ol><li>目的</li></ol></li><li>are you here for…<ol><li>你来这里是为了…</li></ol></li><li>pleasure<ol><li>娱乐</li></ol></li><li>conference<ol><li>会议</li></ol></li><li>vacation<ol><li>度假</li></ol></li><li>tourism<ol><li>旅游</li></ol></li><li>destination<ol><li>目的地</li></ol></li><li>have a connecting flight to…<ol><li>转机去…</li></ol></li><li>occupation<ol><li>职业</li><li>what do you do</li></ol></li><li>contact<ol><li>联系人</li><li>Do you know any one</li></ol></li><li>currency<ol><li>钱</li><li>money</li></ol></li><li>around&#x2F;about<ol><li>大概</li></ol></li><li>return ticket<ol><li>回程机票</li></ol></li><li>take off…<ol><li>拿下&#x2F;取下…</li></ol></li><li>look into…<ol><li>朝…看</li></ol></li><li>can you just…<ol><li>你能…吗</li><li>母语者常用</li></ol></li><li>declare<ol><li>申报</li></ol></li><li>you’ll all set<ol><li>手续都办完了，没问题了</li></ol></li></ol>]]></content>
+    <content type="html"><![CDATA[]]></content>
     
     
     <categories>
       
-      <category>外语学习</category>
+      <category>日语</category>
       
-      <category>英语</category>
-      
-      <category>生活对话</category>
+      <category>情景剧场</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>英语</tag>
+      <tag>日语</tag>
       
     </tags>
     
@@ -509,14 +536,14 @@
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#x6c;&#97;&#117;&#x64;&#x65;&#x63;&#x68;&#97;&#110;&#x31;&#50;&#50;&#x38;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x63;&#x6c;&#97;&#117;&#x64;&#x65;&#x63;&#x68;&#97;&#110;&#x31;&#50;&#50;&#x38;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;</a>或<a href="mailto:&#49;&#x35;&#48;&#53;&#52;&#x31;&#x34;&#51;&#x31;&#57;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#49;&#x35;&#48;&#53;&#52;&#x31;&#x34;&#51;&#x31;&#57;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#99;&#108;&#97;&#117;&#x64;&#101;&#x63;&#x68;&#x61;&#x6e;&#49;&#50;&#50;&#x38;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#99;&#108;&#97;&#117;&#x64;&#101;&#x63;&#x68;&#x61;&#x6e;&#49;&#50;&#50;&#x38;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a>或<a href="mailto:&#x31;&#x35;&#x30;&#x35;&#52;&#x31;&#x34;&#51;&#x31;&#57;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x31;&#x35;&#x30;&#x35;&#52;&#x31;&#x34;&#51;&#x31;&#57;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;</a></li></ul>]]></content>
     
   </entry>
   
   
   
   <entry>
-    <title>categories</title>
+    <title>[object Object]</title>
     <link href="/"/>
     <url>/</url>
     
@@ -527,7 +554,7 @@
   
   
   <entry>
-    <title>[object Object]</title>
+    <title>categories</title>
     <link href="/"/>
     <url>/</url>
     
