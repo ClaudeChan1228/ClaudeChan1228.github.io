@@ -4,9 +4,38 @@
   
     
     <entry>
+      <title>MM 采购申请PO</title>
+      <link href="/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/"/>
+      <url>/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/</url>
+      
+        <content type="html"><![CDATA[<h1 id="采购订单"><a href="#采购订单" class="headerlink" title="采购订单"></a>采购订单</h1><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME21N</code></p></li><li><p><code>ME22N</code></p></li><li><p><code>ME23N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_PO_CREATE1</strong><ul><li><strong>用途</strong>: 创建采购订单</li><li>关键参数<ul><li><code>POHEADER</code>: 采购订单头数据</li><li><code>POITEM</code>: 采购订单行项目数据</li><li><code>POACCOUNT</code>: 账户分配数据</li><li><code>POCOND</code>: 条件数据</li></ul></li></ul></li><li><strong>BAPI_PO_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购订单</li><li>关键参数<ul><li><code>POHEADER</code>: 采购订单头数据</li><li><code>POITEM</code>: 采购订单行项目数据</li></ul></li></ul></li><li><strong>BAPI_PO_GETDETAIL1</strong><ul><li><strong>用途</strong>: 获取采购订单详细信息</li><li>关键参数<ul><li><code>PURCHASEORDER</code>: 采购订单编号</li></ul></li></ul></li><li><strong>BAPI_PO_DELETE</strong><ul><li><strong>用途</strong>: 删除采购订单</li><li>关键参数<ul><li><code>PURCHASEORDER</code>: 采购订单编号</li></ul></li></ul></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><p>在 SAP MM 模块中，采购订单的数据存储在以下几个主要底表中：</p><ol><li><strong>EKKO</strong> - 采购订单头表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>BUKRS</code>: 公司代码</li><li><code>EKORG</code>: 采购组织</li><li><code>EKGRP</code>: 采购组</li><li><code>LIFNR</code>: 供应商编号</li><li><code>BEDAT</code>: 采购订单日期</li></ul></li></ul></li><li><strong>EKPO</strong> - 采购订单行项目表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目编号</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 采购数量</li><li><code>WERKS</code>: 工厂</li><li><code>NETPR</code>: 物料净价</li><li><code>ELIKZ</code>: 交货完成标识</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目</li><li><code>KOSTL</code>: 成本中心</li><li><code>SAKTO</code>: 总账科目</li><li><code>AUFNR</code>: 订单号</li></ul></li></ul></li><li><strong>EKES</strong> - 采购订单交货表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目编号</li><li><code>EINDT</code>: 预计交货日期</li><li><code>EREKZ</code>: 收货标识</li></ul></li></ul></li><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>: 采购申请编号</li><li><code>BNFPO</code>: 采购申请行项目</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 申请数量</li><li><code>WERKS</code>: 工厂</li><li><code>BADAT</code>: 需求日期</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410082116540.png" alt="image-20241008211654142"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> MM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> MM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MM 采购申请</title>
-      <link href="/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7/"/>
-      <url>/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7/</url>
+      <link href="/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7PR/"/>
+      <url>/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7PR/</url>
       
         <content type="html"><![CDATA[<h1 id="采购申请"><a href="#采购申请" class="headerlink" title="采购申请"></a>采购申请</h1><p>采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME51N</code></p></li><li><p><code>ME52N</code></p></li><li><p><code>ME53N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_REQUISITION_CREATE</strong><ul><li><strong>用途</strong>: 创建采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含采购申请的详细信息，如物料编号、数量、工厂等。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含要修改的采购申请行项目数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_GETDETAIL</strong><ul><li><strong>用途</strong>: 获取采购申请的详细信息</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，用于获取采购申请的详细数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_DELETE</strong><ul><li><strong>用途</strong>: 删除采购申请</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，删除指定的采购申请。</li></ul></li></ul></li></ol><p>创建采购申请还有一个BAPI<code>BAPI_PR_CREATE</code>，这个似乎用的比较多（我这边也是用这个）。</p><p>两个BAPI的区别可参考：</p><ol><li><a href="https://blog.csdn.net/wxyix7/article/details/132069125">https://blog.csdn.net/wxyix7/article/details/132069125</a></li><li><a href="https://www.cnblogs.com/BruceKing/p/14785856.html">https://www.cnblogs.com/BruceKing/p/14785856.html</a></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><p>在 SAP MM 模块中，采购申请的数据存储在以下几个主要底表中：</p><ol><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>MATNR</code>：物料编号</li><li><code>MENGE</code>：采购数量</li><li><code>WERKS</code>：工厂</li><li><code>BADAT</code>：需求日期</li></ul></li></ul></li><li><strong>EBKN</strong> - 采购申请账户分配表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>KOSTL</code>：成本中心</li><li><code>AUFNR</code>：订单号</li><li><code>SAKTO</code>：总账科目</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>：采购订单号（与采购申请结合使用时会包含采购申请数据）</li><li><code>EBELP</code>：采购订单项目</li><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410072130613.png" alt="image-20241007213031693"></p>]]></content>
       
