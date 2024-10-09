@@ -19,16 +19,16 @@
   <meta name="author" content="Claude Chan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="采购申请采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。 事务码 ME51N  ME52N  ME53N   BAPI BAPI_REQUISITION_CREATE 用途: 创建采购申请 关键参数 REQUISITION_ITEMS: 包含采购申请的详细信息，如物">
+    <meta name="description" content="收货过账收货过账通过事务码 MIGO 来执行，通常是基于采购订单、生产订单、或采购申请进行的。收货过账会影响库存，并生成相应的凭证记录。 事务码 MIGO  BAPI在收货过账操作中，以下 BAPI 常用于集成或自动化操作：  BAPI_GOODSMVT_CREATE  用途：创建物料凭证（用于收货过账）。  功能  该 BAPI 允许用户在系统中创建物料移动，包括收货、发货、库存转移等。常用于采">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MM 采购申请PR">
-<meta property="og:url" content="https://claudechan1228.github.io/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7PR/index.html">
+<meta property="og:title" content="MM 收货过账">
+<meta property="og:url" content="https://claudechan1228.github.io/2024/10/09/021-MM%20%E6%94%B6%E8%B4%A7%E8%BF%87%E8%B4%A6/index.html">
 <meta property="og:site_name" content="Claude Chan">
-<meta property="og:description" content="采购申请采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。 事务码 ME51N  ME52N  ME53N   BAPI BAPI_REQUISITION_CREATE 用途: 创建采购申请 关键参数 REQUISITION_ITEMS: 包含采购申请的详细信息，如物">
+<meta property="og:description" content="收货过账收货过账通过事务码 MIGO 来执行，通常是基于采购订单、生产订单、或采购申请进行的。收货过账会影响库存，并生成相应的凭证记录。 事务码 MIGO  BAPI在收货过账操作中，以下 BAPI 常用于集成或自动化操作：  BAPI_GOODSMVT_CREATE  用途：创建物料凭证（用于收货过账）。  功能  该 BAPI 允许用户在系统中创建物料移动，包括收货、发货、库存转移等。常用于采">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031454543.png">
-<meta property="article:published_time" content="2024-10-07T13:23:00.000Z">
-<meta property="article:modified_time" content="2024-10-09T13:07:57.163Z">
+<meta property="article:published_time" content="2024-10-09T12:56:00.000Z">
+<meta property="article:modified_time" content="2024-10-09T13:25:34.637Z">
 <meta property="article:author" content="Claude Chan">
 <meta property="article:tag" content="SAP">
 <meta property="article:tag" content="MM">
@@ -39,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>MM 采购申请PR - Claude Chan</title>
+  <title>MM 收货过账 - Claude Chan</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MM 采购申请PR"></span>
+            <span id="subtitle" data-typed-text="MM 收货过账"></span>
           
         </div>
 
@@ -228,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-07 21:23" pubdate>
-          2024年10月7日 晚上
+        <time datetime="2024-10-09 20:56" pubdate>
+          2024年10月9日 晚上
         </time>
       </span>
     
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          424 字
+          582 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -297,96 +297,117 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MM 采购申请PR</h1>
+            <h1 id="seo-header">MM 收货过账</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="采购申请"><a href="#采购申请" class="headerlink" title="采购申请"></a>采购申请</h1><p>采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。</p>
+                <h1 id="收货过账"><a href="#收货过账" class="headerlink" title="收货过账"></a>收货过账</h1><p>收货过账通过事务码 <strong><code>MIGO</code></strong> 来执行，通常是基于采购订单、生产订单、或采购申请进行的。收货过账会影响库存，并生成相应的凭证记录。</p>
 <h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul>
-<li><p><code>ME51N</code></p>
-</li>
-<li><p><code>ME52N</code></p>
-</li>
-<li><p><code>ME53N</code></p>
-</li>
+<li><code>MIGO</code></li>
 </ul>
-<h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol>
-<li><strong>BAPI_REQUISITION_CREATE</strong><ul>
-<li><strong>用途</strong>: 创建采购申请</li>
-<li>关键参数<ul>
-<li><code>REQUISITION_ITEMS</code>: 包含采购申请的详细信息，如物料编号、数量、工厂等。</li>
-</ul>
+<h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><p>在收货过账操作中，以下 BAPI 常用于集成或自动化操作：</p>
+<ol>
+<li><p><strong>BAPI_GOODSMVT_CREATE</strong></p>
+<ul>
+<li><p><strong>用途</strong>：创建物料凭证（用于收货过账）。</p>
 </li>
+<li><p>功能</p>
+<ul>
+<li>该 BAPI 允许用户在系统中创建物料移动，包括收货、发货、库存转移等。常用于采购订单收货。</li>
 </ul>
 </li>
-<li><strong>BAPI_REQUISITION_CHANGE</strong><ul>
-<li><strong>用途</strong>: 修改采购申请</li>
-<li>关键参数<ul>
-<li><code>REQUISITION_ITEMS</code>: 包含要修改的采购申请行项目数据。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>BAPI_REQUISITION_GETDETAIL</strong><ul>
-<li><strong>用途</strong>: 获取采购申请的详细信息</li>
-<li>关键参数<ul>
-<li><code>NUMBER</code>: 采购申请编号，用于获取采购申请的详细数据。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>BAPI_REQUISITION_DELETE</strong><ul>
-<li><strong>用途</strong>: 删除采购申请</li>
-<li>关键参数<ul>
-<li><code>NUMBER</code>: 采购申请编号，删除指定的采购申请。</li>
+<li><p>关键参数</p>
+<ul>
+<li><code>GOODSMVT_HEADER</code>: 物料凭证头数据。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<p>创建采购申请还有一个BAPI<code>BAPI_PR_CREATE</code>，这个似乎用的比较多（我这边也是用这个）。</p>
-<p>两个BAPI的区别可参考：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxyix7/article/details/132069125">https://blog.csdn.net/wxyix7/article/details/132069125</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/BruceKing/p/14785856.html">https://www.cnblogs.com/BruceKing/p/14785856.html</a></li>
+<ul>
+<li><code>GOODSMVT_ITEM</code>: 物料凭证行项目数据。</li>
+</ul>
+<ol start="2">
+<li><p><strong>BAPI_GOODSMVT_GETDETAIL</strong></p>
+<ul>
+<li><p><strong>用途</strong>：获取物料凭证的详细信息。</p>
+</li>
+<li><p>关键参数</p>
+<ul>
+<li><code>MATERIALDOCUMENT</code>: 物料凭证号（<code>MBLNR</code>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>BAPI_TRANSACTION_COMMIT</strong></p>
+<ul>
+<li><strong>用途</strong>：用于在 BAPI 之后提交事务，确保物料移动或收货过账成功记录到数据库。</li>
+</ul>
+</li>
 </ol>
 <h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><ol>
-<li><strong>EBAN</strong> - 采购申请表<ul>
+<li><strong>MKPF</strong> - 物料凭证表<ul>
+<li>记录物料凭证的头数据。</li>
 <li>字段描述<ul>
-<li><code>BANFN</code>：采购申请编号</li>
-<li><code>BNFPO</code>：采购申请行项目</li>
-<li><code>MATNR</code>：物料编号</li>
-<li><code>MENGE</code>：采购数量</li>
-<li><code>WERKS</code>：工厂</li>
-<li><code>BADAT</code>：需求日期</li>
+<li><code>MBLNR</code>: 物料凭证号</li>
+<li><code>MJAHR</code>: 物料凭证年度</li>
+<li><code>BUDAT</code>: 过账日期</li>
+<li><code>BLDAT</code>: 凭证日期</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>EBKN</strong> - 采购申请账户分配表<ul>
+<li><strong>MSEG</strong> - 物料凭证行项目表<ul>
+<li>记录物料凭证的行项目数据。</li>
 <li>字段描述<ul>
-<li><code>BANFN</code>：采购申请编号</li>
-<li><code>BNFPO</code>：采购申请行项目</li>
-<li><code>KOSTL</code>：成本中心</li>
-<li><code>AUFNR</code>：订单号</li>
-<li><code>SAKTO</code>：总账科目</li>
+<li><code>MBLNR</code>: 物料凭证号</li>
+<li><code>MATNR</code>: 物料编号</li>
+<li><code>WERKS</code>: 工厂</li>
+<li><code>LGORT</code>: 库存地点</li>
+<li><code>MENGE</code>: 数量</li>
+<li><code>EBELN</code>: 采购订单号</li>
+<li><code>EBELP</code>: 采购订单行项目</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>EKKN</strong> - 采购凭证账户分配表<ul>
+<li><strong>EKKO</strong> - 采购订单头表<ul>
+<li>记录采购订单的头信息（已在采购订单操作中详细说明）。</li>
 <li>字段描述<ul>
-<li><code>EBELN</code>：采购订单号（与采购申请结合使用时会包含采购申请数据）</li>
-<li><code>EBELP</code>：采购订单项目</li>
-<li><code>BANFN</code>：采购申请编号</li>
-<li><code>BNFPO</code>：采购申请行项目</li>
+<li><code>EBELN</code>: 采购订单号</li>
+<li><code>LIFNR</code>: 供应商编号</li>
 </ul>
 </li>
+</ul>
+</li>
+<li><strong>EKPO</strong> - 采购订单行项目表<ul>
+<li>记录采购订单的行项目数据。</li>
+<li>字段描述<ul>
+<li><code>EBELN</code>: 采购订单号</li>
+<li><code>EBELP</code>: 采购订单行项目</li>
+<li><code>MATNR</code>: 物料编号</li>
+<li><code>MENGE</code>: 采购数量</li>
+<li><code>WERKS</code>: 工厂</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>RBKP</strong> - 发票凭证头表<ul>
+<li>记录发票凭证的头信息。</li>
+</ul>
+</li>
+<li><strong>RSEG</strong> - 发票凭证行项目表<ul>
+<li>记录发票凭证的行项目数据。</li>
 </ul>
 </li>
 </ol>
-<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410072130613.png" srcset="/img/loading.gif" lazyload alt="image-20241007213031693"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410092118570.png" srcset="/img/loading.gif" lazyload alt="image-20241009211820024"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>收货过账操作</strong> 通常通过事务码 <code>MIGO</code> 来完成，并且会涉及到多个底表，包括物料凭证头表（<code>MKPF</code>）、物料凭证行项目表（<code>MSEG</code>）、采购订单表（<code>EKKO</code> 和 <code>EKPO</code>）。</li>
+<li><strong>表之间的关联</strong>：<code>MSEG</code> 记录了物料凭证的行项目，并通过采购订单号（<code>EBELN</code>）和行项目号（<code>EBELP</code>）与采购订单行项目（<code>EKPO</code>）相关联。</li>
+<li><strong>BAPI</strong>：<code>BAPI_GOODSMVT_CREATE</code> 是创建物料凭证的关键 BAPI，通常用于自动化的收货过账操作。</li>
+</ul>
 
                 
               </div>
@@ -441,8 +462,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MM 采购申请PR</div>
-      <div>https://claudechan1228.github.io/2024/10/07/019-MM 采购申请PR/</div>
+      <div>MM 收货过账</div>
+      <div>https://claudechan1228.github.io/2024/10/09/021-MM 收货过账/</div>
     </div>
     <div class="license-meta">
       
@@ -454,7 +475,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月7日</div>
+          <div>2024年10月9日</div>
         </div>
       
       
@@ -486,18 +507,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/" title="MM 采购订单PO">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MM 采购订单PO</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/04/018-MM%20%E4%B8%BB%E6%95%B0%E6%8D%AE/" title="MM 主数据">
-                        <span class="hidden-mobile">MM 主数据</span>
+                      <a href="/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/" title="MM 采购订单PO">
+                        <span class="hidden-mobile">MM 采购订单PO</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

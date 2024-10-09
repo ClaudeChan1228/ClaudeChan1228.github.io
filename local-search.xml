@@ -4,11 +4,40 @@
   
   
   <entry>
+    <title>MM 收货过账</title>
+    <link href="/2024/10/09/021-MM%20%E6%94%B6%E8%B4%A7%E8%BF%87%E8%B4%A6/"/>
+    <url>/2024/10/09/021-MM%20%E6%94%B6%E8%B4%A7%E8%BF%87%E8%B4%A6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="收货过账"><a href="#收货过账" class="headerlink" title="收货过账"></a>收货过账</h1><p>收货过账通过事务码 <strong><code>MIGO</code></strong> 来执行，通常是基于采购订单、生产订单、或采购申请进行的。收货过账会影响库存，并生成相应的凭证记录。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><code>MIGO</code></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><p>在收货过账操作中，以下 BAPI 常用于集成或自动化操作：</p><ol><li><p><strong>BAPI_GOODSMVT_CREATE</strong></p><ul><li><p><strong>用途</strong>：创建物料凭证（用于收货过账）。</p></li><li><p>功能</p><ul><li>该 BAPI 允许用户在系统中创建物料移动，包括收货、发货、库存转移等。常用于采购订单收货。</li></ul></li><li><p>关键参数</p><ul><li><code>GOODSMVT_HEADER</code>: 物料凭证头数据。</li></ul></li></ul></li></ol><ul><li><code>GOODSMVT_ITEM</code>: 物料凭证行项目数据。</li></ul><ol start="2"><li><p><strong>BAPI_GOODSMVT_GETDETAIL</strong></p><ul><li><p><strong>用途</strong>：获取物料凭证的详细信息。</p></li><li><p>关键参数</p><ul><li><code>MATERIALDOCUMENT</code>: 物料凭证号（<code>MBLNR</code>）。</li></ul></li></ul></li><li><p><strong>BAPI_TRANSACTION_COMMIT</strong></p><ul><li><strong>用途</strong>：用于在 BAPI 之后提交事务，确保物料移动或收货过账成功记录到数据库。</li></ul></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><ol><li><strong>MKPF</strong> - 物料凭证表<ul><li>记录物料凭证的头数据。</li><li>字段描述<ul><li><code>MBLNR</code>: 物料凭证号</li><li><code>MJAHR</code>: 物料凭证年度</li><li><code>BUDAT</code>: 过账日期</li><li><code>BLDAT</code>: 凭证日期</li></ul></li></ul></li><li><strong>MSEG</strong> - 物料凭证行项目表<ul><li>记录物料凭证的行项目数据。</li><li>字段描述<ul><li><code>MBLNR</code>: 物料凭证号</li><li><code>MATNR</code>: 物料编号</li><li><code>WERKS</code>: 工厂</li><li><code>LGORT</code>: 库存地点</li><li><code>MENGE</code>: 数量</li><li><code>EBELN</code>: 采购订单号</li><li><code>EBELP</code>: 采购订单行项目</li></ul></li></ul></li><li><strong>EKKO</strong> - 采购订单头表<ul><li>记录采购订单的头信息（已在采购订单操作中详细说明）。</li><li>字段描述<ul><li><code>EBELN</code>: 采购订单号</li><li><code>LIFNR</code>: 供应商编号</li></ul></li></ul></li><li><strong>EKPO</strong> - 采购订单行项目表<ul><li>记录采购订单的行项目数据。</li><li>字段描述<ul><li><code>EBELN</code>: 采购订单号</li><li><code>EBELP</code>: 采购订单行项目</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 采购数量</li><li><code>WERKS</code>: 工厂</li></ul></li></ul></li><li><strong>RBKP</strong> - 发票凭证头表<ul><li>记录发票凭证的头信息。</li></ul></li><li><strong>RSEG</strong> - 发票凭证行项目表<ul><li>记录发票凭证的行项目数据。</li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410092118570.png" alt="image-20241009211820024"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li><strong>收货过账操作</strong> 通常通过事务码 <code>MIGO</code> 来完成，并且会涉及到多个底表，包括物料凭证头表（<code>MKPF</code>）、物料凭证行项目表（<code>MSEG</code>）、采购订单表（<code>EKKO</code> 和 <code>EKPO</code>）。</li><li><strong>表之间的关联</strong>：<code>MSEG</code> 记录了物料凭证的行项目，并通过采购订单号（<code>EBELN</code>）和行项目号（<code>EBELP</code>）与采购订单行项目（<code>EKPO</code>）相关联。</li><li><strong>BAPI</strong>：<code>BAPI_GOODSMVT_CREATE</code> 是创建物料凭证的关键 BAPI，通常用于自动化的收货过账操作。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>MM</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SAP</tag>
+      
+      <tag>MM</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MM 采购订单PO</title>
     <link href="/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/"/>
     <url>/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/</url>
     
-    <content type="html"><![CDATA[<h1 id="采购订单"><a href="#采购订单" class="headerlink" title="采购订单"></a>采购订单</h1><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME21N</code></p></li><li><p><code>ME22N</code></p></li><li><p><code>ME23N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_PO_CREATE1</strong><ul><li><strong>用途</strong>: 创建采购订单</li><li>关键参数<ul><li><code>POHEADER</code>: 采购订单头数据</li><li><code>POITEM</code>: 采购订单行项目数据</li><li><code>POACCOUNT</code>: 账户分配数据</li><li><code>POCOND</code>: 条件数据</li></ul></li></ul></li><li><strong>BAPI_PO_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购订单</li><li>关键参数<ul><li><code>POHEADER</code>: 采购订单头数据</li><li><code>POITEM</code>: 采购订单行项目数据</li></ul></li></ul></li><li><strong>BAPI_PO_GETDETAIL1</strong><ul><li><strong>用途</strong>: 获取采购订单详细信息</li><li>关键参数<ul><li><code>PURCHASEORDER</code>: 采购订单编号</li></ul></li></ul></li><li><strong>BAPI_PO_DELETE</strong><ul><li><strong>用途</strong>: 删除采购订单</li><li>关键参数<ul><li><code>PURCHASEORDER</code>: 采购订单编号</li></ul></li></ul></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><p>在 SAP MM 模块中，采购订单的数据存储在以下几个主要底表中：</p><ol><li><strong>EKKO</strong> - 采购订单头表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>BUKRS</code>: 公司代码</li><li><code>EKORG</code>: 采购组织</li><li><code>EKGRP</code>: 采购组</li><li><code>LIFNR</code>: 供应商编号</li><li><code>BEDAT</code>: 采购订单日期</li></ul></li></ul></li><li><strong>EKPO</strong> - 采购订单行项目表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目编号</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 采购数量</li><li><code>WERKS</code>: 工厂</li><li><code>NETPR</code>: 物料净价</li><li><code>ELIKZ</code>: 交货完成标识</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目</li><li><code>KOSTL</code>: 成本中心</li><li><code>SAKTO</code>: 总账科目</li><li><code>AUFNR</code>: 订单号</li></ul></li></ul></li><li><strong>EKES</strong> - 采购订单交货表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目编号</li><li><code>EINDT</code>: 预计交货日期</li><li><code>EREKZ</code>: 收货标识</li></ul></li></ul></li><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>: 采购申请编号</li><li><code>BNFPO</code>: 采购申请行项目</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 申请数量</li><li><code>WERKS</code>: 工厂</li><li><code>BADAT</code>: 需求日期</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410082116540.png" alt="image-20241008211654142"></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="采购订单"><a href="#采购订单" class="headerlink" title="采购订单"></a>采购订单</h1><p>采购订单的创建、修改和处理通过事务码 <code>ME21N</code>、<code>ME22N</code>、<code>ME23N</code> 等来完成。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME21N</code></p></li><li><p><code>ME22N</code></p></li><li><p><code>ME23N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_PO_CREATE1</strong><ul><li><strong>用途</strong>: 创建采购订单</li><li>关键参数<ul><li><code>POHEADER</code>: 采购订单头数据</li><li><code>POITEM</code>: 采购订单行项目数据</li><li><code>POACCOUNT</code>: 账户分配数据</li><li><code>POCOND</code>: 条件数据</li></ul></li></ul></li><li><strong>BAPI_PO_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购订单</li><li>关键参数<ul><li><code>POHEADER</code>: 采购订单头数据</li><li><code>POITEM</code>: 采购订单行项目数据</li></ul></li></ul></li><li><strong>BAPI_PO_GETDETAIL1</strong><ul><li><strong>用途</strong>: 获取采购订单详细信息</li><li>关键参数<ul><li><code>PURCHASEORDER</code>: 采购订单编号</li></ul></li></ul></li><li><strong>BAPI_PO_DELETE</strong><ul><li><strong>用途</strong>: 删除采购订单</li><li>关键参数<ul><li><code>PURCHASEORDER</code>: 采购订单编号</li></ul></li></ul></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><ol><li><strong>EKKO</strong> - 采购订单头表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>BUKRS</code>: 公司代码</li><li><code>EKORG</code>: 采购组织</li><li><code>EKGRP</code>: 采购组</li><li><code>LIFNR</code>: 供应商编号</li><li><code>BEDAT</code>: 采购订单日期</li></ul></li></ul></li><li><strong>EKPO</strong> - 采购订单行项目表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目编号</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 采购数量</li><li><code>WERKS</code>: 工厂</li><li><code>NETPR</code>: 物料净价</li><li><code>ELIKZ</code>: 交货完成标识</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目</li><li><code>KOSTL</code>: 成本中心</li><li><code>SAKTO</code>: 总账科目</li><li><code>AUFNR</code>: 订单号</li></ul></li></ul></li><li><strong>EKES</strong> - 采购订单交货表<ul><li>字段描述<ul><li><code>EBELN</code>: 采购订单编号</li><li><code>EBELP</code>: 采购订单行项目编号</li><li><code>EINDT</code>: 预计交货日期</li><li><code>EREKZ</code>: 收货标识</li></ul></li></ul></li><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>: 采购申请编号</li><li><code>BNFPO</code>: 采购申请行项目</li><li><code>MATNR</code>: 物料编号</li><li><code>MENGE</code>: 申请数量</li><li><code>WERKS</code>: 工厂</li><li><code>BADAT</code>: 需求日期</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410082116540.png" alt="image-20241008211654142"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li><strong>采购订单的操作</strong> 通常通过事务码 <code>ME21N</code> 进行，系统会记录相关数据到多个表中，主要包括采购订单头表（<code>EKKO</code>）、采购订单行项目表（<code>EKPO</code>）和采购凭证账户分配表（<code>EKKN</code>）等。</li><li><strong>表之间的关系</strong>：<code>EKKO</code> 表存储采购订单的头数据，<code>EKPO</code> 存储行项目数据，<code>EKKN</code> 存储账户分配数据，并且通过采购订单编号（<code>EBELN</code>）和项目号（<code>EBELP</code>）进行关联。</li><li><strong>BAPI</strong>：使用 BAPI 如 <code>BAPI_PO_CREATE1</code> 和 <code>BAPI_PO_CHANGE</code> 可以自动化采购订单的创建和修改。</li></ul>]]></content>
     
     
     <categories>
@@ -37,7 +66,7 @@
     <link href="/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7PR/"/>
     <url>/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7PR/</url>
     
-    <content type="html"><![CDATA[<h1 id="采购申请"><a href="#采购申请" class="headerlink" title="采购申请"></a>采购申请</h1><p>采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME51N</code></p></li><li><p><code>ME52N</code></p></li><li><p><code>ME53N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_REQUISITION_CREATE</strong><ul><li><strong>用途</strong>: 创建采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含采购申请的详细信息，如物料编号、数量、工厂等。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含要修改的采购申请行项目数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_GETDETAIL</strong><ul><li><strong>用途</strong>: 获取采购申请的详细信息</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，用于获取采购申请的详细数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_DELETE</strong><ul><li><strong>用途</strong>: 删除采购申请</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，删除指定的采购申请。</li></ul></li></ul></li></ol><p>创建采购申请还有一个BAPI<code>BAPI_PR_CREATE</code>，这个似乎用的比较多（我这边也是用这个）。</p><p>两个BAPI的区别可参考：</p><ol><li><a href="https://blog.csdn.net/wxyix7/article/details/132069125">https://blog.csdn.net/wxyix7/article/details/132069125</a></li><li><a href="https://www.cnblogs.com/BruceKing/p/14785856.html">https://www.cnblogs.com/BruceKing/p/14785856.html</a></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><p>在 SAP MM 模块中，采购申请的数据存储在以下几个主要底表中：</p><ol><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>MATNR</code>：物料编号</li><li><code>MENGE</code>：采购数量</li><li><code>WERKS</code>：工厂</li><li><code>BADAT</code>：需求日期</li></ul></li></ul></li><li><strong>EBKN</strong> - 采购申请账户分配表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>KOSTL</code>：成本中心</li><li><code>AUFNR</code>：订单号</li><li><code>SAKTO</code>：总账科目</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>：采购订单号（与采购申请结合使用时会包含采购申请数据）</li><li><code>EBELP</code>：采购订单项目</li><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410072130613.png" alt="image-20241007213031693"></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="采购申请"><a href="#采购申请" class="headerlink" title="采购申请"></a>采购申请</h1><p>采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><p><code>ME51N</code></p></li><li><p><code>ME52N</code></p></li><li><p><code>ME53N</code></p></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol><li><strong>BAPI_REQUISITION_CREATE</strong><ul><li><strong>用途</strong>: 创建采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含采购申请的详细信息，如物料编号、数量、工厂等。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_CHANGE</strong><ul><li><strong>用途</strong>: 修改采购申请</li><li>关键参数<ul><li><code>REQUISITION_ITEMS</code>: 包含要修改的采购申请行项目数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_GETDETAIL</strong><ul><li><strong>用途</strong>: 获取采购申请的详细信息</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，用于获取采购申请的详细数据。</li></ul></li></ul></li><li><strong>BAPI_REQUISITION_DELETE</strong><ul><li><strong>用途</strong>: 删除采购申请</li><li>关键参数<ul><li><code>NUMBER</code>: 采购申请编号，删除指定的采购申请。</li></ul></li></ul></li></ol><p>创建采购申请还有一个BAPI<code>BAPI_PR_CREATE</code>，这个似乎用的比较多（我这边也是用这个）。</p><p>两个BAPI的区别可参考：</p><ol><li><a href="https://blog.csdn.net/wxyix7/article/details/132069125">https://blog.csdn.net/wxyix7/article/details/132069125</a></li><li><a href="https://www.cnblogs.com/BruceKing/p/14785856.html">https://www.cnblogs.com/BruceKing/p/14785856.html</a></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><ol><li><strong>EBAN</strong> - 采购申请表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>MATNR</code>：物料编号</li><li><code>MENGE</code>：采购数量</li><li><code>WERKS</code>：工厂</li><li><code>BADAT</code>：需求日期</li></ul></li></ul></li><li><strong>EBKN</strong> - 采购申请账户分配表<ul><li>字段描述<ul><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li><li><code>KOSTL</code>：成本中心</li><li><code>AUFNR</code>：订单号</li><li><code>SAKTO</code>：总账科目</li></ul></li></ul></li><li><strong>EKKN</strong> - 采购凭证账户分配表<ul><li>字段描述<ul><li><code>EBELN</code>：采购订单号（与采购申请结合使用时会包含采购申请数据）</li><li><code>EBELP</code>：采购订单项目</li><li><code>BANFN</code>：采购申请编号</li><li><code>BNFPO</code>：采购申请行项目</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410072130613.png" alt="image-20241007213031693"></p>]]></content>
     
     
     <categories>
@@ -561,29 +590,18 @@
   
   
   <entry>
-    <title>categories</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>friends</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>contact</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>categories</title>
     <link href="/"/>
     <url>/</url>
     
@@ -609,7 +627,18 @@
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#x6c;&#x61;&#x75;&#x64;&#x65;&#x63;&#x68;&#x61;&#110;&#x31;&#50;&#x32;&#x38;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x63;&#x6c;&#x61;&#x75;&#x64;&#x65;&#x63;&#x68;&#x61;&#110;&#x31;&#50;&#x32;&#x38;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>或<a href="mailto:&#x31;&#53;&#48;&#53;&#x34;&#x31;&#x34;&#51;&#x31;&#57;&#x40;&#113;&#113;&#46;&#x63;&#111;&#x6d;">&#x31;&#53;&#48;&#53;&#x34;&#x31;&#x34;&#51;&#x31;&#57;&#x40;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#99;&#108;&#97;&#x75;&#100;&#101;&#99;&#104;&#x61;&#110;&#49;&#50;&#x32;&#56;&#64;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#99;&#108;&#97;&#x75;&#100;&#101;&#99;&#104;&#x61;&#110;&#49;&#50;&#x32;&#56;&#64;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a>或<a href="mailto:&#x31;&#53;&#48;&#53;&#52;&#49;&#52;&#51;&#49;&#57;&#x40;&#113;&#x71;&#46;&#x63;&#111;&#109;">&#x31;&#53;&#48;&#53;&#52;&#49;&#52;&#51;&#49;&#57;&#x40;&#113;&#x71;&#46;&#x63;&#111;&#109;</a></li></ul>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>friends</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
     
   </entry>
   
