@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>MM 发票校验</title>
+      <link href="/2024/10/10/022-MM%20%E5%8F%91%E7%A5%A8%E6%A0%A1%E9%AA%8C/"/>
+      <url>/2024/10/10/022-MM%20%E5%8F%91%E7%A5%A8%E6%A0%A1%E9%AA%8C/</url>
+      
+        <content type="html"><![CDATA[<h1 id="发票检验"><a href="#发票检验" class="headerlink" title="发票检验"></a>发票检验</h1><p>发票校验通过与采购订单和收货的匹配，确保收到的发票符合采购订单中约定的条件。发票校验的操作一般通过事务码 <strong><code>MIRO</code></strong> 来完成，目的是对供应商发票进行处理，并生成应付账款凭证。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><code>MIRO</code></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><p>在发票校验操作中，通常使用的 BAPI 是 <code>BAPI_INCOMINGINVOICE_CREATE</code>，它用于创建供应商的发票凭证。</p><ol><li><strong>BAPI_INCOMINGINVOICE_CREATE</strong><ul><li><strong>用途</strong>：创建供应商发票凭证，包括发票金额、采购订单引用和税额等。</li><li>关键参数<ul><li><code>HEADERDATA</code>: 发票凭证头数据（包含凭证日期、发票金额等）。</li><li><code>ITEMDATA</code>: 发票凭证行项目数据（包含采购订单号、行项目号、发票数量、金额等）。</li></ul></li></ul></li></ol><h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><h3 id="主要底表"><a href="#主要底表" class="headerlink" title="主要底表"></a>主要底表</h3><ol><li><strong>RBKP（发票凭证头表）</strong>：存储发票的头信息。<ul><li>字段描述<ul><li><code>BELNR</code>：发票凭证号（主键，发票的唯一标识）</li><li><code>GJAHR</code>：财务年度（主键）</li><li><code>BUKRS</code>：公司代码</li><li><code>BLDAT</code>：凭证日期</li><li><code>BUDAT</code>：过账日期</li><li><code>XBLNR</code>：参考凭证编号</li><li><code>LIFNR</code>：供应商编号</li></ul></li></ul></li><li><strong>RSEG（发票凭证行项目表）</strong>：存储发票的行项目信息。<ul><li>字段描述<ul><li><code>BELNR</code>：发票凭证号（主键，外键关联到 RBKP）</li><li><code>GJAHR</code>：财务年度（主键，外键关联到 RBKP）</li><li><code>BUZEI</code>：行项目号（主键）</li><li><code>EBELN</code>：采购订单号（外键关联到 EKPO）</li><li><code>EBELP</code>：采购订单行项目（外键关联到 EKPO）</li><li><code>MENGE</code>：发票数量</li><li><code>WRBTR</code>：发票金额</li><li><code>SGTXT</code>：行项目文本</li></ul></li></ul></li><li><strong>BKPF（会计凭证头表）</strong>：存储会计凭证的头信息。<ul><li>字段描述<ul><li><code>BUKRS</code>：公司代码（主键）</li><li><code>BELNR</code>：会计凭证号（主键）</li><li><code>GJAHR</code>：财务年度（主键）</li><li><code>BLDAT</code>：凭证日期</li><li><code>BUDAT</code>：过账日期</li><li><code>USNAM</code>：用户名称</li><li><code>XBLNR</code>：参考凭证编号</li></ul></li></ul></li><li><strong>BSEG（会计凭证行项目表）</strong>：存储会计凭证的行项目信息。<ul><li>字段描述<ul><li><code>BUKRS</code>：公司代码（主键，外键关联到 BKPF）</li><li><code>BELNR</code>：会计凭证号（主键，外键关联到 BKPF）</li><li><code>GJAHR</code>：财务年度（主键，外键关联到 BKPF）</li><li><code>BUZEI</code>：行项目号（主键）</li><li><code>HKONT</code>：总账科目</li><li><code>LIFNR</code>：供应商编号</li><li><code>WRBTR</code>：金额</li></ul></li></ul></li><li><strong>EKKO（采购订单头表）</strong>：存储采购订单的头信息。<ul><li>字段描述<ul><li><code>EBELN</code>：采购订单号（主键）</li><li><code>LIFNR</code>：供应商编号</li><li><code>EKORG</code>：采购组织</li><li><code>BUKRS</code>：公司代码</li><li><code>BEDAT</code>：采购订单日期</li></ul></li></ul></li><li><strong>EKPO（采购订单行项目表）</strong>：存储采购订单的行项目信息。<ul><li>字段描述<ul><li><code>EBELN</code>：采购订单号（主键，外键关联到 EKKO）</li><li><code>EBELP</code>：采购订单行项目号（主键）</li><li><code>MATNR</code>：物料编号</li><li><code>MENGE</code>：订单数量</li><li><code>NETPR</code>：净价</li><li><code>WERKS</code>：工厂</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410102100841.png" alt="image-20241010210025787"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li><strong>发票校验操作</strong> 涉及到 <strong>RBKP</strong>、<strong>RSEG</strong>、<strong>BKPF</strong>、<strong>BSEG</strong>、<strong>EKKO</strong> 和 <strong>EKPO</strong> 等多个表。</li><li><strong>表之间的关系</strong> 通过采购订单号、发票凭证号、会计凭证号等字段进行关联，确保数据的连贯性和完整性。</li><li>使用 <strong><code>BAPI_INCOMINGINVOICE_CREATE</code></strong> 可以自动化发票校验流程，生成发票凭证和会计凭证。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> SAP </category>
+          
+          <category> MM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SAP </tag>
+            
+            <tag> MM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MM 收货过账</title>
       <link href="/2024/10/09/021-MM%20%E6%94%B6%E8%B4%A7%E8%BF%87%E8%B4%A6/"/>
       <url>/2024/10/09/021-MM%20%E6%94%B6%E8%B4%A7%E8%BF%87%E8%B4%A6/</url>
