@@ -19,19 +19,19 @@
   <meta name="author" content="Claude Chan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="采购申请采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。 事务码 ME51N  ME52N  ME53N   BAPI BAPI_REQUISITION_CREATE 用途: 创建采购申请 关键参数 REQUISITION_ITEMS: 包含采购申请的详细信息，如物">
+    <meta name="description" content="SD 销售与分销基本流程SAP SD（销售与分销）模块的基本业务流程主要包括从销售机会的生成到最终的交货和开票，涵盖了销售订单管理、交货、发货、开票和收款等环节。  销售询价和报价 销售询价（Inquiry）  操作：使用事务码 VA11 创建销售询价。填写客户信息、物料信息、数量等。 系统功能：记录客户的询价需求，为后续报价提供参考。  销售报价（Quotation）  操作：使用事务码 VA2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MM 采购申请PR">
-<meta property="og:url" content="https://claudechan1228.github.io/2024/10/07/019-MM%20%E9%87%87%E8%B4%AD%E7%94%B3%E8%AF%B7PR/index.html">
+<meta property="og:title" content="SD 销售与分销基本流程基本流程">
+<meta property="og:url" content="https://claudechan1228.github.io/2024/10/13/023-SD%20%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Claude Chan">
-<meta property="og:description" content="采购申请采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。 事务码 ME51N  ME52N  ME53N   BAPI BAPI_REQUISITION_CREATE 用途: 创建采购申请 关键参数 REQUISITION_ITEMS: 包含采购申请的详细信息，如物">
+<meta property="og:description" content="SD 销售与分销基本流程SAP SD（销售与分销）模块的基本业务流程主要包括从销售机会的生成到最终的交货和开票，涵盖了销售订单管理、交货、发货、开票和收款等环节。  销售询价和报价 销售询价（Inquiry）  操作：使用事务码 VA11 创建销售询价。填写客户信息、物料信息、数量等。 系统功能：记录客户的询价需求，为后续报价提供参考。  销售报价（Quotation）  操作：使用事务码 VA2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031454543.png">
-<meta property="article:published_time" content="2024-10-07T13:23:00.000Z">
-<meta property="article:modified_time" content="2024-10-13T05:53:46.083Z">
+<meta property="article:published_time" content="2024-10-13T06:33:00.000Z">
+<meta property="article:modified_time" content="2024-10-13T07:34:53.622Z">
 <meta property="article:author" content="Claude Chan">
 <meta property="article:tag" content="SAP">
-<meta property="article:tag" content="MM">
+<meta property="article:tag" content="SD">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031454543.png">
   
@@ -39,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>MM 采购申请PR - Claude Chan</title>
+  <title>SD 销售与分销基本流程基本流程 - Claude Chan</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MM 采购申请PR"></span>
+            <span id="subtitle" data-typed-text="SD 销售与分销基本流程基本流程"></span>
           
         </div>
 
@@ -228,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-07 21:23" pubdate>
-          2024年10月7日 晚上
+        <time datetime="2024-10-13 14:33" pubdate>
+          2024年10月13日 下午
         </time>
       </span>
     
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          424 字
+          986 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          4 分钟
+          9 分钟
         
       </span>
     
@@ -297,96 +297,103 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MM 采购申请PR</h1>
+            <h1 id="seo-header">SD 销售与分销基本流程基本流程</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="采购申请"><a href="#采购申请" class="headerlink" title="采购申请"></a>采购申请</h1><p>采购申请是采购流程的起点，但这个操作其实是一个可选的操作。在创建采购申请之前，可以创建采购信息记录来关联供应商与物料用于简化创建采购申请的操作；创建采购申请之后可以继续创建采购订单。</p>
-<h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul>
-<li><p><code>ME51N</code></p>
-</li>
-<li><p><code>ME52N</code></p>
-</li>
-<li><p><code>ME53N</code></p>
-</li>
+                <h1 id="SD-销售与分销基本流程"><a href="#SD-销售与分销基本流程" class="headerlink" title="SD 销售与分销基本流程"></a>SD 销售与分销基本流程</h1><p>SAP SD（销售与分销）模块的基本业务流程主要包括从销售机会的生成到最终的交货和开票，涵盖了销售订单管理、交货、发货、开票和收款等环节。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410131534448.png" srcset="/img/loading.gif" lazyload alt="image-20241013153400086"></p>
+<h2 id="销售询价和报价"><a href="#销售询价和报价" class="headerlink" title="销售询价和报价"></a>销售询价和报价</h2><ul>
+<li><p><strong>销售询价（Inquiry）</strong></p>
+<ul>
+<li>操作：使用事务码 <code>VA11</code> 创建销售询价。填写客户信息、物料信息、数量等。</li>
+<li>系统功能：记录客户的询价需求，为后续报价提供参考。</li>
 </ul>
-<h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><ol>
-<li><strong>BAPI_REQUISITION_CREATE</strong><ul>
-<li><strong>用途</strong>: 创建采购申请</li>
-<li>关键参数<ul>
-<li><code>REQUISITION_ITEMS</code>: 包含采购申请的详细信息，如物料编号、数量、工厂等。</li>
+<p><strong>销售报价（Quotation）</strong></p>
+<ul>
+<li>操作：使用事务码 <code>VA21</code> 创建销售报价。根据询价信息填写报价单，指定报价的有效期、交货条件、价格等。</li>
+<li>系统功能：生成具有法律约束力的报价文档，供客户确认。</li>
 </ul>
 </li>
 </ul>
+<h2 id="销售订单处理"><a href="#销售订单处理" class="headerlink" title="销售订单处理"></a>销售订单处理</h2><ul>
+<li><strong>销售订单创建（Sales Order Creation）</strong><ul>
+<li>操作：使用事务码 <code>VA01</code> 创建销售订单。系统会自动带入报价信息，用户确认订单数据（如物料、数量、交货时间等）。</li>
+<li>系统功能：将客户的需求正式转化为销售订单，锁定订单数据。</li>
+</ul>
 </li>
-<li><strong>BAPI_REQUISITION_CHANGE</strong><ul>
-<li><strong>用途</strong>: 修改采购申请</li>
-<li>关键参数<ul>
-<li><code>REQUISITION_ITEMS</code>: 包含要修改的采购申请行项目数据。</li>
+<li><strong>销售订单确认（Order Confirmation）</strong><ul>
+<li>操作：销售订单创建时，系统会自动检查客户的信用额度和物料的可用性。</li>
+<li>系统功能：确认订单的可执行性，如存在异常（如信用超限或库存不足），系统会发出警告或阻止订单处理。</li>
 </ul>
 </li>
 </ul>
+<h2 id="物料可用性检查和需求计划"><a href="#物料可用性检查和需求计划" class="headerlink" title="物料可用性检查和需求计划"></a>物料可用性检查和需求计划</h2><ul>
+<li><strong>物料可用性检查（Availability Check）</strong><ul>
+<li>操作：在销售订单创建时，系统自动检查物料的库存状况。使用事务码 <code>CO09</code> 查看物料的可用性。</li>
+<li>系统功能：确保订单可以按时交付，如果库存不足，生成相应的需求。</li>
+</ul>
 </li>
-<li><strong>BAPI_REQUISITION_GETDETAIL</strong><ul>
-<li><strong>用途</strong>: 获取采购申请的详细信息</li>
-<li>关键参数<ul>
-<li><code>NUMBER</code>: 采购申请编号，用于获取采购申请的详细数据。</li>
+<li><strong>需求计划（MRP）</strong><ul>
+<li>操作：使用事务码 <code>MD01</code> 运行物料需求计划，以安排生产或采购。</li>
+<li>系统功能：根据销售订单的需求生成采购申请或生产计划，确保物料及时到货。</li>
 </ul>
 </li>
 </ul>
+<h2 id="交货和发货"><a href="#交货和发货" class="headerlink" title="交货和发货"></a>交货和发货</h2><ul>
+<li><strong>创建交货单（Delivery Document Creation）</strong><ul>
+<li>操作：使用事务码 <code>VL01N</code> 创建交货单，确认交货的物料、数量和交货日期。</li>
+<li>系统功能：交货单生成后，系统会锁定相应的库存，并通知仓库进行准备。</li>
+</ul>
 </li>
-<li><strong>BAPI_REQUISITION_DELETE</strong><ul>
-<li><strong>用途</strong>: 删除采购申请</li>
-<li>关键参数<ul>
-<li><code>NUMBER</code>: 采购申请编号，删除指定的采购申请。</li>
+<li><strong>拣货和发货（Picking and Packing）</strong><ul>
+<li>操作：使用 <code>VL02N</code> 进行拣货确认，并记录拣货的实际情况。</li>
+<li>系统功能：更新库存状态，将物料从可用库存转移至交货库存。</li>
+</ul>
+</li>
+<li><strong>发运（Goods Issue）</strong><ul>
+<li>操作：在 <code>VL02N</code> 中执行发运过账，确认货物已经发出。</li>
+<li>系统功能：减少库存，生成物料凭证和会计凭证，记录物料流动。</li>
 </ul>
 </li>
 </ul>
+<h2 id="开票"><a href="#开票" class="headerlink" title="开票"></a>开票</h2><ul>
+<li><strong>创建发票（Invoice Creation）</strong><ul>
+<li>操作：使用事务码 <code>VF01</code> 创建发票，可以基于交货单或销售订单生成。</li>
+<li>系统功能：记录应收账款，系统会自动更新客户的账务信息。</li>
+</ul>
 </li>
-</ol>
-<p>创建采购申请还有一个BAPI<code>BAPI_PR_CREATE</code>，这个似乎用的比较多（我这边也是用这个）。</p>
-<p>两个BAPI的区别可参考：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxyix7/article/details/132069125">https://blog.csdn.net/wxyix7/article/details/132069125</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/BruceKing/p/14785856.html">https://www.cnblogs.com/BruceKing/p/14785856.html</a></li>
-</ol>
-<h2 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h2><ol>
-<li><strong>EBAN</strong> - 采购申请表<ul>
-<li>字段描述<ul>
-<li><code>BANFN</code>：采购申请编号</li>
-<li><code>BNFPO</code>：采购申请行项目</li>
-<li><code>MATNR</code>：物料编号</li>
-<li><code>MENGE</code>：采购数量</li>
-<li><code>WERKS</code>：工厂</li>
-<li><code>BADAT</code>：需求日期</li>
+<li><strong>发票校验和发布（Invoice Verification and Release）</strong><ul>
+<li>操作：系统会自动检查发票的正确性，用户可使用 <code>VF02</code> 修改发票。</li>
+<li>系统功能：发布发票后，系统会确认应收账款。</li>
 </ul>
 </li>
 </ul>
+<h2 id="收款和应收账款处理"><a href="#收款和应收账款处理" class="headerlink" title="收款和应收账款处理"></a>收款和应收账款处理</h2><ul>
+<li><strong>收款处理（Payment Processing）</strong><ul>
+<li>操作：使用事务码 <code>F-28</code> 记录客户的付款，清账应收款项。</li>
+<li>系统功能：更新客户账户，核销相应的应收账款。</li>
+</ul>
 </li>
-<li><strong>EBKN</strong> - 采购申请账户分配表<ul>
-<li>字段描述<ul>
-<li><code>BANFN</code>：采购申请编号</li>
-<li><code>BNFPO</code>：采购申请行项目</li>
-<li><code>KOSTL</code>：成本中心</li>
-<li><code>AUFNR</code>：订单号</li>
-<li><code>SAKTO</code>：总账科目</li>
+<li><strong>应收账款管理（Accounts Receivable Management）</strong><ul>
+<li>操作：在 <code>FBL5N</code> 中查看客户的应收账款明细。</li>
+<li>系统功能：系统自动维护客户的账龄分析和应收账款余额。</li>
 </ul>
 </li>
 </ul>
+<h2 id="退货和信用单处理（可选流程）"><a href="#退货和信用单处理（可选流程）" class="headerlink" title="退货和信用单处理（可选流程）"></a>退货和信用单处理（可选流程）</h2><ul>
+<li><strong>客户退货（Returns）</strong><ul>
+<li>操作：使用事务码 <code>VA01</code> 创建退货订单，记录退货的物料和数量。</li>
+<li>系统功能：退货订单会影响库存和财务，生成相应的退货凭证。</li>
+</ul>
 </li>
-<li><strong>EKKN</strong> - 采购凭证账户分配表<ul>
-<li>字段描述<ul>
-<li><code>EBELN</code>：采购订单号（与采购申请结合使用时会包含采购申请数据）</li>
-<li><code>EBELP</code>：采购订单项目</li>
-<li><code>BANFN</code>：采购申请编号</li>
-<li><code>BNFPO</code>：采购申请行项目</li>
+<li><strong>信用单（Credit Memo）</strong><ul>
+<li>操作：使用事务码 <code>VF01</code> 创建信用单，调整客户应收账款。</li>
+<li>系统功能：减少应收账款，更新客户的账务信息。</li>
 </ul>
 </li>
 </ul>
-</li>
-</ol>
-<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410072130613.png" srcset="/img/loading.gif" lazyload alt="image-20241007213031693"></p>
 
                 
               </div>
@@ -410,7 +417,7 @@
   
     <span>></span>
     
-  <a href="/categories/SAP/MM/" class="category-chain-item">MM</a>
+  <a href="/categories/SAP/SD/" class="category-chain-item">SD</a>
   
   
 
@@ -429,7 +436,7 @@
       
         <a href="/tags/SAP/" class="print-no-link">#SAP</a>
       
-        <a href="/tags/MM/" class="print-no-link">#MM</a>
+        <a href="/tags/SD/" class="print-no-link">#SD</a>
       
     </div>
   
@@ -441,8 +448,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MM 采购申请PR</div>
-      <div>https://claudechan1228.github.io/2024/10/07/019-MM 采购申请PR/</div>
+      <div>SD 销售与分销基本流程基本流程</div>
+      <div>https://claudechan1228.github.io/2024/10/13/023-SD 基本流程/</div>
     </div>
     <div class="license-meta">
       
@@ -454,7 +461,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月7日</div>
+          <div>2024年10月13日</div>
         </div>
       
       
@@ -486,9 +493,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/08/020-MM%20%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95PO/" title="MM 采购订单PO">
+                      <a href="/2024/10/13/024-SD%20%E9%94%80%E5%94%AE%E8%AF%A2%E4%BB%B7%E5%92%8C%E6%8A%A5%E4%BB%B7/" title="SD 销售询价和报价">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MM 采购订单PO</span>
+                        <span class="hidden-mobile">SD 销售询价和报价</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -496,8 +503,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/04/018-MM%20%E4%B8%BB%E6%95%B0%E6%8D%AE/" title="MM 主数据">
-                        <span class="hidden-mobile">MM 主数据</span>
+                      <a href="/2024/10/10/022-MM%20%E5%8F%91%E7%A5%A8%E6%A0%A1%E9%AA%8C/" title="MM 发票校验">
+                        <span class="hidden-mobile">MM 发票校验</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
