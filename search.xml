@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>软件使用问题</title>
+      <link href="/2024/11/11/027-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/"/>
+      <url>/2024/11/11/027-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h1><h2 id="HEXO-D报错无法访问GITHUB仓库"><a href="#HEXO-D报错无法访问GITHUB仓库" class="headerlink" title="HEXO D报错无法访问GITHUB仓库"></a>HEXO D报错无法访问GITHUB仓库</h2><p>具体报错描述：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fatal: unable to access GITHUB仓库地址: Failed to connect to 127.0.0.1 port 7890 after 2102 ms: Couldn<span class="hljs-string">&#x27;t connect to server</span><br></code></pre></td></tr></table></figure><p>原因：使用了代理，GIT配置的代理端口与代理软件设置的端口不一致。</p><p>解决方法：修改GIT代理端口与代理软件设置的端口一致</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global http.proxy http://127.0.0.1:代理端口<br>git config --global http.proxy https://127.0.0.1:代理端口<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 问题处理 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 软件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>EXCEL上传和下载</title>
       <link href="/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/"/>
       <url>/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/</url>

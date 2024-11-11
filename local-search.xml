@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>软件使用问题</title>
+    <link href="/2024/11/11/027-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/"/>
+    <url>/2024/11/11/027-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h1 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h1><h2 id="HEXO-D报错无法访问GITHUB仓库"><a href="#HEXO-D报错无法访问GITHUB仓库" class="headerlink" title="HEXO D报错无法访问GITHUB仓库"></a>HEXO D报错无法访问GITHUB仓库</h2><p>具体报错描述：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fatal: unable to access GITHUB仓库地址: Failed to connect to 127.0.0.1 port 7890 after 2102 ms: Couldn<span class="hljs-string">&#x27;t connect to server</span><br></code></pre></td></tr></table></figure><p>原因：使用了代理，GIT配置的代理端口与代理软件设置的端口不一致。</p><p>解决方法：修改GIT代理端口与代理软件设置的端口一致</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global http.proxy http://127.0.0.1:代理端口<br>git config --global http.proxy https://127.0.0.1:代理端口<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>问题处理</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>软件</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>EXCEL上传和下载</title>
     <link href="/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/"/>
     <url>/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/</url>
@@ -724,11 +749,22 @@
   
   
   <entry>
-    <title>categories</title>
+    <title>404</title>
     <link href="/"/>
     <url>/</url>
     
     <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Claude Chan的个人博客介绍</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#99;&#x6c;&#97;&#117;&#x64;&#101;&#x63;&#104;&#97;&#110;&#49;&#50;&#50;&#56;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#109;">&#99;&#x6c;&#97;&#117;&#x64;&#101;&#x63;&#104;&#97;&#110;&#49;&#50;&#50;&#56;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#109;</a>或<a href="mailto:&#49;&#x35;&#48;&#53;&#x34;&#49;&#x34;&#x33;&#x31;&#57;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#49;&#x35;&#48;&#53;&#x34;&#49;&#x34;&#x33;&#x31;&#57;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;</a></li></ul>]]></content>
     
   </entry>
   
@@ -746,29 +782,7 @@
   
   
   <entry>
-    <title>Claude Chan的个人博客介绍</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#99;&#x6c;&#97;&#x75;&#100;&#x65;&#x63;&#x68;&#97;&#x6e;&#49;&#50;&#50;&#x38;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#99;&#x6c;&#97;&#x75;&#100;&#x65;&#x63;&#x68;&#97;&#x6e;&#49;&#50;&#50;&#x38;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a>或<a href="mailto:&#x31;&#x35;&#48;&#x35;&#52;&#x31;&#x34;&#x33;&#49;&#x39;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;">&#x31;&#x35;&#48;&#x35;&#52;&#x31;&#x34;&#x33;&#49;&#x39;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;</a></li></ul>]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>404</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>contact</title>
+    <title>categories</title>
     <link href="/"/>
     <url>/</url>
     
@@ -791,6 +805,17 @@
   
   <entry>
     <title>tags</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>contact</title>
     <link href="/"/>
     <url>/</url>
     
