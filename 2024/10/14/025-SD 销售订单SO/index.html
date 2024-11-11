@@ -19,16 +19,16 @@
   <meta name="author" content="Claude Chan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="销售询价和报价客户向企业发送询价，企业根据客户的询价单返回报价单。  销售询价事务码 VA11 VA12 VA13  BAPI在销售询价操作中，常用的 BAPI 包括创建、修改和读取销售询价的 BAPI。  BAPI_INQUIRY_CREATEFROMDATA2 用途：用于根据给定的数据创建销售询价。 关键参数 INQUIRY_HEADER_IN：询价的头数据（如客户编号、销售组织等）。 INQ">
+    <meta name="description" content="销售订单SO在 SD 模块中，销售订单处理 是销售业务流程的核心步骤，用于记录客户的正式订单，并为后续的交货、发票和收款奠定基础。 事务码 VA01 VA02 VA03  BAPI在销售订单处理过程中，常用的 BAPI 包括创建、修改和读取销售订单的 BAPI。  BAPI_SALESORDER_CREATEFROMDAT2 用途：用于根据给定的数据创建销售订单。 关键参数 ORDER_HEADE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SD 销售询价和报价">
-<meta property="og:url" content="https://claudechan1228.github.io/2024/10/13/024-SD%20%E9%94%80%E5%94%AE%E8%AF%A2%E4%BB%B7%E5%92%8C%E6%8A%A5%E4%BB%B7/index.html">
+<meta property="og:title" content="SD 销售订单SO">
+<meta property="og:url" content="https://claudechan1228.github.io/2024/10/14/025-SD%20%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95SO/index.html">
 <meta property="og:site_name" content="Claude Chan">
-<meta property="og:description" content="销售询价和报价客户向企业发送询价，企业根据客户的询价单返回报价单。  销售询价事务码 VA11 VA12 VA13  BAPI在销售询价操作中，常用的 BAPI 包括创建、修改和读取销售询价的 BAPI。  BAPI_INQUIRY_CREATEFROMDATA2 用途：用于根据给定的数据创建销售询价。 关键参数 INQUIRY_HEADER_IN：询价的头数据（如客户编号、销售组织等）。 INQ">
+<meta property="og:description" content="销售订单SO在 SD 模块中，销售订单处理 是销售业务流程的核心步骤，用于记录客户的正式订单，并为后续的交货、发票和收款奠定基础。 事务码 VA01 VA02 VA03  BAPI在销售订单处理过程中，常用的 BAPI 包括创建、修改和读取销售订单的 BAPI。  BAPI_SALESORDER_CREATEFROMDAT2 用途：用于根据给定的数据创建销售订单。 关键参数 ORDER_HEADE">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410142107952.png">
-<meta property="article:published_time" content="2024-10-13T12:05:00.000Z">
-<meta property="article:modified_time" content="2024-10-14T13:08:13.845Z">
+<meta property="article:published_time" content="2024-10-14T13:09:00.000Z">
+<meta property="article:modified_time" content="2024-10-14T14:00:07.763Z">
 <meta property="article:author" content="Claude Chan">
 <meta property="article:tag" content="SAP">
 <meta property="article:tag" content="SD">
@@ -39,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>SD 销售询价和报价 - Claude Chan</title>
+  <title>SD 销售订单SO - Claude Chan</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="SD 销售询价和报价"></span>
+            <span id="subtitle" data-typed-text="SD 销售订单SO"></span>
           
         </div>
 
@@ -228,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-13 20:05" pubdate>
-          2024年10月13日 晚上
+        <time datetime="2024-10-14 21:09" pubdate>
+          2024年10月14日 晚上
         </time>
       </span>
     
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          802 字
+          388 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          7 分钟
+          4 分钟
         
       </span>
     
@@ -297,33 +297,32 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">SD 销售询价和报价</h1>
+            <h1 id="seo-header">SD 销售订单SO</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="销售询价和报价"><a href="#销售询价和报价" class="headerlink" title="销售询价和报价"></a>销售询价和报价</h1><p>客户向企业发送询价，企业根据客户的询价单返回报价单。</p>
-<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410132011845.png" srcset="/img/loading.gif" lazyload alt="image-20241013201155590"></p>
-<h2 id="销售询价"><a href="#销售询价" class="headerlink" title="销售询价"></a>销售询价</h2><h3 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h3><ul>
-<li><code>VA11</code></li>
-<li><code>VA12</code></li>
-<li><code>VA13</code></li>
+                <h1 id="销售订单SO"><a href="#销售订单SO" class="headerlink" title="销售订单SO"></a>销售订单SO</h1><p>在 SD 模块中，<strong>销售订单处理</strong> 是销售业务流程的核心步骤，用于记录客户的正式订单，并为后续的交货、发票和收款奠定基础。</p>
+<h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul>
+<li><code>VA01</code></li>
+<li><code>VA02</code></li>
+<li><code>VA03</code></li>
 </ul>
-<h3 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h3><p>在销售询价操作中，常用的 BAPI 包括创建、修改和读取销售询价的 BAPI。</p>
+<h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><p>在销售订单处理过程中，常用的 BAPI 包括创建、修改和读取销售订单的 BAPI。</p>
 <ol>
-<li><strong>BAPI_INQUIRY_CREATEFROMDATA2</strong><ul>
-<li><strong>用途</strong>：用于根据给定的数据创建销售询价。</li>
+<li><strong>BAPI_SALESORDER_CREATEFROMDAT2</strong><ul>
+<li><strong>用途</strong>：用于根据给定的数据创建销售订单。</li>
 <li>关键参数<ul>
-<li><code>INQUIRY_HEADER_IN</code>：询价的头数据（如客户编号、销售组织等）。</li>
-<li><code>INQUIRY_ITEM_IN</code>：询价的行项目信息（如物料编号、数量等）。</li>
+<li><code>ORDER_HEADER_IN</code>：订单的头数据（如客户编号、销售组织等）。</li>
+<li><code>ORDER_ITEM_IN</code>：订单的行项目信息（如物料编号、数量等）。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>BAPI_INQUIRY_GETDETAIL</strong><ul>
-<li><strong>用途</strong>：获取销售询价的详细信息。</li>
+<li><strong>BAPI_SALESORDER_GETDETAIL</strong><ul>
+<li><strong>用途</strong>：获取销售订单的详细信息。</li>
 <li>关键参数<ul>
-<li><code>INQUIRY</code>：销售询价编号。</li>
+<li><code>SALESORDER</code>：销售订单编号。</li>
 </ul>
 </li>
 </ul>
@@ -331,10 +330,11 @@
 </ol>
 <h3 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h3><ol>
 <li><strong>VBAK</strong> - 销售凭证头表<ul>
-<li>存储销售询价的头信息。</li>
+<li>存储销售订单的头信息。</li>
 <li>字段描述<ul>
-<li><code>VBELN</code>：销售凭证号（询价编号，主键）</li>
-<li><code>AUART</code>：销售凭证类型（如 IN-标准询价）</li>
+<li><code>VBELN</code>：销售凭证号（主键，订单编号）</li>
+<li><code>VBTYP</code>：销售凭证类别（订单类型为 <code>C</code>）</li>
+<li><code>AUART</code>：销售凭证类型（如 OR-标准订单）</li>
 <li><code>VKORG</code>：销售组织</li>
 <li><code>VTWEG</code>：分销渠道</li>
 <li><code>KUNNR</code>：客户编号</li>
@@ -343,19 +343,20 @@
 </ul>
 </li>
 <li><strong>VBAP</strong> - 销售凭证行项目表<ul>
-<li>存储销售询价的行项目信息。</li>
+<li>存储销售订单的行项目信息。</li>
 <li>字段描述<ul>
 <li><code>VBELN</code>：销售凭证号（主键，外键关联到 VBAK）</li>
 <li><code>POSNR</code>：行项目号（主键）</li>
 <li><code>MATNR</code>：物料编号</li>
 <li><code>KWMENG</code>：订单数量</li>
+<li><code>NETPR</code>：净价（单价）</li>
 <li><code>EDATU</code>：交货日期</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><strong>VBEP</strong> - 销售凭证交货计划行表<ul>
-<li>存储销售凭证的交货计划信息。</li>
+<li>存储销售订单的交货计划信息。</li>
 <li>字段描述<ul>
 <li><code>VBELN</code>：销售凭证号（主键，外键关联到 VBAP）</li>
 <li><code>POSNR</code>：行项目号（主键，外键关联到 VBAP）</li>
@@ -367,80 +368,7 @@
 </ul>
 </li>
 </ol>
-<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410132023735.png" srcset="/img/loading.gif" lazyload alt="image-20241013202351401"></p>
-<h2 id="销售报价"><a href="#销售报价" class="headerlink" title="销售报价"></a>销售报价</h2><h3 id="事务码-1"><a href="#事务码-1" class="headerlink" title="事务码"></a>事务码</h3><ul>
-<li><code>VA21</code></li>
-<li><code>VA22</code></li>
-<li><code>VA23</code></li>
-</ul>
-<h3 id="BAPI-1"><a href="#BAPI-1" class="headerlink" title="BAPI"></a>BAPI</h3><p>在销售报价操作中，常用的 BAPI 包括创建、修改和读取销售报价的 BAPI。</p>
-<ol>
-<li><p><strong>BAPI_QUOTATION_CREATEFROMDATA2</strong></p>
-<ul>
-<li><strong>用途</strong>：用于根据给定的数据创建销售报价。</li>
-<li>关键参数<ul>
-<li><code>QUOTATION_HEADER_IN</code>：报价的头数据（如客户编号、销售组织等）。</li>
-<li><code>QUOTATION_ITEM_IN</code>：报价的行项目信息（如物料编号、数量等）。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>BAPI_QUOTATION_GETDETAIL</strong></p>
-<ul>
-<li><strong>用途</strong>：获取销售报价的详细信息。</li>
-<li>关键参数<ul>
-<li><code>QUOTATION</code>：销售报价编号。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="底表-1"><a href="#底表-1" class="headerlink" title="底表"></a>底表</h3><ol>
-<li><strong>VBAK</strong> - 销售凭证头表<ul>
-<li>存储销售报价的头信息。</li>
-<li>字段描述<ul>
-<li><code>VBELN</code>：销售凭证号（主键，报价编号）</li>
-<li><code>AUART</code>：销售凭证类型（如 QT-标准报价）</li>
-<li><code>VKORG</code>：销售组织</li>
-<li><code>VTWEG</code>：分销渠道</li>
-<li><code>KUNNR</code>：客户编号</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>VBAP</strong> - 销售凭证行项目表<ul>
-<li>存储销售报价的行项目信息。</li>
-<li>字段描述<ul>
-<li><code>VBELN</code>：销售凭证号（外键关联到 VBAK）</li>
-<li><code>POSNR</code>：行项目号（主键）</li>
-<li><code>MATNR</code>：物料编号</li>
-<li><code>KWMENG</code>：报价数量</li>
-<li><code>NETPR</code>：净价（单价）</li>
-<li><code>EDATU</code>：交货日期</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>VBEP</strong> - 销售凭证交货计划行表<ul>
-<li>存储销售文档的交货计划信息。</li>
-<li>字段描述<ul>
-<li><code>VBELN</code>：销售凭证号（外键关联到 VBAP）</li>
-<li><code>POSNR</code>：行项目号（外键关联到 VBAP）</li>
-<li><code>ETENR</code>：交货计划行项目号（主键）</li>
-<li><code>EDATU</code>：交货日期</li>
-<li><code>BMENG</code>：计划交货数量</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410132155041.png" srcset="/img/loading.gif" lazyload alt="image-20241013215541586"></p>
-<h2 id="相同的询报价底表"><a href="#相同的询报价底表" class="headerlink" title="相同的询报价底表"></a>相同的询报价底表</h2><p>在 SAP 系统中，<strong>销售询价</strong> 和 <strong>销售报价</strong> 都涉及到相同的底表，即 <strong>VBAK</strong>、<strong>VBAP</strong> 和 <strong>VBEP</strong>，这主要是因为 SAP 的销售与分销模块中，销售凭证（包括询价、报价、订单等）的结构和数据存储方式是统一的。这些表是通用的销售凭证表格，用于存储各种类型的销售凭证数据。</p>
-<h3 id="区分询价和报价"><a href="#区分询价和报价" class="headerlink" title="区分询价和报价"></a>区分询价和报价</h3><p>在 <strong><code>VBAK</code></strong> 表中，字段 <strong><code>VBTYP</code></strong> 存储了销售凭证的类型：</p>
-<ul>
-<li><code>A</code>：询价</li>
-<li><code>B</code>：报价</li>
-</ul>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410142156858.png" srcset="/img/loading.gif" lazyload alt="image-20241014215653579"></p>
 
                 
               </div>
@@ -495,8 +423,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>SD 销售询价和报价</div>
-      <div>https://claudechan1228.github.io/2024/10/13/024-SD 销售询价和报价/</div>
+      <div>SD 销售订单SO</div>
+      <div>https://claudechan1228.github.io/2024/10/14/025-SD 销售订单SO/</div>
     </div>
     <div class="license-meta">
       
@@ -508,7 +436,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月13日</div>
+          <div>2024年10月14日</div>
         </div>
       
       
@@ -540,9 +468,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/14/025-SD%20%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95SO/" title="SD 销售订单SO">
+                      <a href="/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/" title="EXCEL上传和下载">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">SD 销售订单SO</span>
+                        <span class="hidden-mobile">EXCEL上传和下载</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -550,8 +478,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/13/023-SD%20%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B/" title="SD 销售与分销基本流程基本流程">
-                        <span class="hidden-mobile">SD 销售与分销基本流程基本流程</span>
+                      <a href="/2024/10/13/024-SD%20%E9%94%80%E5%94%AE%E8%AF%A2%E4%BB%B7%E5%92%8C%E6%8A%A5%E4%BB%B7/" title="SD 销售询价和报价">
+                        <span class="hidden-mobile">SD 销售询价和报价</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

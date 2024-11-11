@@ -4,6 +4,64 @@
   
   
   <entry>
+    <title>EXCEL上传和下载</title>
+    <link href="/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/"/>
+    <url>/2024/10/28/026-EXCEL%E5%A4%84%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ABAP-EXCEL-处理"><a href="#ABAP-EXCEL-处理" class="headerlink" title="ABAP EXCEL 处理"></a>ABAP EXCEL 处理</h1><h2 id="EXCEL-转内表"><a href="#EXCEL-转内表" class="headerlink" title="EXCEL 转内表"></a>EXCEL 转内表</h2><h3 id="函数ALSM-EXCEL-TO-INTERNAL-TABLE"><a href="#函数ALSM-EXCEL-TO-INTERNAL-TABLE" class="headerlink" title="函数ALSM_EXCEL_TO_INTERNAL_TABLE"></a>函数<code>ALSM_EXCEL_TO_INTERNAL_TABLE</code></h3><p>本函数为开发中常用的解析excel数据表函数，由于它的接收excel数据的内表为&#96;&#96;row-col-val&#96;格式，所以有时候也可以用来解析特定的excel模板（比如申请表）。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">DATA:<br>  lt_excel TYPE STANDARD TABLE OF alsmex_tabline,<br>  ls_excel TYPE alsmex_tabline,<br>  lv_value TYPE char256,<br>  lv_error TYPE string.<br><br>CALL FUNCTION &#x27;ALSM_EXCEL_TO_INTERNAL_TABLE&#x27;<br>  EXPORTING<br>    filename                = pv_fname &quot;文件路径<br>    i_begin_col             = 1  &quot;开始解析的列<br>    i_begin_row             = 2  &quot;开始解析的行<br>    i_end_col               = 3  &quot;结束解析的列<br>    i_end_row               = 50 &quot;结束解析的行<br>  TABLES<br>    intern                  = lt_excel &quot;接收解析后的excel数据，以row-col-value的格式存储<br>  EXCEPTIONS<br>    inconsistent_parameters = 1<br>    upload_ole              = 2<br>    OTHERS                  = 3.<br>IF sy-subrc &lt;&gt; 0.<br>  WRITE: / &#x27;SY-SUBRC = &#x27;, sy-subrc.<br>  MESSAGE ID sy-msgid TYPE &#x27;E&#x27; NUMBER sy-msgno<br>  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO lv_error.<br>  WRITE: / lv_error.<br>ELSE.<br>  &quot;解析excel数据至指定格式内表<br>  SORT lt_excel BY row.<br>  LOOP AT lt_excel INTO ls_excel.<br>    lv_value = ls_excel-value.<br>    AT NEW row.<br>      INSERT INITIAL LINE INTO TABLE gt_toexcel ASSIGNING FIELD-SYMBOL(&lt;fs_excel&gt;).<br>    ENDAT.<br>    ASSIGN COMPONENT ls_excel-col OF STRUCTURE &lt;fs_excel&gt; TO FIELD-SYMBOL(&lt;fs_value&gt;).<br>    IF sy-subrc = 0.<br>      &lt;fs_value&gt; = lv_value.<br>    ENDIF.<br>  ENDLOOP.<br>ENDIF.<br></code></pre></td></tr></table></figure><p>在实际的业务实现过程中，本函数存在一些缺陷、并不能完全满足业务要求。</p><p>比如：</p><ul><li>接收excel数据的内表结构中<code>value</code>字段长度只有50</li><li>不能指定解析的sheet页</li></ul><p>开发者可以通过copy本函数进行自开发优化。详细可参考<a href="https://blog.csdn.net/weixin_41886784/article/details/129055504">ABAP: excel上载函数ALSM_EXCEL_TO_INTERNAL_TABLE</a>。</p><p>另外有一个函数<code>KCD_EXCEL_OLE_TO_INT_CONVERT</code>和<code>ALSM_EXCEL_TO_INTERNAL_TABLE</code>用法类似，不过它的接收excel数据的内表的<code>value</code>字段长度只有32。</p><h3 id="函数FILE-READ-AND-CONVERT-SAP-DATA"><a href="#函数FILE-READ-AND-CONVERT-SAP-DATA" class="headerlink" title="函数FILE_READ_AND_CONVERT_SAP_DATA"></a>函数<code>FILE_READ_AND_CONVERT_SAP_DATA</code></h3><p>本函数所在的函数组TRUX中有许多SAP的标准文件转换函数，其中<code>TEXT_CONVERT_XLS_TO_SAP</code>也是转换excel的函数。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">  DATA:<br>    lv_error TYPE string.<br><br>  CALL FUNCTION &#x27;FILE_READ_AND_CONVERT_SAP_DATA&#x27;<br>    EXPORTING<br>      i_filename           = pv_fname &quot;文件路径<br>      i_servertyp          = &#x27;OLE2&#x27; &quot;解析方式<br>      i_fileformat         = &#x27;XLS&#x27;  &quot;对象文件格式<br>*     I_FIELD_SEPERATOR    =<br>*     I_LINE_HEADER        =<br>    TABLES<br>      i_tab_receiver       = pt_data &quot;接收excel的内表<br>    EXCEPTIONS<br>      file_not_found       = 1<br>      close_failed         = 2<br>      authorization_failed = 3<br>      open_failed          = 4<br>      conversion_failed    = 5<br>      OTHERS               = 6.<br><br>  IF sy-subrc &lt;&gt; 0.<br>    WRITE: / &#x27;SY-SUBRC = &#x27;, sy-subrc.<br>    MESSAGE ID sy-msgid TYPE &#x27;E&#x27; NUMBER sy-msgno<br>    WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO lv_error.<br>    WRITE: / lv_error.<br>    STOP.<br>  ENDIF.<br></code></pre></td></tr></table></figure><p>本函数的优点是接收的内表无需转换，可直接使用对应excel数据表格式的自定义内表进行接收；缺点是支持的excel文件格式只有xls，且在程序运行过程中会弹出并显示excel文件，excel文件如果处于打开状态则程序会解析失败。</p><h2 id="内表转-EXCEL"><a href="#内表转-EXCEL" class="headerlink" title="内表转 EXCEL"></a>内表转 EXCEL</h2><h3 id="函数GUI-DOWNLOAD"><a href="#函数GUI-DOWNLOAD" class="headerlink" title="函数GUI_DOWNLOAD"></a>函数<code>GUI_DOWNLOAD</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">TABLES: sflight.<br><br>DATA: BEGIN OF lt_fieldnames  OCCURS 0,<br>        name TYPE char20,<br>      END OF lt_fieldnames.<br><br>SELECT carrid,<br>       fldate<br>  INTO TABLE @DATA(lt_sflight)<br>  FROM sflight<br>  UP TO 20 ROWS.<br><br>&quot;表格抬头<br>lt_fieldnames-name = &#x27;航班代码&#x27;.<br>APPEND lt_fieldnames.<br>lt_fieldnames-name = &#x27;航班日期&#x27;.<br>APPEND lt_fieldnames.<br><br>CALL FUNCTION &#x27;GUI_DOWNLOAD&#x27;<br>  EXPORTING<br>    filename   = &#x27;C:\Users\Wuyuan\Desktop\GUI_DOWNLOAD下载excel.xls&#x27;<br>    filetype   = &#x27;DAT&#x27;<br>    &quot;这里一般用DAT，AT会显示为-1000；<br>    &quot;如果用ASC则1000-不会显示为-1000；<br>    &quot;如果用DBF则不会有缩进，即字符前面的空格会被除去,而且字符的前导0也会输出；<br>    codepage   = &#x27;8404&#x27; &quot;字符格式标识符<br>  TABLES<br>    data_tab   = lt_sflight<br>    fieldnames = lt_fieldnames.<br></code></pre></td></tr></table></figure><p>基本的excel下载函数，类<code>CL_GUI_FRONTEND_SERVICES</code>的方法<code>GUI_DOWNLOAD</code>里面也是调用的本函数。</p><p>本函数虽然简单，但是其下载的excel的实际格式其实是<code>txt</code>，因此在打开excel时会弹出如下警告：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411112120999.png" alt="image-20241111212009481"></p><p>并且本函数仅支持<code>xls</code>格式的excel的下载，不支持<code>xlsx</code>格式。</p><h3 id="函数SAP-CONVERT-TO-XLS-FORMAT"><a href="#函数SAP-CONVERT-TO-XLS-FORMAT" class="headerlink" title="函数SAP_CONVERT_TO_XLS_FORMAT"></a>函数SAP_CONVERT_TO_XLS_FORMAT</h3><p>类似<code>GUI_DOWNLOAD</code>，支持<code>xlsx</code>格式，但是本函数没有定义excel表头的功能。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">TABLES: sflight.<br><br>SELECT carrid,<br>       fldate<br>  INTO TABLE @DATA(lt_sflight)<br>  FROM sflight<br>  UP TO 20 ROWS.<br>  <br>CALL FUNCTION &#x27;SAP_CONVERT_TO_XLS_FORMAT&#x27;<br>  EXPORTING<br>    i_filename        = &#x27;C:\Users\Wuyuan\Desktop\GUI_DOWNLOAD下载excel.xlsx&#x27;<br>  TABLES<br>    i_tab_sap_data    = lt_sflight<br>  EXCEPTIONS<br>    conversion_failed = 1<br>    OTHERS            = 2.<br>IF sy-subrc &lt;&gt; 0.<br>* Implement suitable error handling here<br>ENDIF.  <br></code></pre></td></tr></table></figure><h3 id="OLE"><a href="#OLE" class="headerlink" title="OLE"></a>OLE</h3><p>可实现高度定制化的excel下载，参考<a href="https://community.sap.com/t5/application-development-blog-posts/using-ole2-objects-to-create-an-excel-file/ba-p/13208688">文章</a>。</p><h3 id="ABAP2XLSX"><a href="#ABAP2XLSX" class="headerlink" title="ABAP2XLSX"></a><code>ABAP2XLSX</code></h3><p>官方社区开发者开源的excel文件处理工具，参考<a href="https://community.sap.com/t5/application-development-blog-posts/using-ole2-objects-to-create-an-excel-file/ba-p/13208688">文章</a>。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>文件处理</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>SD 销售订单SO</title>
+    <link href="/2024/10/14/025-SD%20%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95SO/"/>
+    <url>/2024/10/14/025-SD%20%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95SO/</url>
+    
+    <content type="html"><![CDATA[<h1 id="销售订单SO"><a href="#销售订单SO" class="headerlink" title="销售订单SO"></a>销售订单SO</h1><p>在 SD 模块中，<strong>销售订单处理</strong> 是销售业务流程的核心步骤，用于记录客户的正式订单，并为后续的交货、发票和收款奠定基础。</p><h2 id="事务码"><a href="#事务码" class="headerlink" title="事务码"></a>事务码</h2><ul><li><code>VA01</code></li><li><code>VA02</code></li><li><code>VA03</code></li></ul><h2 id="BAPI"><a href="#BAPI" class="headerlink" title="BAPI"></a>BAPI</h2><p>在销售订单处理过程中，常用的 BAPI 包括创建、修改和读取销售订单的 BAPI。</p><ol><li><strong>BAPI_SALESORDER_CREATEFROMDAT2</strong><ul><li><strong>用途</strong>：用于根据给定的数据创建销售订单。</li><li>关键参数<ul><li><code>ORDER_HEADER_IN</code>：订单的头数据（如客户编号、销售组织等）。</li><li><code>ORDER_ITEM_IN</code>：订单的行项目信息（如物料编号、数量等）。</li></ul></li></ul></li><li><strong>BAPI_SALESORDER_GETDETAIL</strong><ul><li><strong>用途</strong>：获取销售订单的详细信息。</li><li>关键参数<ul><li><code>SALESORDER</code>：销售订单编号。</li></ul></li></ul></li></ol><h3 id="底表"><a href="#底表" class="headerlink" title="底表"></a>底表</h3><ol><li><strong>VBAK</strong> - 销售凭证头表<ul><li>存储销售订单的头信息。</li><li>字段描述<ul><li><code>VBELN</code>：销售凭证号（主键，订单编号）</li><li><code>VBTYP</code>：销售凭证类别（订单类型为 <code>C</code>）</li><li><code>AUART</code>：销售凭证类型（如 OR-标准订单）</li><li><code>VKORG</code>：销售组织</li><li><code>VTWEG</code>：分销渠道</li><li><code>KUNNR</code>：客户编号</li></ul></li></ul></li><li><strong>VBAP</strong> - 销售凭证行项目表<ul><li>存储销售订单的行项目信息。</li><li>字段描述<ul><li><code>VBELN</code>：销售凭证号（主键，外键关联到 VBAK）</li><li><code>POSNR</code>：行项目号（主键）</li><li><code>MATNR</code>：物料编号</li><li><code>KWMENG</code>：订单数量</li><li><code>NETPR</code>：净价（单价）</li><li><code>EDATU</code>：交货日期</li></ul></li></ul></li><li><strong>VBEP</strong> - 销售凭证交货计划行表<ul><li>存储销售订单的交货计划信息。</li><li>字段描述<ul><li><code>VBELN</code>：销售凭证号（主键，外键关联到 VBAP）</li><li><code>POSNR</code>：行项目号（主键，外键关联到 VBAP）</li><li><code>ETENR</code>：交货计划行项目号（主键）</li><li><code>EDATU</code>：交货日期</li><li><code>BMENG</code>：计划交货数量</li></ul></li></ul></li></ol><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202410142156858.png" alt="image-20241014215653579"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>SD</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SAP</tag>
+      
+      <tag>SD</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SD 销售询价和报价</title>
     <link href="/2024/10/13/024-SD%20%E9%94%80%E5%94%AE%E8%AF%A2%E4%BB%B7%E5%92%8C%E6%8A%A5%E4%BB%B7/"/>
     <url>/2024/10/13/024-SD%20%E9%94%80%E5%94%AE%E8%AF%A2%E4%BB%B7%E5%92%8C%E6%8A%A5%E4%BB%B7/</url>
@@ -677,7 +735,7 @@
   
   
   <entry>
-    <title>404</title>
+    <title>friends</title>
     <link href="/"/>
     <url>/</url>
     
@@ -688,7 +746,18 @@
   
   
   <entry>
-    <title>friends</title>
+    <title>Claude Chan的个人博客介绍</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#99;&#x6c;&#97;&#x75;&#100;&#x65;&#x63;&#x68;&#97;&#x6e;&#49;&#50;&#50;&#x38;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#99;&#x6c;&#97;&#x75;&#100;&#x65;&#x63;&#x68;&#97;&#x6e;&#49;&#50;&#50;&#x38;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a>或<a href="mailto:&#x31;&#x35;&#48;&#x35;&#52;&#x31;&#x34;&#x33;&#49;&#x39;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;">&#x31;&#x35;&#48;&#x35;&#52;&#x31;&#x34;&#x33;&#49;&#x39;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;</a></li></ul>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>404</title>
     <link href="/"/>
     <url>/</url>
     
@@ -704,17 +773,6 @@
     <url>/</url>
     
     <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Claude Chan的个人博客介绍</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#99;&#x6c;&#97;&#x75;&#x64;&#101;&#x63;&#x68;&#x61;&#x6e;&#x31;&#50;&#x32;&#x38;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;">&#99;&#x6c;&#97;&#x75;&#x64;&#101;&#x63;&#x68;&#x61;&#x6e;&#x31;&#50;&#x32;&#x38;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a>或<a href="mailto:&#49;&#x35;&#48;&#x35;&#x34;&#x31;&#x34;&#51;&#x31;&#57;&#64;&#113;&#x71;&#46;&#99;&#111;&#109;">&#49;&#x35;&#48;&#x35;&#x34;&#x31;&#x34;&#51;&#x31;&#57;&#64;&#113;&#x71;&#46;&#99;&#111;&#109;</a></li></ul>]]></content>
     
   </entry>
   
