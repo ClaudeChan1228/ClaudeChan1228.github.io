@@ -19,16 +19,16 @@
   <meta name="author" content="Claude Chan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="增强介绍对于SAP系统标准代码的改动都可以称之为增强。 当标准业务流程不满足企业需求时，SAP顾问可以通过实施增强来满足企业相对于标准流程的定制化业务需求。 以下按时间递进依次介绍目前的四代增强：  一代增强：源代码的增强 二代增强：基于函数的增强 三代增强：基于类的增强 四代增强：显示和隐式增强  一代增强：源代码的增强一代增强体现为标准事务程序中的以USEREXIT开头的FORM。 一代增强的">
+    <meta name="description" content="增强介绍对于SAP系统标准代码的改动都可以称之为增强。 当标准业务流程不满足企业需求时，SAP顾问可以通过实施增强来满足企业相对于标准流程的定制化业务需求。 以下按时间递进依次介绍目前的四代增强：  一代增强：源代码的增强 二代增强：基于函数的增强 三代增强：基于类的增强 四代增强：显示和隐式增强  一代增强：基于源代码的增强一代增强体现为标准事务程序中的以USEREXIT开头的FORM。 一代增">
 <meta property="og:type" content="article">
-<meta property="og:title" content="增强概述">
-<meta property="og:url" content="https://claudechan1228.github.io/2024/11/12/028-%E5%A2%9E%E5%BC%BA%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:title" content="ABAP增强">
+<meta property="og:url" content="https://claudechan1228.github.io/2024/11/12/028-ABAP%E5%A2%9E%E5%BC%BA/index.html">
 <meta property="og:site_name" content="Claude Chan">
-<meta property="og:description" content="增强介绍对于SAP系统标准代码的改动都可以称之为增强。 当标准业务流程不满足企业需求时，SAP顾问可以通过实施增强来满足企业相对于标准流程的定制化业务需求。 以下按时间递进依次介绍目前的四代增强：  一代增强：源代码的增强 二代增强：基于函数的增强 三代增强：基于类的增强 四代增强：显示和隐式增强  一代增强：源代码的增强一代增强体现为标准事务程序中的以USEREXIT开头的FORM。 一代增强的">
+<meta property="og:description" content="增强介绍对于SAP系统标准代码的改动都可以称之为增强。 当标准业务流程不满足企业需求时，SAP顾问可以通过实施增强来满足企业相对于标准流程的定制化业务需求。 以下按时间递进依次介绍目前的四代增强：  一代增强：源代码的增强 二代增强：基于函数的增强 三代增强：基于类的增强 四代增强：显示和隐式增强  一代增强：基于源代码的增强一代增强体现为标准事务程序中的以USEREXIT开头的FORM。 一代增">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031500508.png">
 <meta property="article:published_time" content="2024-11-12T14:21:00.000Z">
-<meta property="article:modified_time" content="2024-11-24T08:29:57.484Z">
+<meta property="article:modified_time" content="2024-11-30T12:22:15.854Z">
 <meta property="article:author" content="Claude Chan">
 <meta property="article:tag" content="ABAP">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,7 +38,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>增强概述 - Claude Chan</title>
+  <title>ABAP增强 - Claude Chan</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="增强概述"></span>
+            <span id="subtitle" data-typed-text="ABAP增强"></span>
           
         </div>
 
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          2.2k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          13 分钟
+          19 分钟
         
       </span>
     
@@ -296,7 +296,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">增强概述</h1>
+            <h1 id="seo-header">ABAP增强</h1>
             
             
               <div class="markdown-body">
@@ -310,14 +310,20 @@
 <li>三代增强：基于类的增强</li>
 <li>四代增强：显示和隐式增强</li>
 </ol>
-<h2 id="一代增强：源代码的增强"><a href="#一代增强：源代码的增强" class="headerlink" title="一代增强：源代码的增强"></a>一代增强：源代码的增强</h2><p>一代增强体现为标准事务程序中的以<code>USEREXIT</code>开头的<code>FORM</code>。</p>
+<h2 id="一代增强：基于源代码的增强"><a href="#一代增强：基于源代码的增强" class="headerlink" title="一代增强：基于源代码的增强"></a>一代增强：基于源代码的增强</h2><p>一代增强体现为标准事务程序中的以<code>USEREXIT</code>开头的<code>FORM</code>。</p>
 <p>一代增强的好处是可以使用全局变量，缺点是系统升级需要手动迁移增强代码。</p>
+<p>以下为三种查找一代增强的方法：</p>
+<ol>
+<li>通过事务码的程序查找</li>
+<li>通过SPRO查找</li>
+<li>通过SAT查找</li>
+</ol>
 <h3 id="查找一代增强的方法"><a href="#查找一代增强的方法" class="headerlink" title="查找一代增强的方法"></a>查找一代增强的方法</h3><h4 id="通过事务码的程序查找"><a href="#通过事务码的程序查找" class="headerlink" title="通过事务码的程序查找"></a>通过事务码的程序查找</h4><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182044330.png" srcset="/img/loading.gif" lazyload alt="image-20241118204415193"></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182048586.png" srcset="/img/loading.gif" lazyload alt="image-20241118204807229"></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182048865.png" srcset="/img/loading.gif" lazyload alt="image-20241118204828146"></p>
 <h4 id="通过SPRO查找"><a href="#通过SPRO查找" class="headerlink" title="通过SPRO查找"></a>通过SPRO查找</h4><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182052404.png" srcset="/img/loading.gif" lazyload alt="image-20241118205206095"></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411191913096.png" srcset="/img/loading.gif" lazyload alt="image-20241119191322530"></p>
-<h4 id="通过SAT分析事务进行查找"><a href="#通过SAT分析事务进行查找" class="headerlink" title="通过SAT分析事务进行查找"></a>通过SAT分析事务进行查找</h4><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182117810.png" srcset="/img/loading.gif" lazyload alt="image-20241118211724550"></p>
+<h4 id="通过SAT查找"><a href="#通过SAT查找" class="headerlink" title="通过SAT查找"></a>通过SAT查找</h4><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182117810.png" srcset="/img/loading.gif" lazyload alt="image-20241118211724550"></p>
 <p>输入事务码，点击执行，之后在弹出的业务界面进行操作最后点击保存或者退出，在SAT分析出来的报表中筛选<code>USEREXIT</code>的<code>FORM</code></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411182119842.png" srcset="/img/loading.gif" lazyload alt="image-20241118211949289"></p>
 <h3 id="实施方式"><a href="#实施方式" class="headerlink" title="实施方式"></a>实施方式</h3><p>找到对应的<code>FORM</code>直接编辑源码。</p>
@@ -340,6 +346,12 @@
 <li><strong>CUATEXTS</strong>：记录SAP系统GUI界面信息</li>
 <li><strong>TSDIR</strong>：记录SAP系统子程序信息</li>
 </ol>
+<p>以下为三种查找二代增强的方法：</p>
+<ol>
+<li>通过自开发程序查找</li>
+<li>通过<code>MODX_FUNCTION_ACTIVE_CHECK</code>函数查找</li>
+<li>通过调试断点<code>CALL CUSTOMER-FUNCTION</code>查找</li>
+</ol>
 <p>二代增强相关的函数：</p>
 <ol>
 <li>E类：MODX_FUNCTION_ACTIVE_CHECK（检查功能出口类用户出口是否被激活）</li>
@@ -351,13 +363,13 @@
 <p>运行程序，输入需要查找增强的事务码，运行</p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411232111034.png" srcset="/img/loading.gif" lazyload alt="image-20241123211144784"></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411232112757.png" srcset="/img/loading.gif" lazyload alt="image-20241123211244449"></p>
-<h4 id="通过调试标准函数查找"><a href="#通过调试标准函数查找" class="headerlink" title="通过调试标准函数查找"></a>通过调试标准函数查找</h4><p>如果标准事务的运行中存在二代增强的调用，则在事务调用二代增强前，会先进入标准函数<code>MODX_FUNCTION_ACTIVE_CHECK</code>。</p>
+<h4 id="通过MODX-FUNCTION-ACTIVE-CHECK函数查找"><a href="#通过MODX-FUNCTION-ACTIVE-CHECK函数查找" class="headerlink" title="通过MODX_FUNCTION_ACTIVE_CHECK函数查找"></a>通过<code>MODX_FUNCTION_ACTIVE_CHECK</code>函数查找</h4><p>如果标准事务的运行中存在二代增强的调用，则在事务调用二代增强前，会先进入标准函数<code>MODX_FUNCTION_ACTIVE_CHECK</code>。</p>
 <p>最后查找到的增强函数可以搭配自开发增强查找程序一起确定是否适用于当前业务要求。</p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411232124085.png" srcset="/img/loading.gif" lazyload alt="image-20241123212411696"></p>
 <p>比如运行MM02，修改物料描述并保存</p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411232127079.png" srcset="/img/loading.gif" lazyload alt="image-20241123212743610"></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411232137495.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="通过调试标准程打断点call-CUSTOMER-FUNCTION查找"><a href="#通过调试标准程打断点call-CUSTOMER-FUNCTION查找" class="headerlink" title="通过调试标准程打断点call CUSTOMER-FUNCTION查找"></a>通过调试标准程打断点<code>call CUSTOMER-FUNCTION</code>查找</h4><p>以MM02修改物料描述为例</p>
+<h4 id="通过调试断点CALL-CUSTOMER-FUNCTION查找"><a href="#通过调试断点CALL-CUSTOMER-FUNCTION查找" class="headerlink" title="通过调试断点CALL CUSTOMER-FUNCTION查找"></a>通过调试断点<code>CALL CUSTOMER-FUNCTION</code>查找</h4><p>以MM02修改物料描述为例</p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411241347933.png" srcset="/img/loading.gif" lazyload alt="image-20241124134744298"></p>
 <p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202411241349647.png" srcset="/img/loading.gif" lazyload alt="image-20241124134917022"></p>
 <h3 id="实施方式-1"><a href="#实施方式-1" class="headerlink" title="实施方式"></a>实施方式</h3><p>二代增强的实施涉及到<code>SMOD</code>和<code>CMOD</code>两个事务码：</p>
@@ -368,11 +380,53 @@
 <p>四类二代增强实现案例：</p>
 <ol>
 <li>函数增强的实现方式可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44686958/article/details/137672053">ABAP第二代增强-销售订单增强（示例）</a></li>
-<li>GUI增强的实现方式</li>
 <li>子屏幕增强的实现方式可以参考<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg4MzI1OTM0OA==&mid=2247484205&idx=6&sn=0efc10554d22facbfee3a6248b4a6e83&chksm=cf4b6196f83ce880d00281f41677ccc2b292bab3bcce7081a02b6bc6b59ff8f84b9f003c163e&scene=21#wechat_redirect">增强篇4 CO01生产订单屏幕增强</a></li>
 <li>表结构增强的实现方式可以参考上述子屏幕增强，一般搭配子屏幕增强一起实现</li>
 </ol>
-<h2 id="三代增强：基于类的增强"><a href="#三代增强：基于类的增强" class="headerlink" title="三代增强：基于类的增强"></a>三代增强：基于类的增强</h2><h3 id="查找三代增强的方法"><a href="#查找三代增强的方法" class="headerlink" title="查找三代增强的方法"></a>查找三代增强的方法</h3><h3 id="实施方式-2"><a href="#实施方式-2" class="headerlink" title="实施方式"></a>实施方式</h3><h2 id="四代增强：显示和隐式增强"><a href="#四代增强：显示和隐式增强" class="headerlink" title="四代增强：显示和隐式增强"></a>四代增强：显示和隐式增强</h2><h3 id="查找四代增强的方法"><a href="#查找四代增强的方法" class="headerlink" title="查找四代增强的方法"></a>查找四代增强的方法</h3><h3 id="实施方式-3"><a href="#实施方式-3" class="headerlink" title="实施方式"></a>实施方式</h3>
+<h2 id="三代增强：基于类的增强"><a href="#三代增强：基于类的增强" class="headerlink" title="三代增强：基于类的增强"></a>三代增强：基于类的增强</h2><p>第三代增强为BADI（Business add-in）增强。BADI增强表现为SAP预定义好的接口的实现类，其中包含的各种方法代表了各个业务动作。开发人员通过创建实现类、编写方法逻辑来完成BADI增强的实施。</p>
+<p>一个接口可以有多个实现类，因此一个BADI增强可能同时存在多个增强实现类，而具体业务场景需要的增强实现类则通过过滤器来区分。</p>
+<p>查找业务场景中的BADI增强可以通过以下三种方式：</p>
+<ol>
+<li>通过<code>CL_EXITHANDLER=&gt;GET_INSTANCE</code>方法查找</li>
+<li>通过调试<code>CALL BADI</code>断点查找</li>
+<li>通过<code>ST05</code>查找</li>
+</ol>
+<p>当然也可以通过上述查找二代增强时所用到的程序来查找三代增强，这里不在赘述。</p>
+<h3 id="查找三代增强的方式"><a href="#查找三代增强的方式" class="headerlink" title="查找三代增强的方式"></a>查找三代增强的方式</h3><h4 id="通过CL-EXITHANDLER-GET-INSTANCE方法查找"><a href="#通过CL-EXITHANDLER-GET-INSTANCE方法查找" class="headerlink" title="通过CL_EXITHANDLER=&gt;GET_INSTANCE方法查找"></a>通过<code>CL_EXITHANDLER=&gt;GET_INSTANCE</code>方法查找</h4><p>业务流程如果存在BADI增强，则会调用该方法。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241127195752..png" srcset="/img/loading.gif" lazyload alt="image-20241127195752444"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241127195850..png" srcset="/img/loading.gif" lazyload alt="image-20241127195850007"></p>
+<h4 id="通过调试CALL-BADI断点查找"><a href="#通过调试CALL-BADI断点查找" class="headerlink" title="通过调试CALL BADI断点查找"></a>通过调试<code>CALL BADI</code>断点查找</h4><p>BADI增强的调用在标准代码中体现为<code>CALL BADI</code>。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241127200043..png" srcset="/img/loading.gif" lazyload alt="image-20241127200043041"></p>
+<h4 id="通过ST05查找"><a href="#通过ST05查找" class="headerlink" title="通过ST05查找"></a>通过<code>ST05</code>查找</h4><p>BADI增强的信息存储在<code>SXS_INTER</code>、<code>SXC_EXIT</code>、<code>SXC_CLASS</code> 和 <code>SXC_ATTR</code> 这四个表中，所以可以通过<code>ST05</code>分析业务场景，筛选存在对应表的语句即可。方式一中的方法实际也是通过查询这些表来判断是否存在BAID增强。</p>
+<h3 id="实施方式-2"><a href="#实施方式-2" class="headerlink" title="实施方式"></a>实施方式</h3><p>BADI增强涉及到两个事务码：</p>
+<ol>
+<li><code>se18</code>：查询BADI增强</li>
+<li><code>se19</code>：创建BADI增强</li>
+</ol>
+<p>具体的增强实施参考<a target="_blank" rel="noopener" href="http://www.baidusap.com/abap/badi/810">BADI实例开发-生产订单收货(MB_DOCUMENT_BADI)</a>。</p>
+<p>关于BADI增强中的<strong>多次使用</strong>选项：</p>
+<ul>
+<li><p>勾上该选项，则在对应的业务场景中所有的BADI增强实施都会被调用，但这些增强实施的调用顺序是不被保证的。</p>
+</li>
+<li><p>不勾上多次使用选项，则只能有一个BADI增强实施被激活。</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241130191923..png" srcset="/img/loading.gif" lazyload alt="image-20241130191922342"></p>
+</li>
+</ul>
+<h2 id="四代增强：显示增强和隐式增强"><a href="#四代增强：显示增强和隐式增强" class="headerlink" title="四代增强：显示增强和隐式增强"></a>四代增强：显示增强和隐式增强</h2><p>四代增强中的显示增强表现为标准代码中的<code>ENHANCEMENT-POINT</code>，增强的实施通过菜单栏中的增强按钮&gt;创建增强来进行，创建出来的增强段依附于它上面的系统预留的增强点。</p>
+<p>关于隐式增强，创建出来的增强段则是依附于开发人员定义的增强实施下。</p>
+<p>SAP在标准程序的代码中预留了它的位置：</p>
+<ul>
+<li>包含的末尾</li>
+<li>局部类的末尾</li>
+<li>类的实现部分的末尾</li>
+<li>接口定义的末尾</li>
+<li>结构定义的末尾</li>
+<li>过程的开头和结尾</li>
+</ul>
+<p>通过菜单栏的显示隐式增强来发现标准代码中可以实施的隐式增强：</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241130201649..png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241130201910..png" srcset="/img/loading.gif" lazyload alt="image-20241130201910128"></p>
+
                 
               </div>
             
@@ -431,8 +485,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>增强概述</div>
-      <div>https://claudechan1228.github.io/2024/11/12/028-增强概述/</div>
+      <div>ABAP增强</div>
+      <div>https://claudechan1228.github.io/2024/11/12/028-ABAP增强/</div>
     </div>
     <div class="license-meta">
       
