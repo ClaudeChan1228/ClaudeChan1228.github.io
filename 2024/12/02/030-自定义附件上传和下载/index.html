@@ -19,16 +19,16 @@
   <meta name="author" content="Claude Chan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在低版本的740语法中，对内表分组可以通过在循环中使用AT NEW、on change of的语法来实现循环分组的逻辑： 1234567891011121314SELECT *  INTO TABLE @DATA(lt_sflight)  FROM sflight  UP TO 30 ROWS.SORT lt_sflight BY carrid connid.LOOP AT lt_sflight">
+    <meta name="description" content="自定义附件上传和下载上传附件事务码：SMW0     报错如SMW0配置中没有上传的文件的类型会报出如下错误：  通过配置对应文件的类型解决：    下载附件123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051TABLES: sscrfields.DATA:lv_r">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内表分组">
-<meta property="og:url" content="https://claudechan1228.github.io/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/index.html">
+<meta property="og:title" content="自定义附件上传和下载">
+<meta property="og:url" content="https://claudechan1228.github.io/2024/12/02/030-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/index.html">
 <meta property="og:site_name" content="Claude Chan">
-<meta property="og:description" content="在低版本的740语法中，对内表分组可以通过在循环中使用AT NEW、on change of的语法来实现循环分组的逻辑： 1234567891011121314SELECT *  INTO TABLE @DATA(lt_sflight)  FROM sflight  UP TO 30 ROWS.SORT lt_sflight BY carrid connid.LOOP AT lt_sflight">
+<meta property="og:description" content="自定义附件上传和下载上传附件事务码：SMW0     报错如SMW0配置中没有上传的文件的类型会报出如下错误：  通过配置对应文件的类型解决：    下载附件123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051TABLES: sscrfields.DATA:lv_r">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202408031500508.png">
-<meta property="article:published_time" content="2024-01-27T04:56:00.000Z">
-<meta property="article:modified_time" content="2024-12-02T11:50:52.093Z">
+<meta property="article:published_time" content="2024-12-02T12:13:00.000Z">
+<meta property="article:modified_time" content="2024-12-02T12:33:11.627Z">
 <meta property="article:author" content="Claude Chan">
 <meta property="article:tag" content="ABAP">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,7 +38,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>内表分组 - Claude Chan</title>
+  <title>自定义附件上传和下载 - Claude Chan</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="内表分组"></span>
+            <span id="subtitle" data-typed-text="自定义附件上传和下载"></span>
           
         </div>
 
@@ -227,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-27 12:56" pubdate>
-          2024年1月27日 下午
+        <time datetime="2024-12-02 20:13" pubdate>
+          2024年12月2日 晚上
         </time>
       </span>
     
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          308 字
+          199 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          3 分钟
+          2 分钟
         
       </span>
     
@@ -296,33 +296,24 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">内表分组</h1>
+            <h1 id="seo-header">自定义附件上传和下载</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>、<code>on change of</code>的语法来实现循环分组的逻辑：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">SELECT *<br>  INTO TABLE @DATA(lt_sflight)<br>  FROM sflight<br>  UP TO 30 ROWS.<br><br><br>SORT lt_sflight BY carrid connid.<br><br>LOOP AT lt_sflight INTO DATA(lw_sflight).<br>  WRITE : / lw_sflight-connid.<br>  AT NEW connid.<br>    WRITE : / &#x27;AT NEW connid: &#x27; , lw_sflight-connid.<br>  ENDAT.<br>ENDLOOP.<br></code></pre></td></tr></table></figure>
+                <h1 id="自定义附件上传和下载"><a href="#自定义附件上传和下载" class="headerlink" title="自定义附件上传和下载"></a>自定义附件上传和下载</h1><h2 id="上传附件"><a href="#上传附件" class="headerlink" title="上传附件"></a>上传附件</h2><p>事务码：SMW0</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201549..png" srcset="/img/loading.gif" lazyload alt="image-20241202201548715"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201607..png" srcset="/img/loading.gif" lazyload alt="image-20241202201606954"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202202028..png" srcset="/img/loading.gif" lazyload alt="image-20241202202028778"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202202044..png" srcset="/img/loading.gif" lazyload alt="image-20241202202044228"></p>
+<h3 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h3><p>如SMW0配置中没有上传的文件的类型会报出如下错误：</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201701..png" srcset="/img/loading.gif" lazyload alt="image-20241202201701659"></p>
+<p>通过配置对应文件的类型解决：</p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201823..png" srcset="/img/loading.gif" lazyload alt="image-20241202201823173"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201843..png" srcset="/img/loading.gif" lazyload alt="image-20241202201843472"></p>
+<p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201921..png" srcset="/img/loading.gif" lazyload alt="image-20241202201920913"></p>
+<h2 id="下载附件"><a href="#下载附件" class="headerlink" title="下载附件"></a>下载附件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">TABLES: sscrfields.<br><br>DATA:lv_rc       TYPE i,<br>     lv_filename TYPE string,<br>     lv_path     TYPE string,<br>     lv_fullpath TYPE string,<br>     lv_objdata  TYPE wwwdatatab.<br><br>lv_filename = |SMW0附件下载|.<br>cl_gui_frontend_services=&gt;file_save_dialog(<br>  EXPORTING<br>    window_title           = &#x27;SMW0附件下载&#x27;<br>    default_extension     =  &#x27;XLSX&#x27;    	&quot;默认保存文件格式<br>    default_file_name     = lv_filename   &quot;默认文件名称<br>  CHANGING<br>    filename              = lv_filename   &quot;默认文件名称<br>    path                  = lv_path       &quot;文件路径<br>    fullpath              = lv_fullpath   &quot;文件路径<br>  EXCEPTIONS<br>    cntl_error            =  1<br>    error_no_gui          =  2<br>    not_supported_by_gui  =  3<br>    OTHERS                =  4<br>                                            ).<br><br>CHECK lv_fullpath IS NOT INITIAL.<br><br>FREE:lv_objdata,lv_rc.<br><br>SELECT SINGLE relid objid<br>  INTO CORRESPONDING FIELDS OF lv_objdata<br>  FROM wwwdata<br>  WHERE srtf2 = 0<br>  AND relid = &#x27;MI&#x27;<br>  AND objid = &#x27;ZTEST_EXCEL&#x27;.<br>IF sy-subrc EQ 0.<br>  TRANSLATE lv_fullpath TO UPPER CASE.<br>  REPLACE &#x27;XLS&#x27; WITH &#x27;XLSX&#x27; INTO lv_fullpath.<br>  CALL FUNCTION &#x27;DOWNLOAD_WEB_OBJECT&#x27;<br>    EXPORTING<br>      key         = lv_objdata<br>      destination = CONV localfile( lv_fullpath )<br>    IMPORTING<br>      rc          = lv_rc.<br>  IF lv_rc EQ 0.<br>    MESSAGE &#x27;模板下载成功&#x27; TYPE if_mmpur_constants_general=&gt;msg_success.<br>  ELSE.<br>    MESSAGE &#x27;模板下载失败&#x27; TYPE if_mmpur_constants_general=&gt;msg_success DISPLAY LIKE if_mmpur_constants_general=&gt;msg_error.<br>  ENDIF.<br>ELSE.<br>ENDIF.<br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>在使用<code>AT NEW</code>时要注意<ul>
-<li>该语法以目标字段及其对应的前面的字段为基准来判定是否是<code>NEW</code></li>
-<li>在<code>AT...ENDAT</code>代码段中，工作区除去基准字段外，其他字段会被置空</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">LOOP AT lt_sflight INTO lw_sflight.<br>  WRITE : / lw_sflight-connid.<br>  ON CHANGE OF lw_sflight-connid.<br>    WRITE : / &#x27;ON CHANGE OF connid: &#x27; , lw_sflight-connid.<br>  ENDON.<br>ENDLOOP.<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>在使用<code>ON CHAGE OF</code>时要注意<ul>
-<li>程序会隐式生成一个临时变量用于存储基准字段的值，是否<code>CHANGE</code>取决于隐式变量是否改变</li>
-<li>该隐式变量的生命周期&gt;<code>LOOP</code>，因此如果在内表的头尾相同的情况下第二次开始的<code>LOOP</code>第一行不会触发<code>ON CHAGE OF</code></li>
-<li>因此推荐在使用该语法前对内表进行排序</li>
-</ul>
-</li>
-</ul>
-<p>新版本的740语法中提供了另外一种循环分组的语法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">&quot;分组循环<br>LOOP AT lt_sflight INTO DATA(lw_sflight)<br>  GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )<br>  REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象<br><br>  IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid<br>    &quot;业务逻辑<br>    LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).<br>      WRITE / lw_sflight_group-carrid.<br>      EXIT.<br>    ENDLOOP.<br>  ENDIF.<br>ENDLOOP.<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -351,7 +342,7 @@
   
     <span>></span>
     
-  <a href="/categories/SAP/ABAP/%E8%AF%AD%E6%B3%95/" class="category-chain-item">语法</a>
+  <a href="/categories/SAP/ABAP/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/" class="category-chain-item">文件处理</a>
   
   
 
@@ -382,8 +373,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>内表分组</div>
-      <div>https://claudechan1228.github.io/2024/01/27/002-内表分组/</div>
+      <div>自定义附件上传和下载</div>
+      <div>https://claudechan1228.github.io/2024/12/02/030-自定义附件上传和下载/</div>
     </div>
     <div class="license-meta">
       
@@ -395,7 +386,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年1月27日</div>
+          <div>2024年12月2日</div>
         </div>
       
       
@@ -427,15 +418,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/27/003-%E8%B7%B3%E8%BF%87%E4%BA%8B%E5%8A%A1%E7%A0%81%E6%9D%83%E9%99%90%E6%A3%80%E6%9F%A5/" title="跳过事务码权限检查">
+                      <a href="/2024/12/04/029-ABAP%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="ABAP性能优化">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">跳过事务码权限检查</span>
+                        <span class="hidden-mobile">ABAP性能优化</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2024/12/02/032-RFC%E8%AE%B2%E8%A7%A3/" title="RFC讲解">
+                        <span class="hidden-mobile">RFC讲解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

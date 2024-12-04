@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>ABAP开发规范</title>
-    <link href="/2024/11/18/029-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
-    <url>/2024/11/18/029-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</url>
+    <title>ABAP常用语法辨析</title>
+    <link href="/2024/12/04/031-ABAP%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E8%BE%A8%E6%9E%90/"/>
+    <url>/2024/12/04/031-ABAP%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E8%BE%A8%E6%9E%90/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="ABAP常用语法辨析"><a href="#ABAP常用语法辨析" class="headerlink" title="ABAP常用语法辨析"></a>ABAP常用语法辨析</h1><h2 id="RETURN和EXIT"><a href="#RETURN和EXIT" class="headerlink" title="RETURN和EXIT"></a><code>RETURN</code>和<code>EXIT</code></h2><ol><li><code>EXIT</code>一般用于退出循环</li><li><code>RETURN</code>可以用于退出当前FORM、METHOD、函数或者报表事件</li></ol><h2 id="CLEAR、REFRESH和FREE"><a href="#CLEAR、REFRESH和FREE" class="headerlink" title="CLEAR、REFRESH和FREE"></a><code>CLEAR</code>、<code>REFRESH</code>和<code>FREE</code></h2><ol><li><code>CLEAR</code>：初始化目标对象</li><li><code>REFRESH</code>：初始化内表</li><li><code>FREE</code>：初始化目标对象并释放其占用空间</li></ol><h2 id="SY-SUBRC"><a href="#SY-SUBRC" class="headerlink" title="SY-SUBRC"></a><code>SY-SUBRC</code></h2><h3 id="SY-SUBRC-0"><a href="#SY-SUBRC-0" class="headerlink" title="SY-SUBRC = 0"></a><code>SY-SUBRC = 0</code></h3><ol><li><code>SELECT</code>查询到数据</li><li><code>READ TABLE</code>查询到数据</li><li><code>INSERT</code>成功插入数据</li><li><code>UPDATE</code>成功更新数据</li><li><code>DELETE</code>找到数据并成功删除</li><li><code>MODIFY</code>操作后<code>SY-SUBRC</code> 恒为 0</li><li><code>LOOP</code>循环至少被执行一次</li></ol><h3 id="SY-SUBRC-4"><a href="#SY-SUBRC-4" class="headerlink" title="SY-SUBRC = 4"></a><code>SY-SUBRC = 4</code></h3><ol><li><code>SELECT</code>没查询到数据</li><li><code>READ TABLE</code>没查询到数据<ol><li>内表为空</li><li>内表中没有符合条件的数据</li></ol></li><li><code>INSERT</code>数据插入失败<ol><li>插入的数据底表已有相同KEY的记录</li></ol></li><li><code>UPDATE</code>没找到符合条件的数据</li><li><code>DELETE</code>没找到符合条件的数据</li><li><code>LOOP</code>没执行<ol><li>内表为空</li><li>内表中没有符合条件的数据</li></ol></li></ol>]]></content>
     
     
     <categories>
@@ -17,7 +17,94 @@
       
       <category>ABAP</category>
       
-      <category>模板</category>
+      <category>语法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ABAP性能优化</title>
+    <link href="/2024/12/04/029-ABAP%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    <url>/2024/12/04/029-ABAP%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ABAP性能优化"><a href="#ABAP性能优化" class="headerlink" title="ABAP性能优化"></a>ABAP性能优化</h1><h2 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h2><h3 id="嵌套循环优化"><a href="#嵌套循环优化" class="headerlink" title="嵌套循环优化"></a>嵌套循环优化</h3><h3 id="SQL查询优化"><a href="#SQL查询优化" class="headerlink" title="SQL查询优化"></a>SQL查询优化</h3><h3 id="代码编写规范"><a href="#代码编写规范" class="headerlink" title="代码编写规范"></a>代码编写规范</h3><h4 id="ABAP内存使用规范"><a href="#ABAP内存使用规范" class="headerlink" title="ABAP内存使用规范"></a>ABAP内存使用规范</h4><h2 id="性能优化分析工具"><a href="#性能优化分析工具" class="headerlink" title="性能优化分析工具"></a>性能优化分析工具</h2><h3 id="SAT"><a href="#SAT" class="headerlink" title="SAT"></a>SAT</h3><h3 id="ST05"><a href="#ST05" class="headerlink" title="ST05"></a>ST05</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>优化</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>自定义附件上传和下载</title>
+    <link href="/2024/12/02/030-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/"/>
+    <url>/2024/12/02/030-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/</url>
+    
+    <content type="html"><![CDATA[<h1 id="自定义附件上传和下载"><a href="#自定义附件上传和下载" class="headerlink" title="自定义附件上传和下载"></a>自定义附件上传和下载</h1><h2 id="上传附件"><a href="#上传附件" class="headerlink" title="上传附件"></a>上传附件</h2><p>事务码：SMW0</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201549..png" alt="image-20241202201548715"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201607..png" alt="image-20241202201606954"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202202028..png" alt="image-20241202202028778"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202202044..png" alt="image-20241202202044228"></p><h3 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h3><p>如SMW0配置中没有上传的文件的类型会报出如下错误：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201701..png" alt="image-20241202201701659"></p><p>通过配置对应文件的类型解决：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201823..png" alt="image-20241202201823173"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201843..png" alt="image-20241202201843472"></p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241202201921..png" alt="image-20241202201920913"></p><h2 id="下载附件"><a href="#下载附件" class="headerlink" title="下载附件"></a>下载附件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">TABLES: sscrfields.<br><br>DATA:lv_rc       TYPE i,<br>     lv_filename TYPE string,<br>     lv_path     TYPE string,<br>     lv_fullpath TYPE string,<br>     lv_objdata  TYPE wwwdatatab.<br><br>lv_filename = |SMW0附件下载|.<br>cl_gui_frontend_services=&gt;file_save_dialog(<br>  EXPORTING<br>    window_title           = &#x27;SMW0附件下载&#x27;<br>    default_extension     =  &#x27;XLSX&#x27;    &quot;默认保存文件格式<br>    default_file_name     = lv_filename   &quot;默认文件名称<br>  CHANGING<br>    filename              = lv_filename   &quot;默认文件名称<br>    path                  = lv_path       &quot;文件路径<br>    fullpath              = lv_fullpath   &quot;文件路径<br>  EXCEPTIONS<br>    cntl_error            =  1<br>    error_no_gui          =  2<br>    not_supported_by_gui  =  3<br>    OTHERS                =  4<br>                                            ).<br><br>CHECK lv_fullpath IS NOT INITIAL.<br><br>FREE:lv_objdata,lv_rc.<br><br>SELECT SINGLE relid objid<br>  INTO CORRESPONDING FIELDS OF lv_objdata<br>  FROM wwwdata<br>  WHERE srtf2 = 0<br>  AND relid = &#x27;MI&#x27;<br>  AND objid = &#x27;ZTEST_EXCEL&#x27;.<br>IF sy-subrc EQ 0.<br>  TRANSLATE lv_fullpath TO UPPER CASE.<br>  REPLACE &#x27;XLS&#x27; WITH &#x27;XLSX&#x27; INTO lv_fullpath.<br>  CALL FUNCTION &#x27;DOWNLOAD_WEB_OBJECT&#x27;<br>    EXPORTING<br>      key         = lv_objdata<br>      destination = CONV localfile( lv_fullpath )<br>    IMPORTING<br>      rc          = lv_rc.<br>  IF lv_rc EQ 0.<br>    MESSAGE &#x27;模板下载成功&#x27; TYPE if_mmpur_constants_general=&gt;msg_success.<br>  ELSE.<br>    MESSAGE &#x27;模板下载失败&#x27; TYPE if_mmpur_constants_general=&gt;msg_success DISPLAY LIKE if_mmpur_constants_general=&gt;msg_error.<br>  ENDIF.<br>ELSE.<br>ENDIF.<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>文件处理</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>RFC讲解</title>
+    <link href="/2024/12/02/032-RFC%E8%AE%B2%E8%A7%A3/"/>
+    <url>/2024/12/02/032-RFC%E8%AE%B2%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="RFC讲解"><a href="#RFC讲解" class="headerlink" title="RFC讲解"></a>RFC讲解</h1><h2 id="RFC"><a href="#RFC" class="headerlink" title="RFC"></a>RFC</h2><h2 id="ARFC"><a href="#ARFC" class="headerlink" title="ARFC"></a>ARFC</h2><h2 id="TRFC"><a href="#TRFC" class="headerlink" title="TRFC"></a>TRFC</h2><h3 id="QRFC"><a href="#QRFC" class="headerlink" title="QRFC"></a>QRFC</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP</category>
+      
+      <category>接口</category>
       
     </categories>
     
@@ -779,7 +866,7 @@
     <link href="/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/"/>
     <url>/2024/01/27/002-%E5%86%85%E8%A1%A8%E5%88%86%E7%BB%84/</url>
     
-    <content type="html"><![CDATA[<p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>的方式来实现。</p><p>新版本的740语法中提供了分组循环的功能：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">SELECT *<br>  INTO TABLE @DATA(lt_sflight)<br>  FROM sflight<br>  UP TO 100 ROWS.<br><br>  &quot;分组循环<br>  LOOP AT lt_sflight INTO DATA(lw_sflight)<br>    GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )<br>    REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象<br><br>    IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid<br>      &quot;业务逻辑<br>      LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).<br>        WRITE / lw_sflight_group-carrid.<br>        EXIT.<br>      ENDLOOP.<br><br>    ENDIF.<br><br>  ENDLOOP.<br></code></pre></td></tr></table></figure><p>程序输出：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271331564.png?imageSlim" alt="image-20240127133134500"></p><p>底表数据：</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/202401271332832.png?imageSlim" alt="image-20240127133226703"></p>]]></content>
+    <content type="html"><![CDATA[<p>在低版本的740语法中，对内表分组可以通过在循环中使用<code>AT NEW</code>、<code>on change of</code>的语法来实现循环分组的逻辑：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">SELECT *<br>  INTO TABLE @DATA(lt_sflight)<br>  FROM sflight<br>  UP TO 30 ROWS.<br><br><br>SORT lt_sflight BY carrid connid.<br><br>LOOP AT lt_sflight INTO DATA(lw_sflight).<br>  WRITE : / lw_sflight-connid.<br>  AT NEW connid.<br>    WRITE : / &#x27;AT NEW connid: &#x27; , lw_sflight-connid.<br>  ENDAT.<br>ENDLOOP.<br></code></pre></td></tr></table></figure><ul><li>在使用<code>AT NEW</code>时要注意<ul><li>该语法以目标字段及其对应的前面的字段为基准来判定是否是<code>NEW</code></li><li>在<code>AT...ENDAT</code>代码段中，工作区除去基准字段外，其他字段会被置空</li></ul></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">LOOP AT lt_sflight INTO lw_sflight.<br>  WRITE : / lw_sflight-connid.<br>  ON CHANGE OF lw_sflight-connid.<br>    WRITE : / &#x27;ON CHANGE OF connid: &#x27; , lw_sflight-connid.<br>  ENDON.<br>ENDLOOP.<br></code></pre></td></tr></table></figure><ul><li>在使用<code>ON CHAGE OF</code>时要注意<ul><li>程序会隐式生成一个临时变量用于存储基准字段的值，是否<code>CHANGE</code>取决于隐式变量是否改变</li><li>该隐式变量的生命周期&gt;<code>LOOP</code>，因此如果在内表的头尾相同的情况下第二次开始的<code>LOOP</code>第一行不会触发<code>ON CHAGE OF</code></li><li>因此推荐在使用该语法前对内表进行排序</li></ul></li></ul><p>新版本的740语法中提供了另外一种循环分组的语法：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">&quot;分组循环<br>LOOP AT lt_sflight INTO DATA(lw_sflight)<br>  GROUP BY ( carrid = lw_sflight-carrid size = GROUP SIZE )<br>  REFERENCE INTO DATA(lt_sflight_group).&quot;每一组的对象<br><br>  IF lt_sflight_group-&gt;*-size &gt; 1.&quot;当前组有重复的carrid<br>    &quot;业务逻辑<br>    LOOP AT GROUP lt_sflight_group INTO DATA(lw_sflight_group).<br>      WRITE / lw_sflight_group-carrid.<br>      EXIT.<br>    ENDLOOP.<br>  ENDIF.<br>ENDLOOP.<br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
@@ -818,7 +905,7 @@
   
   
   <entry>
-    <title>contact</title>
+    <title>friends</title>
     <link href="/"/>
     <url>/</url>
     
@@ -833,7 +920,7 @@
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#108;&#97;&#x75;&#100;&#x65;&#x63;&#x68;&#x61;&#x6e;&#x31;&#50;&#x32;&#56;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#x63;&#108;&#97;&#x75;&#100;&#x65;&#x63;&#x68;&#x61;&#x6e;&#x31;&#50;&#x32;&#56;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a>或<a href="mailto:&#x31;&#x35;&#48;&#53;&#x34;&#x31;&#52;&#x33;&#49;&#57;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#109;">&#x31;&#x35;&#48;&#53;&#x34;&#x31;&#52;&#x33;&#49;&#57;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#109;</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#x6c;&#97;&#117;&#100;&#x65;&#x63;&#104;&#97;&#x6e;&#x31;&#50;&#x32;&#x38;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x63;&#x6c;&#97;&#117;&#100;&#x65;&#x63;&#104;&#97;&#x6e;&#x31;&#50;&#x32;&#x38;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>或<a href="mailto:&#49;&#x35;&#x30;&#x35;&#x34;&#x31;&#52;&#x33;&#49;&#x39;&#x40;&#x71;&#113;&#46;&#99;&#111;&#109;">&#49;&#x35;&#x30;&#x35;&#x34;&#x31;&#52;&#x33;&#49;&#x39;&#x40;&#x71;&#113;&#46;&#99;&#111;&#109;</a></li></ul>]]></content>
     
   </entry>
   
@@ -851,7 +938,18 @@
   
   
   <entry>
-    <title>friends</title>
+    <title>tags</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>contact</title>
     <link href="/"/>
     <url>/</url>
     
@@ -863,17 +961,6 @@
   
   <entry>
     <title>[object Object]</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>tags</title>
     <link href="/"/>
     <url>/</url>
     
