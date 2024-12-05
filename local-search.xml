@@ -91,11 +91,11 @@
   
   
   <entry>
-    <title>RFC讲解</title>
+    <title>RFC辨析</title>
     <link href="/2024/12/02/032-RFC%E8%AE%B2%E8%A7%A3/"/>
     <url>/2024/12/02/032-RFC%E8%AE%B2%E8%A7%A3/</url>
     
-    <content type="html"><![CDATA[<h1 id="RFC讲解"><a href="#RFC讲解" class="headerlink" title="RFC讲解"></a>RFC讲解</h1><h2 id="RFC"><a href="#RFC" class="headerlink" title="RFC"></a>RFC</h2><h2 id="ARFC"><a href="#ARFC" class="headerlink" title="ARFC"></a>ARFC</h2><h2 id="TRFC"><a href="#TRFC" class="headerlink" title="TRFC"></a>TRFC</h2><h3 id="QRFC"><a href="#QRFC" class="headerlink" title="QRFC"></a>QRFC</h3>]]></content>
+    <content type="html"><![CDATA[<h1 id="RFC-辨析"><a href="#RFC-辨析" class="headerlink" title="RFC 辨析"></a>RFC 辨析</h1><p>Remote Functino Call 远程函数调用是 SAP 提供的一种系统间的通信手段，表现为在被调用方系统的的函数。只需通过事务码<code>SM59</code>维护系统之间的链接信息，即可通过 RFC 进行系统间通信。</p><p><img src="https://claudechan-1316756394.cos.ap-nanjing.myqcloud.com/PicGo/20241205204807..png" alt="image-20241205204806589"></p><p>目前SAP提供了以下四种 RFC ：</p><ol><li>同步RFC：sRFC</li><li>异步RFC：aRFC</li><li>事务RFC：tRFC</li><li>队列RFC：qRFC<ol><li>出栈队列 RFC </li><li>入栈队列 RFC</li></ol></li></ol><h2 id="四种-RFC-调用特性对比"><a href="#四种-RFC-调用特性对比" class="headerlink" title="四种 RFC 调用特性对比"></a>四种 RFC 调用特性对比</h2><table><thead><tr><th align="left"></th><th align="left">执行时间</th><th align="left">处理模式</th><th align="left">调用时是否支持DEBUG</th><th align="left">日志信息</th></tr></thead><tbody><tr><td align="left">sRFC</td><td align="left">立即执行</td><td align="left">同步</td><td align="left">支持</td><td align="left">无</td></tr><tr><td align="left">aRFC</td><td align="left">立即执行</td><td align="left">异步</td><td align="left">支持</td><td align="left">无</td></tr><tr><td align="left">tRFC</td><td align="left">需等待</td><td align="left">异步，一次执行</td><td align="left">不支持</td><td align="left">提供</td></tr><tr><td align="left">qRFC</td><td align="left">需等待</td><td align="left">异步，一次顺序执行</td><td align="left">不支持</td><td align="left">提供</td></tr></tbody></table><h2 id="同步-RFC（sRFC-Synchronous-RFC）"><a href="#同步-RFC（sRFC-Synchronous-RFC）" class="headerlink" title="同步 RFC（sRFC, Synchronous RFC）"></a>同步 RFC（sRFC, Synchronous RFC）</h2><h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">CALL FUNCTION &#x27;REMOTE_FUNCTION&#x27;<br>  DESTINATION &#x27;DESTINATION_NAME&#x27;<br>  EXPORTING<br>    input_data = lv_input<br>  IMPORTING<br>    output_data = lv_output.<br></code></pre></td></tr></table></figure><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul><li>调用是 <strong>同步</strong> 的，即调用者会等待远程过程完成并返回结果。</li><li>调用时，系统需要确保远程系统是可用的，否则调用会失败。</li><li>常用于简单的、实时的、请求-响应模式的场景。</li></ul><h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul><li>两个 SAP 系统之间的数据同步。</li><li>简单的实时请求，比如从另一个 SAP 系统获取客户信息。</li></ul><h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><ul><li>通过<code>ST22</code>查询两方系统的失败日志。</li></ul><h2 id="异步-RFC（aRFC-Asynchronous-RFC）"><a href="#异步-RFC（aRFC-Asynchronous-RFC）" class="headerlink" title="异步 RFC（aRFC, Asynchronous RFC）"></a>异步 RFC（aRFC, Asynchronous RFC）</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">CALL FUNCTION &#x27;REMOTE_FUNCTION&#x27;<br>  DESTINATION &#x27;DESTINATION_NAME&#x27;<br>  STARTING NEW TASK &#x27;TASK_NAME&#x27;<br>  PERFORMING callback_form ON END OF TASK<br>  EXPORTING<br>    input_data = lv_input.<br>*不能有导出参数<br></code></pre></td></tr></table></figure><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ul><li>调用是 <strong>异步</strong> 的，调用者不需要等待远程过程完成。</li><li>异步 RFC 调用过程中，调用者和被调用者的资源是独立的。</li><li>调用方无法直接接收返回值，但可以通过后续的机制<code>PERFORMING callback_form ON END OF TASK</code>检查执行结果。</li></ul><h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><ul><li>数据批量传输。</li><li>长时间运行的过程，例如数据集成或数据清理任务。</li></ul><h3 id="日志-1"><a href="#日志-1" class="headerlink" title="日志"></a>日志</h3><ul><li>调用方系统通过<code>ST22</code>查询失败日志。</li></ul><h2 id="事务-RFC（tRFC-Transactional-RFC）"><a href="#事务-RFC（tRFC-Transactional-RFC）" class="headerlink" title="事务 RFC（tRFC, Transactional RFC）"></a>事务 RFC（tRFC, Transactional RFC）</h2><p><strong>事务 RFC</strong> 是异步 RFC 的改进版本，主要用于<strong>可靠的异步通信</strong>，提供更强的错误处理能力和事务管理功能。即使远程系统暂时不可用，数据会被存储并在稍后重新传输，确保调用成功。</p><h3 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ABAP">CALL FUNCTION &#x27;REMOTE_FUNCTION&#x27;<br>  IN BACKGROUND TASK<br>  DESTINATION &#x27;DESTINATION_NAME&#x27;<br>  EXPORTING<br>    input_data = lv_input.<br><br>COMMIT WORK.<br></code></pre></td></tr></table></figure><h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ul><li>异步调用，但具有事务管理（Transactional RFC）的可靠性。</li><li>支持队列机制，可以按照特定顺序执行。</li><li>消息可以被重新传输，确保数据的一致性。<ul><li>默认配置是发送30次每次间隔15分钟</li></ul></li><li><code>COMMIT WORK</code>时才会将tRFC放入系统队列中。</li><li>tRFC的执行需要在系统队列中等待。</li></ul><h3 id="使用场景-2"><a href="#使用场景-2" class="headerlink" title="使用场景"></a>使用场景</h3><ul><li>数据传输要求可靠性但不需要实时性，比如各种同步数据场景。</li><li>系统不可用时，数据可在稍后继续传输。</li><li>数据传输需要特定的执行顺序。</li></ul><h3 id="日志-2"><a href="#日志-2" class="headerlink" title="日志"></a>日志</h3><ul><li>调用方通过SM58查询失败日志、重处理。</li><li>被调用方通过<code>ST22</code>查询失败日志。</li></ul><h2 id="队列-RFC（qRFC-Queued-RFC）"><a href="#队列-RFC（qRFC-Queued-RFC）" class="headerlink" title="队列 RFC（qRFC, Queued RFC）"></a>队列 RFC（qRFC, Queued RFC）</h2><p>**队列 RFC **可以分为 <strong>出栈队列（Outbound Queue）</strong> 和 <strong>入栈队列（Inbound Queue）</strong>，分别对应数据从源系统发送和目标系统接收的方向。</p><p>队列 RFC 可以视为 事务 RFC 的升级版，相比事务 RFC 通过<code>SM58</code>查询日志、重处理，队列 RFC 提供了 <code>SMQ1</code>和<code>SMQ2</code>两个更强大的事务码来管理出栈队列和入栈队列。</p><h3 id="出栈和入栈队列的关系"><a href="#出栈和入栈队列的关系" class="headerlink" title="出栈和入栈队列的关系"></a>出栈和入栈队列的关系</h3><ul><li><strong>出栈队列</strong> 和 <strong>入栈队列</strong> 通常成对出现，确保数据从源系统到目标系统的顺序性和可靠性。</li><li>数据的处理流程：<ol><li>在源系统中，通过 qRFC 调用生成一个出栈队列（<code>SMQ1</code>）。</li><li>数据发送到目标系统后，存入目标系统的入栈队列（<code>SMQ2</code>）。</li><li>目标系统按顺序处理入栈队列中的调用。</li></ol></li></ul>]]></content>
     
     
     <categories>
@@ -905,29 +905,18 @@
   
   
   <entry>
-    <title>friends</title>
-    <link href="/"/>
-    <url>/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Claude Chan的个人博客介绍</title>
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#x6c;&#97;&#117;&#100;&#x65;&#x63;&#104;&#97;&#x6e;&#x31;&#50;&#x32;&#x38;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x63;&#x6c;&#97;&#117;&#100;&#x65;&#x63;&#104;&#97;&#x6e;&#x31;&#50;&#x32;&#x38;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>或<a href="mailto:&#49;&#x35;&#x30;&#x35;&#x34;&#x31;&#52;&#x33;&#49;&#x39;&#x40;&#x71;&#113;&#46;&#99;&#111;&#109;">&#49;&#x35;&#x30;&#x35;&#x34;&#x31;&#52;&#x33;&#49;&#x39;&#x40;&#x71;&#113;&#46;&#99;&#111;&#109;</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h1><p>Claude Chan，男，福建人，本科毕业于厦门集美。</p><h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul><li>QQ：1505414319</li><li>邮箱：<a href="mailto:&#x63;&#108;&#97;&#x75;&#100;&#101;&#x63;&#x68;&#x61;&#x6e;&#x31;&#50;&#50;&#x38;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x63;&#108;&#97;&#x75;&#100;&#101;&#x63;&#x68;&#x61;&#x6e;&#x31;&#50;&#50;&#x38;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a>或<a href="mailto:&#x31;&#x35;&#48;&#53;&#x34;&#49;&#52;&#51;&#49;&#57;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#109;">&#x31;&#x35;&#48;&#53;&#x34;&#49;&#52;&#51;&#49;&#57;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#109;</a></li></ul>]]></content>
     
   </entry>
   
   
   
   <entry>
-    <title>categories</title>
+    <title>contact</title>
     <link href="/"/>
     <url>/</url>
     
@@ -949,7 +938,7 @@
   
   
   <entry>
-    <title>contact</title>
+    <title>friends</title>
     <link href="/"/>
     <url>/</url>
     
@@ -961,6 +950,17 @@
   
   <entry>
     <title>[object Object]</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>categories</title>
     <link href="/"/>
     <url>/</url>
     
