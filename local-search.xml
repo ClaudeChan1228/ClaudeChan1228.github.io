@@ -98,25 +98,6 @@
   
   
   <entry>
-    <title>欢迎来到我的知识库</title>
-    <link href="/uncategorized/2026-05-31-welcome/"/>
-    <url>/uncategorized/2026-05-31-welcome/</url>
-    
-    <content type="html"><![CDATA[<h2 id="关于这个知识库"><a href="#关于这个知识库" class="headerlink" title="关于这个知识库"></a>关于这个知识库</h2><p>这里记录我在以下领域的学习笔记：</p><ul><li><strong>SAP ERP</strong>：涵盖业务模块（MM&#x2F;SD&#x2F;FI&#x2F;CO）和开发技术（ABAP&#x2F;SAPUI5）</li><li><strong>股票投资</strong>：投资理念、方法论、交易复盘</li><li><strong>乒乓球</strong>：技术训练方法、实战比赛分析</li></ul><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><ul><li>📝 <strong>文章</strong> — 按分类浏览各领域知识</li><li>📋 <strong><a href="/kanban/">学习看板</a></strong> — 查看当前学习计划和进度</li><li>📧 <strong>每日邮件</strong> — 接收近期知识概要推送</li></ul><p>持续更新中…</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>知识管理</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>SAP 物料分类账原理概述</title>
     <link href="/SAP/%E4%B8%9A%E5%8A%A1/2026-05-31-sap-sample/"/>
     <url>/SAP/%E4%B8%9A%E5%8A%A1/2026-05-31-sap-sample/</url>
@@ -136,6 +117,25 @@
     <tags>
       
       <tag>物料分类账,CO,成本管理</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>欢迎来到我的知识库</title>
+    <link href="/uncategorized/2026-05-31-welcome/"/>
+    <url>/uncategorized/2026-05-31-welcome/</url>
+    
+    <content type="html"><![CDATA[<h2 id="关于这个知识库"><a href="#关于这个知识库" class="headerlink" title="关于这个知识库"></a>关于这个知识库</h2><p>这里记录我在以下领域的学习笔记：</p><ul><li><strong>SAP ERP</strong>：涵盖业务模块（MM&#x2F;SD&#x2F;FI&#x2F;CO）和开发技术（ABAP&#x2F;SAPUI5）</li><li><strong>股票投资</strong>：投资理念、方法论、交易复盘</li><li><strong>乒乓球</strong>：技术训练方法、实战比赛分析</li></ul><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><ul><li>📝 <strong>文章</strong> — 按分类浏览各领域知识</li><li>📋 <strong><a href="/kanban/">学习看板</a></strong> — 查看当前学习计划和进度</li><li>📧 <strong>每日邮件</strong> — 接收近期知识概要推送</li></ul><p>持续更新中…</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>知识管理</tag>
       
     </tags>
     
