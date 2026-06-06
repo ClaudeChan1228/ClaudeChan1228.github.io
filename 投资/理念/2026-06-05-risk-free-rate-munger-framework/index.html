@@ -1,0 +1,1195 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wuyuan">
+  <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
+  
+    <meta name="description" content="引言：一切资产的定价之锚查理·芒格在《穷查理宝典》中反复强调一个贯穿所有投资决策的核心概念：  “所有资产都在和国债竞争。”  这句话看似简单，但它揭示了一个被许多投资者忽视的底层逻辑：投资决策不是绝对的”好”或”坏”，而是相对的——相对于无风险收益率是否划算。 本文以芒格的机会成本思维为核心框架，结合中国 10 年期国债收益率与 A 股市场的实际演变，系统梳理无风险收益率如何影响股票定价、行业轮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无风险收益率如何影响股票投资——来自芒格的思考">
+<meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-05-risk-free-rate-munger-framework/index.html">
+<meta property="og:site_name" content="ClaudeChan&#39;s Blog">
+<meta property="og:description" content="引言：一切资产的定价之锚查理·芒格在《穷查理宝典》中反复强调一个贯穿所有投资决策的核心概念：  “所有资产都在和国债竞争。”  这句话看似简单，但它揭示了一个被许多投资者忽视的底层逻辑：投资决策不是绝对的”好”或”坏”，而是相对的——相对于无风险收益率是否划算。 本文以芒格的机会成本思维为核心框架，结合中国 10 年期国债收益率与 A 股市场的实际演变，系统梳理无风险收益率如何影响股票定价、行业轮">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-05T02:56:09.717Z">
+<meta property="article:author" content="Wuyuan">
+<meta property="article:tag" content="查理·芒格,无风险收益率,红利股,A股,估值,机会成本,读书笔记">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>无风险收益率如何影响股票投资——来自芒格的思考 - ClaudeChan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"claudechan1228.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ClaudeChan&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/kanban/" target="_self">
+                
+                <span>日程</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/reading/" target="_self">
+                
+                <span>阅读</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/kanban/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>日程</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/reading/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>阅读</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="无风险收益率如何影响股票投资——来自芒格的思考"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-06-05 00:00" pubdate>
+          2026-06-05
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">无风险收益率如何影响股票投资——来自芒格的思考</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2026-06-05
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="引言：一切资产的定价之锚"><a href="#引言：一切资产的定价之锚" class="headerlink" title="引言：一切资产的定价之锚"></a>引言：一切资产的定价之锚</h2><p>查理·芒格在《穷查理宝典》中反复强调一个贯穿所有投资决策的核心概念：</p>
+<blockquote>
+<p><strong>“所有资产都在和国债竞争。”</strong></p>
+</blockquote>
+<p>这句话看似简单，但它揭示了一个被许多投资者忽视的底层逻辑：<strong>投资决策不是绝对的”好”或”坏”，而是相对的——相对于无风险收益率是否划算。</strong></p>
+<p>本文以芒格的机会成本思维为核心框架，结合中国 10 年期国债收益率与 A 股市场的实际演变，系统梳理无风险收益率如何影响股票定价、行业轮动和投资策略，并最终构建一套适用于红利股投资者的分析框架。</p>
+<hr>
+<h2 id="一、什么是无风险收益率？"><a href="#一、什么是无风险收益率？" class="headerlink" title="一、什么是无风险收益率？"></a>一、什么是无风险收益率？</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><p>无风险收益率（Risk-Free Rate）是指：</p>
+<blockquote>
+<p>在几乎不承担违约风险的情况下，投资者能够获得的收益率。</p>
+</blockquote>
+<p>现实中通常使用<strong>中国 10 年期国债收益率</strong>或<strong>美国 10 年期国债收益率</strong>作为代表。</p>
+<h3 id="1-2-本质：资金的机会成本"><a href="#1-2-本质：资金的机会成本" class="headerlink" title="1.2 本质：资金的机会成本"></a>1.2 本质：资金的机会成本</h3><p>从芒格的视角来看，无风险收益率的本质不只是”一个利率数字”，而是：</p>
+<blockquote>
+<p><strong>所有资金的机会成本（Opportunity Cost）。</strong></p>
+</blockquote>
+<p>芒格在《穷查理宝典》中多次提到，他和巴菲特的投资决策框架中，机会成本是最重要的比较基准。一笔资金如果可以通过持有国债无风险地获得 X% 的收益，那么任何其他投资都必须在”风险调整后”提供更高的回报，否则这笔投资就没有意义。</p>
+<p>用芒格的话来说：</p>
+<blockquote>
+<p>“我们衡量一切投资的标准是：相对于次优选择，它是否更好？而国债，永远是最容易获取的次优选择。”</p>
+</blockquote>
+<hr>
+<h2 id="二、无风险收益率影响股市的三层传导机制"><a href="#二、无风险收益率影响股市的三层传导机制" class="headerlink" title="二、无风险收益率影响股市的三层传导机制"></a>二、无风险收益率影响股市的三层传导机制</h2><p>无风险收益率并非直接”决定”股市涨跌，而是通过三层机制逐步传导。芒格的跨学科思维模型可以帮助我们更完整地理解这一过程。</p>
+<h3 id="第一层：流动性效应（资产配置的再平衡）"><a href="#第一层：流动性效应（资产配置的再平衡）" class="headerlink" title="第一层：流动性效应（资产配置的再平衡）"></a>第一层：流动性效应（资产配置的再平衡）</h3><p>当无风险收益率下降（例如存款利率下调、国债收益率走低），投资者的行为会发生系统性偏移：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">存款收益降低 → 寻找更高收益资产 → 资金流向股票、REITs、黄金<br></code></pre></td></tr></table></figure>
+
+<p>当无风险收益率上升：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">国债收益提高 → 无风险收益变得有吸引力 → 资金从股市回流债市<br></code></pre></td></tr></table></figure>
+
+<p>芒格对此的评论很直接：</p>
+<blockquote>
+<p>“如果存款给你 5% 的无风险收益，为什么还要去承担股票的波动？反之，如果存款几乎不给利息，你就会被逼着去寻找更好的机会。”</p>
+</blockquote>
+<p>这是<strong>第一层传导</strong>：利率通过改变各类资产的相对吸引力，驱动资金在不同资产类别之间流动。</p>
+<h3 id="第二层：估值效应（DCF-框架中的折现率）"><a href="#第二层：估值效应（DCF-框架中的折现率）" class="headerlink" title="第二层：估值效应（DCF 框架中的折现率）"></a>第二层：估值效应（DCF 框架中的折现率）</h3><p>从金融学的角度来看，任何资产的价值都等于其未来现金流的折现值。DCF（现金流折现）模型的核心公式：</p>
+<p>$$<br>\text{价值} &#x3D; \frac{\text{未来现金流}}{\text{折现率}}<br>$$</p>
+<p>无风险收益率是折现率的基石。当无风险收益率下降时：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">折现率降低 → 未来现金流的现值提高 → 合理估值提升 → PE 扩张 → 股价上涨<br></code></pre></td></tr></table></figure>
+
+<p>当无风险收益率上升时：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">折现率提高 → 未来现金流的现值降低 → 合理估值压缩 → PE 收缩 → 股价承压<br></code></pre></td></tr></table></figure>
+
+<p>这是<strong>第二层传导</strong>：利率通过改变”未来钱在今天值多少钱”，系统性地影响所有资产的估值水平。</p>
+<blockquote>
+<p>芒格说：”如果你理解了复利，你就理解了为什么利率是一切估值的核心。改变利率，你就改变了所有未来现金流的现价。”</p>
+</blockquote>
+<h3 id="第三层：经济预期效应（利率与盈利的博弈）"><a href="#第三层：经济预期效应（利率与盈利的博弈）" class="headerlink" title="第三层：经济预期效应（利率与盈利的博弈）"></a>第三层：经济预期效应（利率与盈利的博弈）</h3><p>然而，现实中的股市并非机械地对利率变化做出反应。这是因为无风险收益率本身往往<strong>内生于经济状态</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>经济状态</th>
+<th>利率方向</th>
+<th>企业盈利</th>
+<th>股市表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>经济繁荣</td>
+<td>利率上升</td>
+<td>盈利强劲增长</td>
+<td>可能仍然上涨</td>
+</tr>
+<tr>
+<td>经济衰退</td>
+<td>利率下降</td>
+<td>盈利预期恶化</td>
+<td>可能仍然下跌</td>
+</tr>
+</tbody></table>
+<p>换言之：</p>
+<blockquote>
+<p><strong>利率是估值的地心引力，但盈利是推动股价上升的引擎。两者方向不一致时，强势的一方决定市场走向。</strong></p>
+</blockquote>
+<p>芒格的框架为此提供了一个清晰的解释：投资决策不能只看单一变量。利率重要，但企业的盈利能力、竞争壁垒、管理质量同样重要。<strong>“所有因素都在同一个系统中相互作用”</strong>——这正是芒格”多元思维模型”的核心。</p>
+<hr>
+<h2 id="三、A-股过去八年的演变（2018-2026）：以无风险收益率为线索"><a href="#三、A-股过去八年的演变（2018-2026）：以无风险收益率为线索" class="headerlink" title="三、A 股过去八年的演变（2018-2026）：以无风险收益率为线索"></a>三、A 股过去八年的演变（2018-2026）：以无风险收益率为线索</h2><p>以中国 10 年期国债收益率为线索，可以将 A 股过去八年的市场结构变化分为四个阶段。每一个阶段都印证了芒格的判断：<strong>利率是定价的锚，但不是唯一的锚。</strong></p>
+<h3 id="第一阶段：2018-2020-—-利率下行驱动核心资产牛市"><a href="#第一阶段：2018-2020-—-利率下行驱动核心资产牛市" class="headerlink" title="第一阶段：2018-2020 — 利率下行驱动核心资产牛市"></a>第一阶段：2018-2020 — 利率下行驱动核心资产牛市</h3><p>中国 10 年期国债收益率从约 3.6% 持续下降至约 2.5%。</p>
+<p><strong>市场表现：</strong> 核心资产全面牛市。代表企业包括贵州茅台、五粮液、中国中免、恒瑞医药。</p>
+<p><strong>传导逻辑：</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs 1c">利率持续下降<br>    ↓<br>折现率降低 → 优质企业的远期现金流变得更值钱<br>    ↓<br>估值扩张 → PE 系统性提升<br>    ↓<br><span class="hljs-string">&quot;核心资产&quot;</span>概念形成 → 资金加速集中<br>    ↓<br>股价持续上涨<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>芒格的框架可以解释这个阶段的”核心资产”狂热：当利率下降时，拥有可预测、可持续现金流的优质企业，其估值提升幅度最大——因为它们的远期现金流占比更高，对折现率变化更敏感。</p>
+</blockquote>
+<h3 id="第二阶段：2021-—-杀估值：当利率不再下降"><a href="#第二阶段：2021-—-杀估值：当利率不再下降" class="headerlink" title="第二阶段：2021 — 杀估值：当利率不再下降"></a>第二阶段：2021 — 杀估值：当利率不再下降</h3><p>核心资产的估值扩张在 2021 年戛然而止。贵州茅台的 PE 一度接近 70 倍——即使对于一家伟大的企业，这个估值也需要”利率继续下降”来支撑。</p>
+<p>当利率不再下降时：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs">估值扩张失去动力<br>    ↓<br>过高的 PE 无法被盈利增长消化<br>    ↓<br>白酒、医药、消费板块集体杀估值<br></code></pre></td></tr></table></figure>
+
+<p>芒格对此有一个经典论述：</p>
+<blockquote>
+<p>“即使是一家伟大的公司，如果你为它支付了过高的价格，你仍然会得到糟糕的投资回报。价格是你付出的，价值是你得到的。”</p>
+</blockquote>
+<p>2021 年的核心资产杀估值，正是对这句话的完美印证。企业盈利并未崩塌，但<strong>价格已经远远跑在了价值前面</strong>。</p>
+<h3 id="第三阶段：2022-2023-—-利率下降但股市不涨：盈利预期塌陷"><a href="#第三阶段：2022-2023-—-利率下降但股市不涨：盈利预期塌陷" class="headerlink" title="第三阶段：2022-2023 — 利率下降但股市不涨：盈利预期塌陷"></a>第三阶段：2022-2023 — 利率下降但股市不涨：盈利预期塌陷</h3><p>2022-2023 年出现了教科书式的”非常规”现象：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">利率继续下降<br>    ↓<br>但股市仍然低迷<br></code></pre></td></tr></table></figure>
+
+<p>原因在于：</p>
+<ul>
+<li>地产下行周期</li>
+<li>消费信心疲弱</li>
+<li>企业扩产意愿显著下降</li>
+</ul>
+<p>导致：</p>
+<blockquote>
+<p><strong>盈利预期的塌陷，压倒并超过了利率下降带来的估值利好。</strong></p>
+</blockquote>
+<p>这印证了芒格框架的另一面：<strong>利率不是唯一的变量。</strong> 当企业盈利前景恶化时，即使”钱变得更便宜”，投资者也不愿意买入。这正如芒格反复强调的——你需要同时理解多个因素，而不仅仅是利率。</p>
+<h3 id="第四阶段：2024-2026-—-红利资产牛市：低利率时代的理性选择"><a href="#第四阶段：2024-2026-—-红利资产牛市：低利率时代的理性选择" class="headerlink" title="第四阶段：2024-2026 — 红利资产牛市：低利率时代的理性选择"></a>第四阶段：2024-2026 — 红利资产牛市：低利率时代的理性选择</h3><p>当 10 年期国债收益率跌破 2%，市场出现了结构性转变：</p>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">国债收益率：~<span class="hljs-number">2</span><span class="hljs-comment">%</span><br>    ↓<br>资金寻找稳定收益<br>    ↓<br>红利股股息率：<span class="hljs-number">5</span><span class="hljs-comment">%~8%</span><br>    ↓<br>风险溢价具有显著吸引力<br>    ↓<br>资金持续流入银行、电力、煤炭、通信运营商<br>    ↓<br>红利资产估值系统性重估<br></code></pre></td></tr></table></figure>
+
+<p>代表企业包括长江电力、中国神华、国电电力、中国移动等。</p>
+<p>这正是芒格”机会成本”思维的活教材：<strong>当无风险收益率降到 2%，一个每年稳定分红 5%-8% 的企业就变得极具吸引力——不是因为企业本身发生了变化，而是因为替代选择变差了。</strong></p>
+<hr>
+<h2 id="四、红利股与无风险收益率：权益债券的逻辑"><a href="#四、红利股与无风险收益率：权益债券的逻辑" class="headerlink" title="四、红利股与无风险收益率：权益债券的逻辑"></a>四、红利股与无风险收益率：权益债券的逻辑</h2><h3 id="4-1-风险溢价的本质"><a href="#4-1-风险溢价的本质" class="headerlink" title="4.1 风险溢价的本质"></a>4.1 风险溢价的本质</h3><p>从估值框架来看，红利股与无风险收益率的关系可以通过风险溢价（Risk Premium）来量化：</p>
+<p>$$<br>\text{风险溢价} &#x3D; \text{资产收益率} - \text{无风险收益率}<br>$$</p>
+<p>例如：</p>
+<ul>
+<li>股息率：6%</li>
+<li>国债收益率：2%</li>
+<li>风险溢价：6% - 2% &#x3D; <strong>4%</strong></li>
+</ul>
+<p><strong>风险溢价越高，红利资产的安全边际越高，吸引力越大。</strong></p>
+<h3 id="4-2-“权益债券”的投资逻辑"><a href="#4-2-“权益债券”的投资逻辑" class="headerlink" title="4.2 “权益债券”的投资逻辑"></a>4.2 “权益债券”的投资逻辑</h3><p>对于长江电力、中国神华、国电电力这一类企业，芒格的投资框架会将其归类为一种特殊的资产——<strong>“权益债券”（Equity Bond）</strong>。</p>
+<p>这类企业的特征：</p>
+<ul>
+<li>稳定的自由现金流</li>
+<li>高且可持续的分红率</li>
+<li>业务模式成熟，再投资需求低</li>
+<li>盈利波动性远低于市场平均</li>
+</ul>
+<p>从芒格的角度来看，投资这类企业的比较对象不应该是对标成长股（如科技股、新能源），而应该是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">国债 → 银行定期存款 → 银行理财 → 保险产品 → 红利股<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>芒格说：”如果你能找到一家企业，它的盈利几乎像债券利息一样可预测，而它给你的回报是债券的 2-3 倍——那你应该认真考虑把债券换成这家企业的股票。”</p>
+</blockquote>
+<p>这正是当前低利率环境下红利股牛市的底层逻辑。</p>
+<hr>
+<h2 id="五、一个重要误区：同样的利差-≠-同样的吸引力"><a href="#五、一个重要误区：同样的利差-≠-同样的吸引力" class="headerlink" title="五、一个重要误区：同样的利差 ≠ 同样的吸引力"></a>五、一个重要误区：同样的利差 ≠ 同样的吸引力</h2><h3 id="5-1-教科书式的错误"><a href="#5-1-教科书式的错误" class="headerlink" title="5.1 教科书式的错误"></a>5.1 教科书式的错误</h3><p>许多投资教科书认为：投资者要求一个<strong>固定的风险溢价</strong>（例如 3%），只要利差相同，吸引力就相同。</p>
+<table>
+<thead>
+<tr>
+<th>情景</th>
+<th>国债收益率</th>
+<th>红利股股息率</th>
+<th>利差</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>2%</td>
+<td>5%</td>
+<td>3%</td>
+</tr>
+<tr>
+<td>B</td>
+<td>5%</td>
+<td>8%</td>
+<td>3%</td>
+</tr>
+</tbody></table>
+<p>理论上：两种情景下利差都是 3%，吸引力应该相同。</p>
+<p>现实中：<strong>往往不同。</strong></p>
+<h3 id="5-2-为什么现实中不同？——-芒格的解释"><a href="#5-2-为什么现实中不同？——-芒格的解释" class="headerlink" title="5.2 为什么现实中不同？—— 芒格的解释"></a>5.2 为什么现实中不同？—— 芒格的解释</h3><p>原因在于：<strong>投资者不是只计算利差的机器。</strong> 他们会综合评估：</p>
+<table>
+<thead>
+<tr>
+<th>考量因素</th>
+<th>情景 A（国债 2%）</th>
+<th>情景 B（国债 5%）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无风险收益的满足度</td>
+<td>2% 不够用 → 被迫寻找更高收益</td>
+<td>5% 已基本满足需求 → 无需冒险</td>
+</tr>
+<tr>
+<td>承担风险的意愿</td>
+<td>愿意承担股票波动风险</td>
+<td>不愿承担额外风险</td>
+</tr>
+<tr>
+<td>对额外收益的评价</td>
+<td>3% 额外收益”值得冒险”</td>
+<td>3% 额外收益”不值得冒险”</td>
+</tr>
+</tbody></table>
+<p>从芒格的心理学视角来看，这触及了一个深刻的行为偏误：<strong>人们对收益的评估不是线性的，而是相对于自身”满足点”的。</strong></p>
+<blockquote>
+<p>当无风险收益率已经达到 5% 时，许多投资者会觉得”已经够了”，即使红利股提供 8% 的收益，他们也不愿意承担股票价格的波动。但当无风险收益率只有 2% 时，5% 的股息率就显得”非拿不可”。</p>
+</blockquote>
+<p>这正是芒格在《穷查理宝典》中反复警示的：<strong>不要假设人是完全理性的经济人。</strong> 投资决策受心理因素、满足感、风险感知的影响，其程度远超传统金融学的假设。</p>
+<h3 id="5-3-核心结论"><a href="#5-3-核心结论" class="headerlink" title="5.3 核心结论"></a>5.3 核心结论</h3><blockquote>
+<p><strong>同样都是 3% 的利差，国债 2% + 红利股 5% 的组合，往往比国债 5% + 红利股 8% 的组合更有吸引力。</strong></p>
+</blockquote>
+<p>因为在低利率环境中，投资者不仅在计算利差，更在权衡一个根本问题：</p>
+<blockquote>
+<p><strong>“这额外的收益，是否值得我承担额外的风险？”</strong></p>
+</blockquote>
+<p>而对这个问题的回答，高度依赖于无风险收益的绝对水平。</p>
+<hr>
+<h2 id="六、芒格核心原则在无风险收益率框架中的应用"><a href="#六、芒格核心原则在无风险收益率框架中的应用" class="headerlink" title="六、芒格核心原则在无风险收益率框架中的应用"></a>六、芒格核心原则在无风险收益率框架中的应用</h2><h3 id="原则一：机会成本是唯一的投资度量"><a href="#原则一：机会成本是唯一的投资度量" class="headerlink" title="原则一：机会成本是唯一的投资度量"></a>原则一：机会成本是唯一的投资度量</h3><p>芒格和巴菲特从不使用复杂的 CAPM 模型或 Beta 系数。他们的方法极其简单：</p>
+<blockquote>
+<p>“我们只问一个问题：这笔投资是否比我们次优的选择更好？”</p>
+</blockquote>
+<p>在这个框架中，<strong>国债收益率就是那个”次优的选择”</strong>。当红利股的股息率远高于国债收益率时，答案清晰；当利差收窄时，答案变得模糊——此时芒格会建议：<strong>等待。</strong></p>
+<blockquote>
+<p>“投资不是要不停挥棒。你可以在击球区外站很久，等到那个最适合你的球出现。”</p>
+</blockquote>
+<h3 id="原则二：反过来想，总是反过来想"><a href="#原则二：反过来想，总是反过来想" class="headerlink" title="原则二：反过来想，总是反过来想"></a>原则二：反过来想，总是反过来想</h3><p>芒格最著名的思维工具——<strong>逆向思维（Invert, Always Invert）</strong>——在这个框架中的应用：</p>
+<p>不直接问：”这只红利股值得买吗？”</p>
+<p>而是反过来问：</p>
+<ol>
+<li><strong>在什么情况下，这只红利股会让我亏损？</strong>（股息削减、利率急升、企业基本面恶化）</li>
+<li><strong>如果利率从 2% 升到 4%，这只股票的估值会怎样？</strong></li>
+<li><strong>我是在买一家真正的优质企业，还是在追逐”看起来很高的股息率”？</strong></li>
+</ol>
+<blockquote>
+<p>逆向思考的价值在于：它把不容易看清的”好机会”转化为更容易识别的”坏情况”——排除了坏情况，剩下的就是好机会。</p>
+</blockquote>
+<h3 id="原则三：理解企业的本质，而非数字的表象"><a href="#原则三：理解企业的本质，而非数字的表象" class="headerlink" title="原则三：理解企业的本质，而非数字的表象"></a>原则三：理解企业的本质，而非数字的表象</h3><p>芒格不会仅仅因为”股息率高”就买入一只股票。他会追问：</p>
+<ul>
+<li>这家企业的高股息是<strong>可持续的</strong>，还是<strong>周期性的</strong>？</li>
+<li>分红来源于<strong>真实的自由现金流</strong>，还是<strong>借债或削减必要投资</strong>？</li>
+<li>企业的<strong>护城河</strong>是否足以保护它在未来 10 年维持当前的盈利能力？</li>
+</ul>
+<blockquote>
+<p>“只盯着股息率买股票，就像只盯着利率买债券——你看到的是表象，不是本质。”</p>
+</blockquote>
+<h3 id="原则四：降低预期，接受合理的回报"><a href="#原则四：降低预期，接受合理的回报" class="headerlink" title="原则四：降低预期，接受合理的回报"></a>原则四：降低预期，接受合理的回报</h3><p>在低利率时代，芒格的一个重要提醒是：</p>
+<blockquote>
+<p>“在利率只有 2% 的世界里，你不能期望获得 15% 的年化回报。这不是能力的限制，是数学的限制。”</p>
+</blockquote>
+<p>这意味着：</p>
+<ul>
+<li>红利股 5%-8% 的股息率 + 适度的资本增值 &#x3D; 合理的长期回报</li>
+<li>接受这个现实，而不是追逐不切实际的高收益</li>
+<li>低利率时代的投资成功，更多取决于<strong>不犯错</strong>，而非<strong>找到宝藏</strong></li>
+</ul>
+<hr>
+<h2 id="七、红利股投资者的实用分析框架"><a href="#七、红利股投资者的实用分析框架" class="headerlink" title="七、红利股投资者的实用分析框架"></a>七、红利股投资者的实用分析框架</h2><p>基于以上分析，结合芒格的思维模型，可以构建以下适用于红利股（如国电电力、华能蒙电等）的分析框架：</p>
+<h3 id="宏观层面：需要持续跟踪的指标"><a href="#宏观层面：需要持续跟踪的指标" class="headerlink" title="宏观层面：需要持续跟踪的指标"></a>宏观层面：需要持续跟踪的指标</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>为什么重要</th>
+<th>芒格视角</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>中国 10 年期国债收益率</strong></td>
+<td>无风险收益的基准，决定红利股的相对吸引力</td>
+<td>机会成本的量化——次优选择的回报率</td>
+</tr>
+<tr>
+<td><strong>社会融资增速</strong></td>
+<td>反映实体经济对资金的需求强度</td>
+<td>企业能否获得合理回报来支撑分红</td>
+</tr>
+<tr>
+<td><strong>M2 增速</strong></td>
+<td>反映流动性环境</td>
+<td>过多的货币追逐有限的优质资产</td>
+</tr>
+</tbody></table>
+<h3 id="企业层面：需要验证的核心质量指标"><a href="#企业层面：需要验证的核心质量指标" class="headerlink" title="企业层面：需要验证的核心质量指标"></a>企业层面：需要验证的核心质量指标</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>关注要点</th>
+<th>芒格的审视角度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>股息率</strong></td>
+<td>与国债收益率的利差是否充足</td>
+<td>这是你的”最低回报保证”</td>
+</tr>
+<tr>
+<td><strong>分红率</strong></td>
+<td>分红占利润的比例是否可持续（通常 40%-70%）</td>
+<td>过高可能牺牲必要再投资，过低说明股东回报意愿不足</td>
+</tr>
+<tr>
+<td><strong>自由现金流</strong></td>
+<td>分红是否来自真实现金流，而非会计利润或借债</td>
+<td>“利润是观点，现金是事实”</td>
+</tr>
+<tr>
+<td><strong>ROE</strong></td>
+<td>能否持续创造高于资金成本的回报</td>
+<td>长期 ROE 是企业内在价值的引擎</td>
+</tr>
+<tr>
+<td><strong>负债率</strong></td>
+<td>高负债企业在利率上升时最脆弱</td>
+<td>“杠杆是唯一可以把你从好投资中踢出去的东西”</td>
+</tr>
+</tbody></table>
+<h3 id="核心公式"><a href="#核心公式" class="headerlink" title="核心公式"></a>核心公式</h3><p>投资红利资产时，最需要关注的数字：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">风险补偿（利差）<span class="hljs-operator">=</span> 股息率 - <span class="hljs-number">10</span>年期国债收益率<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>利差扩大 → 风险补偿提高 → 红利资产更有吸引力</li>
+<li>利差收窄 → 风险补偿降低 → 需重新评估持仓</li>
+</ul>
+<h3 id="投资检查清单（Checklist）"><a href="#投资检查清单（Checklist）" class="headerlink" title="投资检查清单（Checklist）"></a>投资检查清单（Checklist）</h3><p>借鉴芒格推崇的”飞行员检查清单”方法，每次评估红利股时可以逐项核对：</p>
+<ol>
+<li>☐ 股息率是否显著高于 10 年期国债收益率？（利差 &gt; 2% 为佳）</li>
+<li>☐ 分红是否来源于可持续的自由现金流？（而非借债或削减必要投资）</li>
+<li>☐ 企业是否拥有可辨识的护城河？（特许经营、规模优势、网络效应等）</li>
+<li>☐ 负债率是否在安全范围内？（高杠杆 + 利率上升 &#x3D; 灾难组合）</li>
+<li>☐ 如果利率从 2% 升至 4%，这家企业的估值会受到多大冲击？</li>
+<li>☐ 管理层是否有持续回馈股东的历史记录？</li>
+<li>☐ 当前价格是否提供了足够的安全边际？</li>
+</ol>
+<hr>
+<h2 id="八、最终总结"><a href="#八、最终总结" class="headerlink" title="八、最终总结"></a>八、最终总结</h2><p>从芒格的多元思维模型来看，无风险收益率与股票投资的关系可以凝练为以下核心认知：</p>
+<h3 id="对于所有股票"><a href="#对于所有股票" class="headerlink" title="对于所有股票"></a>对于所有股票</h3><blockquote>
+<p><strong>无风险收益率是所有资产定价的锚。</strong> 它通过改变资金的机会成本，影响资产的相对吸引力、未来现金流的折现价值，以及投资者在不同资产类别之间的配置决策。</p>
+</blockquote>
+<h3 id="对于成长股"><a href="#对于成长股" class="headerlink" title="对于成长股"></a>对于成长股</h3><p>无风险收益率影响的是：</p>
+<ul>
+<li>远期现金流的折现价值</li>
+<li>PE 估值的中枢水平</li>
+<li>市场愿意为”增长故事”支付的价格</li>
+</ul>
+<h3 id="对于红利股"><a href="#对于红利股" class="headerlink" title="对于红利股"></a>对于红利股</h3><p>无风险收益率影响的是：</p>
+<ul>
+<li>股息的相对吸引力（相对于国债和存款）</li>
+<li>风险补偿的水平（利差）</li>
+<li>机构资金的配置方向（债券替代策略）</li>
+</ul>
+<h3 id="芒格最重要的提醒"><a href="#芒格最重要的提醒" class="headerlink" title="芒格最重要的提醒"></a>芒格最重要的提醒</h3><blockquote>
+<p><strong>“投资不是买卖股票，是买卖价值。而价值永远是相对的——相对于你次优的选择，相对于你能够承担的风险，相对于你对自己认知盲点的了解程度。”</strong></p>
+</blockquote>
+<p>在当前低利率时代，理解无风险收益率如何影响投资决策，不是一种可有可无的知识，而是<strong>每个投资者都应当掌握的底层思维框架</strong>。</p>
+<p>而理解这个框架最好的方式，正如芒格一生所践行的那样：</p>
+<p><strong>用机会成本的眼光衡量一切，反过来想，保持耐心，只在你真正理解的机会上下重注。</strong></p>
+<hr>
+<blockquote>
+<p>本文为个人投资学习笔记，基于与 GPT 的对话内容、中国 10 年期国债收益率的公开数据，以及《穷查理宝典》中芒格关于机会成本、多元思维模型和投资心理学的论述整理而成，不构成任何投资建议。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%95%E8%B5%84/" class="category-chain-item">投资</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/" class="category-chain-item">理念</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9F%A5%E7%90%86%C2%B7%E8%8A%92%E6%A0%BC-%E6%97%A0%E9%A3%8E%E9%99%A9%E6%94%B6%E7%9B%8A%E7%8E%87-%E7%BA%A2%E5%88%A9%E8%82%A1-A%E8%82%A1-%E4%BC%B0%E5%80%BC-%E6%9C%BA%E4%BC%9A%E6%88%90%E6%9C%AC-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="print-no-link">#查理·芒格,无风险收益率,红利股,A股,估值,机会成本,读书笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>无风险收益率如何影响股票投资——来自芒格的思考</div>
+      <div>https://claudechan1228.github.io/投资/理念/2026-06-05-risk-free-rate-munger-framework/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wuyuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年6月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-03-pricing-power-moat/" title="定价权如何帮助企业持续盈利——来自芒格的思考">
+                        <span class="hidden-mobile">定价权如何帮助企业持续盈利——来自芒格的思考</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
