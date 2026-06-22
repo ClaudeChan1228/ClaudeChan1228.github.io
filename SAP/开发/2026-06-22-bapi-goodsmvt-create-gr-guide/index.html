@@ -1,0 +1,1207 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wuyuan">
+  <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
+  
+    <meta name="description" content="引言BAPI_GOODSMVT_CREATE 是 SAP MM 模块中最常用的 BAPI 之一，用于创建物料凭证（Material Document）。无论是采购入库、生产收货、发货还是转储，核心都调用这个 BAPI，区别仅在于 移动类型（MOVE_TYPE） 和 移动标识（MVT_IND） 的组合。 本文以最常见的采购订单入库（移动类型 101） 为例，梳理完整的调用流程、关键字段和容易踩坑的细">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-goodsmvt-create-gr-guide/index.html">
+<meta property="og:site_name" content="ClaudeChan&#39;s Blog">
+<meta property="og:description" content="引言BAPI_GOODSMVT_CREATE 是 SAP MM 模块中最常用的 BAPI 之一，用于创建物料凭证（Material Document）。无论是采购入库、生产收货、发货还是转储，核心都调用这个 BAPI，区别仅在于 移动类型（MOVE_TYPE） 和 移动标识（MVT_IND） 的组合。 本文以最常见的采购订单入库（移动类型 101） 为例，梳理完整的调用流程、关键字段和容易踩坑的细">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T05:36:11.105Z">
+<meta property="article:author" content="Wuyuan">
+<meta property="article:tag" content="ABAP">
+<meta property="article:tag" content="BAPI">
+<meta property="article:tag" content="物料凭证">
+<meta property="article:tag" content="MM">
+<meta property="article:tag" content="接口开发">
+<meta property="article:tag" content="采购入库">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账 - ClaudeChan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"claudechan1228.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ClaudeChan&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/kanban/" target="_self">
+                
+                <span>日程</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/reading/" target="_self">
+                
+                <span>阅读</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/kanban/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>日程</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/reading/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>阅读</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-06-22 00:00" pubdate>
+          2026-06-22
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2026-06-22
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>BAPI_GOODSMVT_CREATE</code> 是 SAP MM 模块中最常用的 BAPI 之一，用于创建物料凭证（Material Document）。无论是采购入库、生产收货、发货还是转储，核心都调用这个 BAPI，区别仅在于 <strong>移动类型（MOVE_TYPE）</strong> 和 <strong>移动标识（MVT_IND）</strong> 的组合。</p>
+<p>本文以最常见的<strong>采购订单入库（移动类型 101）</strong> 为例，梳理完整的调用流程、关键字段和容易踩坑的细节。</p>
+<hr>
+<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs text">准备Header<br>    │<br>    ▼<br>查询EKPO获取物料<br>    │<br>    ▼<br>循环构造Item<br>    │<br>    ▼<br>BAPI_GOODSMVT_CREATE<br>    │<br>    ▼<br>检查 RETURN 是否存在 A/E/X 错误<br>    │<br> ┌──┴──────────┐<br> │             │<br> ▼             ▼<br>COMMIT      ROLLBACK<br>    │<br>    ▼<br>返回物料凭证号<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-定义变量"><a href="#1-定义变量" class="headerlink" title="1. 定义变量"></a>1. 定义变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  ls_header  TYPE bapi2017_gm_head_01,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  ls_code    TYPE bapi2017_gm_code,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_create,<br>  ls_item    TYPE bapi2017_gm_item_create,<br>  lt_return  TYPE TABLE OF bapiret2,<br>  ls_return  TYPE bapiret2,<br>  lv_error   TYPE abap_bool.<br></code></pre></td></tr></table></figure>
+
+<p>各变量说明：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ls_header</code></td>
+<td><code>bapi2017_gm_head_01</code></td>
+<td>物料凭证抬头</td>
+</tr>
+<tr>
+<td><code>ls_headret</code></td>
+<td><code>bapi2017_gm_head_ret</code></td>
+<td>返回的物料凭证号</td>
+</tr>
+<tr>
+<td><code>ls_code</code></td>
+<td><code>bapi2017_gm_code</code></td>
+<td>业务代码（GM_CODE）</td>
+</tr>
+<tr>
+<td><code>lt_item</code> &#x2F; <code>ls_item</code></td>
+<td><code>bapi2017_gm_item_create</code></td>
+<td>行项目表 &#x2F; 单个行项目</td>
+</tr>
+<tr>
+<td><code>lt_return</code></td>
+<td><code>bapiret2</code></td>
+<td>BAPI 返回消息</td>
+</tr>
+<tr>
+<td><code>lv_error</code></td>
+<td><code>abap_bool</code></td>
+<td>错误标记</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-查询采购订单物料"><a href="#2-查询采购订单物料" class="headerlink" title="2. 查询采购订单物料"></a>2. 查询采购订单物料</h2><p>采购收货时，很多系统要求显式传入物料号。可先读取 EKPO 获取采购订单行的物料信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs abap">SELECT<br>  ebeln,<br>  ebelp,<br>  matnr,<br>  menge,<br>  meins<br>  FROM ekpo<br>  INTO TABLE @DATA(lt_ekpo)<br>  FOR ALL ENTRIES IN @lt_po_key<br>  WHERE ebeln = @lt_po_key-ebeln<br>    AND ebelp = @lt_po_key-ebelp.<br><br>SORT lt_ekpo BY ebeln ebelp.<br></code></pre></td></tr></table></figure>
+
+<p>随后按采购订单号 + 行号定位物料：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">READ TABLE lt_ekpo<br>  INTO DATA(ls_ekpo)<br>  WITH KEY<br>    ebeln = ls_req-po_number<br>    ebelp = ls_req-po_item<br>  BINARY SEARCH.<br><br>IF sy-subrc = 0.<br>  ls_item-material = ls_ekpo-matnr.<br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-构造-Header"><a href="#3-构造-Header" class="headerlink" title="3. 构造 Header"></a>3. 构造 Header</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_header-pstng_date = iv_posting_date.   &quot; 过账日期<br>ls_header-doc_date   = sy-datum.          &quot; 凭证日期<br>ls_header-header_txt = iv_header_txt.     &quot; 抬头文本<br></code></pre></td></tr></table></figure>
+
+<p>常用字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PSTNG_DATE</code></td>
+<td>过账日期（物料移动的实际记账日期）</td>
+</tr>
+<tr>
+<td><code>DOC_DATE</code></td>
+<td>凭证日期（业务单据日期）</td>
+</tr>
+<tr>
+<td><code>HEADER_TXT</code></td>
+<td>凭证抬头文本</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-设置-GM-CODE"><a href="#4-设置-GM-CODE" class="headerlink" title="4. 设置 GM_CODE"></a>4. 设置 GM_CODE</h2><p>采购订单收货固定使用 <code>01</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_code-gm_code = &#x27;01&#x27;.<br></code></pre></td></tr></table></figure>
+
+<p>常见 GM_CODE：</p>
+<table>
+<thead>
+<tr>
+<th align="center">GM_CODE</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">01</td>
+<td>采购订单收货（GR）</td>
+</tr>
+<tr>
+<td align="center">02</td>
+<td>生产订单收货</td>
+</tr>
+<tr>
+<td align="center">03</td>
+<td>发货（GI）</td>
+</tr>
+<tr>
+<td align="center">04</td>
+<td>转储</td>
+</tr>
+<tr>
+<td align="center">05</td>
+<td>其他收货</td>
+</tr>
+<tr>
+<td align="center">06</td>
+<td>冲销</td>
+</tr>
+</tbody></table>
+<p>采购收货使用 <strong>01</strong>。</p>
+<hr>
+<h2 id="5-构造-Item（最重要）"><a href="#5-构造-Item（最重要）" class="headerlink" title="5. 构造 Item（最重要）"></a>5. 构造 Item（最重要）</h2><p>循环每个采购订单行，逐一构造行项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs abap">LOOP AT it_req INTO DATA(ls_req).<br><br>  CLEAR ls_item.<br><br>  ls_item-move_type = &#x27;101&#x27;.      &quot; 移动类型<br>  ls_item-mvt_ind   = &#x27;B&#x27;.        &quot; 采购订单<br><br>  ls_item-po_number = ls_req-po_number.<br>  ls_item-po_item   = ls_req-po_item.<br><br>  ls_item-entry_qnt = ls_req-entry_qnt.<br>  ls_item-entry_uom = ls_req-entry_uom.<br><br>  ls_item-plant     = ls_req-werks.<br>  ls_item-stge_loc  = ls_req-stge_loc.<br><br>  ls_item-batch     = &#x27;X&#x27;.<br><br>  &quot; 读取物料<br>  READ TABLE lt_ekpo INTO DATA(ls_ekpo)<br>       WITH KEY<br>         ebeln = ls_req-po_number<br>         ebelp = ls_req-po_item<br>       BINARY SEARCH.<br><br>  IF sy-subrc = 0.<br>    ls_item-material = ls_ekpo-matnr.<br>  ENDIF.<br><br>  APPEND ls_item TO lt_item.<br><br>ENDLOOP.<br></code></pre></td></tr></table></figure>
+
+<h3 id="采购收货最重要字段"><a href="#采购收货最重要字段" class="headerlink" title="采购收货最重要字段"></a>采购收货最重要字段</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+<th align="center">必填</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MOVE_TYPE</code></td>
+<td>移动类型，如 <code>101</code></td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>MVT_IND</code></td>
+<td>移动标识，采购订单固定 <code>B</code></td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>PO_NUMBER</code></td>
+<td>采购订单号</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>PO_ITEM</code></td>
+<td>采购订单行</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>ENTRY_QNT</code></td>
+<td>收货数量</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>ENTRY_UOM</code></td>
+<td>单位</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>PLANT</code></td>
+<td>工厂</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>STGE_LOC</code></td>
+<td>库存地点</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><code>MATERIAL</code></td>
+<td>物料号</td>
+<td align="center">建议传</td>
+</tr>
+<tr>
+<td><code>BATCH</code></td>
+<td>批次号（批次管理物料必填）</td>
+<td align="center">条件必填</td>
+</tr>
+</tbody></table>
+<h3 id="为什么一定要设置-MVT-IND-B"><a href="#为什么一定要设置-MVT-IND-B" class="headerlink" title="为什么一定要设置 MVT_IND = &#39;B&#39;"></a>为什么一定要设置 <code>MVT_IND = &#39;B&#39;</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_item-mvt_ind = &#x27;B&#x27;.<br></code></pre></td></tr></table></figure>
+
+<p>这是采购订单收货<strong>最容易遗漏的字段</strong>。</p>
+<p><code>MVT_IND = &#39;B&#39;</code> 表示<strong>本次移动来源于采购订单</strong>。如果不设置或设置错误，BAPI 无法识别这是采购订单收货，通常会报错或产生非预期的结果。</p>
+<hr>
+<h2 id="6-调用-BAPI"><a href="#6-调用-BAPI" class="headerlink" title="6. 调用 BAPI"></a>6. 调用 BAPI</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CREATE&#x27;<br>  EXPORTING<br>    goodsmvt_header  = ls_header<br>    goodsmvt_code    = ls_code<br>  IMPORTING<br>    goodsmvt_headret = ls_headret<br>  TABLES<br>    goodsmvt_item    = lt_item<br>    return           = lt_return.<br></code></pre></td></tr></table></figure>
+
+<p>返回的关键信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_headret-mat_doc   &quot; 生成的物料凭证号<br>ls_headret-mat_year  &quot; 物料凭证年度<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-判断是否成功"><a href="#7-判断是否成功" class="headerlink" title="7. 判断是否成功"></a>7. 判断是否成功</h2><p>检查 RETURN 中是否存在错误消息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">lv_error = abap_false.<br><br>LOOP AT lt_return INTO ls_return<br>  WHERE type CA &#x27;AEX&#x27;.<br><br>  lv_error = abap_true.<br>  EXIT.<br><br>ENDLOOP.<br></code></pre></td></tr></table></figure>
+
+<p>BAPI 返回消息类型：</p>
+<table>
+<thead>
+<tr>
+<th align="center">TYPE</th>
+<th>说明</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">S</td>
+<td>成功（Success）</td>
+<td>忽略</td>
+</tr>
+<tr>
+<td align="center">W</td>
+<td>警告（Warning）</td>
+<td>通常可忽略，但建议记录</td>
+</tr>
+<tr>
+<td align="center">I</td>
+<td>信息（Information）</td>
+<td>忽略</td>
+</tr>
+<tr>
+<td align="center">E</td>
+<td>错误（Error）</td>
+<td>❌ 失败</td>
+</tr>
+<tr>
+<td align="center">A</td>
+<td>终止（Abort）</td>
+<td>❌ 失败</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td>异常（Exception）</td>
+<td>❌ 失败</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>判断逻辑：</strong> 只要 RETURN 中出现 A、E、X 任意一类消息，即视为失败。</p>
+</blockquote>
+<hr>
+<h2 id="8-成功提交"><a href="#8-成功提交" class="headerlink" title="8. 成功提交"></a>8. 成功提交</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abap">IF lv_error = abap_false.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>    EXPORTING<br>      wait = &#x27;X&#x27;.<br><br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️ 重要：</strong> 必须设置 <code>WAIT = &#39;X&#39;</code>，否则数据库可能尚未真正提交，后续逻辑读取不到已创建的物料凭证。</p>
+</blockquote>
+<hr>
+<h2 id="9-失败回滚"><a href="#9-失败回滚" class="headerlink" title="9. 失败回滚"></a>9. 失败回滚</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abap">ELSE.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br><br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-返回错误信息"><a href="#10-返回错误信息" class="headerlink" title="10. 返回错误信息"></a>10. 返回错误信息</h2><p>遍历 RETURN 表获取所有错误消息，便于排查问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">LOOP AT lt_return INTO ls_return<br>  WHERE type CA &#x27;AEX&#x27;.<br><br>  WRITE:<br>    / ls_return-id,         &quot; 消息类<br>      ls_return-number,     &quot; 消息号<br>      ls_return-message.    &quot; 消息文本<br><br>ENDLOOP.<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ID</code></td>
+<td>消息类（如 <code>M7</code>）</td>
+</tr>
+<tr>
+<td><code>NUMBER</code></td>
+<td>消息号（如 <code>021</code>）</td>
+</tr>
+<tr>
+<td><code>MESSAGE</code></td>
+<td>消息文本（可直接展示给用户）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="完整示例代码"><a href="#完整示例代码" class="headerlink" title="完整示例代码"></a>完整示例代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  ls_header  TYPE bapi2017_gm_head_01,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  ls_code    TYPE bapi2017_gm_code,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_create,<br>  ls_item    TYPE bapi2017_gm_item_create,<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lv_error   TYPE abap_bool.<br><br>&quot; 构造 Header<br>ls_header-pstng_date = sy-datum.<br>ls_header-doc_date   = sy-datum.<br>ls_header-header_txt = &#x27;采购收货&#x27;.<br><br>&quot; 设置 GM_CODE<br>ls_code-gm_code = &#x27;01&#x27;.<br><br>&quot; 构造 Item<br>ls_item-move_type = &#x27;101&#x27;.<br>ls_item-mvt_ind   = &#x27;B&#x27;.<br>ls_item-po_number = &#x27;4500000001&#x27;.<br>ls_item-po_item   = &#x27;00010&#x27;.<br>ls_item-material  = &#x27;MAT001&#x27;.<br>ls_item-entry_qnt = &#x27;10&#x27;.<br>ls_item-entry_uom = &#x27;PC&#x27;.<br>ls_item-plant     = &#x27;1000&#x27;.<br>ls_item-stge_loc  = &#x27;0001&#x27;.<br><br>APPEND ls_item TO lt_item.<br><br>&quot; 调用 BAPI<br>CALL FUNCTION &#x27;BAPI_GOODSMVT_CREATE&#x27;<br>  EXPORTING<br>    goodsmvt_header  = ls_header<br>    goodsmvt_code    = ls_code<br>  IMPORTING<br>    goodsmvt_headret = ls_headret<br>  TABLES<br>    goodsmvt_item    = lt_item<br>    return           = lt_return.<br><br>&quot; 判断结果<br>lv_error = abap_false.<br><br>LOOP AT lt_return INTO DATA(ls_return)<br>  WHERE type CA &#x27;AEX&#x27;.<br><br>  lv_error = abap_true.<br>  EXIT.<br><br>ENDLOOP.<br><br>IF lv_error = abap_false.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>    EXPORTING<br>      wait = &#x27;X&#x27;.<br><br>  WRITE: / &#x27;物料凭证号:&#x27;, ls_headret-mat_doc.<br><br>ELSE.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br><br>  LOOP AT lt_return INTO ls_return<br>    WHERE type CA &#x27;AEX&#x27;.<br><br>    WRITE:<br>      / ls_return-id,<br>        ls_return-number,<br>        ls_return-message.<br><br>  ENDLOOP.<br><br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最容易遗漏的若干字段"><a href="#最容易遗漏的若干字段" class="headerlink" title="最容易遗漏的若干字段"></a>最容易遗漏的若干字段</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_item-move_type = &#x27;101&#x27;.   &quot; 移动类型<br>ls_item-mvt_ind   = &#x27;B&#x27;.     &quot; 采购订单 ← 最容易遗漏！<br>ls_item-po_number = ...      &quot; 采购订单号<br>ls_item-po_item   = ...      &quot; 采购订单行<br>ls_item-entry_qnt = ...      &quot; 收货数量<br>ls_item-entry_uom = ...      &quot; 单位<br>ls_item-plant     = ...      &quot; 工厂<br>ls_item-stge_loc  = ...      &quot; 库存地点<br>ls_item-material  = ...      &quot; 物料号<br>ls_item-batch     = ...      &quot; 批次<br></code></pre></td></tr></table></figure>
+
+<p>各字段说明：</p>
+<ul>
+<li><strong><code>MOVE_TYPE = &#39;101&#39;</code></strong>：采购收货的标准移动类型。</li>
+<li><strong><code>MVT_IND = &#39;B&#39;</code></strong>：表示本次移动来源于采购订单，缺失时常导致 BAPI 报错或行为异常。</li>
+<li><strong><code>PO_NUMBER</code>、<code>PO_ITEM</code></strong>：指定采购订单及行项目。</li>
+<li><strong><code>ENTRY_QNT</code>、<code>ENTRY_UOM</code></strong>：本次收货数量及单位。</li>
+<li><strong><code>PLANT</code>、<code>STGE_LOC</code></strong>：工厂及库存地点。</li>
+<li><strong><code>MATERIAL</code></strong>：部分系统需要显式传入物料号，建议始终传入。</li>
+<li><strong><code>BATCH</code></strong>：批次管理物料必须维护批次号，非批次管理物料可为空。</li>
+</ul>
+<hr>
+<h2 id="常见-GM-CODE-速查"><a href="#常见-GM-CODE-速查" class="headerlink" title="常见 GM_CODE 速查"></a>常见 GM_CODE 速查</h2><table>
+<thead>
+<tr>
+<th align="center">GM_CODE</th>
+<th>业务场景</th>
+<th align="center">常用 MOVE_TYPE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">01</td>
+<td>采购订单收货</td>
+<td align="center">101</td>
+</tr>
+<tr>
+<td align="center">02</td>
+<td>生产订单收货</td>
+<td align="center">101</td>
+</tr>
+<tr>
+<td align="center">03</td>
+<td>发货</td>
+<td align="center">201, 261</td>
+</tr>
+<tr>
+<td align="center">04</td>
+<td>转储</td>
+<td align="center">301, 311</td>
+</tr>
+<tr>
+<td align="center">05</td>
+<td>其他收货</td>
+<td align="center">501</td>
+</tr>
+<tr>
+<td align="center">06</td>
+<td>冲销</td>
+<td align="center">102, 202</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>BAPI_GOODSMVT_CREATE</code> 虽然参数较多，但核心逻辑清晰：</p>
+<ol>
+<li><strong>Header</strong> — 设好过账日期、凭证日期</li>
+<li><strong>GM_CODE</strong> — 采购收货用 <code>01</code></li>
+<li><strong>Item</strong> — 最关键的步骤，<code>MOVE_TYPE = &#39;101&#39;</code> + <code>MVT_IND = &#39;B&#39;</code> 是采购收货的固定搭配，缺一不可</li>
+<li><strong>调用 BAPI</strong> → <strong>检查 RETURN</strong> → <strong>COMMIT &#x2F; ROLLBACK</strong></li>
+</ol>
+<p>实际项目中建议封装成独立的 Function Module 或 Method，统一处理错误逻辑和日志记录，避免在每个调用处重复写 COMMIT &#x2F; ROLLBACK 的判断代码。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SAP/" class="category-chain-item">SAP</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/SAP/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ABAP/" class="print-no-link">#ABAP</a>
+      
+        <a href="/tags/BAPI/" class="print-no-link">#BAPI</a>
+      
+        <a href="/tags/%E7%89%A9%E6%96%99%E5%87%AD%E8%AF%81/" class="print-no-link">#物料凭证</a>
+      
+        <a href="/tags/MM/" class="print-no-link">#MM</a>
+      
+        <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
+      
+        <a href="/tags/%E9%87%87%E8%B4%AD%E5%85%A5%E5%BA%93/" class="print-no-link">#采购入库</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</div>
+      <div>https://claudechan1228.github.io/SAP/开发/2026-06-22-bapi-goodsmvt-create-gr-guide/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wuyuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年6月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-goodsmvt-cancel-guide/" title="使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-incominginvoice-park-guide/" title="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票">
+                        <span class="hidden-mobile">使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

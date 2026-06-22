@@ -19,26 +19,28 @@
   <meta name="author" content="Wuyuan">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
   
-    <meta name="description" content="引言：为什么需要”普世智慧”？查理·芒格（Charlie Munger）认为，投资决策不能仅依赖某一门学科的知识。现实世界的问题本质上是跨学科的——单一视角就像一把锤子，看什么都像钉子。他提出 “格栅理论”：将不同学科的核心思维模型编织成一个框架，在决策时根据问题性质在不同模型之间切换，以避免单一视角带来的系统性偏差。  “在手里拿着锤子的人看来，世界就像一根钉子。” —— 查理·芒格   普世智">
+    <meta name="description" content="引言BAPI_INCOMINGINVOICE_PARK 是 SAP MM 模块中用于创建预制采购发票（Park Invoice） 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 采购订单 → 入库 → 发票 的完整 MM 业务闭环。 本文基于实际接口开发经验，梳理了从组装发票行项目">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《穷查理宝典》读书笔记之普世智慧">
-<meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-05-31-poor-charlie-almanack-worldly-wisdom/index.html">
+<meta property="og:title" content="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-incominginvoice-park-guide/index.html">
 <meta property="og:site_name" content="ClaudeChan&#39;s Blog">
-<meta property="og:description" content="引言：为什么需要”普世智慧”？查理·芒格（Charlie Munger）认为，投资决策不能仅依赖某一门学科的知识。现实世界的问题本质上是跨学科的——单一视角就像一把锤子，看什么都像钉子。他提出 “格栅理论”：将不同学科的核心思维模型编织成一个框架，在决策时根据问题性质在不同模型之间切换，以避免单一视角带来的系统性偏差。  “在手里拿着锤子的人看来，世界就像一根钉子。” —— 查理·芒格   普世智">
+<meta property="og:description" content="引言BAPI_INCOMINGINVOICE_PARK 是 SAP MM 模块中用于创建预制采购发票（Park Invoice） 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 采购订单 → 入库 → 发票 的完整 MM 业务闭环。 本文基于实际接口开发经验，梳理了从组装发票行项目">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-05-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-17T07:36:10.474Z">
+<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-22T05:48:24.081Z">
 <meta property="article:author" content="Wuyuan">
-<meta property="article:tag" content="穷查理宝典">
-<meta property="article:tag" content="查理·芒格">
-<meta property="article:tag" content="普世智慧">
-<meta property="article:tag" content="思维模型">
-<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="ABAP">
+<meta property="article:tag" content="BAPI">
+<meta property="article:tag" content="MM">
+<meta property="article:tag" content="接口开发">
+<meta property="article:tag" content="采购发票">
+<meta property="article:tag" content="发票预制">
+<meta property="article:tag" content="BAPI_INCOMINGINVOICE_PARK">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>《穷查理宝典》读书笔记之普世智慧 - ClaudeChan&#39;s Blog</title>
+  <title>使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票 - ClaudeChan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -333,7 +335,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="《穷查理宝典》读书笔记之普世智慧"></span>
+            <span id="subtitle" data-typed-text="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票"></span>
           
         </div>
 
@@ -344,8 +346,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-05-31 00:00" pubdate>
-          2026-05-31
+        <time datetime="2026-06-22 00:00" pubdate>
+          2026-06-22
         </time>
       </span>
     
@@ -356,7 +358,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          3.6k 字
         
       </span>
     
@@ -367,7 +369,7 @@
         
         
         
-          22 分钟
+          30 分钟
         
       </span>
     
@@ -406,12 +408,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">《穷查理宝典》读书笔记之普世智慧</h1>
+            <h1 id="seo-header">使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2026-06-17
+                    本文最后更新于 2026-06-22
                   
                 
               </p>
@@ -419,206 +421,188 @@
             
               <div class="markdown-body">
                 
-                <h2 id="引言：为什么需要”普世智慧”？"><a href="#引言：为什么需要”普世智慧”？" class="headerlink" title="引言：为什么需要”普世智慧”？"></a>引言：为什么需要”普世智慧”？</h2><p>查理·芒格（Charlie Munger）认为，投资决策不能仅依赖某一门学科的知识。现实世界的问题本质上是跨学科的——单一视角就像一把锤子，看什么都像钉子。他提出 <strong>“格栅理论”</strong>：将不同学科的核心思维模型编织成一个框架，在决策时根据问题性质在不同模型之间切换，以避免单一视角带来的系统性偏差。</p>
-<blockquote>
-<p>“在手里拿着锤子的人看来，世界就像一根钉子。” —— 查理·芒格</p>
-</blockquote>
+                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>BAPI_INCOMINGINVOICE_PARK</code> 是 SAP MM 模块中用于<strong>创建预制采购发票（Park Invoice）</strong> 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 <strong>采购订单 → 入库 → 发票</strong> 的完整 MM 业务闭环。</p>
+<p>本文基于实际接口开发经验，梳理了从组装发票行项目到调用 BAPI、事务提交流程的完整实现。</p>
 <hr>
-<h2 id="普世智慧的学科框架"><a href="#普世智慧的学科框架" class="headerlink" title="普世智慧的学科框架"></a>普世智慧的学科框架</h2><p>下表汇总了在芒格”普世智慧”框架中最常被提及的几大门类及其代表性的核心模型（或思想）：</p>
-<table>
+<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">采购入库成功<br>      │<br>      ▼<br>组装发票行项目 (ItemData)<br>      │<br>      ▼<br>组装发票抬头 (HeaderData)<br>      │<br>      ▼<br>调用 BAPI_INCOMINGINVOICE_PARK<br>      │<br>      ├──── 成功<br>      │       │<br>      │       ▼<br>      │   COMMIT 事务<br>      │       │<br>      │       ▼<br>      │   更新接口日志及返回发票号<br>      │<br>      └──── 失败<br>              │<br>              ▼<br>        ROLLBACK 事务<br>              │<br>              ▼<br>        返回错误信息<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-构造发票行项目-ItemData"><a href="#1-构造发票行项目-ItemData" class="headerlink" title="1. 构造发票行项目 (ItemData)"></a>1. 构造发票行项目 (ItemData)</h2><p>入库成功后，程序循环采购订单明细，为 BAPI 组装发票行项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">&lt;fs_incm_ivc_crt_item&gt;-ref_doc       = lv_matdoc.<br>&lt;fs_incm_ivc_crt_item&gt;-ref_doc_year  = lv_matdoc_year.<br>&lt;fs_incm_ivc_crt_item&gt;-ref_doc_it    = ls_mseg-zeile.<br><br>&lt;fs_incm_ivc_crt_item&gt;-po_unit       = &lt;lfs_item&gt;-meins.<br>&lt;fs_incm_ivc_crt_item&gt;-quantity      = &lt;lfs_item&gt;-menge.<br>&lt;fs_incm_ivc_crt_item&gt;-item_amount   = &lt;lfs_item&gt;-netwr.<br>&lt;fs_incm_ivc_crt_item&gt;-tax_code      = &lt;lfs_item&gt;-mwskz.<br></code></pre></td></tr></table></figure>
+
+<h3 id="字段说明"><a href="#字段说明" class="headerlink" title="字段说明"></a>字段说明</h3><table>
 <thead>
 <tr>
-<th>学科</th>
-<th>关键模型&#x2F;思想</th>
+<th>字段</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>数学</strong></td>
-<td>复利思维模型</td>
-<td>把上期利息计入本金的”利滚利”增长框架，揭示时间与回报的非线性关系</td>
+<td><code>REF_DOC</code></td>
+<td>采购入库物料凭证号</td>
 </tr>
 <tr>
-<td><strong>心理学</strong></td>
-<td>认知误判模型</td>
-<td>系统梳理人类常见的系统性认知偏误，帮助识别决策中的心理陷阱</td>
+<td><code>REF_DOC_YEAR</code></td>
+<td>物料凭证年度</td>
 </tr>
 <tr>
-<td><strong>微观经济学</strong></td>
-<td>机会成本与边际效用模型</td>
-<td>用”成本-收益”与”边际”概念指导资源最优配置与定价判断</td>
+<td><code>REF_DOC_IT</code></td>
+<td>物料凭证行号</td>
 </tr>
 <tr>
-<td><strong>工程学</strong></td>
-<td>冗余备份思维模型</td>
-<td>通过设置额外备份提高系统可靠性，用于风险管理与容错设计</td>
+<td><code>PO_UNIT</code></td>
+<td>采购订单单位</td>
 </tr>
 <tr>
-<td><strong>物理学</strong></td>
-<td>临界模型、倾覆力矩</td>
-<td>临界点&#x2F;阈值概念提示系统突然失稳的风险；倾覆力矩说明结构失衡的条件</td>
+<td><code>QUANTITY</code></td>
+<td>开票数量</td>
 </tr>
 <tr>
-<td><strong>化学</strong></td>
-<td>自我催化模型</td>
-<td>描述反应速率随浓度呈正反馈加速的机制，类比商业中的增长飞轮</td>
+<td><code>ITEM_AMOUNT</code></td>
+<td>本行金额（未税）</td>
 </tr>
 <tr>
-<td><strong>生物学</strong></td>
-<td>现代达尔文综合模型</td>
-<td>将自然选择与遗传机制结合，解释物种渐进演化，用于行业更迭与技术替代分析</td>
-</tr>
-<tr>
-<td><strong>历史学</strong></td>
-<td>（常以案例形式出现）</td>
-<td>虽非严格模型，但历史视角提供了对商业周期、制度变迁的归纳式”案例模型”</td>
+<td><code>TAX_CODE</code></td>
+<td>税码</td>
 </tr>
 </tbody></table>
-<p>以上模型共同构成了芒格所谓的 <strong>“思维模型架”</strong>。</p>
-<hr>
-<h2 id="各学科核心模型精讲"><a href="#各学科核心模型精讲" class="headerlink" title="各学科核心模型精讲"></a>各学科核心模型精讲</h2><h3 id="1️⃣-数学：复利思维模型"><a href="#1️⃣-数学：复利思维模型" class="headerlink" title="1️⃣ 数学：复利思维模型"></a>1️⃣ 数学：复利思维模型</h3><p>复利被爱因斯坦称为”世界第八大奇迹”。在投资中，复利的本质是 <strong>时间 × 回报率的非线性积累</strong>：</p>
-<ul>
-<li><strong>投资领域</strong>：即使年化收益率看似不高，经过数十年的积累，最终结果远超直觉判断</li>
-<li><strong>知识领域</strong>：每天进步一点点，知识的复利效应会在多年后带来质变</li>
-<li><strong>人际关系</strong>：信任与信誉也是一种复利资产，长期积累的价值不可估量</li>
-</ul>
-<p>芒格强调，理解复利不仅仅是理解公式，更重要的是理解 <strong>“慢变量”</strong> 的力量——真正的大回报来自长期坚持做正确的事。</p>
-<h3 id="2️⃣-心理学：认知误判模型"><a href="#2️⃣-心理学：认知误判模型" class="headerlink" title="2️⃣ 心理学：认知误判模型"></a>2️⃣ 心理学：认知误判模型</h3><p>芒格系统梳理了约 25 种人类常见的认知偏误，其中最著名的包括：</p>
-<table>
-<thead>
-<tr>
-<th>误判类型</th>
-<th>核心含义</th>
-<th>投资中的体现</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>确认偏误</strong></td>
-<td>只关注支持自己观点的证据</td>
-<td>持仓后选择性看多，忽视利空信号</td>
-</tr>
-<tr>
-<td><strong>锚定效应</strong></td>
-<td>过度依赖第一信息做判断</td>
-<td>以买入价作为决策锚点，拒绝止损</td>
-</tr>
-<tr>
-<td><strong>社会认同</strong></td>
-<td>从众心理</td>
-<td>追涨杀跌，跟随市场情绪</td>
-</tr>
-<tr>
-<td><strong>损失厌恶</strong></td>
-<td>损失的痛苦 &gt; 等量获得的快乐</td>
-<td>过早卖出盈利股，死扛亏损股</td>
-</tr>
-<tr>
-<td><strong>过度自信</strong></td>
-<td>高估自身判断准确率</td>
-<td>频繁交易，认为能择时</td>
-</tr>
-</tbody></table>
-<p>芒格的解法是：<strong>预先列出 check-list</strong>，在做每个投资决策前逐一过一遍，就像飞行员起飞前的检查清单一样。</p>
-<h3 id="3️⃣-微观经济学：机会成本与边际效用"><a href="#3️⃣-微观经济学：机会成本与边际效用" class="headerlink" title="3️⃣ 微观经济学：机会成本与边际效用"></a>3️⃣ 微观经济学：机会成本与边际效用</h3><p><strong>机会成本</strong> 是芒格最核心的决策框架之一：</p>
-<ul>
-<li>每投入一个项目，就放弃了其他所有可能的投资机会</li>
-<li>真正的好机会是极少数的——耐心等待”挥棒区”内的好球</li>
-<li>巴菲特和芒格的”少而精”策略：一生只做 20 次重大投资决策</li>
-</ul>
-<p><strong>边际效用</strong> 则提醒我们：</p>
-<ul>
-<li>随着消费&#x2F;投资增加，每单位新增的满足感递减</li>
-<li>投资中的”集中持仓” vs “分散投资”本质上是在边际效用曲线上寻找最优解</li>
-</ul>
-<h3 id="4️⃣-工程学：冗余备份思维模型"><a href="#4️⃣-工程学：冗余备份思维模型" class="headerlink" title="4️⃣ 工程学：冗余备份思维模型"></a>4️⃣ 工程学：冗余备份思维模型</h3><p>工程学中的冗余设计（Redundancy），用于提升系统的可靠性：</p>
-<ul>
-<li><strong>投资应用</strong>：保留现金储备，不把全部资金投入市场</li>
-<li><strong>安全边际</strong>：买入价格远低于内在价值，为判断错误留出缓冲</li>
-<li><strong>能力圈备份</strong>：不依赖单一信息来源，构建多元化的知识结构作为决策冗余</li>
-</ul>
-<p>芒格说：”预测未来最好的方式，就是为多种可能性做好准备。”</p>
-<h3 id="5️⃣-物理学：临界模型与倾覆力矩"><a href="#5️⃣-物理学：临界模型与倾覆力矩" class="headerlink" title="5️⃣ 物理学：临界模型与倾覆力矩"></a>5️⃣ 物理学：临界模型与倾覆力矩</h3><p>物理学的临界点概念，帮助理解系统的 <strong>相变</strong> 与 <strong>失稳</strong>：</p>
-<ul>
-<li><strong>临界点</strong>：温度达到 100°C 时水沸腾——系统在某个阈值下突然质变<ul>
-<li>企业债务水平到达临界点后可能引发连锁违约</li>
-<li>市场情绪到达极端后会出现反转</li>
-</ul>
-</li>
-<li><strong>倾覆力矩</strong>：结构在失衡条件下突然倒塌<ul>
-<li>高杠杆企业在黑天鹅事件中的崩塌</li>
-<li>过度集中的仓位在极端行情下的爆仓风险</li>
-</ul>
-</li>
-</ul>
-<p>物理模型提醒我们：<strong>非线性突变</strong> 是真实世界的常态，而非异常。</p>
-<h3 id="6️⃣-化学：自我催化模型"><a href="#6️⃣-化学：自我催化模型" class="headerlink" title="6️⃣ 化学：自我催化模型"></a>6️⃣ 化学：自我催化模型</h3><p>化学反应中，生成物本身就是催化剂，使反应加速进行——这就是 <strong>正反馈循环</strong>：</p>
-<ul>
-<li><strong>商业飞轮</strong>：亚马逊的”更低价格 → 更多流量 → 更多卖家 → 更低价格”</li>
-<li><strong>品牌效应</strong>：知名品牌 → 更多用户 → 更高知名度 → 更强品牌</li>
-<li><strong>学习复利</strong>：学会一个新概念 → 更容易理解相关概念 → 学习速度加快</li>
-</ul>
-<p>识别自我催化机制，是芒格判断企业护城河的重要方法——能自我强化的商业模式才是真正的护城河。</p>
-<h3 id="7️⃣-生物学：现代达尔文综合模型"><a href="#7️⃣-生物学：现代达尔文综合模型" class="headerlink" title="7️⃣ 生物学：现代达尔文综合模型"></a>7️⃣ 生物学：现代达尔文综合模型</h3><p>进化论不仅解释物种演化，也是理解商业竞争的有力工具：</p>
-<table>
-<thead>
-<tr>
-<th>生物学概念</th>
-<th>商业类比</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>自然选择</td>
-<td>市场竞争淘汰低效企业</td>
-</tr>
-<tr>
-<td>适应辐射</td>
-<td>新技术催生的多元化业态</td>
-</tr>
-<tr>
-<td>生态位</td>
-<td>细分市场的差异化定位</td>
-</tr>
-<tr>
-<td>红皇后效应</td>
-<td>必须不断进化才能维持现有地位</td>
-</tr>
-</tbody></table>
-<p>芒格常说：”商业世界就是一个丛林，适应能力是最关键的生存技能。”</p>
-<h3 id="8️⃣-历史学：案例模型"><a href="#8️⃣-历史学：案例模型" class="headerlink" title="8️⃣ 历史学：案例模型"></a>8️⃣ 历史学：案例模型</h3><p>历史学虽然不是严格的”模型科学”，但它提供了极其丰富的 <strong>归纳式案例库</strong>：</p>
-<ul>
-<li>商业周期反复出现——历史告诉我们”这次不一样”是最昂贵的五个字</li>
-<li>制度变迁有迹可循——理解过去才能预判未来</li>
-<li>人类行为模式相对稳定——历史上的人性误判在今天依然上演</li>
-</ul>
-<p>芒格酷爱阅读传记和历史，他通过大量案例积累了丰富的 <strong>情境模式识别</strong> 能力——当类似情况再次出现时，他能更快地做出正确判断。</p>
-<hr>
-<h2 id="如何构建自己的”普世智慧”框架"><a href="#如何构建自己的”普世智慧”框架" class="headerlink" title="如何构建自己的”普世智慧”框架"></a>如何构建自己的”普世智慧”框架</h2><p>芒格给出的方法论非常具体：</p>
-<h3 id="第一步：跨学科阅读"><a href="#第一步：跨学科阅读" class="headerlink" title="第一步：跨学科阅读"></a>第一步：跨学科阅读</h3><blockquote>
-<p>“我这辈子遇到的聪明人，没有不每天阅读的——没有，一个都没有。”</p>
-</blockquote>
-<ul>
-<li>不局限于投资书籍，阅读涵盖数学、物理、生物、心理、历史、哲学</li>
-<li>每年至少阅读 50-100 本书</li>
-</ul>
-<h3 id="第二步：建立思维模型清单"><a href="#第二步：建立思维模型清单" class="headerlink" title="第二步：建立思维模型清单"></a>第二步：建立思维模型清单</h3><ul>
-<li>掌握各学科约 100 个核心思维模型</li>
-<li>每个模型不需要精通到专业水平，但要理解其核心原理与适用边界</li>
-</ul>
-<h3 id="第三步：决策前使用-Check-List"><a href="#第三步：决策前使用-Check-List" class="headerlink" title="第三步：决策前使用 Check-List"></a>第三步：决策前使用 Check-List</h3><ul>
-<li>列出所有可能相关的模型</li>
-<li>逐一对照分析当前决策</li>
-<li>特别警惕反向信号（反向思考）</li>
-</ul>
-<h3 id="第四步：养成”反向思考”习惯"><a href="#第四步：养成”反向思考”习惯" class="headerlink" title="第四步：养成”反向思考”习惯"></a>第四步：养成”反向思考”习惯</h3><ul>
-<li>想成功，先研究失败的原因</li>
-<li>想构建好系统，先研究系统崩溃的方式</li>
-<li>想赚钱，先研究亏钱的所有方式</li>
-</ul>
-<hr>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>芒格的普世智慧框架，本质上是 <strong>一套跨学科的元认知系统</strong>——它不教我们”思考什么”，而是教我们”如何思考”。当我们掌握了足够多的思维模型，并将它们编织成一张知识网络，就能在面对复杂问题时从多个角度切入，做出更全面的判断。</p>
+<h3 id="为什么需要-REF-DOC？"><a href="#为什么需要-REF-DOC？" class="headerlink" title="为什么需要 REF_DOC？"></a>为什么需要 REF_DOC？</h3><p><code>REF_DOC</code>、<code>REF_DOC_YEAR</code>、<code>REF_DOC_IT</code> 三者共同指定了：</p>
 <blockquote>
-<p>“如果你只是记住一些孤立的事实，然后把它们硬凑起来，那你不会真正理解任何东西。如果不把知识放到一个格栅框架中，你便无法有效地运用它们。” —— 查理·芒格</p>
+<p>本次采购发票对应哪一张采购入库物料凭证。</p>
 </blockquote>
+<p>SAP 据此建立完整的业务链追溯：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">采购订单 ──→ 入库物料凭证 ──→ 采购发票<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-累计发票总金额"><a href="#2-累计发票总金额" class="headerlink" title="2. 累计发票总金额"></a>2. 累计发票总金额</h2><p>循环行项目过程中同步累计发票抬头总金额：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_incm_ivc_crt_header-gross_amount =<br>    ls_incm_ivc_crt_header-gross_amount<br>  + &lt;lfs_item&gt;-netwr * ( 1 + lv_kbetr / 1000 ).<br></code></pre></td></tr></table></figure>
+
+<p>业务含义：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">发票总金额 <span class="hljs-operator">=</span> 累计所有行金额（含税）<br></code></pre></td></tr></table></figure>
+
+<p>其中 <code>netwr</code> 为采购订单净价，<code>lv_kbetr</code> 为税率（需根据系统实际配置确认比例，例如 13% 的税率可能存储为 <code>130</code> 或 <code>1300</code>）。</p>
+<hr>
+<h2 id="3-构造发票抬头-HeaderData"><a href="#3-构造发票抬头-HeaderData" class="headerlink" title="3. 构造发票抬头 (HeaderData)"></a>3. 构造发票抬头 (HeaderData)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_incm_ivc_crt_header-doc_date      = sy-datum.<br>ls_incm_ivc_crt_header-pstng_date    = sy-datum.<br>ls_incm_ivc_crt_header-comp_code     = ls_ekko-bukrs.<br>ls_incm_ivc_crt_header-currency      = ls_ekko-waers.<br><br>ls_incm_ivc_crt_header-invoice_ind   = &#x27;X&#x27;.<br>ls_incm_ivc_crt_header-doc_type      = &#x27;RE&#x27;.<br>ls_incm_ivc_crt_header-calc_tax_ind  = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
+
+<h3 id="字段说明-1"><a href="#字段说明-1" class="headerlink" title="字段说明"></a>字段说明</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DOC_DATE</code></td>
+<td>凭证日期</td>
+</tr>
+<tr>
+<td><code>PSTNG_DATE</code></td>
+<td>过账日期</td>
+</tr>
+<tr>
+<td><code>COMP_CODE</code></td>
+<td>公司代码</td>
+</tr>
+<tr>
+<td><code>CURRENCY</code></td>
+<td>币种（来自采购订单）</td>
+</tr>
+<tr>
+<td><code>INVOICE_IND</code></td>
+<td>普通发票标识</td>
+</tr>
+<tr>
+<td><code>DOC_TYPE</code></td>
+<td>发票凭证类型 <code>RE</code></td>
+</tr>
+<tr>
+<td><code>CALC_TAX_IND</code></td>
+<td>自动计算税额</td>
+</tr>
+</tbody></table>
+<h3 id="INVOICE-IND-‘X’"><a href="#INVOICE-IND-‘X’" class="headerlink" title="INVOICE_IND &#x3D; ‘X’"></a>INVOICE_IND &#x3D; ‘X’</h3><p>表示本次创建的是<strong>普通采购发票</strong>，而非：</p>
+<ul>
+<li>Credit Memo（贷项凭证）</li>
+<li>Subsequent Debit（后续借记）</li>
+<li>Subsequent Credit（后续贷记）</li>
+</ul>
+<h3 id="DOC-TYPE-‘RE’"><a href="#DOC-TYPE-‘RE’" class="headerlink" title="DOC_TYPE &#x3D; ‘RE’"></a>DOC_TYPE &#x3D; ‘RE’</h3><p>SAP 标准的采购发票凭证类型。所有通过该 BAPI 生成的 MM 发票都使用 <code>RE</code>。</p>
+<h3 id="CALC-TAX-IND-‘X’"><a href="#CALC-TAX-IND-‘X’" class="headerlink" title="CALC_TAX_IND &#x3D; ‘X’"></a>CALC_TAX_IND &#x3D; ‘X’</h3><p>告诉 SAP：</p>
+<blockquote>
+<p>税额不由接口计算，由 SAP 根据税码自动计算。</p>
+</blockquote>
+<p>因此程序只需传入<strong>金额</strong>和<strong>税码</strong>，SAP 会自动生成税额。这避免了接口端算税不一致的风险。</p>
+<hr>
+<h2 id="4-调用-BAPI-创建预制发票"><a href="#4-调用-BAPI-创建预制发票" class="headerlink" title="4. 调用 BAPI 创建预制发票"></a>4. 调用 BAPI 创建预制发票</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_INCOMINGINVOICE_PARK&#x27;<br>  EXPORTING<br>    headerdata       = ls_incm_ivc_crt_header<br>  IMPORTING<br>    invoicedocnumber = lv_inv_doc_no<br>    fiscalyear       = lv_fisc_year<br>  TABLES<br>    itemdata         = lt_incm_ivc_crt_item<br>    return           = lt_return.<br></code></pre></td></tr></table></figure>
+
+<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><p>该 BAPI 不是<strong>直接过账</strong>发票，而是 <strong>Park Invoice（预制发票）</strong>。预制后的发票需要后续在 SAP 中审核过账。</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>INVOICEDOCNUMBER</code></td>
+<td>发票编号</td>
+</tr>
+<tr>
+<td><code>FISCALYEAR</code></td>
+<td>会计年度</td>
+</tr>
+<tr>
+<td><code>RETURN</code></td>
+<td>执行消息（内表）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-成功处理"><a href="#5-成功处理" class="headerlink" title="5. 成功处理"></a>5. 成功处理</h2><p>判断逻辑：只要返回了发票号，即认为创建成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">IF lv_inv_doc_no IS NOT INITIAL.<br></code></pre></td></tr></table></figure>
+
+<p>随后提交事务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则 BAPI 创建的数据不会真正写入数据库。设置 <code>WAIT = &#39;X&#39;</code> 确保同步提交完成后再执行后续逻辑。</p>
+</blockquote>
+<h3 id="返回成功信息"><a href="#返回成功信息" class="headerlink" title="返回成功信息"></a>返回成功信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">is_out-return_msg =<br>    &#x27;采购订单入库、发票成功。&#x27;<br> &amp;&amp; &#x27;发票号：&#x27;<br> &amp;&amp; lv_inv_doc_no.<br><br>CONDENSE is_out-return_msg NO-GAPS.<br><br>is_out-return_type = &#x27;S&#x27;.<br></code></pre></td></tr></table></figure>
+
+<p>接口最终返回类似：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns">采购订单入库、发票成功。<br>发票号：<span class="hljs-number">5100001234</span><br></code></pre></td></tr></table></figure>
+
+<p>同时将发票号持久化到接口日志表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_ztmm018-invoicedocnumber = lv_inv_doc_no.<br>ls_ztmm018-fiscalyear       = lv_fisc_year.<br></code></pre></td></tr></table></figure>
+
+<p>便于后续查询和追溯。</p>
+<hr>
+<h2 id="6-失败处理"><a href="#6-失败处理" class="headerlink" title="6. 失败处理"></a>6. 失败处理</h2><p>若未返回发票号，认为创建失败：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure>
+
+<p>作用：</p>
+<ul>
+<li>回滚整个 LUW（Logical Unit of Work）</li>
+<li>避免发票创建一半导致数据不一致</li>
+</ul>
+<p>随后重新组织错误返回信息，通知 OA 或上层系统。</p>
+<hr>
+<h2 id="业务流程总结"><a href="#业务流程总结" class="headerlink" title="业务流程总结"></a>业务流程总结</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs text">采购订单<br>     │<br>     ▼<br>采购入库成功 (BAPI_GOODSMVT_CREATE)<br>     │<br>     ▼<br>根据采购订单生成发票行项目<br>     │<br>     ▼<br>计算发票总金额（含税）<br>     │<br>     ▼<br>组装发票抬头<br>     │<br>     ▼<br>BAPI_INCOMINGINVOICE_PARK<br>     │<br> ┌───┴──────────────┐<br> │                  │<br>成功               失败<br> │                  │<br> ▼                  ▼<br>COMMIT          ROLLBACK<br> │                  │<br> ▼                  ▼<br>记录发票号      返回错误<br> │<br> ▼<br>接口结束<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文梳理了使用 <code>BAPI_INCOMINGINVOICE_PARK</code> 创建预制采购发票的完整流程，核心职责可概括为：</p>
+<ol>
+<li>根据采购订单及入库凭证生成发票行项目</li>
+<li>计算发票总金额（含税）</li>
+<li>组装发票抬头信息（凭证类型 <code>RE</code>、自动算税）</li>
+<li>调用 <code>BAPI_INCOMINGINVOICE_PARK</code> 创建预制采购发票</li>
+<li>创建成功后 <code>COMMIT</code> 事务并保存发票号到日志表</li>
+<li>创建失败则 <code>ROLLBACK</code> 事务并返回错误信息</li>
+</ol>
+<p>整个流程与上一篇文章《使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账》配合，实现了：</p>
+<blockquote>
+<p><strong>采购订单 → 入库 → 采购发票（Park）</strong> 的完整 MM 业务闭环。</p>
+</blockquote>
+<p>实际项目开发中建议将入库 + 发票创建封装为统一的接口 Function Module，统一处理事务提交、回滚和错误日志，避免在每个调用处重复编写判断逻辑。</p>
 
                 
               </div>
@@ -637,12 +621,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%8A%95%E8%B5%84/" class="category-chain-item">投资</a>
+  <a href="/categories/SAP/" class="category-chain-item">SAP</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/" class="category-chain-item">理念</a>
+  <a href="/categories/SAP/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
   
   
 
@@ -659,15 +643,19 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%A9%B7%E6%9F%A5%E7%90%86%E5%AE%9D%E5%85%B8/" class="print-no-link">#穷查理宝典</a>
+        <a href="/tags/ABAP/" class="print-no-link">#ABAP</a>
       
-        <a href="/tags/%E6%9F%A5%E7%90%86%C2%B7%E8%8A%92%E6%A0%BC/" class="print-no-link">#查理·芒格</a>
+        <a href="/tags/BAPI/" class="print-no-link">#BAPI</a>
       
-        <a href="/tags/%E6%99%AE%E4%B8%96%E6%99%BA%E6%85%A7/" class="print-no-link">#普世智慧</a>
+        <a href="/tags/MM/" class="print-no-link">#MM</a>
       
-        <a href="/tags/%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/" class="print-no-link">#思维模型</a>
+        <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
       
-        <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="print-no-link">#读书笔记</a>
+        <a href="/tags/%E9%87%87%E8%B4%AD%E5%8F%91%E7%A5%A8/" class="print-no-link">#采购发票</a>
+      
+        <a href="/tags/%E5%8F%91%E7%A5%A8%E9%A2%84%E5%88%B6/" class="print-no-link">#发票预制</a>
+      
+        <a href="/tags/BAPI-INCOMINGINVOICE-PARK/" class="print-no-link">#BAPI_INCOMINGINVOICE_PARK</a>
       
     </div>
   
@@ -679,8 +667,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>《穷查理宝典》读书笔记之普世智慧</div>
-      <div>https://claudechan1228.github.io/投资/理念/2026-05-31-poor-charlie-almanack-worldly-wisdom/</div>
+      <div>使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</div>
+      <div>https://claudechan1228.github.io/SAP/开发/2026-06-22-bapi-incominginvoice-park-guide/</div>
     </div>
     <div class="license-meta">
       
@@ -692,7 +680,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年5月31日</div>
+          <div>2026年6月22日</div>
         </div>
       
       
@@ -724,15 +712,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-02-cognitive-biases-in-investing/" title="投资中的人类认知误判模型">
+                      <a href="/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">投资中的人类认知误判模型</span>
+                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-19-munger-mental-models-investing/" title="《穷查理宝典》学习笔记——多元思维模型在投资中的实战应用">
+                        <span class="hidden-mobile">《穷查理宝典》学习笔记——多元思维模型在投资中的实战应用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
