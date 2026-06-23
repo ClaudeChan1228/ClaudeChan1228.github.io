@@ -117,6 +117,88 @@
   
   
   <entry>
+    <title>理解商誉（Goodwill）——从会计到投资</title>
+    <link href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-22-understanding-goodwill/"/>
+    <url>/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-22-understanding-goodwill/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。</p></blockquote><hr><h2 id="一、什么是商誉？"><a href="#一、什么是商誉？" class="headerlink" title="一、什么是商誉？"></a>一、什么是商誉？</h2><h3 id="1-会计中的商誉（Accounting-Goodwill）"><a href="#1-会计中的商誉（Accounting-Goodwill）" class="headerlink" title="1. 会计中的商誉（Accounting Goodwill）"></a>1. 会计中的商誉（Accounting Goodwill）</h3><p>商誉并不是企业自己评估出来的价值，而是<strong>只有在企业并购时才会出现在资产负债表中的一项资产</strong>。</p><p>计算公式非常简单：</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">商誉 <span class="hljs-operator">=</span> 收购价格 - 被收购企业可辨认净资产公允价值<br></code></pre></td></tr></table></figure><p>例如：</p><ul><li>收购价格：100 亿元</li><li>被收购企业：资产 80 亿元，负债 20 亿元</li><li>可辨认净资产：60 亿元</li></ul><p>则：</p><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">商誉 =<span class="hljs-number"> 100 </span>-<span class="hljs-number"> 60 </span>=<span class="hljs-number"> 40 </span>亿元<br></code></pre></td></tr></table></figure><p>资产负债表中会出现：</p><table><thead><tr><th>项目</th><th>金额</th></tr></thead><tbody><tr><td>可辨认净资产</td><td>60 亿元</td></tr><tr><td>商誉</td><td>40 亿元</td></tr></tbody></table><h3 id="2-为什么会愿意支付这-40-亿元？"><a href="#2-为什么会愿意支付这-40-亿元？" class="headerlink" title="2. 为什么会愿意支付这 40 亿元？"></a>2. 为什么会愿意支付这 40 亿元？</h3><p>因为购买的不只是工厂、设备、现金等资产。真正购买的是<strong>企业未来持续赚钱的能力</strong>，例如：</p><ul><li>品牌</li><li>客户关系</li><li>管理团队</li><li>企业文化</li><li>市场地位</li><li>技术积累</li><li>网络效应</li><li>协同效应</li></ul><p>这些东西很难单独出售、很难准确估值、无法单独辨认，因此不会单独计入资产，只能统一计入 <strong>商誉（Goodwill）</strong>。</p><hr><h2 id="二、为什么很多优秀企业没有商誉？"><a href="#二、为什么很多优秀企业没有商誉？" class="headerlink" title="二、为什么很多优秀企业没有商誉？"></a>二、为什么很多优秀企业没有商誉？</h2><p>这是很多初学者容易误解的地方。</p><p>例如：可口可乐、苹果、贵州茅台——这些企业拥有世界顶级品牌，但资产负债表上的商誉可能很少，甚至没有。</p><p>原因是：</p><blockquote><p>企业自己长期积累形成的品牌价值、管理能力、客户忠诚度等，并不会计入资产负债表。</p></blockquote><p>只有<strong>花钱收购别人时支付的溢价</strong>，才能形成<strong>会计商誉（Accounting Goodwill）</strong>。</p><p>因此：</p><blockquote><p><strong>没有商誉 ≠ 没有竞争优势。</strong></p></blockquote><hr><h2 id="三、经济商誉（Economic-Goodwill）"><a href="#三、经济商誉（Economic-Goodwill）" class="headerlink" title="三、经济商誉（Economic Goodwill）"></a>三、经济商誉（Economic Goodwill）</h2><p>巴菲特更关心的是<strong>经济商誉（Economic Goodwill）</strong>，即企业真正能够长期创造超额利润的能力。</p><p>例如：</p><ul><li>可口可乐品牌</li><li>苹果生态系统</li><li>Costco 会员体系</li><li>茅台品牌</li></ul><p>这些价值虽然不会体现在财务报表中，却是真正决定企业价值的核心。</p><p><strong>企业存在两种商誉：</strong></p><table><thead><tr><th>类型</th><th>来源</th><th align="center">是否在报表中</th></tr></thead><tbody><tr><td>会计商誉</td><td>企业并购</td><td align="center">✅</td></tr><tr><td>经济商誉</td><td>长期经营形成的竞争优势</td><td align="center">❌</td></tr></tbody></table><p>巴菲特真正重视的是：<strong>经济商誉。</strong></p><hr><h2 id="四、商誉是不是无形资产？"><a href="#四、商誉是不是无形资产？" class="headerlink" title="四、商誉是不是无形资产？"></a>四、商誉是不是无形资产？</h2><p>严格来说，<strong>不是</strong>。</p><p>会计上，商誉与无形资产是两个不同科目。</p><p><strong>无形资产</strong>包括：专利、商标、软件、土地使用权等。它们可以辨认、可以出售、可以单独估值。</p><p><strong>商誉</strong>不能单独出售，必须依附整个企业。</p><p>因此，商誉属于：</p><blockquote><p><strong>不可辨认资产（Unidentifiable Asset）</strong></p></blockquote><hr><h2 id="五、商誉可以理解成什么？"><a href="#五、商誉可以理解成什么？" class="headerlink" title="五、商誉可以理解成什么？"></a>五、商誉可以理解成什么？</h2><blockquote><p><strong>商誉 &#x3D; 企业无法单独辨认的竞争优势以及并购协同效应所形成的未来超额现金流，在收购时支付的现值溢价。</strong></p></blockquote><p>关键词：</p><ul><li>不可辨认竞争优势</li><li>协同效应</li><li>超额现金流</li><li>现值（Present Value）</li></ul><p>这里已经和巴菲特的估值思想完全联系起来了。</p><hr><h2 id="六、商誉是不是未来现金流的折现？"><a href="#六、商誉是不是未来现金流的折现？" class="headerlink" title="六、商誉是不是未来现金流的折现？"></a>六、商誉是不是未来现金流的折现？</h2><p>可以，但更准确一点：</p><blockquote><p><strong>商誉反映的是未来超额现金流对应的溢价，而不是企业全部未来现金流。</strong></p></blockquote><p>例如：企业未来现金流价值 100 亿元，其中净资产价值 60 亿元，则商誉 40 亿元。</p><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">100 </span>= <span class="hljs-number">60</span> + <span class="hljs-number">40</span><br></code></pre></td></tr></table></figure><p>即：商誉代表那些无法单独辨认、但能够持续创造超额现金流的价值。</p><hr><h2 id="七、为什么要做商誉减值测试？"><a href="#七、为什么要做商誉减值测试？" class="headerlink" title="七、为什么要做商誉减值测试？"></a>七、为什么要做商誉减值测试？</h2><p>因为未来可能发生变化。例如：</p><ul><li>品牌影响力下降</li><li>客户流失</li><li>管理团队离开</li><li>技术落后</li><li>行业竞争恶化</li></ul><p>这些都会导致未来现金流下降。如果未来现金流下降，那么原来支付的溢价就可能已经不存在，因此必须重新评估。</p><h3 id="商誉减值测试的本质"><a href="#商誉减值测试的本质" class="headerlink" title="商誉减值测试的本质"></a>商誉减值测试的本质</h3><p>本质只有一句话：</p><blockquote><p><strong>重新估计未来现金流，并折现计算今天值多少钱。</strong></p></blockquote><p>例如：</p><ul><li>收购时预计未来价值：100 亿元</li><li>几年后竞争恶化，重新预测未来价值：65 亿元</li><li>账面价值：100 亿元</li></ul><p>明显 <strong>账面价值 &gt; 实际价值</strong>，必须确认<strong>商誉减值</strong>。</p><p>所以：</p><blockquote><p><strong>商誉减值，本质就是一次重新估值。</strong></p></blockquote><hr><h2 id="八、商誉减值测试为什么不是单独给商誉估值？"><a href="#八、商誉减值测试为什么不是单独给商誉估值？" class="headerlink" title="八、商誉减值测试为什么不是单独给商誉估值？"></a>八、商誉减值测试为什么不是单独给商誉估值？</h2><p>因为商誉本身不能赚钱。真正赚钱的是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">品牌 + 员工 + 设备 + 渠道 + 管理团队 + 客户<br></code></pre></td></tr></table></figure><p>整个体系一起产生现金流。因此商誉不能单独估值。</p><p>会计准则要求将商誉分配到<strong>现金产生单元（Cash Generating Unit，CGU）</strong>，然后计算整个资产组未来现金流折现价值。</p><p>如果 <strong>未来价值 &lt; 账面价值</strong>，则：</p><ol><li>先减商誉</li><li>商誉减完还不够 → 再减固定资产、无形资产等</li></ol><p>因此，真正接受减值测试的是：<strong>整个赚钱机器，而不是商誉本身。</strong></p><hr><h2 id="九、以前为什么要摊销商誉？"><a href="#九、以前为什么要摊销商誉？" class="headerlink" title="九、以前为什么要摊销商誉？"></a>九、以前为什么要摊销商誉？</h2><p>历史上很多国家采用<strong>商誉每年摊销</strong>，例如 20 年平均摊销，每年减少 5 亿元。这种方式类似于固定资产折旧。</p><p>但是很多人认为：优秀品牌并不会随着时间自动贬值。例如可口可乐品牌，20 年以后可能比今天更值钱。</p><p>因此，现在国际主流会计准则：</p><ul><li>❌ 取消了商誉摊销</li><li>✅ 改成<strong>每年做减值测试</strong></li></ul><p>只有价值真的下降，才一次性减值。</p><hr><h2 id="十、投资时怎么看商誉？"><a href="#十、投资时怎么看商誉？" class="headerlink" title="十、投资时怎么看商誉？"></a>十、投资时怎么看商誉？</h2><p>不能简单地认为”商誉高就是坏公司”，也不能认为”商誉低就是好公司”。</p><p>真正应该关注的是：</p><h3 id="第一：为什么会产生这么大的商誉？"><a href="#第一：为什么会产生这么大的商誉？" class="headerlink" title="第一：为什么会产生这么大的商誉？"></a>第一：为什么会产生这么大的商誉？</h3><p>是否买贵了？行业内卷？管理层激进扩张？</p><h3 id="第二：收购以后有没有兑现预期？"><a href="#第二：收购以后有没有兑现预期？" class="headerlink" title="第二：收购以后有没有兑现预期？"></a>第二：收购以后有没有兑现预期？</h3><p>利润、现金流、ROE、ROIC 有没有持续改善？</p><h3 id="第三：未来现金流有没有恶化？"><a href="#第三：未来现金流有没有恶化？" class="headerlink" title="第三：未来现金流有没有恶化？"></a>第三：未来现金流有没有恶化？</h3><p>如果未来赚钱能力下降，那么未来发生商誉减值的概率就会上升。</p><h3 id="第四：连续大额商誉减值意味着什么？"><a href="#第四：连续大额商誉减值意味着什么？" class="headerlink" title="第四：连续大额商誉减值意味着什么？"></a>第四：连续大额商誉减值意味着什么？</h3><p>通常意味着当年的收购很可能买贵了，或者管理层高估了未来。连续发生大额商誉减值，通常是一个危险信号。</p><hr><h2 id="十一、巴菲特怎么看商誉？"><a href="#十一、巴菲特怎么看商誉？" class="headerlink" title="十一、巴菲特怎么看商誉？"></a>十一、巴菲特怎么看商誉？</h2><p>巴菲特其实并不太关注财务报表上的商誉数字。他真正关心的是：</p><blockquote><p>企业未来还能创造多少现金流？</p></blockquote><p>他的估值思想：</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">企业价值 <span class="hljs-operator">=</span> 未来现金流折现<br></code></pre></td></tr></table></figure><p>而商誉减值测试的本质也是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">未来现金流折现<br></code></pre></td></tr></table></figure><p>区别只是：</p><ul><li><strong>巴菲特</strong>：用于估值</li><li><strong>会计</strong>：用于检查资产是否高估</li></ul><p>两者底层逻辑其实一致。</p><hr><h2 id="十二、关于商誉最重要的理解"><a href="#十二、关于商誉最重要的理解" class="headerlink" title="十二、关于商誉最重要的理解"></a>十二、关于商誉最重要的理解</h2><table><thead><tr><th>概念</th><th>核心含义</th></tr></thead><tbody><tr><td><strong>会计商誉</strong></td><td>企业并购时，为未来超额盈利能力支付的溢价</td></tr><tr><td><strong>经济商誉</strong></td><td>企业长期形成、无法单独辨认的竞争优势</td></tr><tr><td><strong>商誉减值</strong></td><td>对未来现金流重新估值</td></tr></tbody></table><p>巴菲特真正关注的，不是财务报表里的商誉，而是企业是否拥有：</p><blockquote><p><strong>持续创造超额现金流的经济商誉。</strong></p></blockquote><hr><h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><blockquote><p><strong>会计商誉，是并购交易中形成的资产；经济商誉，是企业竞争优势的体现；两者的共同本质，都是未来能够持续创造超额现金流的能力。巴菲特阅读财务报表时，并不执着于商誉这一会计科目，而是始终回到同一个问题：这家公司未来还能持续产生多少自由现金流？</strong></p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>投资</category>
+      
+      <category>理念</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>财务分析</tag>
+      
+      <tag>价值投资</tag>
+      
+      <tag>商誉</tag>
+      
+      <tag>巴菲特</tag>
+      
+      <tag>会计</tag>
+      
+      <tag>经济商誉</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>第一次正式业余比赛赛后反思 — 基本功才是比赛胜负的关键</title>
+    <link href="/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/2026-06-22-table-tennis-first-competition-reflection/"/>
+    <url>/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/2026-06-22-table-tennis-first-competition-reflection/</url>
+    
+    <content type="html"><![CDATA[<h2 id="总体评价"><a href="#总体评价" class="headerlink" title="总体评价"></a>总体评价</h2><p>今天参加了爱聚网不限分公开赛，这是我的第一次正式业余乒乓球比赛。小组 6 人循环，5 场全败，一小局都没赢。</p><p>但今天最大的收获，不是发现技术不会，而是明确了真正影响比赛胜负的并非某一项高难技术，而是<strong>接发球、还原、站位、核心发力和战术选择这些基本功</strong>。</p><p>比赛暴露出来的问题，大多数并不是技术不会，而是比赛中基本功不到位，包括：</p><ul><li>接发球判断与执行</li><li>发球、接球后的还原意识</li><li>对连续相持的准备不足</li><li>身体核心松散导致动作质量下降</li><li>战术选择不符合目前技术能力</li></ul><p>这些问题都具有可训练性，后续训练应围绕这些内容进行专项强化。</p><hr><h2 id="一、接发球失分较多"><a href="#一、接发球失分较多" class="headerlink" title="一、接发球失分较多"></a>一、接发球失分较多</h2><h3 id="问题表现"><a href="#问题表现" class="headerlink" title="问题表现"></a>问题表现</h3><p>组里有一位选手发球动作几乎没有变化，但能够发出上旋和下旋。</p><p>面对他的下旋发球：</p><ul><li>大多数时候选择搓长</li><li>经常搓下网</li><li>接发球直接失分较多</li></ul><h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><h4 id="①-下旋处理时动作不完整"><a href="#①-下旋处理时动作不完整" class="headerlink" title="① 下旋处理时动作不完整"></a>① 下旋处理时动作不完整</h4><p>虽然自己知道应该：<strong>在球下降期主动迎前，将球搓长。</strong></p><p>但是实际比赛中：</p><ul><li>出手过于保守</li><li>手臂运行距离太短</li><li>不敢送出去</li><li>摩擦不足，导致球不过网</li></ul><h4 id="②-上步不到位"><a href="#②-上步不到位" class="headerlink" title="② 上步不到位"></a>② 上步不到位</h4><p>有些球身体没有真正上到台内，导致：</p><ul><li>手够球</li><li>重心不到位</li><li>只能缩着动作去搓</li></ul><p>进一步导致搓球质量下降。</p><h4 id="③-对出台球没有第一时间选择更合理的处理"><a href="#③-对出台球没有第一时间选择更合理的处理" class="headerlink" title="③ 对出台球没有第一时间选择更合理的处理"></a>③ 对出台球没有第一时间选择更合理的处理</h4><p>对于已经出台的下旋球，目前自己<strong>正手兜弧圈成功率明显高于搓长</strong>。但比赛中仍然习惯去搓，属于比赛选择的问题。</p><h3 id="后续训练重点"><a href="#后续训练重点" class="headerlink" title="后续训练重点"></a>后续训练重点</h3><p><strong>对于短下旋</strong>，要求：</p><ul><li>主动迎前</li><li>手送出去</li><li>动作做完整</li><li>不要怕出界</li></ul><p>宁愿长一点，也不要缩手下网。</p><p><strong>对于出台下旋</strong>，优先选择：正手兜弧圈，暂时减少强行搓长，利用自己目前更稳定的技术。</p><hr><h2 id="二、发球、接球后的还原速度过慢"><a href="#二、发球、接球后的还原速度过慢" class="headerlink" title="二、发球、接球后的还原速度过慢"></a>二、发球、接球后的还原速度过慢</h2><h3 id="问题表现-1"><a href="#问题表现-1" class="headerlink" title="问题表现"></a>问题表现</h3><p>比赛结束后发现，无论是发球后还是搓球后，自己的还原速度都明显偏慢。虽然今天没有因此直接丢很多分，但面对更高水平选手，一定会被连续调动。</p><h3 id="原因分析-1"><a href="#原因分析-1" class="headerlink" title="原因分析"></a>原因分析</h3><h4 id="（一）发球后站位恢复慢"><a href="#（一）发球后站位恢复慢" class="headerlink" title="（一）发球后站位恢复慢"></a>（一）发球后站位恢复慢</h4><p>发完球之后没有第一时间恢复准备姿势。如果遇到接发球直接劈两个大角，自己基本来不及。</p><h4 id="（二）搓球后的还原太慢"><a href="#（二）搓球后的还原太慢" class="headerlink" title="（二）搓球后的还原太慢"></a>（二）搓球后的还原太慢</h4><p>主要有两个问题：</p><ol><li><strong>上步速度慢</strong> — 走到球前已经慢了一拍</li><li><strong>蹬回速度慢</strong> — 搓完以后没有第一时间蹬回准备位置，整个人比较松散</li></ol><h3 id="后续训练重点-1"><a href="#后续训练重点-1" class="headerlink" title="后续训练重点"></a>后续训练重点</h3><p>以后每一次练习都要求自己形成固定流程：</p><blockquote><p>发球（或搓球）→ 完成动作 → 第一时间蹬回准备姿势 → 等下一板</p></blockquote><p>把还原变成肌肉记忆。</p><hr><h2 id="三、对前冲球和弧圈球处理能力不足"><a href="#三、对前冲球和弧圈球处理能力不足" class="headerlink" title="三、对前冲球和弧圈球处理能力不足"></a>三、对前冲球和弧圈球处理能力不足</h2><h3 id="问题表现-2"><a href="#问题表现-2" class="headerlink" title="问题表现"></a>问题表现</h3><p>今天相持中，面对对方的前冲球和弧圈球，处理质量都比较差。尤其反手推挡处理前冲球，很多直接打飞。对于弧圈球，经常找不到最佳击球点。</p><h3 id="原因分析-2"><a href="#原因分析-2" class="headerlink" title="原因分析"></a>原因分析</h3><p>目前自己的近台连续封挡能力还不足。面对质量较高的球，站位太近，导致来不及调整、来不及判断，动作容易变形。</p><h3 id="后续训练重点-2"><a href="#后续训练重点-2" class="headerlink" title="后续训练重点"></a>后续训练重点</h3><p><strong>劈长以后</strong>，建立意识：劈长完成后，人主动往后退半步，不要一直贴着球台。</p><p><strong>现阶段战术</strong>，优先采用中远台防守：</p><ul><li>放高球</li><li>防弧圈</li><li>借力</li></ul><p>等待机会。如果来到正手舒服位置，再考虑反拉。不要一开始就硬拼。</p><hr><h2 id="四、身体核心越来越松散"><a href="#四、身体核心越来越松散" class="headerlink" title="四、身体核心越来越松散"></a>四、身体核心越来越松散</h2><h3 id="问题表现-3"><a href="#问题表现-3" class="headerlink" title="问题表现"></a>问题表现</h3><p>随着比赛进行，明显感觉核心越来越松、大腿越来越放松。导致拉下旋时力量无法集中。今天前冲拉下旋失误很多。</p><h3 id="原因分析-3"><a href="#原因分析-3" class="headerlink" title="原因分析"></a>原因分析</h3><p>身体支撑不足。动作看起来完成了，实际上发力链条断了，力量没有真正传递到球上。</p><h3 id="后续训练重点-3"><a href="#后续训练重点-3" class="headerlink" title="后续训练重点"></a>后续训练重点</h3><p>比赛开始前提醒自己：</p><blockquote><p>核心收紧 → 大腿保持发力 → 身体保持积极状态</p></blockquote><p>整个比赛过程中不断提醒。</p><p><strong>技术选择上</strong>：对于比较转的下旋，目前不要追求前冲暴冲，优先高质量兜弧圈。目前正手兜弧圈稳定性已经不错，下一步重点加强反手横打兜弧圈，让反手也具备安全起板能力。</p><hr><h2 id="五、强行侧身导致动作变形"><a href="#五、强行侧身导致动作变形" class="headerlink" title="五、强行侧身导致动作变形"></a>五、强行侧身导致动作变形</h2><h3 id="问题表现-4"><a href="#问题表现-4" class="headerlink" title="问题表现"></a>问题表现</h3><p>今天多次为了使用正手，进行了比较大的侧身。结果动作蹩住身体，最终左膝出现疼痛。</p><h3 id="原因分析-4"><a href="#原因分析-4" class="headerlink" title="原因分析"></a>原因分析</h3><p>目前自己的连续侧身能力和步法能力，还不足以支撑大范围侧身。属于技术能力和战术选择不匹配。</p><h3 id="后续训练重点-4"><a href="#后续训练重点-4" class="headerlink" title="后续训练重点"></a>后续训练重点</h3><p><strong>减少大幅侧身</strong>，尤其反手位来球。优先：</p><ul><li>反手处理</li><li>横打</li><li>放高球</li><li>兜弧圈</li></ul><p>不要为了正手硬侧。</p><p><strong>追身球</strong>如果需要使用正手，优先：<strong>右脚后撤一步</strong>腾出击球空间，而不是整个身体横向大侧身。</p><hr><h2 id="后续训练计划"><a href="#后续训练计划" class="headerlink" title="后续训练计划"></a>后续训练计划</h2><h3 id="①-接发球专项（最高优先级）"><a href="#①-接发球专项（最高优先级）" class="headerlink" title="① 接发球专项（最高优先级）"></a>① 接发球专项（最高优先级）</h3><p>重点练习：短下旋搓长、出台下旋兜弧圈、上旋下旋判断。目标：减少接发球直接失分。</p><h3 id="②-还原专项"><a href="#②-还原专项" class="headerlink" title="② 还原专项"></a>② 还原专项</h3><p>每一板球都要求：击球 → 还原 → 准备下一板，形成条件反射。</p><h3 id="③-防守专项"><a href="#③-防守专项" class="headerlink" title="③ 防守专项"></a>③ 防守专项</h3><p>重点练习：前冲球封挡、弧圈球借力、中远台防守、防守转反攻。</p><h3 id="④-核心发力专项"><a href="#④-核心发力专项" class="headerlink" title="④ 核心发力专项"></a>④ 核心发力专项</h3><p>训练时不断提醒：核心收紧、大腿发力、身体保持紧凑。避免越打越松散。</p><h3 id="⑤-战术调整"><a href="#⑤-战术调整" class="headerlink" title="⑤ 战术调整"></a>⑤ 战术调整</h3><p>近期比赛原则：</p><ul><li>少暴冲，多兜弧圈</li><li>少大侧身，多反手处理</li><li>劈长以后主动后撤</li><li>等机会再反攻</li></ul><p>先保证稳定性，再逐步提升进攻质量。</p><hr><h2 id="赛后总结改进口诀"><a href="#赛后总结改进口诀" class="headerlink" title="赛后总结改进口诀"></a>赛后总结改进口诀</h2><h3 id="一、接发球"><a href="#一、接发球" class="headerlink" title="一、接发球"></a>一、接发球</h3><blockquote><p><strong>主动迎前，搓长斜线；出台下旋，优先兜圈。</strong></p></blockquote><ul><li>短下旋主动迎前，不缩手，动作做完整</li><li>搓长优先搓斜线，提高容错率和上台率</li><li>出台下旋优先正手兜弧圈，不勉强搓长</li></ul><h3 id="二、发球与还原"><a href="#二、发球与还原" class="headerlink" title="二、发球与还原"></a>二、发球与还原</h3><blockquote><p><strong>发完即还，搓完即退；每打一板，准备下一板。</strong></p></blockquote><ul><li>发球后第一时间恢复准备姿势</li><li>搓球后立即蹬回还原</li><li>每打一板，都要做好下一板准备</li></ul><h3 id="三、相持处理"><a href="#三、相持处理" class="headerlink" title="三、相持处理"></a>三、相持处理</h3><blockquote><p><strong>劈长后撤，中远防守；等到机会，再去反攻。</strong></p></blockquote><ul><li>劈长后主动后撤半步</li><li>面对前冲和弧圈，以中远台防守为主</li><li>正手机会球再主动反拉</li></ul><h3 id="四、起下旋"><a href="#四、起下旋" class="headerlink" title="四、起下旋"></a>四、起下旋</h3><blockquote><p><strong>核心绷紧，腿先发力；少拉前冲，多兜弧圈。</strong></p></blockquote><ul><li>比赛开始前提醒自己收紧核心、绷紧大腿</li><li>下旋球优先保证质量，不盲目暴冲</li><li>正手、反手都以兜弧圈为主要起板方式</li></ul><h3 id="五、步法与战术"><a href="#五、步法与战术" class="headerlink" title="五、步法与战术"></a>五、步法与战术</h3><blockquote><p><strong>少大侧身，多用反手；右脚后撤，腾出正手。</strong></p></blockquote><ul><li>不强行大幅侧身抢正手</li><li>反手位优先横打、兜弧圈或防守</li><li>遇到追身球，可右脚后撤一步创造正手空间</li></ul><hr><h2 id="比赛前默念口诀（30-秒版）"><a href="#比赛前默念口诀（30-秒版）" class="headerlink" title="比赛前默念口诀（30 秒版）"></a>比赛前默念口诀（30 秒版）</h2><blockquote><p><strong>主动迎前，搓长斜线；出台兜圈，不缩动作。</strong></p><p><strong>发完即还，搓完即退；每打一板，准备下板。</strong></p><p><strong>劈长后撤，中远防守；等到机会，再去反攻。</strong></p><p><strong>核心绷紧，腿先发力；少拉前冲，多兜弧圈。</strong></p><p><strong>少大侧身，多用反手；保持稳定，减少失误。</strong></p></blockquote><hr><h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><p><strong>今天最大的收获，不是发现技术不会，而是明确了目前真正影响比赛胜负的并非某一项高难技术，而是接发球、还原、站位、核心发力和战术选择这些基本功。下一阶段训练应坚持”先稳定、后进攻”的原则，减少无谓失误，把每一板球都打得更合理、更扎实。</strong></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>乒乓球</category>
+      
+      <category>比赛</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>赛后反思</tag>
+      
+      <tag>接发球</tag>
+      
+      <tag>还原</tag>
+      
+      <tag>相持</tag>
+      
+      <tag>核心发力</tag>
+      
+      <tag>步法</tag>
+      
+      <tag>战术选择</tag>
+      
+      <tag>兜弧圈</tag>
+      
+      <tag>防守</tag>
+      
+      <tag>比赛口诀</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>《穷查理宝典》学习笔记——多元思维模型在投资中的实战应用</title>
     <link href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-19-munger-mental-models-investing/"/>
     <url>/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-19-munger-mental-models-investing/</url>

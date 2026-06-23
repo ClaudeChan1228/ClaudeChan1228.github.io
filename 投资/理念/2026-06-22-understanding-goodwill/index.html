@@ -19,28 +19,27 @@
   <meta name="author" content="Wuyuan">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
   
-    <meta name="description" content="引言BAPI_INCOMINGINVOICE_PARK 是 SAP MM 模块中用于创建预制采购发票（Park Invoice） 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 采购订单 → 入库 → 发票 的完整 MM 业务闭环。 本文基于实际接口开发经验，梳理了从组装发票行项目">
+    <meta name="description" content="阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。   一、什么是商誉？1. 会计中的商誉（Accounting Goodwill）商誉并不是企业自己评估出来的价值，而是只有在企业并购时才会出现在资产负债表中的一项资产。 计算公式非常简单： 1商誉 &#x3D; 收购价格 - 被收购企业可辨认净资产公允价值  例如：  收购价格：100 亿元 被收购企业：资产 80 亿元，负债 20 亿元">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票">
-<meta property="og:url" content="https://claudechan1228.github.io/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-incominginvoice-park-guide/index.html">
+<meta property="og:title" content="理解商誉（Goodwill）——从会计到投资">
+<meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-22-understanding-goodwill/index.html">
 <meta property="og:site_name" content="ClaudeChan&#39;s Blog">
-<meta property="og:description" content="引言BAPI_INCOMINGINVOICE_PARK 是 SAP MM 模块中用于创建预制采购发票（Park Invoice） 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 采购订单 → 入库 → 发票 的完整 MM 业务闭环。 本文基于实际接口开发经验，梳理了从组装发票行项目">
+<meta property="og:description" content="阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。   一、什么是商誉？1. 会计中的商誉（Accounting Goodwill）商誉并不是企业自己评估出来的价值，而是只有在企业并购时才会出现在资产负债表中的一项资产。 计算公式非常简单： 1商誉 &#x3D; 收购价格 - 被收购企业可辨认净资产公允价值  例如：  收购价格：100 亿元 被收购企业：资产 80 亿元，负债 20 亿元">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-22T05:48:24.081Z">
+<meta property="article:modified_time" content="2026-06-22T07:19:52.732Z">
 <meta property="article:author" content="Wuyuan">
-<meta property="article:tag" content="ABAP">
-<meta property="article:tag" content="BAPI">
-<meta property="article:tag" content="MM">
-<meta property="article:tag" content="接口开发">
-<meta property="article:tag" content="采购发票">
-<meta property="article:tag" content="发票预制">
-<meta property="article:tag" content="BAPI_INCOMINGINVOICE_PARK">
+<meta property="article:tag" content="财务分析">
+<meta property="article:tag" content="价值投资">
+<meta property="article:tag" content="商誉">
+<meta property="article:tag" content="巴菲特">
+<meta property="article:tag" content="会计">
+<meta property="article:tag" content="经济商誉">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票 - ClaudeChan&#39;s Blog</title>
+  <title>理解商誉（Goodwill）——从会计到投资 - ClaudeChan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -335,7 +334,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票"></span>
+            <span id="subtitle" data-typed-text="理解商誉（Goodwill）——从会计到投资"></span>
           
         </div>
 
@@ -358,7 +357,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          2.4k 字
         
       </span>
     
@@ -369,7 +368,7 @@
         
         
         
-          30 分钟
+          20 分钟
         
       </span>
     
@@ -408,7 +407,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</h1>
+            <h1 id="seo-header">理解商誉（Goodwill）——从会计到投资</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
@@ -421,188 +420,224 @@
             
               <div class="markdown-body">
                 
-                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>BAPI_INCOMINGINVOICE_PARK</code> 是 SAP MM 模块中用于<strong>创建预制采购发票（Park Invoice）</strong> 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 <strong>采购订单 → 入库 → 发票</strong> 的完整 MM 业务闭环。</p>
-<p>本文基于实际接口开发经验，梳理了从组装发票行项目到调用 BAPI、事务提交流程的完整实现。</p>
-<hr>
-<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">采购入库成功<br>      │<br>      ▼<br>组装发票行项目 (ItemData)<br>      │<br>      ▼<br>组装发票抬头 (HeaderData)<br>      │<br>      ▼<br>调用 BAPI_INCOMINGINVOICE_PARK<br>      │<br>      ├──── 成功<br>      │       │<br>      │       ▼<br>      │   COMMIT 事务<br>      │       │<br>      │       ▼<br>      │   更新接口日志及返回发票号<br>      │<br>      └──── 失败<br>              │<br>              ▼<br>        ROLLBACK 事务<br>              │<br>              ▼<br>        返回错误信息<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="1-构造发票行项目-ItemData"><a href="#1-构造发票行项目-ItemData" class="headerlink" title="1. 构造发票行项目 (ItemData)"></a>1. 构造发票行项目 (ItemData)</h2><p>入库成功后，程序循环采购订单明细，为 BAPI 组装发票行项目。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">&lt;fs_incm_ivc_crt_item&gt;-ref_doc       = lv_matdoc.<br>&lt;fs_incm_ivc_crt_item&gt;-ref_doc_year  = lv_matdoc_year.<br>&lt;fs_incm_ivc_crt_item&gt;-ref_doc_it    = ls_mseg-zeile.<br><br>&lt;fs_incm_ivc_crt_item&gt;-po_unit       = &lt;lfs_item&gt;-meins.<br>&lt;fs_incm_ivc_crt_item&gt;-quantity      = &lt;lfs_item&gt;-menge.<br>&lt;fs_incm_ivc_crt_item&gt;-item_amount   = &lt;lfs_item&gt;-netwr.<br>&lt;fs_incm_ivc_crt_item&gt;-tax_code      = &lt;lfs_item&gt;-mwskz.<br></code></pre></td></tr></table></figure>
-
-<h3 id="字段说明"><a href="#字段说明" class="headerlink" title="字段说明"></a>字段说明</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>REF_DOC</code></td>
-<td>采购入库物料凭证号</td>
-</tr>
-<tr>
-<td><code>REF_DOC_YEAR</code></td>
-<td>物料凭证年度</td>
-</tr>
-<tr>
-<td><code>REF_DOC_IT</code></td>
-<td>物料凭证行号</td>
-</tr>
-<tr>
-<td><code>PO_UNIT</code></td>
-<td>采购订单单位</td>
-</tr>
-<tr>
-<td><code>QUANTITY</code></td>
-<td>开票数量</td>
-</tr>
-<tr>
-<td><code>ITEM_AMOUNT</code></td>
-<td>本行金额（未税）</td>
-</tr>
-<tr>
-<td><code>TAX_CODE</code></td>
-<td>税码</td>
-</tr>
-</tbody></table>
-<h3 id="为什么需要-REF-DOC？"><a href="#为什么需要-REF-DOC？" class="headerlink" title="为什么需要 REF_DOC？"></a>为什么需要 REF_DOC？</h3><p><code>REF_DOC</code>、<code>REF_DOC_YEAR</code>、<code>REF_DOC_IT</code> 三者共同指定了：</p>
-<blockquote>
-<p>本次采购发票对应哪一张采购入库物料凭证。</p>
+                <blockquote>
+<p>阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。</p>
 </blockquote>
-<p>SAP 据此建立完整的业务链追溯：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">采购订单 ──→ 入库物料凭证 ──→ 采购发票<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="2-累计发票总金额"><a href="#2-累计发票总金额" class="headerlink" title="2. 累计发票总金额"></a>2. 累计发票总金额</h2><p>循环行项目过程中同步累计发票抬头总金额：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_incm_ivc_crt_header-gross_amount =<br>    ls_incm_ivc_crt_header-gross_amount<br>  + &lt;lfs_item&gt;-netwr * ( 1 + lv_kbetr / 1000 ).<br></code></pre></td></tr></table></figure>
+<h2 id="一、什么是商誉？"><a href="#一、什么是商誉？" class="headerlink" title="一、什么是商誉？"></a>一、什么是商誉？</h2><h3 id="1-会计中的商誉（Accounting-Goodwill）"><a href="#1-会计中的商誉（Accounting-Goodwill）" class="headerlink" title="1. 会计中的商誉（Accounting Goodwill）"></a>1. 会计中的商誉（Accounting Goodwill）</h3><p>商誉并不是企业自己评估出来的价值，而是<strong>只有在企业并购时才会出现在资产负债表中的一项资产</strong>。</p>
+<p>计算公式非常简单：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">商誉 <span class="hljs-operator">=</span> 收购价格 - 被收购企业可辨认净资产公允价值<br></code></pre></td></tr></table></figure>
 
-<p>业务含义：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">发票总金额 <span class="hljs-operator">=</span> 累计所有行金额（含税）<br></code></pre></td></tr></table></figure>
-
-<p>其中 <code>netwr</code> 为采购订单净价，<code>lv_kbetr</code> 为税率（需根据系统实际配置确认比例，例如 13% 的税率可能存储为 <code>130</code> 或 <code>1300</code>）。</p>
-<hr>
-<h2 id="3-构造发票抬头-HeaderData"><a href="#3-构造发票抬头-HeaderData" class="headerlink" title="3. 构造发票抬头 (HeaderData)"></a>3. 构造发票抬头 (HeaderData)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_incm_ivc_crt_header-doc_date      = sy-datum.<br>ls_incm_ivc_crt_header-pstng_date    = sy-datum.<br>ls_incm_ivc_crt_header-comp_code     = ls_ekko-bukrs.<br>ls_incm_ivc_crt_header-currency      = ls_ekko-waers.<br><br>ls_incm_ivc_crt_header-invoice_ind   = &#x27;X&#x27;.<br>ls_incm_ivc_crt_header-doc_type      = &#x27;RE&#x27;.<br>ls_incm_ivc_crt_header-calc_tax_ind  = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
-
-<h3 id="字段说明-1"><a href="#字段说明-1" class="headerlink" title="字段说明"></a>字段说明</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>DOC_DATE</code></td>
-<td>凭证日期</td>
-</tr>
-<tr>
-<td><code>PSTNG_DATE</code></td>
-<td>过账日期</td>
-</tr>
-<tr>
-<td><code>COMP_CODE</code></td>
-<td>公司代码</td>
-</tr>
-<tr>
-<td><code>CURRENCY</code></td>
-<td>币种（来自采购订单）</td>
-</tr>
-<tr>
-<td><code>INVOICE_IND</code></td>
-<td>普通发票标识</td>
-</tr>
-<tr>
-<td><code>DOC_TYPE</code></td>
-<td>发票凭证类型 <code>RE</code></td>
-</tr>
-<tr>
-<td><code>CALC_TAX_IND</code></td>
-<td>自动计算税额</td>
-</tr>
-</tbody></table>
-<h3 id="INVOICE-IND-‘X’"><a href="#INVOICE-IND-‘X’" class="headerlink" title="INVOICE_IND &#x3D; ‘X’"></a>INVOICE_IND &#x3D; ‘X’</h3><p>表示本次创建的是<strong>普通采购发票</strong>，而非：</p>
+<p>例如：</p>
 <ul>
-<li>Credit Memo（贷项凭证）</li>
-<li>Subsequent Debit（后续借记）</li>
-<li>Subsequent Credit（后续贷记）</li>
+<li>收购价格：100 亿元</li>
+<li>被收购企业：资产 80 亿元，负债 20 亿元</li>
+<li>可辨认净资产：60 亿元</li>
 </ul>
-<h3 id="DOC-TYPE-‘RE’"><a href="#DOC-TYPE-‘RE’" class="headerlink" title="DOC_TYPE &#x3D; ‘RE’"></a>DOC_TYPE &#x3D; ‘RE’</h3><p>SAP 标准的采购发票凭证类型。所有通过该 BAPI 生成的 MM 发票都使用 <code>RE</code>。</p>
-<h3 id="CALC-TAX-IND-‘X’"><a href="#CALC-TAX-IND-‘X’" class="headerlink" title="CALC_TAX_IND &#x3D; ‘X’"></a>CALC_TAX_IND &#x3D; ‘X’</h3><p>告诉 SAP：</p>
-<blockquote>
-<p>税额不由接口计算，由 SAP 根据税码自动计算。</p>
-</blockquote>
-<p>因此程序只需传入<strong>金额</strong>和<strong>税码</strong>，SAP 会自动生成税额。这避免了接口端算税不一致的风险。</p>
-<hr>
-<h2 id="4-调用-BAPI-创建预制发票"><a href="#4-调用-BAPI-创建预制发票" class="headerlink" title="4. 调用 BAPI 创建预制发票"></a>4. 调用 BAPI 创建预制发票</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_INCOMINGINVOICE_PARK&#x27;<br>  EXPORTING<br>    headerdata       = ls_incm_ivc_crt_header<br>  IMPORTING<br>    invoicedocnumber = lv_inv_doc_no<br>    fiscalyear       = lv_fisc_year<br>  TABLES<br>    itemdata         = lt_incm_ivc_crt_item<br>    return           = lt_return.<br></code></pre></td></tr></table></figure>
+<p>则：</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">商誉 =<span class="hljs-number"> 100 </span>-<span class="hljs-number"> 60 </span>=<span class="hljs-number"> 40 </span>亿元<br></code></pre></td></tr></table></figure>
 
-<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><p>该 BAPI 不是<strong>直接过账</strong>发票，而是 <strong>Park Invoice（预制发票）</strong>。预制后的发票需要后续在 SAP 中审核过账。</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><table>
+<p>资产负债表中会出现：</p>
+<table>
 <thead>
 <tr>
-<th>返回值</th>
-<th>说明</th>
+<th>项目</th>
+<th>金额</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>INVOICEDOCNUMBER</code></td>
-<td>发票编号</td>
+<td>可辨认净资产</td>
+<td>60 亿元</td>
 </tr>
 <tr>
-<td><code>FISCALYEAR</code></td>
-<td>会计年度</td>
-</tr>
-<tr>
-<td><code>RETURN</code></td>
-<td>执行消息（内表）</td>
+<td>商誉</td>
+<td>40 亿元</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="5-成功处理"><a href="#5-成功处理" class="headerlink" title="5. 成功处理"></a>5. 成功处理</h2><p>判断逻辑：只要返回了发票号，即认为创建成功。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">IF lv_inv_doc_no IS NOT INITIAL.<br></code></pre></td></tr></table></figure>
-
-<p>随后提交事务：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则 BAPI 创建的数据不会真正写入数据库。设置 <code>WAIT = &#39;X&#39;</code> 确保同步提交完成后再执行后续逻辑。</p>
-</blockquote>
-<h3 id="返回成功信息"><a href="#返回成功信息" class="headerlink" title="返回成功信息"></a>返回成功信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">is_out-return_msg =<br>    &#x27;采购订单入库、发票成功。&#x27;<br> &amp;&amp; &#x27;发票号：&#x27;<br> &amp;&amp; lv_inv_doc_no.<br><br>CONDENSE is_out-return_msg NO-GAPS.<br><br>is_out-return_type = &#x27;S&#x27;.<br></code></pre></td></tr></table></figure>
-
-<p>接口最终返回类似：</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns">采购订单入库、发票成功。<br>发票号：<span class="hljs-number">5100001234</span><br></code></pre></td></tr></table></figure>
-
-<p>同时将发票号持久化到接口日志表：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_ztmm018-invoicedocnumber = lv_inv_doc_no.<br>ls_ztmm018-fiscalyear       = lv_fisc_year.<br></code></pre></td></tr></table></figure>
-
-<p>便于后续查询和追溯。</p>
-<hr>
-<h2 id="6-失败处理"><a href="#6-失败处理" class="headerlink" title="6. 失败处理"></a>6. 失败处理</h2><p>若未返回发票号，认为创建失败：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure>
-
-<p>作用：</p>
+<h3 id="2-为什么会愿意支付这-40-亿元？"><a href="#2-为什么会愿意支付这-40-亿元？" class="headerlink" title="2. 为什么会愿意支付这 40 亿元？"></a>2. 为什么会愿意支付这 40 亿元？</h3><p>因为购买的不只是工厂、设备、现金等资产。真正购买的是<strong>企业未来持续赚钱的能力</strong>，例如：</p>
 <ul>
-<li>回滚整个 LUW（Logical Unit of Work）</li>
-<li>避免发票创建一半导致数据不一致</li>
+<li>品牌</li>
+<li>客户关系</li>
+<li>管理团队</li>
+<li>企业文化</li>
+<li>市场地位</li>
+<li>技术积累</li>
+<li>网络效应</li>
+<li>协同效应</li>
 </ul>
-<p>随后重新组织错误返回信息，通知 OA 或上层系统。</p>
+<p>这些东西很难单独出售、很难准确估值、无法单独辨认，因此不会单独计入资产，只能统一计入 <strong>商誉（Goodwill）</strong>。</p>
 <hr>
-<h2 id="业务流程总结"><a href="#业务流程总结" class="headerlink" title="业务流程总结"></a>业务流程总结</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs text">采购订单<br>     │<br>     ▼<br>采购入库成功 (BAPI_GOODSMVT_CREATE)<br>     │<br>     ▼<br>根据采购订单生成发票行项目<br>     │<br>     ▼<br>计算发票总金额（含税）<br>     │<br>     ▼<br>组装发票抬头<br>     │<br>     ▼<br>BAPI_INCOMINGINVOICE_PARK<br>     │<br> ┌───┴──────────────┐<br> │                  │<br>成功               失败<br> │                  │<br> ▼                  ▼<br>COMMIT          ROLLBACK<br> │                  │<br> ▼                  ▼<br>记录发票号      返回错误<br> │<br> ▼<br>接口结束<br></code></pre></td></tr></table></figure>
+<h2 id="二、为什么很多优秀企业没有商誉？"><a href="#二、为什么很多优秀企业没有商誉？" class="headerlink" title="二、为什么很多优秀企业没有商誉？"></a>二、为什么很多优秀企业没有商誉？</h2><p>这是很多初学者容易误解的地方。</p>
+<p>例如：可口可乐、苹果、贵州茅台——这些企业拥有世界顶级品牌，但资产负债表上的商誉可能很少，甚至没有。</p>
+<p>原因是：</p>
+<blockquote>
+<p>企业自己长期积累形成的品牌价值、管理能力、客户忠诚度等，并不会计入资产负债表。</p>
+</blockquote>
+<p>只有<strong>花钱收购别人时支付的溢价</strong>，才能形成<strong>会计商誉（Accounting Goodwill）</strong>。</p>
+<p>因此：</p>
+<blockquote>
+<p><strong>没有商誉 ≠ 没有竞争优势。</strong></p>
+</blockquote>
+<hr>
+<h2 id="三、经济商誉（Economic-Goodwill）"><a href="#三、经济商誉（Economic-Goodwill）" class="headerlink" title="三、经济商誉（Economic Goodwill）"></a>三、经济商誉（Economic Goodwill）</h2><p>巴菲特更关心的是<strong>经济商誉（Economic Goodwill）</strong>，即企业真正能够长期创造超额利润的能力。</p>
+<p>例如：</p>
+<ul>
+<li>可口可乐品牌</li>
+<li>苹果生态系统</li>
+<li>Costco 会员体系</li>
+<li>茅台品牌</li>
+</ul>
+<p>这些价值虽然不会体现在财务报表中，却是真正决定企业价值的核心。</p>
+<p><strong>企业存在两种商誉：</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>来源</th>
+<th align="center">是否在报表中</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>会计商誉</td>
+<td>企业并购</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td>经济商誉</td>
+<td>长期经营形成的竞争优势</td>
+<td align="center">❌</td>
+</tr>
+</tbody></table>
+<p>巴菲特真正重视的是：<strong>经济商誉。</strong></p>
+<hr>
+<h2 id="四、商誉是不是无形资产？"><a href="#四、商誉是不是无形资产？" class="headerlink" title="四、商誉是不是无形资产？"></a>四、商誉是不是无形资产？</h2><p>严格来说，<strong>不是</strong>。</p>
+<p>会计上，商誉与无形资产是两个不同科目。</p>
+<p><strong>无形资产</strong>包括：专利、商标、软件、土地使用权等。它们可以辨认、可以出售、可以单独估值。</p>
+<p><strong>商誉</strong>不能单独出售，必须依附整个企业。</p>
+<p>因此，商誉属于：</p>
+<blockquote>
+<p><strong>不可辨认资产（Unidentifiable Asset）</strong></p>
+</blockquote>
+<hr>
+<h2 id="五、商誉可以理解成什么？"><a href="#五、商誉可以理解成什么？" class="headerlink" title="五、商誉可以理解成什么？"></a>五、商誉可以理解成什么？</h2><blockquote>
+<p><strong>商誉 &#x3D; 企业无法单独辨认的竞争优势以及并购协同效应所形成的未来超额现金流，在收购时支付的现值溢价。</strong></p>
+</blockquote>
+<p>关键词：</p>
+<ul>
+<li>不可辨认竞争优势</li>
+<li>协同效应</li>
+<li>超额现金流</li>
+<li>现值（Present Value）</li>
+</ul>
+<p>这里已经和巴菲特的估值思想完全联系起来了。</p>
+<hr>
+<h2 id="六、商誉是不是未来现金流的折现？"><a href="#六、商誉是不是未来现金流的折现？" class="headerlink" title="六、商誉是不是未来现金流的折现？"></a>六、商誉是不是未来现金流的折现？</h2><p>可以，但更准确一点：</p>
+<blockquote>
+<p><strong>商誉反映的是未来超额现金流对应的溢价，而不是企业全部未来现金流。</strong></p>
+</blockquote>
+<p>例如：企业未来现金流价值 100 亿元，其中净资产价值 60 亿元，则商誉 40 亿元。</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">100 </span>= <span class="hljs-number">60</span> + <span class="hljs-number">40</span><br></code></pre></td></tr></table></figure>
 
+<p>即：商誉代表那些无法单独辨认、但能够持续创造超额现金流的价值。</p>
 <hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文梳理了使用 <code>BAPI_INCOMINGINVOICE_PARK</code> 创建预制采购发票的完整流程，核心职责可概括为：</p>
+<h2 id="七、为什么要做商誉减值测试？"><a href="#七、为什么要做商誉减值测试？" class="headerlink" title="七、为什么要做商誉减值测试？"></a>七、为什么要做商誉减值测试？</h2><p>因为未来可能发生变化。例如：</p>
+<ul>
+<li>品牌影响力下降</li>
+<li>客户流失</li>
+<li>管理团队离开</li>
+<li>技术落后</li>
+<li>行业竞争恶化</li>
+</ul>
+<p>这些都会导致未来现金流下降。如果未来现金流下降，那么原来支付的溢价就可能已经不存在，因此必须重新评估。</p>
+<h3 id="商誉减值测试的本质"><a href="#商誉减值测试的本质" class="headerlink" title="商誉减值测试的本质"></a>商誉减值测试的本质</h3><p>本质只有一句话：</p>
+<blockquote>
+<p><strong>重新估计未来现金流，并折现计算今天值多少钱。</strong></p>
+</blockquote>
+<p>例如：</p>
+<ul>
+<li>收购时预计未来价值：100 亿元</li>
+<li>几年后竞争恶化，重新预测未来价值：65 亿元</li>
+<li>账面价值：100 亿元</li>
+</ul>
+<p>明显 <strong>账面价值 &gt; 实际价值</strong>，必须确认<strong>商誉减值</strong>。</p>
+<p>所以：</p>
+<blockquote>
+<p><strong>商誉减值，本质就是一次重新估值。</strong></p>
+</blockquote>
+<hr>
+<h2 id="八、商誉减值测试为什么不是单独给商誉估值？"><a href="#八、商誉减值测试为什么不是单独给商誉估值？" class="headerlink" title="八、商誉减值测试为什么不是单独给商誉估值？"></a>八、商誉减值测试为什么不是单独给商誉估值？</h2><p>因为商誉本身不能赚钱。真正赚钱的是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">品牌 + 员工 + 设备 + 渠道 + 管理团队 + 客户<br></code></pre></td></tr></table></figure>
+
+<p>整个体系一起产生现金流。因此商誉不能单独估值。</p>
+<p>会计准则要求将商誉分配到<strong>现金产生单元（Cash Generating Unit，CGU）</strong>，然后计算整个资产组未来现金流折现价值。</p>
+<p>如果 <strong>未来价值 &lt; 账面价值</strong>，则：</p>
 <ol>
-<li>根据采购订单及入库凭证生成发票行项目</li>
-<li>计算发票总金额（含税）</li>
-<li>组装发票抬头信息（凭证类型 <code>RE</code>、自动算税）</li>
-<li>调用 <code>BAPI_INCOMINGINVOICE_PARK</code> 创建预制采购发票</li>
-<li>创建成功后 <code>COMMIT</code> 事务并保存发票号到日志表</li>
-<li>创建失败则 <code>ROLLBACK</code> 事务并返回错误信息</li>
+<li>先减商誉</li>
+<li>商誉减完还不够 → 再减固定资产、无形资产等</li>
 </ol>
-<p>整个流程与上一篇文章《使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账》配合，实现了：</p>
+<p>因此，真正接受减值测试的是：<strong>整个赚钱机器，而不是商誉本身。</strong></p>
+<hr>
+<h2 id="九、以前为什么要摊销商誉？"><a href="#九、以前为什么要摊销商誉？" class="headerlink" title="九、以前为什么要摊销商誉？"></a>九、以前为什么要摊销商誉？</h2><p>历史上很多国家采用<strong>商誉每年摊销</strong>，例如 20 年平均摊销，每年减少 5 亿元。这种方式类似于固定资产折旧。</p>
+<p>但是很多人认为：优秀品牌并不会随着时间自动贬值。例如可口可乐品牌，20 年以后可能比今天更值钱。</p>
+<p>因此，现在国际主流会计准则：</p>
+<ul>
+<li>❌ 取消了商誉摊销</li>
+<li>✅ 改成<strong>每年做减值测试</strong></li>
+</ul>
+<p>只有价值真的下降，才一次性减值。</p>
+<hr>
+<h2 id="十、投资时怎么看商誉？"><a href="#十、投资时怎么看商誉？" class="headerlink" title="十、投资时怎么看商誉？"></a>十、投资时怎么看商誉？</h2><p>不能简单地认为”商誉高就是坏公司”，也不能认为”商誉低就是好公司”。</p>
+<p>真正应该关注的是：</p>
+<h3 id="第一：为什么会产生这么大的商誉？"><a href="#第一：为什么会产生这么大的商誉？" class="headerlink" title="第一：为什么会产生这么大的商誉？"></a>第一：为什么会产生这么大的商誉？</h3><p>是否买贵了？行业内卷？管理层激进扩张？</p>
+<h3 id="第二：收购以后有没有兑现预期？"><a href="#第二：收购以后有没有兑现预期？" class="headerlink" title="第二：收购以后有没有兑现预期？"></a>第二：收购以后有没有兑现预期？</h3><p>利润、现金流、ROE、ROIC 有没有持续改善？</p>
+<h3 id="第三：未来现金流有没有恶化？"><a href="#第三：未来现金流有没有恶化？" class="headerlink" title="第三：未来现金流有没有恶化？"></a>第三：未来现金流有没有恶化？</h3><p>如果未来赚钱能力下降，那么未来发生商誉减值的概率就会上升。</p>
+<h3 id="第四：连续大额商誉减值意味着什么？"><a href="#第四：连续大额商誉减值意味着什么？" class="headerlink" title="第四：连续大额商誉减值意味着什么？"></a>第四：连续大额商誉减值意味着什么？</h3><p>通常意味着当年的收购很可能买贵了，或者管理层高估了未来。连续发生大额商誉减值，通常是一个危险信号。</p>
+<hr>
+<h2 id="十一、巴菲特怎么看商誉？"><a href="#十一、巴菲特怎么看商誉？" class="headerlink" title="十一、巴菲特怎么看商誉？"></a>十一、巴菲特怎么看商誉？</h2><p>巴菲特其实并不太关注财务报表上的商誉数字。他真正关心的是：</p>
 <blockquote>
-<p><strong>采购订单 → 入库 → 采购发票（Park）</strong> 的完整 MM 业务闭环。</p>
+<p>企业未来还能创造多少现金流？</p>
 </blockquote>
-<p>实际项目开发中建议将入库 + 发票创建封装为统一的接口 Function Module，统一处理事务提交、回滚和错误日志，避免在每个调用处重复编写判断逻辑。</p>
+<p>他的估值思想：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">企业价值 <span class="hljs-operator">=</span> 未来现金流折现<br></code></pre></td></tr></table></figure>
+
+<p>而商誉减值测试的本质也是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">未来现金流折现<br></code></pre></td></tr></table></figure>
+
+<p>区别只是：</p>
+<ul>
+<li><strong>巴菲特</strong>：用于估值</li>
+<li><strong>会计</strong>：用于检查资产是否高估</li>
+</ul>
+<p>两者底层逻辑其实一致。</p>
+<hr>
+<h2 id="十二、关于商誉最重要的理解"><a href="#十二、关于商誉最重要的理解" class="headerlink" title="十二、关于商誉最重要的理解"></a>十二、关于商誉最重要的理解</h2><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>核心含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>会计商誉</strong></td>
+<td>企业并购时，为未来超额盈利能力支付的溢价</td>
+</tr>
+<tr>
+<td><strong>经济商誉</strong></td>
+<td>企业长期形成、无法单独辨认的竞争优势</td>
+</tr>
+<tr>
+<td><strong>商誉减值</strong></td>
+<td>对未来现金流重新估值</td>
+</tr>
+</tbody></table>
+<p>巴菲特真正关注的，不是财务报表里的商誉，而是企业是否拥有：</p>
+<blockquote>
+<p><strong>持续创造超额现金流的经济商誉。</strong></p>
+</blockquote>
+<hr>
+<h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><blockquote>
+<p><strong>会计商誉，是并购交易中形成的资产；经济商誉，是企业竞争优势的体现；两者的共同本质，都是未来能够持续创造超额现金流的能力。巴菲特阅读财务报表时，并不执着于商誉这一会计科目，而是始终回到同一个问题：这家公司未来还能持续产生多少自由现金流？</strong></p>
+</blockquote>
 
                 
               </div>
@@ -621,12 +656,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/SAP/" class="category-chain-item">SAP</a>
+  <a href="/categories/%E6%8A%95%E8%B5%84/" class="category-chain-item">投资</a>
   
   
     <span>></span>
     
-  <a href="/categories/SAP/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  <a href="/categories/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/" class="category-chain-item">理念</a>
   
   
 
@@ -643,19 +678,17 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/ABAP/" class="print-no-link">#ABAP</a>
+        <a href="/tags/%E8%B4%A2%E5%8A%A1%E5%88%86%E6%9E%90/" class="print-no-link">#财务分析</a>
       
-        <a href="/tags/BAPI/" class="print-no-link">#BAPI</a>
+        <a href="/tags/%E4%BB%B7%E5%80%BC%E6%8A%95%E8%B5%84/" class="print-no-link">#价值投资</a>
       
-        <a href="/tags/MM/" class="print-no-link">#MM</a>
+        <a href="/tags/%E5%95%86%E8%AA%89/" class="print-no-link">#商誉</a>
       
-        <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
+        <a href="/tags/%E5%B7%B4%E8%8F%B2%E7%89%B9/" class="print-no-link">#巴菲特</a>
       
-        <a href="/tags/%E9%87%87%E8%B4%AD%E5%8F%91%E7%A5%A8/" class="print-no-link">#采购发票</a>
+        <a href="/tags/%E4%BC%9A%E8%AE%A1/" class="print-no-link">#会计</a>
       
-        <a href="/tags/%E5%8F%91%E7%A5%A8%E9%A2%84%E5%88%B6/" class="print-no-link">#发票预制</a>
-      
-        <a href="/tags/BAPI-INCOMINGINVOICE-PARK/" class="print-no-link">#BAPI_INCOMINGINVOICE_PARK</a>
+        <a href="/tags/%E7%BB%8F%E6%B5%8E%E5%95%86%E8%AA%89/" class="print-no-link">#经济商誉</a>
       
     </div>
   
@@ -667,8 +700,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</div>
-      <div>https://claudechan1228.github.io/SAP/开发/2026-06-22-bapi-incominginvoice-park-guide/</div>
+      <div>理解商誉（Goodwill）——从会计到投资</div>
+      <div>https://claudechan1228.github.io/投资/理念/2026-06-22-understanding-goodwill/</div>
     </div>
     <div class="license-meta">
       
@@ -712,9 +745,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
+                      <a href="/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-incominginvoice-park-guide/" title="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
+                        <span class="hidden-mobile">使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -722,8 +755,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/2026-06-22-understanding-goodwill/" title="理解商誉（Goodwill）——从会计到投资">
-                        <span class="hidden-mobile">理解商誉（Goodwill）——从会计到投资</span>
+                      <a href="/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/2026-06-22-table-tennis-first-competition-reflection/" title="第一次正式业余比赛赛后反思 — 基本功才是比赛胜负的关键">
+                        <span class="hidden-mobile">第一次正式业余比赛赛后反思 — 基本功才是比赛胜负的关键</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
