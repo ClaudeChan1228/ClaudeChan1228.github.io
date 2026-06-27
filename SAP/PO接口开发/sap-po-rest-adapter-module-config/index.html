@@ -1,0 +1,1061 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wuyuan">
+  <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
+  
+    <meta name="description" content="引言在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 JSON Root Array 问题。 本文记录了我实际开发中遇到并验证的 setIgnoredElements 配置方案，以及通过资料查询整理的 RESTAdapter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-adapter-module-config/index.html">
+<meta property="og:site_name" content="ClaudeChan&#39;s Blog">
+<meta property="og:description" content="引言在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 JSON Root Array 问题。 本文记录了我实际开发中遇到并验证的 setIgnoredElements 配置方案，以及通过资料查询整理的 RESTAdapter">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-26T08:56:44.075Z">
+<meta property="article:author" content="Wuyuan">
+<meta property="article:tag" content="接口开发">
+<meta property="article:tag" content="SAP">
+<meta property="article:tag" content="PO">
+<meta property="article:tag" content="REST">
+<meta property="article:tag" content="RESTAdapterBean">
+<meta property="article:tag" content="XML">
+<meta property="article:tag" content="JSON">
+<meta property="article:tag" content="Module Configuration">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南 - ClaudeChan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"claudechan1228.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ClaudeChan&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/kanban/" target="_self">
+                
+                <span>日程</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/reading/" target="_self">
+                
+                <span>阅读</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/kanban/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>日程</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/reading/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>阅读</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-06-26 00:00" pubdate>
+          2026-06-26
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2026-06-26
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 <strong>JSON Root Array</strong> 问题。</p>
+<p>本文记录了我实际开发中遇到并验证的 <code>setIgnoredElements</code> 配置方案，以及通过资料查询整理的 RESTAdapterBean 常用 Module Configuration 参数速查。</p>
+<blockquote>
+<p><strong>⚠️ 可靠性说明：</strong> <code>setIgnoredElements</code> 参数已经过实际项目验证，确认有效。后续扩展参数来自 GPT 联网搜索结果，尚未逐一实测，使用前建议先在测试环境验证。</p>
+</blockquote>
+<hr>
+<h2 id="一、问题场景：JSON-根数组（Root-Array）"><a href="#一、问题场景：JSON-根数组（Root-Array）" class="headerlink" title="一、问题场景：JSON 根数组（Root Array）"></a>一、问题场景：JSON 根数组（Root Array）</h2><h3 id="典型-XML-结构"><a href="#典型-XML-结构" class="headerlink" title="典型 XML 结构"></a>典型 XML 结构</h3><p>ESR 中定义的 Message Type 通常包含包装节点：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">DT_POSync_Req</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">IT_TAB</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">HEADER_KEY</span>&gt;</span>450000001<span class="hljs-tag">&lt;/<span class="hljs-name">HEADER_KEY</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">EBELN</span>&gt;</span>PO2026001<span class="hljs-tag">&lt;/<span class="hljs-name">EBELN</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">IT_TAB</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">IT_TAB</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">HEADER_KEY</span>&gt;</span>450000002<span class="hljs-tag">&lt;/<span class="hljs-name">HEADER_KEY</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">EBELN</span>&gt;</span>PO2026002<span class="hljs-tag">&lt;/<span class="hljs-name">EBELN</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">IT_TAB</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">DT_POSync_Req</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="默认-JSON-转换结果"><a href="#默认-JSON-转换结果" class="headerlink" title="默认 JSON 转换结果"></a>默认 JSON 转换结果</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;IT_TAB&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="第三方接口实际要求"><a href="#第三方接口实际要求" class="headerlink" title="第三方接口实际要求"></a>第三方接口实际要求</h3><p>很多 REST API（MES、WMS、SpringBoot、FastAPI 等）要求直接返回数据数组：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>问题在于<strong>最外层多了 <code>IT_TAB</code> 这个包装节点</strong>。</p>
+<hr>
+<h2 id="二、推荐方案：配置-setIgnoredElements"><a href="#二、推荐方案：配置-setIgnoredElements" class="headerlink" title="二、推荐方案：配置 setIgnoredElements"></a>二、推荐方案：配置 <code>setIgnoredElements</code></h2><p>无需修改 ESR、无需修改 Message Mapping，也无需编写 Java&#x2F;Groovy Mapping。只需在 REST Receiver Communication Channel 中配置一个 Module Parameter。</p>
+<h3 id="配置位置"><a href="#配置位置" class="headerlink" title="配置位置"></a>配置位置</h3><figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs julia">Receiver Communication <span class="hljs-built_in">Channel</span><br>    └── <span class="hljs-built_in">Module</span><br>        └── RESTAdapterBean<br>            └── <span class="hljs-built_in">Module</span> Configuration<br></code></pre></td></tr></table></figure>
+
+<p>新增一行：</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setIgnoredElements</td>
+<td>IT_TAB</td>
+</tr>
+</tbody></table>
+<p>配置示意：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">Module</span><br><span class="hljs-section">------------------------------------------------------</span><br>Module Key : rest<br><br><span class="hljs-section">Parameter Name      Parameter Value</span><br><span class="hljs-section">--------------------------------------------</span><br>setIgnoredElements  IT_TAB<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置效果"><a href="#配置效果" class="headerlink" title="配置效果"></a>配置效果</h3><p>配置后，XML 中的 <code>&lt;IT_TAB&gt;</code> 节点被忽略，输出 JSON 变为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>完美满足第三方接口对根数组的要求。</p>
+<hr>
+<h2 id="三、支持多个节点"><a href="#三、支持多个节点" class="headerlink" title="三、支持多个节点"></a>三、支持多个节点</h2><p><code>setIgnoredElements</code> 支持忽略多个 XML 节点，用逗号或分号分隔：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">setIgnoredElements</span> = ROOT,IT_TAB<br></code></pre></td></tr></table></figure>
+
+<p>XML：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">ROOT</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">IT_TAB</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">HEADER_KEY</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">HEADER_KEY</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">IT_TAB</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ROOT</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>最终 JSON：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p><code>ROOT</code> 和 <code>IT_TAB</code> 两个包装节点都被移除，只保留真正的数据数组。</p>
+<hr>
+<h2 id="四、适用场景"><a href="#四、适用场景" class="headerlink" title="四、适用场景"></a>四、适用场景</h2><p>此方案适用于各类需要 JSON Root Array 的第三方系统集成：</p>
+<ul>
+<li>MES &#x2F; WMS &#x2F; SRM &#x2F; OA</li>
+<li>微信小程序、企业微信</li>
+<li>Java SpringBoot</li>
+<li>.NET WebAPI</li>
+<li>Python FastAPI</li>
+</ul>
+<p>相比修改 ESR Message Type 或 Message Mapping，该方法更加简单优雅，且不影响 XML Schema 结构设计。</p>
+<hr>
+<h2 id="五、RESTAdapterBean-常用-Module-Configuration-参数速查"><a href="#五、RESTAdapterBean-常用-Module-Configuration-参数速查" class="headerlink" title="五、RESTAdapterBean 常用 Module Configuration 参数速查"></a>五、RESTAdapterBean 常用 Module Configuration 参数速查</h2><p>REST Adapter 的 Module Key 为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sap.com/com<span class="hljs-selector-class">.sap</span><span class="hljs-selector-class">.aii</span><span class="hljs-selector-class">.adapter</span><span class="hljs-selector-class">.rest</span>.app/RESTAdapterBean<br></code></pre></td></tr></table></figure>
+
+<p>以下参数由资料查询整理（<strong>仅 <code>setIgnoredElements</code> 实际验证过</strong>）。</p>
+<hr>
+<h3 id="1-setIgnoredElements-⭐⭐⭐⭐⭐"><a href="#1-setIgnoredElements-⭐⭐⭐⭐⭐" class="headerlink" title="1. setIgnoredElements ⭐⭐⭐⭐⭐"></a>1. setIgnoredElements ⭐⭐⭐⭐⭐</h3><p>忽略 XML 指定节点，去除包装层，输出 Root Array。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: setIgnoredElements = IT_TAB<br><br>XML:<br>&lt;ROOT&gt;&lt;IT_TAB&gt;&lt;ITEM&gt;...&lt;/ITEM&gt;&lt;/IT_TAB&gt;&lt;/ROOT&gt;<br><br>JSON:<br>[&#123; &quot;...&quot; &#125;]<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-setIgnoreEmptyArrayValues-⭐⭐⭐⭐⭐"><a href="#2-setIgnoreEmptyArrayValues-⭐⭐⭐⭐⭐" class="headerlink" title="2. setIgnoreEmptyArrayValues ⭐⭐⭐⭐⭐"></a>2. setIgnoreEmptyArrayValues ⭐⭐⭐⭐⭐</h3><p>忽略空数组，精简 JSON 输出。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: setIgnoreEmptyArrayValues = true<br><br>默认: &#123; &quot;items&quot;: [] &#125;<br>配置后: &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>适用于第三方接口不允许空数组的场景。</p>
+<hr>
+<h3 id="3-ProceedRedirects-⭐⭐⭐⭐☆"><a href="#3-ProceedRedirects-⭐⭐⭐⭐☆" class="headerlink" title="3. ProceedRedirects ⭐⭐⭐⭐☆"></a>3. ProceedRedirects ⭐⭐⭐⭐☆</h3><p>控制是否自动跟随 HTTP 重定向（301&#x2F;302&#x2F;307）。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例:<br>  ProceedRedirects = true   (默认，自动跟随)<br>  ProceedRedirects = false  (程序自行处理)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-EncodeURL-⭐⭐⭐⭐☆"><a href="#4-EncodeURL-⭐⭐⭐⭐☆" class="headerlink" title="4. EncodeURL ⭐⭐⭐⭐☆"></a>4. EncodeURL ⭐⭐⭐⭐☆</h3><p>是否自动进行 URL Encode。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例:<br>  EncodeURL = true   (默认，&quot;中文&quot; → %E4%B8%AD%E6%96%87)<br>  EncodeURL = false  (目标系统已编码，关闭自动编码)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-errorFormat"><a href="#5-errorFormat" class="headerlink" title="5. errorFormat"></a>5. errorFormat</h3><p>REST Sender 返回异常时的错误信息格式。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: errorFormat = JSON<br><br>默认: XML 格式错误<br>配置后: &#123; &quot;error&quot;: &quot;...&quot; &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="6-escapeNonXML10Symbols"><a href="#6-escapeNonXML10Symbols" class="headerlink" title="6. escapeNonXML10Symbols"></a>6. escapeNonXML10Symbols</h3><p>转义非法 XML 1.0 字符（特殊字符、控制字符、非法 Unicode），避免 XML Parser 报错。</p>
+<hr>
+<h3 id="7-escapeRestricted"><a href="#7-escapeRestricted" class="headerlink" title="7. escapeRestricted"></a>7. escapeRestricted</h3><p>自动转义 XML 保留字符（<code>&amp;</code> <code>&lt;</code> <code>&gt;</code>），避免 XML 解析失败。</p>
+<hr>
+<h3 id="8-addXMLDeclaration"><a href="#8-addXMLDeclaration" class="headerlink" title="8. addXMLDeclaration"></a>8. addXMLDeclaration</h3><p>控制是否输出 XML 声明。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: addXMLDeclaration = true<br><br>输出: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="9-setStandaloneNo"><a href="#9-setStandaloneNo" class="headerlink" title="9. setStandaloneNo"></a>9. setStandaloneNo</h3><p>输出 standalone&#x3D;”no” 的 XML 声明。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: setStandaloneNo = true<br><br>输出: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="10-setRequestXIDynamicHeaders"><a href="#10-setRequestXIDynamicHeaders" class="headerlink" title="10. setRequestXIDynamicHeaders"></a>10. setRequestXIDynamicHeaders</h3><p>控制 Dynamic Header 与 HTTP Header 之间的互相转换。适用于 OAuth Token、自定义 Header 等场景。</p>
+<hr>
+<h3 id="11-useDefaultCharsetForCustomHandling"><a href="#11-useDefaultCharsetForCustomHandling" class="headerlink" title="11. useDefaultCharsetForCustomHandling"></a>11. useDefaultCharsetForCustomHandling</h3><p>指定默认字符集，常用于解决中文乱码（UTF-8、GBK）。</p>
+<hr>
+<h3 id="12-setIgnoreNamespaces"><a href="#12-setIgnoreNamespaces" class="headerlink" title="12. setIgnoreNamespaces"></a>12. setIgnoreNamespaces</h3><p>忽略 XML Namespace，适用于 JSON Key 不需要 Namespace 前缀的场景。</p>
+<hr>
+<h2 id="六、推荐组合配置（REST-Receiver）"><a href="#六、推荐组合配置（REST-Receiver）" class="headerlink" title="六、推荐组合配置（REST Receiver）"></a>六、推荐组合配置（REST Receiver）</h2><p>对于大多数 REST Receiver 接口，可参考以下组合：</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>推荐值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setIgnoredElements</td>
+<td>IT_TAB</td>
+<td>去除包装节点，输出 Root Array</td>
+</tr>
+<tr>
+<td>setIgnoreEmptyArrayValues</td>
+<td>true</td>
+<td>空数组不输出</td>
+</tr>
+<tr>
+<td>EncodeURL</td>
+<td>true</td>
+<td>URL 自动编码</td>
+</tr>
+<tr>
+<td>ProceedRedirects</td>
+<td>true</td>
+<td>自动处理 HTTP 重定向</td>
+</tr>
+<tr>
+<td>useDefaultCharsetForCustomHandling</td>
+<td>true</td>
+<td>避免字符集问题</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p><code>RESTAdapterBean</code> 的 Module Configuration 是 SAP PO REST Adapter 中一个非常实用但容易被忽略的高级功能。</p>
+<p>核心要点：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>推荐指数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setIgnoredElements</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>去除包装节点，输出 Root Array</td>
+</tr>
+<tr>
+<td>setIgnoreEmptyArrayValues</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>忽略空数组</td>
+</tr>
+<tr>
+<td>EncodeURL</td>
+<td>⭐⭐⭐⭐☆</td>
+<td>URL 自动编码</td>
+</tr>
+<tr>
+<td>ProceedRedirects</td>
+<td>⭐⭐⭐⭐☆</td>
+<td>自动处理 HTTP 重定向</td>
+</tr>
+<tr>
+<td>errorFormat</td>
+<td>⭐⭐⭐⭐☆</td>
+<td>返回 JSON 错误信息</td>
+</tr>
+</tbody></table>
+<p>其中，<strong><code>setIgnoredElements</code> 是开发 REST 接口时最值得掌握的配置</strong>，可在保持 ESR&#x2F;XSD 结构不变的情况下，轻松满足第三方接口对 JSON 根数组格式的要求。</p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>SAP Help Portal — REST Adapter Module Configuration</li>
+<li>实际项目验证：SAP PO 7.5 REST Receiver Channel</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SAP/" class="category-chain-item">SAP</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="category-chain-item">PO接口开发</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
+      
+        <a href="/tags/SAP/" class="print-no-link">#SAP</a>
+      
+        <a href="/tags/PO/" class="print-no-link">#PO</a>
+      
+        <a href="/tags/REST/" class="print-no-link">#REST</a>
+      
+        <a href="/tags/RESTAdapterBean/" class="print-no-link">#RESTAdapterBean</a>
+      
+        <a href="/tags/XML/" class="print-no-link">#XML</a>
+      
+        <a href="/tags/JSON/" class="print-no-link">#JSON</a>
+      
+        <a href="/tags/Module-Configuration/" class="print-no-link">#Module Configuration</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南</div>
+      <div>https://claudechan1228.github.io/SAP/PO接口开发/sap-po-rest-adapter-module-config/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wuyuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年6月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E4%B9%92%E4%B9%93%E7%90%83/%E8%AE%AD%E7%BB%83/table-tennis-training-notes/" title="乒乓球训练笔记——劈长、机会球处理、发抢套路与前冲弧圈（2026-06-27）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">乒乓球训练笔记——劈长、机会球处理、发抢套路与前冲弧圈（2026-06-27）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/" title="使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证">
+                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

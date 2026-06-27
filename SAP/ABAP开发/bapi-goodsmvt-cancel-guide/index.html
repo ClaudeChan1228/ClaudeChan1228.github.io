@@ -22,12 +22,12 @@
     <meta name="description" content="引言BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancellat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证">
-<meta property="og:url" content="https://claudechan1228.github.io/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-goodsmvt-cancel-guide/index.html">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/index.html">
 <meta property="og:site_name" content="ClaudeChan&#39;s Blog">
 <meta property="og:description" content="引言BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancellat">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-22T05:58:51.898Z">
+<meta property="article:modified_time" content="2026-06-26T08:56:46.660Z">
 <meta property="article:author" content="Wuyuan">
 <meta property="article:tag" content="ABAP">
 <meta property="article:tag" content="BAPI">
@@ -412,7 +412,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2026-06-22
+                    本文最后更新于 2026-06-26
                   
                 
               </p>
@@ -733,7 +733,7 @@
   
     <span>></span>
     
-  <a href="/categories/SAP/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  <a href="/categories/SAP/ABAP%E5%BC%80%E5%8F%91/" class="category-chain-item">ABAP开发</a>
   
   
 
@@ -773,7 +773,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证</div>
-      <div>https://claudechan1228.github.io/SAP/开发/2026-06-22-bapi-goodsmvt-cancel-guide/</div>
+      <div>https://claudechan1228.github.io/SAP/ABAP开发/bapi-goodsmvt-cancel-guide/</div>
     </div>
     <div class="license-meta">
       
@@ -817,11 +817,17 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-adapter-module-config/" title="SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/SAP/%E5%BC%80%E5%8F%91/2026-06-22-bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
+                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
                         <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
