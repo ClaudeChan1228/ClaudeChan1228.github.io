@@ -4,6 +4,51 @@
   
   
   <entry>
+    <title>爱聚网比赛赛后反思——建立自动化比赛决策体系（2026-06）</title>
+    <link href="/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/table-tennis-automatic-decision-system/"/>
+    <url>/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/table-tennis-automatic-decision-system/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、本次比赛总结"><a href="#一、本次比赛总结" class="headerlink" title="一、本次比赛总结"></a>一、本次比赛总结</h2><p>这次比赛最大的收获，并不是发现自己的步伐不好，而是发现了导致步伐不好的真正原因。</p><p>以前一直认为：</p><blockquote><p>我的步伐不好，所以比赛时腿脚动不起来。</p></blockquote><p>现在重新分析后发现：</p><blockquote><p><strong>步伐不好只是结果，真正的问题是没有建立来球后的决策体系。</strong></p></blockquote><p>也就是说：</p><p>并不是腿不会动，而是大脑没有在第一时间决定：</p><ul><li>用正手还是反手？</li><li>需要侧身还是跨步？</li><li>哪只脚应该先启动？</li></ul><p>由于每个球都需要重新思考，因此导致启动延迟，最终表现出来就是：</p><ul><li>腿脚动不起来</li><li>总是慢半拍</li><li>原地伸手击球</li><li>身体转动不足</li></ul><hr><h2 id="二、本次比赛暴露出的核心问题"><a href="#二、本次比赛暴露出的核心问题" class="headerlink" title="二、本次比赛暴露出的核心问题"></a>二、本次比赛暴露出的核心问题</h2><h3 id="1-来球决策速度慢（核心问题）"><a href="#1-来球决策速度慢（核心问题）" class="headerlink" title="1. 来球决策速度慢（核心问题）"></a>1. 来球决策速度慢（核心问题）</h3><p>目前比赛中的思考过程：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">球来了<br>  ↓<br>这是中间球？<br>  ↓<br>正手？<br>  ↓<br>还是横打？<br>  ↓<br>还能不能侧身？<br>  ↓<br>已经晚了<br>  ↓<br>原地伸手击球<br></code></pre></td></tr></table></figure><p>真正浪费时间的不是移动，而是：</p><blockquote><p><strong>犹豫。</strong></p></blockquote><h3 id="2-没有建立固定的比赛体系"><a href="#2-没有建立固定的比赛体系" class="headerlink" title="2. 没有建立固定的比赛体系"></a>2. 没有建立固定的比赛体系</h3><p>目前已经掌握：</p><ul><li>正手拉球</li><li>横打</li><li>推挡</li><li>劈长</li></ul><p>但是：</p><p><strong>没有形成固定对应关系。</strong></p><p>例如中间球：</p><ul><li>有时候正手</li><li>有时候横打</li><li>有时候推挡</li></ul><p>全部都可以。</p><p>结果就是：<strong>全部都会犹豫。</strong></p><h3 id="3-步法和技术没有绑定"><a href="#3-步法和技术没有绑定" class="headerlink" title="3. 步法和技术没有绑定"></a>3. 步法和技术没有绑定</h3><p>目前知道各种步法，但是不知道不同来球对应哪种步法。因此脚没有第一时间启动。</p><hr><h2 id="三、本阶段训练目标"><a href="#三、本阶段训练目标" class="headerlink" title="三、本阶段训练目标"></a>三、本阶段训练目标</h2><p>不是：</p><blockquote><p>提高步法速度。</p></blockquote><p>而是：</p><blockquote><p><strong>建立自动化的比赛决策。</strong></p></blockquote><p>做到：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">来球<br>  ↓<br>立即判断区域<br>  ↓<br>立即启动对应脚<br>  ↓<br>完成击球<br></code></pre></td></tr></table></figure><p>整个过程形成条件反射。</p><hr><h2 id="四、建立自己的比赛体系（V1-0）"><a href="#四、建立自己的比赛体系（V1-0）" class="headerlink" title="四、建立自己的比赛体系（V1.0）"></a>四、建立自己的比赛体系（V1.0）</h2><h3 id="原则一"><a href="#原则一" class="headerlink" title="原则一"></a>原则一</h3><p><strong>能用正手解决，就优先正手。</strong></p><h3 id="原则二"><a href="#原则二" class="headerlink" title="原则二"></a>原则二</h3><p><strong>中间球默认正手。</strong></p><p>不要重新思考”横打还是正手”。先固定正手，以后再根据水平调整。</p><h3 id="原则三"><a href="#原则三" class="headerlink" title="原则三"></a>原则三</h3><p><strong>反手长球默认横打。</strong></p><p>不要重新思考。</p><h3 id="原则四"><a href="#原则四" class="headerlink" title="原则四"></a>原则四</h3><p><strong>横打来不及，立即推挡。</strong></p><p>不要硬横。</p><h3 id="原则五"><a href="#原则五" class="headerlink" title="原则五"></a>原则五</h3><p><strong>允许判断错误，不允许犹豫。</strong></p><p>宁愿判断错，也不要什么都想。</p><hr><h2 id="五、建立步法启动规则"><a href="#五、建立步法启动规则" class="headerlink" title="五、建立步法启动规则"></a>五、建立步法启动规则</h2><p>以后不要想着：</p><blockquote><p>我要走什么步法？</p></blockquote><p>只需要想着：</p><blockquote><p><strong>哪只脚先启动？</strong></p></blockquote><h3 id="偏正手"><a href="#偏正手" class="headerlink" title="偏正手"></a>偏正手</h3><p><strong>右脚先启动。</strong></p><p>通常：</p><ul><li>微后撤</li><li>转腰</li><li>正手击球</li></ul><h3 id="偏反手"><a href="#偏反手" class="headerlink" title="偏反手"></a>偏反手</h3><p><strong>左脚先启动。</strong></p><p>通常：</p><ul><li>微调</li><li>小并步</li><li>横打</li></ul><h3 id="大角"><a href="#大角" class="headerlink" title="大角"></a>大角</h3><p>再使用：</p><ul><li>并步</li><li>交叉步</li></ul><p>不用一开始就考虑复杂步法。</p><hr><h2 id="六、本阶段训练重点"><a href="#六、本阶段训练重点" class="headerlink" title="六、本阶段训练重点"></a>六、本阶段训练重点</h2><p>训练目标不是拉得更暴，而是：</p><blockquote><p><strong>脚比手先动。</strong></p></blockquote><hr><h2 id="七、训练计划"><a href="#七、训练计划" class="headerlink" title="七、训练计划"></a>七、训练计划</h2><h3 id="第一阶段（建议-2-周）"><a href="#第一阶段（建议-2-周）" class="headerlink" title="第一阶段（建议 2 周）"></a>第一阶段（建议 2 周）</h3><h4 id="两点随机（★★★★★）"><a href="#两点随机（★★★★★）" class="headerlink" title="两点随机（★★★★★）"></a>两点随机（★★★★★）</h4><p>随机发球：</p><ul><li>中间偏正手</li><li>中间偏反手</li></ul><p>要求：看到球立即启动，不要犹豫。</p><p>建立：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">偏正手 → 右脚启动 → 正手<br>偏反手 → 左脚启动 → 横打<br></code></pre></td></tr></table></figure><p>训练重点：不是命中率，而是<strong>是否第一时间完成决策</strong>。</p><h4 id="三点随机（★★★★★）"><a href="#三点随机（★★★★★）" class="headerlink" title="三点随机（★★★★★）"></a>三点随机（★★★★★）</h4><p>随机：正手 &#x2F; 中间 &#x2F; 反手</p><p>固定打法：</p><table><thead><tr><th>来球</th><th>默认技术</th></tr></thead><tbody><tr><td>正手</td><td>正手</td></tr><tr><td>中间</td><td>正手</td></tr><tr><td>反手</td><td>横打</td></tr></tbody></table><p>要求：不要重新思考，看到球立即执行。</p><h3 id="第二阶段（建议-2-4-周）"><a href="#第二阶段（建议-2-4-周）" class="headerlink" title="第二阶段（建议 2~4 周）"></a>第二阶段（建议 2~4 周）</h3><h4 id="全台不定点（★★★★☆）"><a href="#全台不定点（★★★★☆）" class="headerlink" title="全台不定点（★★★★☆）"></a>全台不定点（★★★★☆）</h4><p>目的：把已经建立好的决策体系应用到真正随机来球。</p><p>要求：继续坚持默认规则，不要每个球重新选择技术。</p><h3 id="第三阶段"><a href="#第三阶段" class="headerlink" title="第三阶段"></a>第三阶段</h3><p><strong>比赛训练。</strong></p><p>训练内容：</p><ul><li>发球抢攻</li><li>接发球</li><li>相持</li></ul><p>要求：全部按照自己的比赛体系执行，不要临场改变打法。</p><hr><h2 id="八、每次训练结束后的复盘"><a href="#八、每次训练结束后的复盘" class="headerlink" title="八、每次训练结束后的复盘"></a>八、每次训练结束后的复盘</h2><p>以后不要统计：</p><ul><li>正手失误多少</li><li>横打失误多少</li></ul><p>建议统计：</p><table><thead><tr><th>项目</th><th>目标</th></tr></thead><tbody><tr><td>是否第一时间完成技术选择</td><td>≥90%</td></tr><tr><td>是否脚先于手启动</td><td>≥80%</td></tr><tr><td>是否因为犹豫导致原地击球</td><td>越少越好</td></tr><tr><td>是否坚持执行默认规则</td><td>≥90%</td></tr><tr><td>是否主动使用正手解决中间球</td><td>持续增加</td></tr></tbody></table><hr><h2 id="九、未来一个月训练比例"><a href="#九、未来一个月训练比例" class="headerlink" title="九、未来一个月训练比例"></a>九、未来一个月训练比例</h2><table><thead><tr><th>内容</th><th>比例</th><th>目标</th></tr></thead><tbody><tr><td>两点随机（偏正手 &#x2F; 偏反手）</td><td>30%</td><td>建立来球→启动→击球条件反射</td></tr><tr><td>三点随机（正手 &#x2F; 中间 &#x2F; 反手）</td><td>25%</td><td>固定技术选择，减少犹豫</td></tr><tr><td>全台不定点</td><td>20%</td><td>综合应用决策体系</td></tr><tr><td>发球 + 第三板</td><td>15%</td><td>建立主动得分能力</td></tr><tr><td>单项技术（正手、横打）</td><td>10%</td><td>保持动作质量</td></tr></tbody></table><hr><h2 id="十、本阶段核心目标"><a href="#十、本阶段核心目标" class="headerlink" title="十、本阶段核心目标"></a>十、本阶段核心目标</h2><h3 id="技术目标"><a href="#技术目标" class="headerlink" title="技术目标"></a>技术目标</h3><p>建立：</p><blockquote><p><strong>来球 → 决策 → 启动 → 击球</strong></p></blockquote><p>自动化流程。</p><h3 id="比赛目标"><a href="#比赛目标" class="headerlink" title="比赛目标"></a>比赛目标</h3><p>减少犹豫，提高第一时间启动。</p><hr><h2 id="赛后总结口诀"><a href="#赛后总结口诀" class="headerlink" title="赛后总结口诀"></a>赛后总结口诀</h2><h3 id="决策口诀"><a href="#决策口诀" class="headerlink" title="决策口诀"></a>决策口诀</h3><blockquote><p><strong>偏正右脚起，偏反左脚移；</strong><br><strong>中间优先正，反手长横打；</strong><br><strong>横打来不及，推挡先顶住；</strong><br><strong>宁可判错，也不犹豫。</strong></p></blockquote><h3 id="启动口诀"><a href="#启动口诀" class="headerlink" title="启动口诀"></a>启动口诀</h3><blockquote><p><strong>脚比手先动，启动在脑前；</strong><br><strong>区域先判断，技术自然连。</strong></p></blockquote><h3 id="训练口诀"><a href="#训练口诀" class="headerlink" title="训练口诀"></a>训练口诀</h3><blockquote><p><strong>两点练启动，三点定选择；</strong><br><strong>不定点应用，比赛不纠结。</strong></p></blockquote><hr><h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><p>以前追求的是：</p><blockquote><p><strong>学会更多技术。</strong></p></blockquote><p>现在追求的是：</p><blockquote><p><strong>让已有技术形成条件反射。</strong></p></blockquote><p>当能够做到：</p><blockquote><p><strong>来球后不用思考，脚先启动，技术自然跟上。</strong></p></blockquote><p>比赛中的步伐、击球质量和整体节奏都会得到明显提升。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>乒乓球</category>
+      
+      <category>比赛</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>条件反射</tag>
+      
+      <tag>赛后反思</tag>
+      
+      <tag>决策体系</tag>
+      
+      <tag>步法启动</tag>
+      
+      <tag>训练计划</tag>
+      
+      <tag>比赛体系</tag>
+      
+      <tag>来球判断</tag>
+      
+      <tag>两点随机</tag>
+      
+      <tag>三点随机</tag>
+      
+      <tag>全台不定点</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>乒乓球训练笔记——劈长、机会球处理、发抢套路与前冲弧圈（2026-06-27）</title>
     <link href="/%E4%B9%92%E4%B9%93%E7%90%83/%E8%AE%AD%E7%BB%83/table-tennis-training-notes/"/>
     <url>/%E4%B9%92%E4%B9%93%E7%90%83/%E8%AE%AD%E7%BB%83/table-tennis-training-notes/</url>
