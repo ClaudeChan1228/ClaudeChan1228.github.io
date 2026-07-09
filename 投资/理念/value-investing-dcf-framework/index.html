@@ -27,7 +27,7 @@
 <meta property="og:description" content="投资的底层逻辑可以凝练为一句话：判断当前市场价格是否低于一家优秀企业未来创造价值的合理估计。 这个判断遵循一条清晰的决策链——先筛选企业质量，再判断现金流可预测性，然后用 DCF 估算内在价值，最后与市场价格比较。其中最关键也最容易被误解的一环，是 DCF 估值。它不是一台精密的计算器，而是一面镜子：照出的是投资者自己对收益的要求、对风险的判断。  第一步：筛选优秀企业DCF 估值的前提是企业未来">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-09T00:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-09T06:21:52.236Z">
+<meta property="article:modified_time" content="2026-07-09T06:28:56.137Z">
 <meta property="article:author" content="Wuyuan">
 <meta property="article:tag" content="估值">
 <meta property="article:tag" content="价值投资">
@@ -356,7 +356,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          3.2k 字
         
       </span>
     
@@ -367,7 +367,7 @@
         
         
         
-          20 分钟
+          27 分钟
         
       </span>
     
@@ -434,14 +434,26 @@
 <p>反之，高速变化的行业——技术路线不确定、竞争格局剧烈变化、盈利模式尚未稳定——DCF 的输入本身就高度不可靠，算出来的结果自然失真。这类企业不是不能投，而是不适合用 DCF 来定价。</p>
 <hr>
 <h2 id="第三步：DCF-估值"><a href="#第三步：DCF-估值" class="headerlink" title="第三步：DCF 估值"></a>第三步：DCF 估值</h2><p>DCF（现金流折现法）的核心思想很简单：<strong>企业价值等于未来全部自由现金流，按一定折现率折算到今天的价值之和。</strong> 未来第 n 年的 100 元不等于今天的 100 元——今天的钱可以投资增值，还要考虑通胀和经营风险。</p>
-<p>DCF 包含三个核心变量，其中第三个最关键。</p>
-<h3 id="自由现金流（FCF）"><a href="#自由现金流（FCF）" class="headerlink" title="自由现金流（FCF）"></a>自由现金流（FCF）</h3><p>企业真正能分配给股东的钱。需要预测收入规模、利润率、资本支出和增量投资收益。</p>
-<h3 id="长期增长率（g）"><a href="#长期增长率（g）" class="headerlink" title="长期增长率（g）"></a>长期增长率（g）</h3><p>企业未来现金流永续增长的速度。对于成熟企业，这个数字必须保守。长江电力的增长来源是电价提升、新资产注入和留存收益再投资，而非爆发式扩张。</p>
-<h3 id="折现率（r）"><a href="#折现率（r）" class="headerlink" title="折现率（r）"></a>折现率（r）</h3><p>这是 DCF 的灵魂，也最容易被误解。</p>
-<p>折现率的现实含义很简单：<strong>投资者投资这家企业时，要求获得的最低年化收益率。</strong> 它由两部分组成——无风险利率加上风险溢价。</p>
-<p>无风险利率通常参考长期国债收益率（如中国 10 年期国债）。它下降，折现率就下降，未来现金流折现损失减少，企业内在价值上升；反之亦然。</p>
-<p>风险溢价则是投资者承担股票风险、相比无风险资产要求额外获得的收益补偿。假设无风险利率 2%，投资者要求 8% 的总回报，风险溢价就是约 6%。</p>
-<p><strong>风险溢价是 DCF 中完全主观的变量。</strong> 企业没有变，变化的是投资者对风险和收益的要求。同一个企业，折现率用 8% 和用 10% 算出来的内在价值可以相差 30% 以上。</p>
+<p>两阶段 DCF 模型的计算公式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">企业内在价值 = 显性预测期现金流现值之和 + 永续价值现值<br><br>即：<br><br>             FCF₁       FCF₂             FCFₙ<br>V =  ─────── + ─────── + ... + ─────── + TV<br>     (1 + r)¹  (1 + r)²          (1 + r)ⁿ<br><br>其中，永续价值（Terminal Value）：<br><br>     FCFₙ × (1 + g)<br>TV = ────────────── ÷ (1 + r)ⁿ<br>        (r - g)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>FCF</strong>：自由现金流，企业真正能分配给股东的钱</li>
+<li><strong>g</strong>：永续增长率，企业未来现金流长期增长的速度</li>
+<li><strong>r</strong>：折现率，投资者要求的最低年化收益率</li>
+</ul>
+<p>公式直观地展示了三个变量各自的影响方向，下面逐一展开。</p>
+<h3 id="自由现金流（FCF）"><a href="#自由现金流（FCF）" class="headerlink" title="自由现金流（FCF）"></a>自由现金流（FCF）</h3><p><strong>对结果的影响：</strong> FCF 是公式的分子。FCF 越大，企业内在价值越高——两者呈正比关系。</p>
+<p><strong>现实含义：</strong> FCF 代表企业真正能分配给股东的钱，等于经营现金流减去维持业务所需的资本支出。它不是报表上的净利润——很多企业账面盈利，但钱都变成了应收账款和库存，股东一分也拿不到。预测 FCF 需要判断收入规模、利润率、资本支出和增量投资收益。以长江电力为例，发电量和电价决定收入，折旧和水资源费决定成本，大坝维护决定资本支出——每一项都需要跟踪，但没有一项是玄学。</p>
+<h3 id="长期增长率（g）"><a href="#长期增长率（g）" class="headerlink" title="长期增长率（g）"></a>长期增长率（g）</h3><p><strong>对结果的影响：</strong> g 出现在两个位置。在显性预测期，它决定每一年 FCF 相比于前一年的增速；在永续价值中，它出现在分母 <code>(r - g)</code> 里——g 越大，分母越小，永续价值就越大。由于永续价值通常占总价值的 60%~80%，g 的微小变化会对最终结果产生巨大影响。</p>
+<p><strong>现实含义：</strong> g 是企业未来现金流永续增长的速度。对于成熟企业，这个数字必须保守——没有一家公司能永远以远高于 GDP 的速度增长。长江电力的增长来源是电价提升、新资产注入和留存收益再投资，这些都有迹可循，而非需要想象力的爆发式扩张。如果一家企业的增长逻辑需要用”如果””假设”来支撑，那它就不适合 DCF。</p>
+<h3 id="折现率（r）"><a href="#折现率（r）" class="headerlink" title="折现率（r）"></a>折现率（r）</h3><p><strong>对结果的影响：</strong> r 是公式的分母。r 越大，每一年现金流折算到今天的价值就越小，企业内在价值越低。而且由于复利效应的存在，r 的变动对远期现金流的影响远超近期——第 10 年的现金流对 r 的敏感度是第 1 年的数倍。同一个企业，折现率从 8% 提高到 10%，内在价值可以相差 30% 以上。</p>
+<p><strong>现实含义：</strong> r 是投资者投资这家企业时要求的最低年化收益率，由两部分组成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">折现率 = 无风险利率 + 风险溢价<br></code></pre></td></tr></table></figure>
+
+<p>无风险利率通常参考长期国债收益率（如中国 10 年期国债）。它下降 → 折现率下降 → 分母变小 → 未来现金流折现损失减少 → 企业内在价值上升。这解释了为什么降息周期里市场整体估值会扩张——不是企业变好了，而是无风险资产的吸引力下降了。</p>
+<p>风险溢价是投资者承担股票风险、相比无风险资产要求额外获得的收益补偿。假设无风险利率 2%，投资者要求 8% 的总回报，风险溢价就是约 6%。</p>
+<p><strong>风险溢价是 DCF 中完全主观的变量。</strong> 企业没有变，变化的是投资者对风险和收益的要求。折现率取 8% 还是 10%，取决于你对这家企业不确定性的评估和你自己的收益目标——这不是企业告诉你的，是你自己决定的。</p>
 <p>这正是 DCF 最核心的洞见：<strong>它不是客观地给企业定价，而是帮投资者回答一个问题——“以我要求的收益率来看，当前价格是贵了还是便宜了？”</strong></p>
 <hr>
 <h2 id="DCF-与-PE-的关系"><a href="#DCF-与-PE-的关系" class="headerlink" title="DCF 与 PE 的关系"></a>DCF 与 PE 的关系</h2><p>PE 本身不是估值方法，而是 DCF 结果的另一种表达形式。</p>
