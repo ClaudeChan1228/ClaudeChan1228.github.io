@@ -19,27 +19,26 @@
   <meta name="author" content="Wuyuan">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
   
-    <meta name="description" content="阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。   一、什么是商誉？1. 会计中的商誉（Accounting Goodwill）商誉并不是企业自己评估出来的价值，而是只有在企业并购时才会出现在资产负债表中的一项资产。 计算公式非常简单： 1商誉 &#x3D; 收购价格 - 被收购企业可辨认净资产公允价值  例如：  收购价格：100 亿元 被收购企业：资产 80 亿元，负债 20 亿元">
+    <meta name="description" content="总：投资的本质不是预测股价投资的底层逻辑可以凝练为一句话：  判断当前市场价格是否低于一家优秀企业未来创造价值的合理估计。  这个判断过程遵循一条清晰的决策链： 1投资机会 → 企业是否优秀？→ 商业模式分析 → 现金流是否可预测？→ DCF估值 → 比较市场价格 → 买入&#x2F;等待  其中最关键也最容易被误解的一环，是 DCF 估值。它不是一台精密的计算器，而是一面镜子——照出的是投资者自己对收益的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理解商誉（Goodwill）——从会计到投资">
-<meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/index.html">
+<meta property="og:title" content="价值投资决策框架：DCF的本质是主观估值">
+<meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/value-investing-dcf-framework/index.html">
 <meta property="og:site_name" content="ClaudeChan&#39;s Blog">
-<meta property="og:description" content="阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。   一、什么是商誉？1. 会计中的商誉（Accounting Goodwill）商誉并不是企业自己评估出来的价值，而是只有在企业并购时才会出现在资产负债表中的一项资产。 计算公式非常简单： 1商誉 &#x3D; 收购价格 - 被收购企业可辨认净资产公允价值  例如：  收购价格：100 亿元 被收购企业：资产 80 亿元，负债 20 亿元">
+<meta property="og:description" content="总：投资的本质不是预测股价投资的底层逻辑可以凝练为一句话：  判断当前市场价格是否低于一家优秀企业未来创造价值的合理估计。  这个判断过程遵循一条清晰的决策链： 1投资机会 → 企业是否优秀？→ 商业模式分析 → 现金流是否可预测？→ DCF估值 → 比较市场价格 → 买入&#x2F;等待  其中最关键也最容易被误解的一环，是 DCF 估值。它不是一台精密的计算器，而是一面镜子——照出的是投资者自己对收益的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-22T07:19:52.732Z">
+<meta property="article:published_time" content="2026-07-09T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-09T06:16:18.724Z">
 <meta property="article:author" content="Wuyuan">
-<meta property="article:tag" content="财务分析">
+<meta property="article:tag" content="估值">
 <meta property="article:tag" content="价值投资">
-<meta property="article:tag" content="商誉">
-<meta property="article:tag" content="巴菲特">
-<meta property="article:tag" content="会计">
-<meta property="article:tag" content="经济商誉">
+<meta property="article:tag" content="安全边际">
+<meta property="article:tag" content="DCF">
+<meta property="article:tag" content="折现率">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>理解商誉（Goodwill）——从会计到投资 - ClaudeChan&#39;s Blog</title>
+  <title>价值投资决策框架：DCF的本质是主观估值 - ClaudeChan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -334,7 +333,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="理解商誉（Goodwill）——从会计到投资"></span>
+            <span id="subtitle" data-typed-text="价值投资决策框架：DCF的本质是主观估值"></span>
           
         </div>
 
@@ -345,8 +344,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-06-22 00:00" pubdate>
-          2026-06-22
+        <time datetime="2026-07-09 08:00" pubdate>
+          2026-07-09
         </time>
       </span>
     
@@ -357,7 +356,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          2k 字
         
       </span>
     
@@ -368,7 +367,7 @@
         
         
         
-          20 分钟
+          17 分钟
         
       </span>
     
@@ -407,12 +406,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">理解商誉（Goodwill）——从会计到投资</h1>
+            <h1 id="seo-header">价值投资决策框架：DCF的本质是主观估值</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2026-06-22
+                    本文最后更新于 2026-07-09
                   
                 
               </p>
@@ -420,224 +419,78 @@
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。</p>
+                <h2 id="总：投资的本质不是预测股价"><a href="#总：投资的本质不是预测股价" class="headerlink" title="总：投资的本质不是预测股价"></a>总：投资的本质不是预测股价</h2><p>投资的底层逻辑可以凝练为一句话：</p>
+<blockquote>
+<p>判断当前市场价格是否低于一家优秀企业未来创造价值的合理估计。</p>
 </blockquote>
-<hr>
-<h2 id="一、什么是商誉？"><a href="#一、什么是商誉？" class="headerlink" title="一、什么是商誉？"></a>一、什么是商誉？</h2><h3 id="1-会计中的商誉（Accounting-Goodwill）"><a href="#1-会计中的商誉（Accounting-Goodwill）" class="headerlink" title="1. 会计中的商誉（Accounting Goodwill）"></a>1. 会计中的商誉（Accounting Goodwill）</h3><p>商誉并不是企业自己评估出来的价值，而是<strong>只有在企业并购时才会出现在资产负债表中的一项资产</strong>。</p>
-<p>计算公式非常简单：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">商誉 <span class="hljs-operator">=</span> 收购价格 - 被收购企业可辨认净资产公允价值<br></code></pre></td></tr></table></figure>
+<p>这个判断过程遵循一条清晰的决策链：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">投资机会 → 企业是否优秀？→ 商业模式分析 → 现金流是否可预测？→ DCF估值 → 比较市场价格 → 买入/等待<br></code></pre></td></tr></table></figure>
 
-<p>例如：</p>
-<ul>
-<li>收购价格：100 亿元</li>
-<li>被收购企业：资产 80 亿元，负债 20 亿元</li>
-<li>可辨认净资产：60 亿元</li>
-</ul>
-<p>则：</p>
-<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">商誉 =<span class="hljs-number"> 100 </span>-<span class="hljs-number"> 60 </span>=<span class="hljs-number"> 40 </span>亿元<br></code></pre></td></tr></table></figure>
+<p>其中最关键也最容易被误解的一环，是 <strong>DCF 估值</strong>。它不是一台精密的计算器，而是一面镜子——照出的是投资者自己对收益的要求、对风险的判断。</p>
+<hr>
+<h2 id="分"><a href="#分" class="headerlink" title="分"></a>分</h2><h3 id="一、筛选优秀企业"><a href="#一、筛选优秀企业" class="headerlink" title="一、筛选优秀企业"></a>一、筛选优秀企业</h3><p>DCF 估值的前提是：<strong>企业未来能持续创造现金流</strong>。没有这个前提，DCF 算出来的数字毫无意义。</p>
+<p>判断一家企业是否优秀，看四个维度：</p>
+<p><strong>1. 商业模式</strong>——企业靠什么赚钱？盈利模式是否简单、可持续？长江电力就是典型：水资源 → 发电 → 售电 → 现金流，链条清晰，需求稳定，资产寿命极长。</p>
+<p><strong>2. 护城河</strong>——为什么竞争对手无法轻易复制？可能是资源优势（三峡的水电资产独一无二）、成本优势、品牌壁垒，或是网络效应。没有护城河的企业，利润终将被竞争侵蚀。</p>
+<p><strong>3. 行业空间</strong>——未来 10 到 20 年，这个行业还有没有增长空间？需要警惕的是行业衰退或商业模式被替代的风险，而非短期的景气波动。</p>
+<p><strong>4. 管理层与资本配置能力</strong>——企业赚的钱花在哪里，决定了股东能拿到多少。优秀的管理层把利润投向高回报项目、合理回购或分红；糟糕的管理层则盲目并购、低效投资，资本打了水漂。</p>
+<hr>
+<h3 id="二、判断现金流可预测性"><a href="#二、判断现金流可预测性" class="headerlink" title="二、判断现金流可预测性"></a>二、判断现金流可预测性</h3><p>优秀企业 ≠ 适合 DCF 估值。还需要一个条件：<strong>未来现金流具有较高确定性</strong>。</p>
+<p>适合 DCF 的企业特征：商业模式稳定、收入来源明确、盈利能力长期平稳、资本投入有规律可循。</p>
+<p>不适合 DCF 精确估值的企业：技术路线不确定、竞争格局剧烈变化、盈利模式尚未稳定——高速变化行业里的企业，DCF 的输入本身就高度不确定，算出来的结果自然失真。</p>
+<hr>
+<h3 id="三、DCF-估值的三个核心变量"><a href="#三、DCF-估值的三个核心变量" class="headerlink" title="三、DCF 估值的三个核心变量"></a>三、DCF 估值的三个核心变量</h3><p>DCF（Discounted Cash Flow，现金流折现法）的核心思想很简单：</p>
+<blockquote>
+<p>企业价值 &#x3D; 未来全部自由现金流，按一定折现率折算到今天的价值之和。</p>
+</blockquote>
+<p>未来第 n 年的 100 元，不等于今天的 100 元——因为今天的钱可以投资增值，还要考虑通胀和经营风险。</p>
+<p>DCF 包含三个核心变量：</p>
+<h4 id="1-自由现金流（FCF）"><a href="#1-自由现金流（FCF）" class="headerlink" title="1. 自由现金流（FCF）"></a>1. 自由现金流（FCF）</h4><p>企业真正能分配给股东的钱。需要预测：收入规模、利润率、资本支出、增量投资收益。</p>
+<h4 id="2-长期增长率（g）"><a href="#2-长期增长率（g）" class="headerlink" title="2. 长期增长率（g）"></a>2. 长期增长率（g）</h4><p>企业未来现金流永续增长的速度。对于成熟企业，这个数字必须保守。长江电力的增长来源是电价提升、新资产注入和留存收益再投资，而非爆发式扩张。</p>
+<h4 id="3-折现率（r）——DCF-的灵魂"><a href="#3-折现率（r）——DCF-的灵魂" class="headerlink" title="3. 折现率（r）——DCF 的灵魂"></a>3. 折现率（r）——DCF 的灵魂</h4><p>这是 DCF 中最容易被误解、也最核心的变量。</p>
+<p><strong>折现率的现实含义</strong>：投资者投资这家企业时，要求获得的最低年化收益率。</p>
+<p>它由两部分组成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">折现率 = 无风险利率 + 风险溢价<br></code></pre></td></tr></table></figure>
 
-<p>资产负债表中会出现：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>金额</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>可辨认净资产</td>
-<td>60 亿元</td>
-</tr>
-<tr>
-<td>商誉</td>
-<td>40 亿元</td>
-</tr>
-</tbody></table>
-<h3 id="2-为什么会愿意支付这-40-亿元？"><a href="#2-为什么会愿意支付这-40-亿元？" class="headerlink" title="2. 为什么会愿意支付这 40 亿元？"></a>2. 为什么会愿意支付这 40 亿元？</h3><p>因为购买的不只是工厂、设备、现金等资产。真正购买的是<strong>企业未来持续赚钱的能力</strong>，例如：</p>
 <ul>
-<li>品牌</li>
-<li>客户关系</li>
-<li>管理团队</li>
-<li>企业文化</li>
-<li>市场地位</li>
-<li>技术积累</li>
-<li>网络效应</li>
-<li>协同效应</li>
+<li><strong>无风险利率</strong>：通常参考长期国债收益率（如中国 10 年期国债）。它下降 → 折现率下降 → 未来现金流折现损失减少 → 企业内在价值上升；反之亦然。</li>
+<li><strong>风险溢价</strong>：投资者承担股票风险，相比无风险资产要求额外获得的收益补偿。</li>
 </ul>
-<p>这些东西很难单独出售、很难准确估值、无法单独辨认，因此不会单独计入资产，只能统一计入 <strong>商誉（Goodwill）</strong>。</p>
-<hr>
-<h2 id="二、为什么很多优秀企业没有商誉？"><a href="#二、为什么很多优秀企业没有商誉？" class="headerlink" title="二、为什么很多优秀企业没有商誉？"></a>二、为什么很多优秀企业没有商誉？</h2><p>这是很多初学者容易误解的地方。</p>
-<p>例如：可口可乐、苹果、贵州茅台——这些企业拥有世界顶级品牌，但资产负债表上的商誉可能很少，甚至没有。</p>
-<p>原因是：</p>
-<blockquote>
-<p>企业自己长期积累形成的品牌价值、管理能力、客户忠诚度等，并不会计入资产负债表。</p>
-</blockquote>
-<p>只有<strong>花钱收购别人时支付的溢价</strong>，才能形成<strong>会计商誉（Accounting Goodwill）</strong>。</p>
-<p>因此：</p>
-<blockquote>
-<p><strong>没有商誉 ≠ 没有竞争优势。</strong></p>
-</blockquote>
-<hr>
-<h2 id="三、经济商誉（Economic-Goodwill）"><a href="#三、经济商誉（Economic-Goodwill）" class="headerlink" title="三、经济商誉（Economic Goodwill）"></a>三、经济商誉（Economic Goodwill）</h2><p>巴菲特更关心的是<strong>经济商誉（Economic Goodwill）</strong>，即企业真正能够长期创造超额利润的能力。</p>
-<p>例如：</p>
+<p><strong>风险溢价是 DCF 中完全主观的变量</strong>——企业没有变，变化的是投资者对风险和收益的要求：</p>
 <ul>
-<li>可口可乐品牌</li>
-<li>苹果生态系统</li>
-<li>Costco 会员体系</li>
-<li>茅台品牌</li>
+<li>假设无风险利率 2%，投资者要求 8% 的总回报 → 风险溢价约 6%</li>
+<li>同一个企业，折现率用 8% 和用 10% 算出来的内在价值可以相差 30% 以上</li>
 </ul>
-<p>这些价值虽然不会体现在财务报表中，却是真正决定企业价值的核心。</p>
-<p><strong>企业存在两种商誉：</strong></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>来源</th>
-<th align="center">是否在报表中</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>会计商誉</td>
-<td>企业并购</td>
-<td align="center">✅</td>
-</tr>
-<tr>
-<td>经济商誉</td>
-<td>长期经营形成的竞争优势</td>
-<td align="center">❌</td>
-</tr>
-</tbody></table>
-<p>巴菲特真正重视的是：<strong>经济商誉。</strong></p>
-<hr>
-<h2 id="四、商誉是不是无形资产？"><a href="#四、商誉是不是无形资产？" class="headerlink" title="四、商誉是不是无形资产？"></a>四、商誉是不是无形资产？</h2><p>严格来说，<strong>不是</strong>。</p>
-<p>会计上，商誉与无形资产是两个不同科目。</p>
-<p><strong>无形资产</strong>包括：专利、商标、软件、土地使用权等。它们可以辨认、可以出售、可以单独估值。</p>
-<p><strong>商誉</strong>不能单独出售，必须依附整个企业。</p>
-<p>因此，商誉属于：</p>
+<p>这就引出了一个重要结论：</p>
 <blockquote>
-<p><strong>不可辨认资产（Unidentifiable Asset）</strong></p>
+<p><strong>DCF 不是客观地给企业定价，而是帮投资者回答”以我要求的收益率来看，当前价格是贵了还是便宜了”。</strong></p>
 </blockquote>
 <hr>
-<h2 id="五、商誉可以理解成什么？"><a href="#五、商誉可以理解成什么？" class="headerlink" title="五、商誉可以理解成什么？"></a>五、商誉可以理解成什么？</h2><blockquote>
-<p><strong>商誉 &#x3D; 企业无法单独辨认的竞争优势以及并购协同效应所形成的未来超额现金流，在收购时支付的现值溢价。</strong></p>
-</blockquote>
-<p>关键词：</p>
-<ul>
-<li>不可辨认竞争优势</li>
-<li>协同效应</li>
-<li>超额现金流</li>
-<li>现值（Present Value）</li>
-</ul>
-<p>这里已经和巴菲特的估值思想完全联系起来了。</p>
-<hr>
-<h2 id="六、商誉是不是未来现金流的折现？"><a href="#六、商誉是不是未来现金流的折现？" class="headerlink" title="六、商誉是不是未来现金流的折现？"></a>六、商誉是不是未来现金流的折现？</h2><p>可以，但更准确一点：</p>
-<blockquote>
-<p><strong>商誉反映的是未来超额现金流对应的溢价，而不是企业全部未来现金流。</strong></p>
-</blockquote>
-<p>例如：企业未来现金流价值 100 亿元，其中净资产价值 60 亿元，则商誉 40 亿元。</p>
-<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">100 </span>= <span class="hljs-number">60</span> + <span class="hljs-number">40</span><br></code></pre></td></tr></table></figure>
+<h3 id="四、DCF-与-PE-的关系"><a href="#四、DCF-与-PE-的关系" class="headerlink" title="四、DCF 与 PE 的关系"></a>四、DCF 与 PE 的关系</h3><p>PE 不是估值方法，而是 DCF 结果的另一种表达形式。</p>
+<p>在稳定增长模型下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">合理 PE ≈ 1 / (折现率 - 永续增长率)<br></code></pre></td></tr></table></figure>
 
-<p>即：商誉代表那些无法单独辨认、但能够持续创造超额现金流的价值。</p>
+<p>折现率 8%、永续增长 3% → 合理 PE 约 20 倍。这个公式解释了为什么不同投资者对同一只股票的”合理 PE”判断可以天差地别——因为每个人心里的折现率和增长率都不一样。</p>
 <hr>
-<h2 id="七、为什么要做商誉减值测试？"><a href="#七、为什么要做商誉减值测试？" class="headerlink" title="七、为什么要做商誉减值测试？"></a>七、为什么要做商誉减值测试？</h2><p>因为未来可能发生变化。例如：</p>
-<ul>
-<li>品牌影响力下降</li>
-<li>客户流失</li>
-<li>管理团队离开</li>
-<li>技术落后</li>
-<li>行业竞争恶化</li>
-</ul>
-<p>这些都会导致未来现金流下降。如果未来现金流下降，那么原来支付的溢价就可能已经不存在，因此必须重新评估。</p>
-<h3 id="商誉减值测试的本质"><a href="#商誉减值测试的本质" class="headerlink" title="商誉减值测试的本质"></a>商誉减值测试的本质</h3><p>本质只有一句话：</p>
-<blockquote>
-<p><strong>重新估计未来现金流，并折现计算今天值多少钱。</strong></p>
-</blockquote>
-<p>例如：</p>
-<ul>
-<li>收购时预计未来价值：100 亿元</li>
-<li>几年后竞争恶化，重新预测未来价值：65 亿元</li>
-<li>账面价值：100 亿元</li>
-</ul>
-<p>明显 <strong>账面价值 &gt; 实际价值</strong>，必须确认<strong>商誉减值</strong>。</p>
-<p>所以：</p>
-<blockquote>
-<p><strong>商誉减值，本质就是一次重新估值。</strong></p>
-</blockquote>
+<h3 id="五、DCF-的现实意义"><a href="#五、DCF-的现实意义" class="headerlink" title="五、DCF 的现实意义"></a>五、DCF 的现实意义</h3><p>DCF 不是为了得到一个绝对精准的价格。未来一定有不确定性。</p>
+<p>DCF 的真正作用：<strong>在投资者自己认可的风险水平和收益要求下，计算企业当前的合理价值范围。然后将这个范围与市场价格比较，判断是否存在安全边际。</strong></p>
 <hr>
-<h2 id="八、商誉减值测试为什么不是单独给商誉估值？"><a href="#八、商誉减值测试为什么不是单独给商誉估值？" class="headerlink" title="八、商誉减值测试为什么不是单独给商誉估值？"></a>八、商誉减值测试为什么不是单独给商誉估值？</h2><p>因为商誉本身不能赚钱。真正赚钱的是：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">品牌 + 员工 + 设备 + 渠道 + 管理团队 + 客户<br></code></pre></td></tr></table></figure>
+<h2 id="总：价值投资的最终框架"><a href="#总：价值投资的最终框架" class="headerlink" title="总：价值投资的最终框架"></a>总：价值投资的最终框架</h2><p>将整个决策流程串起来：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs text">发现投资机会<br>    ↓<br>企业是否优秀？（商业模式、护城河、行业空间、管理层）<br>    ↓ 否 → 放弃<br>    ↓ 是<br>未来现金流是否可预测？<br>    ↓ 否 → 放弃<br>    ↓ 是<br>确定折现率（无风险利率 + 个人风险溢价要求）<br>    ↓<br>DCF 估算内在价值<br>    ↓<br>比较市场价格<br>    ↓<br>低估且有安全边际 → 买入<br>高估 → 等待或卖出<br></code></pre></td></tr></table></figure>
 
-<p>整个体系一起产生现金流。因此商誉不能单独估值。</p>
-<p>会计准则要求将商誉分配到<strong>现金产生单元（Cash Generating Unit，CGU）</strong>，然后计算整个资产组未来现金流折现价值。</p>
-<p>如果 <strong>未来价值 &lt; 账面价值</strong>，则：</p>
-<ol>
-<li>先减商誉</li>
-<li>商誉减完还不够 → 再减固定资产、无形资产等</li>
+<h3 id="核心认知"><a href="#核心认知" class="headerlink" title="核心认知"></a>核心认知</h3><ol>
+<li><p><strong>投资不是预测股价</strong>，而是判断企业未来创造价值的能力是否被市场低估。</p>
+</li>
+<li><p><strong>优秀企业是 DCF 估值的前提</strong>。没有稳定现金流的企业，DCF 没有意义。</p>
+</li>
+<li><p><strong>DCF 不是计算器，而是决策工具</strong>——它将未来现金流、风险和投资者的收益要求统一量化。</p>
+</li>
+<li><p><strong>风险溢价是主观的</strong>——同一家企业，不同投资者因收益要求不同，会得出完全不同的”合理价格”。这正是投资既是科学也是艺术的原因。</p>
+</li>
+<li><p><strong>最终目标不是找到最低 PE 的股票</strong>，而是在优秀企业中，找到市场价格低于自己认可的内在价值、且具有足够安全边际的机会。</p>
+</li>
 </ol>
-<p>因此，真正接受减值测试的是：<strong>整个赚钱机器，而不是商誉本身。</strong></p>
-<hr>
-<h2 id="九、以前为什么要摊销商誉？"><a href="#九、以前为什么要摊销商誉？" class="headerlink" title="九、以前为什么要摊销商誉？"></a>九、以前为什么要摊销商誉？</h2><p>历史上很多国家采用<strong>商誉每年摊销</strong>，例如 20 年平均摊销，每年减少 5 亿元。这种方式类似于固定资产折旧。</p>
-<p>但是很多人认为：优秀品牌并不会随着时间自动贬值。例如可口可乐品牌，20 年以后可能比今天更值钱。</p>
-<p>因此，现在国际主流会计准则：</p>
-<ul>
-<li>❌ 取消了商誉摊销</li>
-<li>✅ 改成<strong>每年做减值测试</strong></li>
-</ul>
-<p>只有价值真的下降，才一次性减值。</p>
-<hr>
-<h2 id="十、投资时怎么看商誉？"><a href="#十、投资时怎么看商誉？" class="headerlink" title="十、投资时怎么看商誉？"></a>十、投资时怎么看商誉？</h2><p>不能简单地认为”商誉高就是坏公司”，也不能认为”商誉低就是好公司”。</p>
-<p>真正应该关注的是：</p>
-<h3 id="第一：为什么会产生这么大的商誉？"><a href="#第一：为什么会产生这么大的商誉？" class="headerlink" title="第一：为什么会产生这么大的商誉？"></a>第一：为什么会产生这么大的商誉？</h3><p>是否买贵了？行业内卷？管理层激进扩张？</p>
-<h3 id="第二：收购以后有没有兑现预期？"><a href="#第二：收购以后有没有兑现预期？" class="headerlink" title="第二：收购以后有没有兑现预期？"></a>第二：收购以后有没有兑现预期？</h3><p>利润、现金流、ROE、ROIC 有没有持续改善？</p>
-<h3 id="第三：未来现金流有没有恶化？"><a href="#第三：未来现金流有没有恶化？" class="headerlink" title="第三：未来现金流有没有恶化？"></a>第三：未来现金流有没有恶化？</h3><p>如果未来赚钱能力下降，那么未来发生商誉减值的概率就会上升。</p>
-<h3 id="第四：连续大额商誉减值意味着什么？"><a href="#第四：连续大额商誉减值意味着什么？" class="headerlink" title="第四：连续大额商誉减值意味着什么？"></a>第四：连续大额商誉减值意味着什么？</h3><p>通常意味着当年的收购很可能买贵了，或者管理层高估了未来。连续发生大额商誉减值，通常是一个危险信号。</p>
-<hr>
-<h2 id="十一、巴菲特怎么看商誉？"><a href="#十一、巴菲特怎么看商誉？" class="headerlink" title="十一、巴菲特怎么看商誉？"></a>十一、巴菲特怎么看商誉？</h2><p>巴菲特其实并不太关注财务报表上的商誉数字。他真正关心的是：</p>
-<blockquote>
-<p>企业未来还能创造多少现金流？</p>
-</blockquote>
-<p>他的估值思想：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">企业价值 <span class="hljs-operator">=</span> 未来现金流折现<br></code></pre></td></tr></table></figure>
-
-<p>而商誉减值测试的本质也是：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">未来现金流折现<br></code></pre></td></tr></table></figure>
-
-<p>区别只是：</p>
-<ul>
-<li><strong>巴菲特</strong>：用于估值</li>
-<li><strong>会计</strong>：用于检查资产是否高估</li>
-</ul>
-<p>两者底层逻辑其实一致。</p>
-<hr>
-<h2 id="十二、关于商誉最重要的理解"><a href="#十二、关于商誉最重要的理解" class="headerlink" title="十二、关于商誉最重要的理解"></a>十二、关于商誉最重要的理解</h2><table>
-<thead>
-<tr>
-<th>概念</th>
-<th>核心含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>会计商誉</strong></td>
-<td>企业并购时，为未来超额盈利能力支付的溢价</td>
-</tr>
-<tr>
-<td><strong>经济商誉</strong></td>
-<td>企业长期形成、无法单独辨认的竞争优势</td>
-</tr>
-<tr>
-<td><strong>商誉减值</strong></td>
-<td>对未来现金流重新估值</td>
-</tr>
-</tbody></table>
-<p>巴菲特真正关注的，不是财务报表里的商誉，而是企业是否拥有：</p>
-<blockquote>
-<p><strong>持续创造超额现金流的经济商誉。</strong></p>
-</blockquote>
-<hr>
-<h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><blockquote>
-<p><strong>会计商誉，是并购交易中形成的资产；经济商誉，是企业竞争优势的体现；两者的共同本质，都是未来能够持续创造超额现金流的能力。巴菲特阅读财务报表时，并不执着于商誉这一会计科目，而是始终回到同一个问题：这家公司未来还能持续产生多少自由现金流？</strong></p>
-</blockquote>
+<p>投资的本质，归根到底就一件事：<strong>认识企业，认识自己，然后等待市场犯错。</strong></p>
 
                 
               </div>
@@ -678,17 +531,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%B4%A2%E5%8A%A1%E5%88%86%E6%9E%90/" class="print-no-link">#财务分析</a>
+        <a href="/tags/%E4%BC%B0%E5%80%BC/" class="print-no-link">#估值</a>
       
         <a href="/tags/%E4%BB%B7%E5%80%BC%E6%8A%95%E8%B5%84/" class="print-no-link">#价值投资</a>
       
-        <a href="/tags/%E5%95%86%E8%AA%89/" class="print-no-link">#商誉</a>
+        <a href="/tags/%E5%AE%89%E5%85%A8%E8%BE%B9%E9%99%85/" class="print-no-link">#安全边际</a>
       
-        <a href="/tags/%E5%B7%B4%E8%8F%B2%E7%89%B9/" class="print-no-link">#巴菲特</a>
+        <a href="/tags/DCF/" class="print-no-link">#DCF</a>
       
-        <a href="/tags/%E4%BC%9A%E8%AE%A1/" class="print-no-link">#会计</a>
-      
-        <a href="/tags/%E7%BB%8F%E6%B5%8E%E5%95%86%E8%AA%89/" class="print-no-link">#经济商誉</a>
+        <a href="/tags/%E6%8A%98%E7%8E%B0%E7%8E%87/" class="print-no-link">#折现率</a>
       
     </div>
   
@@ -700,8 +551,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>理解商誉（Goodwill）——从会计到投资</div>
-      <div>https://claudechan1228.github.io/投资/理念/understanding-goodwill/</div>
+      <div>价值投资决策框架：DCF的本质是主观估值</div>
+      <div>https://claudechan1228.github.io/投资/理念/value-investing-dcf-framework/</div>
     </div>
     <div class="license-meta">
       
@@ -713,7 +564,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年6月22日</div>
+          <div>2026年7月9日</div>
         </div>
       
       
@@ -745,18 +596,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-incominginvoice-park-guide/" title="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/roe-vs-roic/" title="ROE 与 ROIC 的区别——如何看穿高杠杆的伪装">
-                        <span class="hidden-mobile">ROE 与 ROIC 的区别——如何看穿高杠杆的伪装</span>
+                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/buffett-letters-review/" title="《巴菲特写给股东的信》全书回顾——价值投资的底层逻辑与实践框架">
+                        <span class="hidden-mobile">《巴菲特写给股东的信》全书回顾——价值投资的底层逻辑与实践框架</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
