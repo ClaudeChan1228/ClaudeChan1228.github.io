@@ -1,0 +1,999 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wuyuan">
+  <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
+  
+    <meta name="description" content="概述在 SAP 系统中，许多业务对象都包含长文本信息，如采购订单的备注、销售订单的条款、物料主数据的说明等。这些长文本存储在表 STXH（文本抬头）和 STXL（文本行）中，通过标准函数 READ_TEXT 进行读取。 本文梳理了常见业务场景下的长文本读取方法，提供可复用的代码模板。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAP ABAP 长文本读取完整指南">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/ABAP%E5%BC%80%E5%8F%91/abap-read-text-function/index.html">
+<meta property="og:site_name" content="ClaudeChan&#39;s Blog">
+<meta property="og:description" content="概述在 SAP 系统中，许多业务对象都包含长文本信息，如采购订单的备注、销售订单的条款、物料主数据的说明等。这些长文本存储在表 STXH（文本抬头）和 STXL（文本行）中，通过标准函数 READ_TEXT 进行读取。 本文梳理了常见业务场景下的长文本读取方法，提供可复用的代码模板。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-28T02:12:29.966Z">
+<meta property="article:author" content="Wuyuan">
+<meta property="article:tag" content="ABAP">
+<meta property="article:tag" content="READ_TEXT">
+<meta property="article:tag" content="长文本">
+<meta property="article:tag" content="采购订单">
+<meta property="article:tag" content="销售订单">
+<meta property="article:tag" content="物料主数据">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>SAP ABAP 长文本读取完整指南 - ClaudeChan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"claudechan1228.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ClaudeChan&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/kanban/" target="_self">
+                
+                <span>日程</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/reading/" target="_self">
+                
+                <span>阅读</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/kanban/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>日程</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/reading/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>阅读</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SAP ABAP 长文本读取完整指南"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-07-28 00:00" pubdate>
+          2026-07-28
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">SAP ABAP 长文本读取完整指南</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2026-07-28
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在 SAP 系统中，许多业务对象都包含长文本信息，如采购订单的备注、销售订单的条款、物料主数据的说明等。这些长文本存储在表 STXH（文本抬头）和 STXL（文本行）中，通过标准函数 <code>READ_TEXT</code> 进行读取。</p>
+<p>本文梳理了常见业务场景下的长文本读取方法，提供可复用的代码模板。</p>
+<span id="more"></span>
+
+<h2 id="核心函数：READ-TEXT"><a href="#核心函数：READ-TEXT" class="headerlink" title="核心函数：READ_TEXT"></a>核心函数：READ_TEXT</h2><p><code>READ_TEXT</code> 是读取长文本的标准函数模块，主要参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CLIENT</td>
+<td>客户端（通常为 sy-mandt）</td>
+<td>800</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>文本 ID（标识文本类型）</td>
+<td>‘F01’</td>
+</tr>
+<tr>
+<td>LANGUAGE</td>
+<td>语言</td>
+<td>sy-langu &#x2F; ‘ZH’</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>文本名称（通常是对象键）</td>
+<td>采购订单号</td>
+</tr>
+<tr>
+<td>OBJECT</td>
+<td>文本对象</td>
+<td>‘EKKO’ &#x2F; ‘VBBK’</td>
+</tr>
+<tr>
+<td>LINES</td>
+<td>返回的文本行表（TYPE TABLE OF TLINE）</td>
+<td>lt_lines</td>
+</tr>
+</tbody></table>
+<h2 id="常见业务场景代码"><a href="#常见业务场景代码" class="headerlink" title="常见业务场景代码"></a>常见业务场景代码</h2><h3 id="1-采购订单（PO）长文本"><a href="#1-采购订单（PO）长文本" class="headerlink" title="1. 采购订单（PO）长文本"></a>1. 采购订单（PO）长文本</h3><h4 id="1-1-采购订单抬头文本"><a href="#1-1-采购订单抬头文本" class="headerlink" title="1.1 采购订单抬头文本"></a>1.1 采购订单抬头文本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA: BEGIN OF ls_longtxt,<br>        id     TYPE thead-tdid,<br>        langu  TYPE thead-tdspras,<br>        name   TYPE thead-tdname,<br>        object TYPE thead-tdobject,<br>        text   TYPE string,<br>      END OF ls_longtxt.<br>DATA: lt_lines TYPE TABLE OF tline.<br><br>* 抬头文本（F01 = 抬头备注）<br>ls_longtxt = VALUE #( id     = &#x27;F01&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_ebeln    &quot;采购订单号<br>                      object = &#x27;EKKO&#x27; ).<br><br>CALL FUNCTION &#x27;READ_TEXT&#x27;<br>  EXPORTING<br>    client                  = sy-mandt<br>    id                      = ls_longtxt-id<br>    language                = ls_longtxt-langu<br>    name                    = ls_longtxt-name<br>    object                  = ls_longtxt-object<br>  TABLES<br>    lines                   = lt_lines<br>  EXCEPTIONS<br>    id                      = 1<br>    language                = 2<br>    name                    = 3<br>    not_found               = 4<br>    object                  = 5<br>    reference_check         = 6<br>    wrong_access_to_archive = 7<br>    OTHERS                  = 8.<br><br>IF sy-subrc = 0.<br>  LOOP AT lt_lines INTO DATA(ls_line).<br>    ls_longtxt-text = ls_longtxt-text &amp;&amp; ls_line-tdline.<br>  ENDLOOP.<br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-2-采购订单行项目文本"><a href="#1-2-采购订单行项目文本" class="headerlink" title="1.2 采购订单行项目文本"></a>1.2 采购订单行项目文本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 行项目文本（F05 = 采购订单文本）<br>ls_longtxt = VALUE #( id     = &#x27;F05&#x27;<br>                      langu  = sy-langu<br>                      name   = |&#123; lv_ebeln &#125;&#123; lv_ebelp &#125;|  &quot;订单号+行项目号<br>                      object = &#x27;EKPO&#x27; ).<br><br>CALL FUNCTION &#x27;READ_TEXT&#x27;<br>  EXPORTING<br>    client   = sy-mandt<br>    id       = ls_longtxt-id<br>    language = ls_longtxt-langu<br>    name     = ls_longtxt-name<br>    object   = ls_longtxt-object<br>  TABLES<br>    lines    = lt_lines<br>  EXCEPTIONS<br>    OTHERS   = 1.<br><br>IF sy-subrc = 0.<br>  CLEAR ls_longtxt-text.<br>  LOOP AT lt_lines INTO DATA(ls_line).<br>    ls_longtxt-text = ls_longtxt-text &amp;&amp; ls_line-tdline.<br>  ENDLOOP.<br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用采购订单文本 ID：</strong></p>
+<ul>
+<li><code>F01</code> - 采购订单抬头文本（Object: EKKO）</li>
+<li><code>F02</code> - 采购申请抬头文本（Object: EBAN）</li>
+<li><code>F03</code> - 报价单抬头文本（Object: EKKO）</li>
+<li><code>F05</code> - 采购订单行项目文本（Object: EKPO）</li>
+<li><code>F06</code> - 采购申请行项目文本（Object: EBAN）</li>
+</ul>
+<h3 id="2-销售订单（SO）长文本"><a href="#2-销售订单（SO）长文本" class="headerlink" title="2. 销售订单（SO）长文本"></a>2. 销售订单（SO）长文本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 销售订单抬头文本（0001 = 订单备注）<br>ls_longtxt = VALUE #( id     = &#x27;0001&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_vbeln    &quot;销售订单号<br>                      object = &#x27;VBBK&#x27; ).<br><br>CALL FUNCTION &#x27;READ_TEXT&#x27;<br>  EXPORTING<br>    client   = sy-mandt<br>    id       = ls_longtxt-id<br>    language = ls_longtxt-langu<br>    name     = ls_longtxt-name<br>    object   = ls_longtxt-object<br>  TABLES<br>    lines    = lt_lines<br>  EXCEPTIONS<br>    OTHERS   = 1.<br><br>* 销售订单行项目文本（0001 = 行项目文本）<br>ls_longtxt = VALUE #( id     = &#x27;0001&#x27;<br>                      langu  = sy-langu<br>                      name   = |&#123; lv_vbeln &#125;&#123; lv_posnr &#125;|  &quot;订单号+行项目号（6位）<br>                      object = &#x27;VBBP&#x27; ).<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用销售订单文本 ID：</strong></p>
+<ul>
+<li><code>0001</code> - 销售订单抬头&#x2F;行项目文本（Object: VBBK&#x2F;VBBP）</li>
+<li><code>0002</code> - 内部备注</li>
+<li><code>Z001</code> - 交货抬头文本（Object: VBBK，交货单号）</li>
+<li><code>Z002</code> - 发票抬头文本（Object: VBBK，发票号）</li>
+</ul>
+<h3 id="3-物料主数据长文本"><a href="#3-物料主数据长文本" class="headerlink" title="3. 物料主数据长文本"></a>3. 物料主数据长文本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 物料基本数据文本（GRUN = 基本数据文本）<br>ls_longtxt = VALUE #( id     = &#x27;GRUN&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_matnr    &quot;物料号（右对齐，前导零）<br>                      object = &#x27;MATERIAL&#x27; ).<br><br>CALL FUNCTION &#x27;READ_TEXT&#x27;<br>  EXPORTING<br>    client   = sy-mandt<br>    id       = ls_longtxt-id<br>    language = ls_longtxt-langu<br>    name     = ls_longtxt-name<br>    object   = ls_longtxt-object<br>  TABLES<br>    lines    = lt_lines<br>  EXCEPTIONS<br>    OTHERS   = 1.<br><br>* 采购文本（BEST = 采购订单文本）<br>ls_longtxt = VALUE #( id     = &#x27;BEST&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_matnr<br>                      object = &#x27;MATERIAL&#x27; ).<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用物料文本 ID：</strong></p>
+<ul>
+<li><code>GRUN</code> - 基本数据文本（Object: MATERIAL）</li>
+<li><code>BEST</code> - 采购订单文本（Object: MATERIAL）</li>
+<li><code>KAUF</code> - 内部备注（Object: MATERIAL）</li>
+<li><code>LAKT</code> - 销售文本（Object: MVKE，需指定销售组织+分销渠道）</li>
+</ul>
+<p>物料主数据文本的 NAME 需要特殊处理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 物料号需要转换为内部格式（右对齐，前导零）<br>CALL FUNCTION &#x27;CONVERSION_EXIT_MATN1_INPUT&#x27;<br>  EXPORTING<br>    input        = lv_matnr_external<br>  IMPORTING<br>    output       = lv_matnr_internal<br>  EXCEPTIONS<br>    OTHERS       = 1.<br><br>ls_longtxt-name = lv_matnr_internal.<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-客户主数据长文本"><a href="#4-客户主数据长文本" class="headerlink" title="4. 客户主数据长文本"></a>4. 客户主数据长文本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 客户一般数据文本（0001 = 备注）<br>ls_longtxt = VALUE #( id     = &#x27;0001&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_kunnr    &quot;客户编号（右对齐，前导零）<br>                      object = &#x27;KNA1&#x27; ).<br><br>CALL FUNCTION &#x27;READ_TEXT&#x27;<br>  EXPORTING<br>    client   = sy-mandt<br>    id       = ls_longtxt-id<br>    language = ls_longtxt-langu<br>    name     = ls_longtxt-name<br>    object   = ls_longtxt-object<br>  TABLES<br>    lines    = lt_lines<br>  EXCEPTIONS<br>    OTHERS   = 1.<br><br>* 客户编号也需要转换<br>CALL FUNCTION &#x27;CONVERSION_EXIT_ALPHA_INPUT&#x27;<br>  EXPORTING<br>    input  = lv_kunnr_external<br>  IMPORTING<br>    output = lv_kunnr_internal.<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-供应商主数据长文本"><a href="#5-供应商主数据长文本" class="headerlink" title="5. 供应商主数据长文本"></a>5. 供应商主数据长文本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 供应商一般数据文本（0001 = 备注）<br>ls_longtxt = VALUE #( id     = &#x27;0001&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_lifnr    &quot;供应商编号（右对齐，前导零）<br>                      object = &#x27;LFA1&#x27; ).<br><br>* 供应商编号转换<br>CALL FUNCTION &#x27;CONVERSION_EXIT_ALPHA_INPUT&#x27;<br>  EXPORTING<br>    input  = lv_lifnr_external<br>  IMPORTING<br>    output = lv_lifnr_internal.<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-生产订单长文本"><a href="#6-生产订单长文本" class="headerlink" title="6. 生产订单长文本"></a>6. 生产订单长文本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs abap">* 生产订单抬头文本（KOPF = 抬头文本）<br>ls_longtxt = VALUE #( id     = &#x27;KOPF&#x27;<br>                      langu  = sy-langu<br>                      name   = lv_aufnr    &quot;生产订单号（右对齐12位）<br>                      object = &#x27;AUFK&#x27; ).<br><br>CALL FUNCTION &#x27;READ_TEXT&#x27;<br>  EXPORTING<br>    client   = sy-mandt<br>    id       = ls_longtxt-id<br>    language = ls_longtxt-langu<br>    name     = ls_longtxt-name<br>    object   = ls_longtxt-object<br>  TABLES<br>    lines    = lt_lines<br>  EXCEPTIONS<br>    OTHERS   = 1.<br></code></pre></td></tr></table></figure>
+
+<h2 id="封装函数示例"><a href="#封装函数示例" class="headerlink" title="封装函数示例"></a>封装函数示例</h2><p>为了提高代码复用性，可以封装一个通用读取函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs abap">FORM read_long_text<br>  USING<br>    iv_object TYPE thead-tdobject<br>    iv_id     TYPE thead-tdid<br>    iv_name   TYPE thead-tdname<br>    iv_langu  TYPE thead-tdspras<br>  CHANGING<br>    cv_text   TYPE string.<br><br>  DATA: lt_lines TYPE TABLE OF tline.<br><br>  CLEAR cv_text.<br><br>  CALL FUNCTION &#x27;READ_TEXT&#x27;<br>    EXPORTING<br>      client   = sy-mandt<br>      id       = iv_id<br>      language = iv_langu<br>      name     = iv_name<br>      object   = iv_object<br>    TABLES<br>      lines    = lt_lines<br>    EXCEPTIONS<br>      OTHERS   = 1.<br><br>  IF sy-subrc = 0.<br>    LOOP AT lt_lines INTO DATA(ls_line).<br>      cv_text = cv_text &amp;&amp; ls_line-tdline.<br>    ENDLOOP.<br>  ENDIF.<br><br>ENDFORM.<br><br>* 调用示例<br>PERFORM read_long_text<br>  USING<br>    &#x27;EKKO&#x27;      &quot;Object<br>    &#x27;F01&#x27;       &quot;ID<br>    lv_ebeln    &quot;Name（采购订单号）<br>    sy-langu    &quot;Language<br>  CHANGING<br>    lv_text.    &quot;返回的文本<br></code></pre></td></tr></table></figure>
+
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><strong>异常处理</strong>：务必检查 <code>sy-subrc</code>，<code>not_found = 4</code> 表示文本不存在（正常情况）</li>
+<li><strong>语言处理</strong>：多语言环境下，显式指定 <code>sy-langu</code> 或目标语言代码</li>
+<li><strong>NAME 格式</strong>：注意不同对象的 NAME 格式要求（前导零、右对齐、组合键等）</li>
+<li><strong>性能优化</strong>：批量读取时，考虑使用 <code>READ_TEXT</code> 的批量版本或直接查询 STXH&#x2F;STXL 表</li>
+<li><strong>文本拼接</strong>：使用 <code>&amp;&amp;</code> 操作符或 <code>CONCATENATE</code>，注意 <code>tdline</code> 长度为 132 字符</li>
+<li><strong>换行处理</strong>：如需保留原始格式，使用 <code>cl_abap_char_utilities=&gt;newline</code> 拼接行</li>
+</ol>
+<h2 id="写入长文本"><a href="#写入长文本" class="headerlink" title="写入长文本"></a>写入长文本</h2><p>与读取对应的写入函数是 <code>SAVE_TEXT</code> 或 <code>CREATE_TEXT</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA: lt_lines TYPE TABLE OF tline.<br><br>* 将文本切分成多行（每行最多132字符）<br>DATA(lv_offset) = 0.<br>DATA(lv_length) = strlen( lv_text ).<br><br>WHILE lv_offset &lt; lv_length.<br>  DATA(lv_chunk_len) = nmin( val1 = 132 val2 = lv_length - lv_offset ).<br>  APPEND VALUE tline( tdformat = &#x27;*&#x27;<br>                      tdline   = lv_text+lv_offset(lv_chunk_len) )<br>         TO lt_lines.<br>  lv_offset = lv_offset + lv_chunk_len.<br>ENDWHILE.<br><br>* 保存文本<br>CALL FUNCTION &#x27;SAVE_TEXT&#x27;<br>  EXPORTING<br>    client   = sy-mandt<br>    header   = VALUE thead( tdobject = &#x27;EKKO&#x27;<br>                            tdname   = lv_ebeln<br>                            tdid     = &#x27;F01&#x27;<br>                            tdspras  = sy-langu )<br>    insert   = &#x27;X&#x27;    &quot;新建模式<br>  TABLES<br>    lines    = lt_lines<br>  EXCEPTIONS<br>    OTHERS   = 1.<br><br>IF sy-subrc = 0.<br>  COMMIT WORK.    &quot;必须提交才能生效<br>ENDIF.<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考表"><a href="#参考表" class="headerlink" title="参考表"></a>参考表</h2><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>STXH</td>
+<td>文本抬头（包含 OBJECT&#x2F;ID&#x2F;NAME&#x2F;LANGU 等索引字段）</td>
+</tr>
+<tr>
+<td>STXL</td>
+<td>文本行内容（CLOB 存储）</td>
+</tr>
+<tr>
+<td>THEAD</td>
+<td>文本抬头结构（用于函数参数）</td>
+</tr>
+<tr>
+<td>TLINE</td>
+<td>文本行结构（132 字符）</td>
+</tr>
+<tr>
+<td>TTXID</td>
+<td>文本 ID 配置表</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>READ_TEXT</code> 是 SAP 系统中读取长文本的标准方法，掌握不同业务对象的文本 ID 和 NAME 格式是关键。建议在项目中维护一个文本 ID 配置文档，方便快速查阅和复用代码。</p>
+<hr>
+<p><strong>相关事务码：</strong></p>
+<ul>
+<li>SE75 - SAPscript 文本管理</li>
+<li>SO10 - 标准文本维护</li>
+<li>SMARTFORMS - 智能表单（支持文本模块）</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SAP/" class="category-chain-item">SAP</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/SAP/ABAP%E5%BC%80%E5%8F%91/" class="category-chain-item">ABAP开发</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ABAP/" class="print-no-link">#ABAP</a>
+      
+        <a href="/tags/READ-TEXT/" class="print-no-link">#READ_TEXT</a>
+      
+        <a href="/tags/%E9%95%BF%E6%96%87%E6%9C%AC/" class="print-no-link">#长文本</a>
+      
+        <a href="/tags/%E9%87%87%E8%B4%AD%E8%AE%A2%E5%8D%95/" class="print-no-link">#采购订单</a>
+      
+        <a href="/tags/%E9%94%80%E5%94%AE%E8%AE%A2%E5%8D%95/" class="print-no-link">#销售订单</a>
+      
+        <a href="/tags/%E7%89%A9%E6%96%99%E4%B8%BB%E6%95%B0%E6%8D%AE/" class="print-no-link">#物料主数据</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SAP ABAP 长文本读取完整指南</div>
+      <div>https://claudechan1228.github.io/SAP/ABAP开发/abap-read-text-function/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wuyuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年7月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/value-investing-dcf-framework/" title="价值投资决策框架：DCF的本质是主观估值">
+                        <span class="hidden-mobile">价值投资决策框架：DCF的本质是主观估值</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
