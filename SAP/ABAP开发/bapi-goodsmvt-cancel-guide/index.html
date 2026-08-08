@@ -16,30 +16,30 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Wuyuan">
+  <meta name="author" content="彼得陈奇">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
   
     <meta name="description" content="引言BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancellat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证">
 <meta property="og:url" content="https://claudechan1228.github.io/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/index.html">
-<meta property="og:site_name" content="ClaudeChan&#39;s Blog">
+<meta property="og:site_name" content="彼得陈奇的个人博客">
 <meta property="og:description" content="引言BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancellat">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-06-26T08:56:46.660Z">
-<meta property="article:author" content="Wuyuan">
+<meta property="article:author" content="彼得陈奇">
 <meta property="article:tag" content="ABAP">
 <meta property="article:tag" content="BAPI">
 <meta property="article:tag" content="物料凭证">
+<meta property="article:tag" content="冲销">
 <meta property="article:tag" content="MM">
 <meta property="article:tag" content="接口开发">
-<meta property="article:tag" content="冲销">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证 - ClaudeChan&#39;s Blog</title>
+  <title>使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证 - 彼得陈奇的个人博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -756,11 +756,11 @@
       
         <a href="/tags/%E7%89%A9%E6%96%99%E5%87%AD%E8%AF%81/" class="print-no-link">#物料凭证</a>
       
+        <a href="/tags/%E5%86%B2%E9%94%80/" class="print-no-link">#冲销</a>
+      
         <a href="/tags/MM/" class="print-no-link">#MM</a>
       
         <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
-      
-        <a href="/tags/%E5%86%B2%E9%94%80/" class="print-no-link">#冲销</a>
       
     </div>
   
@@ -779,7 +779,7 @@
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>Wuyuan</div>
+          <div>彼得陈奇</div>
         </div>
       
       
@@ -817,9 +817,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
+                      <a href="/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-adapter-module-config/" title="SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
+                        <span class="hidden-mobile">SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -827,8 +827,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/" title="理解商誉（Goodwill）——从会计到投资">
-                        <span class="hidden-mobile">理解商誉（Goodwill）——从会计到投资</span>
+                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
+                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
