@@ -19,26 +19,26 @@
   <meta name="author" content="Wuyuan">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
   
-    <meta name="description" content="问题背景在 SAP PO 中配置 SOAP to REST 接口时，接口测试调用失败，需要排查并解决映射相关问题。">
+    <meta name="description" content="背景在SAP PO（Process Orchestration）中配置OAuth认证时，有时会遇到标准OAuth配置不成功的情况。本文介绍一种通过Query Parameter传递access_token的替代方案。 前提条件：目标接口必须支持通过Query Parameter进行认证。 解决方案概述整体思路是将OAuth认证过程分为两步：  先调用OAuth接口获取access_token 通过">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案">
-<meta property="og:url" content="https://claudechan1228.github.io/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-response-mapping-error-solution/index.html">
+<meta property="og:title" content="SAP PO OAuth认证失败的Query Parameter替代方案">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/sap-po-oauth-query-param-workaround/index.html">
 <meta property="og:site_name" content="ClaudeChan&#39;s Blog">
-<meta property="og:description" content="问题背景在 SAP PO 中配置 SOAP to REST 接口时，接口测试调用失败，需要排查并解决映射相关问题。">
+<meta property="og:description" content="背景在SAP PO（Process Orchestration）中配置OAuth认证时，有时会遇到标准OAuth配置不成功的情况。本文介绍一种通过Query Parameter传递access_token的替代方案。 前提条件：目标接口必须支持通过Query Parameter进行认证。 解决方案概述整体思路是将OAuth认证过程分为两步：  先调用OAuth接口获取access_token 通过">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-07-29T12:32:52.000Z">
-<meta property="article:modified_time" content="2026-07-29T12:34:29.287Z">
+<meta property="article:published_time" content="2026-08-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-06T08:11:25.385Z">
 <meta property="article:author" content="Wuyuan">
+<meta property="article:tag" content="OAuth">
 <meta property="article:tag" content="SAP PO">
-<meta property="article:tag" content="REST Adapter">
-<meta property="article:tag" content="SOAP to REST">
-<meta property="article:tag" content="接口映射">
-<meta property="article:tag" content="报错排查">
+<meta property="article:tag" content="REST API">
+<meta property="article:tag" content="UDF">
+<meta property="article:tag" content="Integration">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案 - ClaudeChan&#39;s Blog</title>
+  <title>SAP PO OAuth认证失败的Query Parameter替代方案 - ClaudeChan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -333,7 +333,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案"></span>
+            <span id="subtitle" data-typed-text="SAP PO OAuth认证失败的Query Parameter替代方案"></span>
           
         </div>
 
@@ -344,8 +344,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-07-29 20:32" pubdate>
-          2026-07-29
+        <time datetime="2026-08-06 00:00" pubdate>
+          2026-08-06
         </time>
       </span>
     
@@ -356,7 +356,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          2.5k 字
         
       </span>
     
@@ -367,7 +367,7 @@
         
         
         
-          26 分钟
+          21 分钟
         
       </span>
     
@@ -406,12 +406,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案</h1>
+            <h1 id="seo-header">SAP PO OAuth认证失败的Query Parameter替代方案</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2026-07-29
+                    本文最后更新于 2026-08-06
                   
                 
               </p>
@@ -419,94 +419,76 @@
             
               <div class="markdown-body">
                 
-                <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>在 SAP PO 中配置 SOAP to REST 接口时，接口测试调用失败，需要排查并解决映射相关问题。</p>
-<span id="more"></span>
-
-<h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><h3 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h3><p>在 SAP PO Monitor 中查看消息监控日志，发现以下错误信息：</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs subunit">Transmitting the message using connection AFW failed, due to: com.sap.engine.interfaces.messaging.api.exception.MessagingException: <br><span class="hljs-keyword">Error </span>encountered while executing mapping: com.sap.aii.af.service.mapping.MappingException: <br>Mapping failed in runtimeRuntime Exception when executing application mapping program com/sap/xi/tf___ES__. <br>Details: com.sap.aii.utilxi.misc.api.BaseRuntimeException; Content is not allowed in prolog.<br></code></pre></td></tr></table></figure>
-
-<p>关键错误提示：<strong>Content is not allowed in prolog.</strong></p>
-<h3 id="初步观察"><a href="#初步观察" class="headerlink" title="初步观察"></a>初步观察</h3><p>通过 Monitor 查看消息流，发现一个重要线索：</p>
-<ul>
-<li>REST Receiver Communication Channel (CC) <strong>正常返回了 JSON 格式的响应数据</strong></li>
-<li>错误发生在<strong>映射处理阶段</strong>，而非 REST 调用本身</li>
-</ul>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><h3 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h3><p>“Content is not allowed in prolog” 是 XML 解析时的典型报错，通常表示：</p>
-<ul>
-<li>XML 解析器在文档序言（prolog）之前遇到了非法内容</li>
-<li>或者试图将非 XML 格式的数据按 XML 格式解析</li>
-</ul>
-<h3 id="根本原因定位"><a href="#根本原因定位" class="headerlink" title="根本原因定位"></a>根本原因定位</h3><p>结合错误现象，问题根源在于：</p>
+                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在SAP PO（Process Orchestration）中配置OAuth认证时，有时会遇到标准OAuth配置不成功的情况。本文介绍一种通过Query Parameter传递access_token的替代方案。</p>
+<p><strong>前提条件</strong>：目标接口必须支持通过Query Parameter进行认证。</p>
+<h2 id="解决方案概述"><a href="#解决方案概述" class="headerlink" title="解决方案概述"></a>解决方案概述</h2><p>整体思路是将OAuth认证过程分为两步：</p>
 <ol>
-<li>REST 接口返回的是 <strong>JSON 格式</strong>数据</li>
-<li>SAP PO 的映射程序（Message Mapping &#x2F; Operation Mapping）处理的是 <strong>XML 格式</strong>数据</li>
-<li>REST Receiver CC 在接收到 JSON 响应后，<strong>没有将其转换为 XML</strong>，直接传递给映射程序</li>
-<li>映射程序尝试解析 JSON 字符串作为 XML，触发 “Content is not allowed in prolog” 错误</li>
+<li>先调用OAuth接口获取access_token</li>
+<li>通过UDF将access_token注入到REST调用的URL中作为Query Parameter</li>
 </ol>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><p>需要在 REST Receiver Communication Channel 的 <strong>Response Format</strong> 配置区域进行以下设置：</p>
-<h4 id="1-设置响应数据格式"><a href="#1-设置响应数据格式" class="headerlink" title="1. 设置响应数据格式"></a>1. 设置响应数据格式</h4><ul>
-<li><strong>Data Format</strong>: 选择 <code>JSON</code></li>
-</ul>
-<h4 id="2-启用-JSON-到-XML-转换"><a href="#2-启用-JSON-到-XML-转换" class="headerlink" title="2. 启用 JSON 到 XML 转换"></a>2. 启用 JSON 到 XML 转换</h4><ul>
-<li><strong>勾选 “Convert to XML”</strong> 选项</li>
-</ul>
-<p>这是解决问题的<strong>关键配置</strong>：启用此选项后，REST Adapter 会自动将 JSON 响应转换为 XML 格式，然后再传递给后续的映射程序。</p>
-<h4 id="3-配置-Wrapper-Element（可选但推荐）"><a href="#3-配置-Wrapper-Element（可选但推荐）" class="headerlink" title="3. 配置 Wrapper Element（可选但推荐）"></a>3. 配置 Wrapper Element（可选但推荐）</h4><p>为了让转换后的 XML 结构更规范，建议配置包装元素：</p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><h3 id="1-在ESR中增加access-token元素"><a href="#1-在ESR中增加access-token元素" class="headerlink" title="1. 在ESR中增加access_token元素"></a>1. 在ESR中增加access_token元素</h3><p>在业务接口的SAP PO ESR（Enterprise Services Repository）中，增加一个<code>access_token</code>元素用于接收OAuth接口获取的access_token。</p>
+<p><strong>说明</strong>：</p>
 <ul>
-<li><strong>勾选 “Add Wrapper Element”</strong></li>
-<li><strong>Element Name</strong>: 设置根元素名称（例如：<code>MT_***_RESPONSE_ES</code>）</li>
-<li><strong>Element Namespace</strong>: 设置命名空间 URL（与 ESR 中定义的消息类型命名空间一致）</li>
+<li>这个节点用于从SAP ABAP系统传入access_token</li>
+<li>建议在消息映射后创建一个临时接收节点，因为UDF出参为空，实际映射后该节点不会显示在最终XML中</li>
 </ul>
-<h4 id="4-指定-ESR-映射对象"><a href="#4-指定-ESR-映射对象" class="headerlink" title="4. 指定 ESR 映射对象"></a>4. 指定 ESR 映射对象</h4><p>在 Message Mapping 或 Operation Mapping 中：</p>
-<ul>
-<li>确保<strong>响应消息类型</strong>定义的 XSD 结构与 JSON 转换后的 XML 结构匹配</li>
-<li>如果使用了 Wrapper Element，XSD 根节点需要与配置的 Element Name&#x2F;Namespace 一致</li>
-</ul>
-<h3 id="配置示例"><a href="#配置示例" class="headerlink" title="配置示例"></a>配置示例</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Response Format (<span class="hljs-keyword">for</span> Synchronous Messages)<br>├─ Data <span class="hljs-keyword">Format</span>: <span class="hljs-type">JSON</span><br>├─ <span class="hljs-type">Character</span> <span class="hljs-keyword">Set</span>: HTTP <span class="hljs-keyword">Header</span><br>├─ ☑ Convert <span class="hljs-keyword">to</span> <span class="hljs-type">XML</span><br>├─ ☑ <span class="hljs-keyword">Log</span> <span class="hljs-type">JSON</span> message<br>├─ ☑ <span class="hljs-keyword">Add</span> <span class="hljs-keyword">Wrapper</span> Element<br>│   ├─ Element <span class="hljs-type">Name</span>: MT_EXTERNAL_RESPONSE_ES<br>│   └─ Element Namespace: urn:example:namespace:token<br>├─ ☑ Treat <span class="hljs-keyword">null</span> <span class="hljs-keyword">As</span> String<br>└─ Message Protocol: <span class="hljs-keyword">Default</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-在Message-Mapping中编写UDF代码"><a href="#2-在Message-Mapping中编写UDF代码" class="headerlink" title="2. 在Message Mapping中编写UDF代码"></a>2. 在Message Mapping中编写UDF代码</h3><p>在MM（Message Mapping）中编写UDF（User-Defined Function）代码，将access_token传入PO的XML MESSAGE的DynamicConfiguration中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">// Get transformation parameter</span><br>    Map&lt;String, Object&gt; all = container.getInputHeader().getAll();<br>    <span class="hljs-type">DynamicConfiguration</span> <span class="hljs-variable">conf</span> <span class="hljs-operator">=</span> (DynamicConfiguration)all.get(StreamTransformationConstants.DYNAMIC_CONFIGURATION);<br>    <br>    <span class="hljs-comment">// Define key for access_token</span><br>    <span class="hljs-type">DynamicConfigurationKey</span> <span class="hljs-variable">key1</span> <span class="hljs-operator">=</span> DynamicConfigurationKey.create(<br>        <span class="hljs-string">&quot;http://sap.com/xi/XI/System/REST&quot;</span>, <br>        <span class="hljs-string">&quot;access_token&quot;</span><br>    );<br>    <br>    <span class="hljs-comment">// Set access_token value from input parameter</span><br>    conf.put(key1, var1);<br>    <br>&#125; <span class="hljs-keyword">catch</span>(Exception e) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br><br><span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br></code></pre></td></tr></table></figure>
 
-<h2 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h2><p>配置完成后：</p>
-<ol>
-<li>重新测试接口调用</li>
-<li>在 Monitor 中观察消息流：<ul>
-<li>REST Receiver CC 接收 JSON 响应</li>
-<li>自动转换为 XML 格式</li>
-<li>映射程序正常处理 XML 数据</li>
-</ul>
-</li>
-<li>消息处理成功，不再出现 “Content is not allowed in prolog” 错误</li>
-</ol>
-<h2 id="经验总结"><a href="#经验总结" class="headerlink" title="经验总结"></a>经验总结</h2><h3 id="关键要点"><a href="#关键要点" class="headerlink" title="关键要点"></a>关键要点</h3><ol>
-<li><strong>数据格式转换必须在 CC 层完成</strong>：不要试图在映射程序中处理 JSON 字符串</li>
-<li><strong>“Convert to XML” 是核心开关</strong>：REST Adapter 的 JSON&#x2F;XML 转换依赖此配置</li>
-<li><strong>响应消息与 ESR 结构一致</strong>：转换后的 XML 结构必须与 ESR 中定义的响应消息类型匹配</li>
-</ol>
-<h3 id="排查思路"><a href="#排查思路" class="headerlink" title="排查思路"></a>排查思路</h3><p>遇到类似 “Content is not allowed in prolog” 错误时：</p>
-<ol>
-<li>先确认<strong>数据格式</strong>：源端返回的是 JSON 还是 XML？</li>
-<li>检查 <strong>CC 配置</strong>：是否启用了必要的格式转换？</li>
-<li>查看 <strong>Monitor 日志</strong>：在哪个阶段失败？数据流转到哪一步？</li>
-<li>验证 <strong>ESR 定义</strong>：消息类型结构是否与实际数据匹配？</li>
-</ol>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>此解决方案适用于以下场景：</p>
+<p><strong>代码说明</strong>：</p>
 <ul>
-<li>SOAP to REST 接口（同步调用）</li>
-<li>REST 接口返回 JSON 格式数据</li>
-<li>需要在 SAP PO 中对响应数据进行 Message Mapping</li>
-<li>使用 REST Receiver Communication Channel</li>
+<li><code>var1</code>：UDF的入参，接收从映射传入的access_token值</li>
+<li><code>return null</code>：UDF的出参为空，因此返回null</li>
+<li>DynamicConfiguration：动态配置容器，用于在运行时传递额外参数</li>
+<li>DynamicConfigurationKey：定义命名空间和属性名，此处为REST适配器的access_token</li>
 </ul>
-<h2 id="相关配置说明"><a href="#相关配置说明" class="headerlink" title="相关配置说明"></a>相关配置说明</h2><h3 id="Convert-to-XML-的作用"><a href="#Convert-to-XML-的作用" class="headerlink" title="Convert to XML 的作用"></a>Convert to XML 的作用</h3><p>启用 “Convert to XML” 后，REST Adapter 会执行以下转换逻辑：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-type">JSON</span> 响应示例:<br>&#123;<br>  &quot;status&quot;: &quot;success&quot;,<br>  &quot;data&quot;: &#123;<br>    &quot;id&quot;: &quot;12345&quot;,<br>    &quot;name&quot;: &quot;Test&quot;<br>  &#125;<br>&#125;<br><br>转换为 <span class="hljs-type">XML</span>（无 <span class="hljs-keyword">Wrapper</span>）:<br>&lt;root&gt;<br>  &lt;status&gt;success&lt;/status&gt;<br>  &lt;data&gt;<br>    &lt;id&gt;<span class="hljs-number">12345</span>&lt;/id&gt;<br>    &lt;<span class="hljs-type">name</span>&gt;Test&lt;/<span class="hljs-type">name</span>&gt;<br>  &lt;/data&gt;<br>&lt;/root&gt;<br><br>转换为 <span class="hljs-type">XML</span>（有 <span class="hljs-keyword">Wrapper</span>，Element <span class="hljs-type">Name</span> = Response）:<br>&lt;Response xmlns=&quot;urn:example:namespace&quot;&gt;<br>  &lt;status&gt;success&lt;/status&gt;<br>  &lt;data&gt;<br>    &lt;id&gt;<span class="hljs-number">12345</span>&lt;/id&gt;<br>    &lt;<span class="hljs-type">name</span>&gt;Test&lt;/<span class="hljs-type">name</span>&gt;<br>  &lt;/data&gt;<br>&lt;/Response&gt;<br></code></pre></td></tr></table></figure>
+<h3 id="3-配置Integration-Directory的Receiver-Channel"><a href="#3-配置Integration-Directory的Receiver-Channel" class="headerlink" title="3. 配置Integration Directory的Receiver Channel"></a>3. 配置Integration Directory的Receiver Channel</h3><p>在PO ID（Integration Directory）的Receiver Communication Channel中配置REST URL。</p>
+<p><strong>REST URL配置</strong>：</p>
+<p>在URL Pattern中添加Query Parameter：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml">?access_token=</span><span class="hljs-template-variable">&#123;access_token&#125;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="其他相关选项"><a href="#其他相关选项" class="headerlink" title="其他相关选项"></a>其他相关选项</h3><ul>
-<li><strong>Log JSON message</strong>: 勾选后会在 Monitor 中记录原始 JSON 内容，便于排查</li>
-<li><strong>Treat null As String</strong>: 将 JSON 中的 null 值转换为字符串 “null” 而非空元素</li>
-<li><strong>Convert JSON Name To XML Name</strong>: 处理 JSON 键名中不符合 XML 命名规范的字符</li>
+<p><strong>Pattern Variable Replacement配置</strong>：</p>
+<ul>
+<li><strong>Value Source</strong>: Adapter-Specific Attribute</li>
+<li><strong>Pattern Element Name</strong>: <code>access_token</code></li>
+<li><strong>Adapter-Specific Attribute</strong>: Custom Attribute</li>
+<li><strong>Attribute Name</strong>: <code>access_token</code></li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li>SAP Help Portal: REST Adapter Configuration</li>
-<li>SAP Note: JSON to XML Conversion in PI&#x2F;PO</li>
-<li>SAP Community: Common REST Adapter Issues</li>
+<p>这样配置后，REST适配器会从DynamicConfiguration中读取<code>access_token</code>的值，并替换URL中的占位符。</p>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-number">1.</span> <span class="hljs-variable">ABAP</span>系统调用<span class="hljs-variable">OAuth</span>接口获取<span class="hljs-type">access_token</span><br>   ↓<br><span class="hljs-number">2.</span> 将<span class="hljs-type">access_token</span>作为输入参数传递给<span class="hljs-variable">PO</span>接口<br>   ↓<br><span class="hljs-number">3.</span> <span class="hljs-built_in">Message</span> <span class="hljs-variable">Mapping</span>中的<span class="hljs-variable">UDF</span>将<span class="hljs-type">access_token</span>写入<span class="hljs-variable">DynamicConfiguration</span><br>   ↓<br><span class="hljs-number">4.</span> <span class="hljs-variable">REST</span> <span class="hljs-variable">Receiver</span> <span class="hljs-variable">Adapter</span>从<span class="hljs-variable">DynamicConfiguration</span>读取<span class="hljs-type">access_token</span><br>   ↓<br><span class="hljs-number">5.</span> 将<span class="hljs-type">access_token</span>作为<span class="hljs-built_in">Query</span> <span class="hljs-built_in">Parameter</span>附加到<span class="hljs-variable">REST</span> <span class="hljs-built_in">URL</span>中<br>   ↓<br><span class="hljs-number">6.</span> 调用目标<span class="hljs-variable">REST</span> <span class="hljs-variable">API</span>完成认证<br></code></pre></td></tr></table></figure>
+
+<h2 id="技术要点"><a href="#技术要点" class="headerlink" title="技术要点"></a>技术要点</h2><h3 id="DynamicConfiguration机制"><a href="#DynamicConfiguration机制" class="headerlink" title="DynamicConfiguration机制"></a>DynamicConfiguration机制</h3><p>DynamicConfiguration是SAP PI&#x2F;PO中的一个强大特性，允许在运行时动态修改消息属性：</p>
+<ul>
+<li>可在Message Mapping阶段写入自定义属性</li>
+<li>可在Adapter阶段读取这些属性用于配置</li>
+<li>常用于动态文件名、动态URL、动态HTTP头等场景</li>
 </ul>
+<h3 id="UDF设计原则"><a href="#UDF设计原则" class="headerlink" title="UDF设计原则"></a>UDF设计原则</h3><p>在本场景中：</p>
+<ul>
+<li><strong>入参</strong>（var1）：接收映射传入的access_token</li>
+<li><strong>出参</strong>：返回null，因为不需要将此值映射到目标结构</li>
+<li><strong>副作用</strong>：通过DynamicConfiguration传递数据</li>
+</ul>
+<p>虽然UDF返回null，但可以创建一个临时目标节点来接收，该节点在实际XML中不会显示。</p>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>此方案适用于以下情况：</p>
+<ul>
+<li>SAP PO标准OAuth配置不工作或不支持</li>
+<li>目标API支持通过Query Parameter传递token</li>
+<li>需要灵活控制token的获取和传递过程</li>
+<li>无法使用HTTP Header传递认证信息</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><strong>安全性</strong>：Query Parameter会在URL中明文传输，确保使用HTTPS协议</li>
+<li><strong>日志记录</strong>：注意Query Parameter可能会被记录在日志中，避免敏感信息泄露</li>
+<li><strong>Token有效期</strong>：需要在ABAP端处理token刷新逻辑</li>
+<li><strong>目标系统支持</strong>：确认目标API确实支持Query Parameter认证方式</li>
+</ol>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ul>
+<li><a href="2026-06-26-sap-po-rest-adapter-module-config.md">SAP PO REST适配器配置</a></li>
+<li><a href="2026-07-29-api-authentication-methods.md">API认证方法概述</a></li>
+</ul>
+<hr>
+<p><em>本方案为OAuth标准配置失败时的变通方法，建议优先尝试标准OAuth配置。</em></p>
 
                 
               </div>
@@ -528,13 +510,6 @@
   <a href="/categories/SAP/" class="category-chain-item">SAP</a>
   
   
-    <span>></span>
-    
-  <a href="/categories/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="category-chain-item">PO接口开发</a>
-  
-  
-
-  
 
       </span>
     
@@ -547,15 +522,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/OAuth/" class="print-no-link">#OAuth</a>
+      
         <a href="/tags/SAP-PO/" class="print-no-link">#SAP PO</a>
       
-        <a href="/tags/REST-Adapter/" class="print-no-link">#REST Adapter</a>
+        <a href="/tags/REST-API/" class="print-no-link">#REST API</a>
       
-        <a href="/tags/SOAP-to-REST/" class="print-no-link">#SOAP to REST</a>
+        <a href="/tags/UDF/" class="print-no-link">#UDF</a>
       
-        <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%98%A0%E5%B0%84/" class="print-no-link">#接口映射</a>
-      
-        <a href="/tags/%E6%8A%A5%E9%94%99%E6%8E%92%E6%9F%A5/" class="print-no-link">#报错排查</a>
+        <a href="/tags/Integration/" class="print-no-link">#Integration</a>
       
     </div>
   
@@ -567,8 +542,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案</div>
-      <div>https://claudechan1228.github.io/SAP/PO接口开发/sap-po-rest-response-mapping-error-solution/</div>
+      <div>SAP PO OAuth认证失败的Query Parameter替代方案</div>
+      <div>https://claudechan1228.github.io/SAP/sap-po-oauth-query-param-workaround/</div>
     </div>
     <div class="license-meta">
       
@@ -580,7 +555,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年7月29日</div>
+          <div>2026年8月6日</div>
         </div>
       
       
@@ -612,18 +587,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/SAP/sap-po-oauth-query-param-workaround/" title="SAP PO OAuth认证失败的Query Parameter替代方案">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">SAP PO OAuth认证失败的Query Parameter替代方案</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/api-authentication-methods/" title="API认证方式详解：从Basic Auth到OAuth 2.0">
-                        <span class="hidden-mobile">API认证方式详解：从Basic Auth到OAuth 2.0</span>
+                      <a href="/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-response-mapping-error-solution/" title="SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案">
+                        <span class="hidden-mobile">SAP PO REST接口返回映射报错：Content is not allowed in prolog 解决方案</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
