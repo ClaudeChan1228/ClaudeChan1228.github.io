@@ -19,28 +19,27 @@
   <meta name="author" content="彼得陈奇">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球">
   
-    <meta name="description" content="引言BAPI_INCOMINGINVOICE_PARK 是 SAP MM 模块中用于创建预制采购发票（Park Invoice） 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 采购订单 → 入库 → 发票 的完整 MM 业务闭环。 本文基于实际接口开发经验，梳理了从组装发票行项目">
+    <meta name="description" content="记录 SAP PO 在调用 REST 接口时，对方系统返回 HTTP 400 但同时包含业务错误信息的场景下，如何配置 Error Handling 以正常接收返回报文。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票">
-<meta property="og:url" content="https://claudechan1228.github.io/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-incominginvoice-park-guide/index.html">
+<meta property="og:title" content="SAP PO REST Receiver Adapter 处理 HTTP 400 错误返回报文">
+<meta property="og:url" content="https://claudechan1228.github.io/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-receiver-http-400-error-handling/index.html">
 <meta property="og:site_name" content="彼得陈奇的个人博客">
-<meta property="og:description" content="引言BAPI_INCOMINGINVOICE_PARK 是 SAP MM 模块中用于创建预制采购发票（Park Invoice） 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 采购订单 → 入库 → 发票 的完整 MM 业务闭环。 本文基于实际接口开发经验，梳理了从组装发票行项目">
+<meta property="og:description" content="记录 SAP PO 在调用 REST 接口时，对方系统返回 HTTP 400 但同时包含业务错误信息的场景下，如何配置 Error Handling 以正常接收返回报文。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-26T08:56:49.566Z">
+<meta property="og:image" content="https://claudechan1228.github.io/img/sap-po-error-handling.png">
+<meta property="article:published_time" content="2026-08-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-17T07:35:34.216Z">
 <meta property="article:author" content="彼得陈奇">
-<meta property="article:tag" content="ABAP">
-<meta property="article:tag" content="BAPI">
-<meta property="article:tag" content="MM">
-<meta property="article:tag" content="接口开发">
-<meta property="article:tag" content="采购发票">
-<meta property="article:tag" content="发票预制">
-<meta property="article:tag" content="BAPI_INCOMINGINVOICE_PARK">
+<meta property="article:tag" content="SAP PO">
+<meta property="article:tag" content="REST Adapter">
+<meta property="article:tag" content="Error Handling">
+<meta property="article:tag" content="HTTP 400">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://claudechan1228.github.io/img/sap-po-error-handling.png">
   
   
   
-  <title>使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票 - 彼得陈奇的个人博客</title>
+  <title>SAP PO REST Receiver Adapter 处理 HTTP 400 错误返回报文 - 彼得陈奇的个人博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -335,7 +334,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票"></span>
+            <span id="subtitle" data-typed-text="SAP PO REST Receiver Adapter 处理 HTTP 400 错误返回报文"></span>
           
         </div>
 
@@ -346,8 +345,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-06-22 00:00" pubdate>
-          2026-06-22
+        <time datetime="2026-08-17 00:00" pubdate>
+          2026-08-17
         </time>
       </span>
     
@@ -358,7 +357,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          1.6k 字
         
       </span>
     
@@ -369,7 +368,7 @@
         
         
         
-          30 分钟
+          14 分钟
         
       </span>
     
@@ -408,12 +407,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</h1>
+            <h1 id="seo-header">SAP PO REST Receiver Adapter 处理 HTTP 400 错误返回报文</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2026-06-26
+                    本文最后更新于 2026-08-17
                   
                 
               </p>
@@ -421,188 +420,84 @@
             
               <div class="markdown-body">
                 
-                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>BAPI_INCOMINGINVOICE_PARK</code> 是 SAP MM 模块中用于<strong>创建预制采购发票（Park Invoice）</strong> 的标准 BAPI。在采购入库（MIGO &#x2F; BAPI_GOODSMVT_CREATE）完成后，程序调用该 BAPI 将采购发票预制到 SAP 中，从而形成 <strong>采购订单 → 入库 → 发票</strong> 的完整 MM 业务闭环。</p>
-<p>本文基于实际接口开发经验，梳理了从组装发票行项目到调用 BAPI、事务提交流程的完整实现。</p>
-<hr>
-<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">采购入库成功<br>      │<br>      ▼<br>组装发票行项目 (ItemData)<br>      │<br>      ▼<br>组装发票抬头 (HeaderData)<br>      │<br>      ▼<br>调用 BAPI_INCOMINGINVOICE_PARK<br>      │<br>      ├──── 成功<br>      │       │<br>      │       ▼<br>      │   COMMIT 事务<br>      │       │<br>      │       ▼<br>      │   更新接口日志及返回发票号<br>      │<br>      └──── 失败<br>              │<br>              ▼<br>        ROLLBACK 事务<br>              │<br>              ▼<br>        返回错误信息<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="1-构造发票行项目-ItemData"><a href="#1-构造发票行项目-ItemData" class="headerlink" title="1. 构造发票行项目 (ItemData)"></a>1. 构造发票行项目 (ItemData)</h2><p>入库成功后，程序循环采购订单明细，为 BAPI 组装发票行项目。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">&lt;fs_incm_ivc_crt_item&gt;-ref_doc       = lv_matdoc.<br>&lt;fs_incm_ivc_crt_item&gt;-ref_doc_year  = lv_matdoc_year.<br>&lt;fs_incm_ivc_crt_item&gt;-ref_doc_it    = ls_mseg-zeile.<br><br>&lt;fs_incm_ivc_crt_item&gt;-po_unit       = &lt;lfs_item&gt;-meins.<br>&lt;fs_incm_ivc_crt_item&gt;-quantity      = &lt;lfs_item&gt;-menge.<br>&lt;fs_incm_ivc_crt_item&gt;-item_amount   = &lt;lfs_item&gt;-netwr.<br>&lt;fs_incm_ivc_crt_item&gt;-tax_code      = &lt;lfs_item&gt;-mwskz.<br></code></pre></td></tr></table></figure>
-
-<h3 id="字段说明"><a href="#字段说明" class="headerlink" title="字段说明"></a>字段说明</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>REF_DOC</code></td>
-<td>采购入库物料凭证号</td>
-</tr>
-<tr>
-<td><code>REF_DOC_YEAR</code></td>
-<td>物料凭证年度</td>
-</tr>
-<tr>
-<td><code>REF_DOC_IT</code></td>
-<td>物料凭证行号</td>
-</tr>
-<tr>
-<td><code>PO_UNIT</code></td>
-<td>采购订单单位</td>
-</tr>
-<tr>
-<td><code>QUANTITY</code></td>
-<td>开票数量</td>
-</tr>
-<tr>
-<td><code>ITEM_AMOUNT</code></td>
-<td>本行金额（未税）</td>
-</tr>
-<tr>
-<td><code>TAX_CODE</code></td>
-<td>税码</td>
-</tr>
-</tbody></table>
-<h3 id="为什么需要-REF-DOC？"><a href="#为什么需要-REF-DOC？" class="headerlink" title="为什么需要 REF_DOC？"></a>为什么需要 REF_DOC？</h3><p><code>REF_DOC</code>、<code>REF_DOC_YEAR</code>、<code>REF_DOC_IT</code> 三者共同指定了：</p>
-<blockquote>
-<p>本次采购发票对应哪一张采购入库物料凭证。</p>
-</blockquote>
-<p>SAP 据此建立完整的业务链追溯：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">采购订单 ──→ 入库物料凭证 ──→ 采购发票<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="2-累计发票总金额"><a href="#2-累计发票总金额" class="headerlink" title="2. 累计发票总金额"></a>2. 累计发票总金额</h2><p>循环行项目过程中同步累计发票抬头总金额：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_incm_ivc_crt_header-gross_amount =<br>    ls_incm_ivc_crt_header-gross_amount<br>  + &lt;lfs_item&gt;-netwr * ( 1 + lv_kbetr / 1000 ).<br></code></pre></td></tr></table></figure>
-
-<p>业务含义：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">发票总金额 <span class="hljs-operator">=</span> 累计所有行金额（含税）<br></code></pre></td></tr></table></figure>
-
-<p>其中 <code>netwr</code> 为采购订单净价，<code>lv_kbetr</code> 为税率（需根据系统实际配置确认比例，例如 13% 的税率可能存储为 <code>130</code> 或 <code>1300</code>）。</p>
-<hr>
-<h2 id="3-构造发票抬头-HeaderData"><a href="#3-构造发票抬头-HeaderData" class="headerlink" title="3. 构造发票抬头 (HeaderData)"></a>3. 构造发票抬头 (HeaderData)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_incm_ivc_crt_header-doc_date      = sy-datum.<br>ls_incm_ivc_crt_header-pstng_date    = sy-datum.<br>ls_incm_ivc_crt_header-comp_code     = ls_ekko-bukrs.<br>ls_incm_ivc_crt_header-currency      = ls_ekko-waers.<br><br>ls_incm_ivc_crt_header-invoice_ind   = &#x27;X&#x27;.<br>ls_incm_ivc_crt_header-doc_type      = &#x27;RE&#x27;.<br>ls_incm_ivc_crt_header-calc_tax_ind  = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
-
-<h3 id="字段说明-1"><a href="#字段说明-1" class="headerlink" title="字段说明"></a>字段说明</h3><table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>DOC_DATE</code></td>
-<td>凭证日期</td>
-</tr>
-<tr>
-<td><code>PSTNG_DATE</code></td>
-<td>过账日期</td>
-</tr>
-<tr>
-<td><code>COMP_CODE</code></td>
-<td>公司代码</td>
-</tr>
-<tr>
-<td><code>CURRENCY</code></td>
-<td>币种（来自采购订单）</td>
-</tr>
-<tr>
-<td><code>INVOICE_IND</code></td>
-<td>普通发票标识</td>
-</tr>
-<tr>
-<td><code>DOC_TYPE</code></td>
-<td>发票凭证类型 <code>RE</code></td>
-</tr>
-<tr>
-<td><code>CALC_TAX_IND</code></td>
-<td>自动计算税额</td>
-</tr>
-</tbody></table>
-<h3 id="INVOICE-IND-‘X’"><a href="#INVOICE-IND-‘X’" class="headerlink" title="INVOICE_IND &#x3D; ‘X’"></a>INVOICE_IND &#x3D; ‘X’</h3><p>表示本次创建的是<strong>普通采购发票</strong>，而非：</p>
+                <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>在 SAP PO 中配置 SOAP2REST 接口调用第三方系统时，遇到一个特殊场景：</p>
 <ul>
-<li>Credit Memo（贷项凭证）</li>
-<li>Subsequent Debit（后续借记）</li>
-<li>Subsequent Credit（后续贷记）</li>
+<li>对方系统在业务处理失败时返回 <strong>HTTP 400</strong> 状态码</li>
+<li>同时在响应报文中返回了详细的错误信息（如错误代码、错误描述等）</li>
 </ul>
-<h3 id="DOC-TYPE-‘RE’"><a href="#DOC-TYPE-‘RE’" class="headerlink" title="DOC_TYPE &#x3D; ‘RE’"></a>DOC_TYPE &#x3D; ‘RE’</h3><p>SAP 标准的采购发票凭证类型。所有通过该 BAPI 生成的 MM 发票都使用 <code>RE</code>。</p>
-<h3 id="CALC-TAX-IND-‘X’"><a href="#CALC-TAX-IND-‘X’" class="headerlink" title="CALC_TAX_IND &#x3D; ‘X’"></a>CALC_TAX_IND &#x3D; ‘X’</h3><p>告诉 SAP：</p>
-<blockquote>
-<p>税额不由接口计算，由 SAP 根据税码自动计算。</p>
-</blockquote>
-<p>因此程序只需传入<strong>金额</strong>和<strong>税码</strong>，SAP 会自动生成税额。这避免了接口端算税不一致的风险。</p>
-<hr>
-<h2 id="4-调用-BAPI-创建预制发票"><a href="#4-调用-BAPI-创建预制发票" class="headerlink" title="4. 调用 BAPI 创建预制发票"></a>4. 调用 BAPI 创建预制发票</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_INCOMINGINVOICE_PARK&#x27;<br>  EXPORTING<br>    headerdata       = ls_incm_ivc_crt_header<br>  IMPORTING<br>    invoicedocnumber = lv_inv_doc_no<br>    fiscalyear       = lv_fisc_year<br>  TABLES<br>    itemdata         = lt_incm_ivc_crt_item<br>    return           = lt_return.<br></code></pre></td></tr></table></figure>
-
-<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><p>该 BAPI 不是<strong>直接过账</strong>发票，而是 <strong>Park Invoice（预制发票）</strong>。预制后的发票需要后续在 SAP 中审核过账。</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><table>
+<p>按照标准的 RESTful API 设计原则，业务处理失败应该返回 HTTP 200，然后通过报文体中的业务状态码来标识成功或失败。但实际对接中，有些系统会在请求格式正确但业务校验失败时直接返回 4xx 错误码。</p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>SAP PO 的默认行为是：</p>
+<ul>
+<li>当接收到 HTTP 4xx 或 5xx 错误状态码时，会将该响应视为<strong>异常</strong></li>
+<li>异常情况下，SAP PO <strong>不会继续解析返回报文</strong></li>
+<li>这导致对方系统返回的业务错误信息<strong>丢失</strong>，无法在 SAP ABAP 程序中获取和处理</li>
+</ul>
+<p>这种情况下，虽然知道接口调用失败了，但无法得知具体的失败原因，给问题排查和业务处理带来困难。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>通过在 <strong>REST Receiver Adapter</strong> 的 <strong>Error Handling</strong> 标签页配置自定义结果处理器，可以将 HTTP 400 响应当作正常报文接收。</p>
+<h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><ol>
+<li><p>打开 SAP PO Integration Directory，进入对应的 Receiver Communication Channel</p>
+</li>
+<li><p>切换到 <strong>Error Handling</strong> 标签页</p>
+</li>
+<li><p>配置 <strong>Result Handler</strong> 如下：</p>
+<table>
 <thead>
 <tr>
-<th>返回值</th>
+<th>配置项</th>
+<th>配置值</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>INVOICEDOCNUMBER</code></td>
-<td>发票编号</td>
+<td><strong>Source</strong></td>
+<td>Exception</td>
+<td>表示处理异常情况</td>
 </tr>
 <tr>
-<td><code>FISCALYEAR</code></td>
-<td>会计年度</td>
+<td><strong>Action</strong></td>
+<td>Custom Result</td>
+<td>自定义结果处理</td>
 </tr>
 <tr>
-<td><code>RETURN</code></td>
-<td>执行消息（内表）</td>
+<td><strong>Message Content</strong></td>
+<td><code>&#123;http_result&#125;</code></td>
+<td>使用 HTTP 返回的原始报文作为消息内容</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="5-成功处理"><a href="#5-成功处理" class="headerlink" title="5. 成功处理"></a>5. 成功处理</h2><p>判断逻辑：只要返回了发票号，即认为创建成功。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">IF lv_inv_doc_no IS NOT INITIAL.<br></code></pre></td></tr></table></figure>
-
-<p>随后提交事务：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则 BAPI 创建的数据不会真正写入数据库。设置 <code>WAIT = &#39;X&#39;</code> 确保同步提交完成后再执行后续逻辑。</p>
-</blockquote>
-<h3 id="返回成功信息"><a href="#返回成功信息" class="headerlink" title="返回成功信息"></a>返回成功信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abap">is_out-return_msg =<br>    &#x27;采购订单入库、发票成功。&#x27;<br> &amp;&amp; &#x27;发票号：&#x27;<br> &amp;&amp; lv_inv_doc_no.<br><br>CONDENSE is_out-return_msg NO-GAPS.<br><br>is_out-return_type = &#x27;S&#x27;.<br></code></pre></td></tr></table></figure>
-
-<p>接口最终返回类似：</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns">采购订单入库、发票成功。<br>发票号：<span class="hljs-number">5100001234</span><br></code></pre></td></tr></table></figure>
-
-<p>同时将发票号持久化到接口日志表：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">ls_ztmm018-invoicedocnumber = lv_inv_doc_no.<br>ls_ztmm018-fiscalyear       = lv_fisc_year.<br></code></pre></td></tr></table></figure>
-
-<p>便于后续查询和追溯。</p>
-<hr>
-<h2 id="6-失败处理"><a href="#6-失败处理" class="headerlink" title="6. 失败处理"></a>6. 失败处理</h2><p>若未返回发票号，认为创建失败：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure>
-
-<p>作用：</p>
-<ul>
-<li>回滚整个 LUW（Logical Unit of Work）</li>
-<li>避免发票创建一半导致数据不一致</li>
-</ul>
-<p>随后重新组织错误返回信息，通知 OA 或上层系统。</p>
-<hr>
-<h2 id="业务流程总结"><a href="#业务流程总结" class="headerlink" title="业务流程总结"></a>业务流程总结</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs text">采购订单<br>     │<br>     ▼<br>采购入库成功 (BAPI_GOODSMVT_CREATE)<br>     │<br>     ▼<br>根据采购订单生成发票行项目<br>     │<br>     ▼<br>计算发票总金额（含税）<br>     │<br>     ▼<br>组装发票抬头<br>     │<br>     ▼<br>BAPI_INCOMINGINVOICE_PARK<br>     │<br> ┌───┴──────────────┐<br> │                  │<br>成功               失败<br> │                  │<br> ▼                  ▼<br>COMMIT          ROLLBACK<br> │                  │<br> ▼                  ▼<br>记录发票号      返回错误<br> │<br> ▼<br>接口结束<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文梳理了使用 <code>BAPI_INCOMINGINVOICE_PARK</code> 创建预制采购发票的完整流程，核心职责可概括为：</p>
-<ol>
-<li>根据采购订单及入库凭证生成发票行项目</li>
-<li>计算发票总金额（含税）</li>
-<li>组装发票抬头信息（凭证类型 <code>RE</code>、自动算税）</li>
-<li>调用 <code>BAPI_INCOMINGINVOICE_PARK</code> 创建预制采购发票</li>
-<li>创建成功后 <code>COMMIT</code> 事务并保存发票号到日志表</li>
-<li>创建失败则 <code>ROLLBACK</code> 事务并返回错误信息</li>
+</li>
+<li><p><strong>不要勾选</strong> “Selection does NOT match” 选项</p>
+</li>
 </ol>
-<p>整个流程与上一篇文章《使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账》配合，实现了：</p>
-<blockquote>
-<p><strong>采购订单 → 入库 → 采购发票（Park）</strong> 的完整 MM 业务闭环。</p>
-</blockquote>
-<p>实际项目开发中建议将入库 + 发票创建封装为统一的接口 Function Module，统一处理事务提交、回滚和错误日志，避免在每个调用处重复编写判断逻辑。</p>
+<h3 id="配置效果"><a href="#配置效果" class="headerlink" title="配置效果"></a>配置效果</h3><p>配置完成后：</p>
+<ul>
+<li>SAP PO 会将 HTTP 400 响应作为正常消息处理</li>
+<li>返回的报文会按照 ESR 中配置的 <strong>Response Data Type</strong> 进行解析</li>
+<li>在 SAP ABAP 程序中可以通过 Proxy 或 Mapping 正常获取到返回报文内容</li>
+<li>可以从报文中提取业务错误代码、错误描述等信息进行后续处理</li>
+</ul>
+<h2 id="技术要点"><a href="#技术要点" class="headerlink" title="技术要点"></a>技术要点</h2><h3 id="1-http-result-变量"><a href="#1-http-result-变量" class="headerlink" title="1. {http_result} 变量"></a>1. {http_result} 变量</h3><p><code>&#123;http_result&#125;</code> 是 SAP PO 提供的动态变量，表示 HTTP 响应的原始报文内容。在 Error Handling 中使用该变量，可以确保即使 HTTP 状态码为错误码，报文内容也不会丢失。</p>
+<h3 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h3><p>这种配置方式适用于以下场景：</p>
+<ul>
+<li>对方系统在业务校验失败时返回 4xx 状态码</li>
+<li>错误响应报文结构与正常响应报文结构一致（或者有专门的 Error Response DT）</li>
+<li>需要在 SAP 端解析并处理详细的错误信息</li>
+</ul>
+<h3 id="3-ESR-配置要求"><a href="#3-ESR-配置要求" class="headerlink" title="3. ESR 配置要求"></a>3. ESR 配置要求</h3><p>在 ESR (Enterprise Services Repository) 中需要确保：</p>
+<ul>
+<li>Response Message Type 的结构能够包容错误响应的字段</li>
+<li>或者配置独立的 Fault Message Type 来接收错误响应</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><p><strong>不要滥用</strong>：这种配置会将 HTTP 错误当作正常消息处理，可能会掩盖真正的网络或服务异常。建议只针对特定的 HTTP 状态码（如 400）配置，不要对所有错误码一刀切。</p>
+</li>
+<li><p><strong>监控和日志</strong>：配置后建议在 Message Mapping 或 ABAP Proxy 中添加日志记录，区分正常响应和错误响应，便于后续监控和问题排查。</p>
+</li>
+<li><p><strong>与第三方系统协调</strong>：从长远看，建议与第三方系统协调，让其遵循标准的 RESTful 设计原则，业务错误返回 200 状态码，通过报文体中的状态码区分成功和失败。</p>
+</li>
+</ol>
+<h2 id="参考配置截图"><a href="#参考配置截图" class="headerlink" title="参考配置截图"></a>参考配置截图</h2><p><img src="/img/sap-po-error-handling.png" srcset="/img/loading.gif" lazyload alt="SAP PO REST Receiver Error Handling 配置"></p>
+<p>配置界面显示了 Error Handling 标签页中 Result Handler 的详细配置，包括 Source 为 Exception，Action 为 Custom Result，Message Content 为 {http_result}。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过在 SAP PO REST Receiver Adapter 的 Error Handling 中配置自定义结果处理器，可以有效解决第三方系统返回 HTTP 错误码但同时包含业务错误信息的场景。这种配置方式在实际项目中非常实用，能够确保错误信息不丢失，提高问题排查效率和业务处理能力。</p>
 
                 
               </div>
@@ -626,7 +521,7 @@
   
     <span>></span>
     
-  <a href="/categories/SAP/ABAP%E5%BC%80%E5%8F%91/" class="category-chain-item">ABAP开发</a>
+  <a href="/categories/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="category-chain-item">PO接口开发</a>
   
   
 
@@ -643,19 +538,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/ABAP/" class="print-no-link">#ABAP</a>
+        <a href="/tags/SAP-PO/" class="print-no-link">#SAP PO</a>
       
-        <a href="/tags/BAPI/" class="print-no-link">#BAPI</a>
+        <a href="/tags/REST-Adapter/" class="print-no-link">#REST Adapter</a>
       
-        <a href="/tags/MM/" class="print-no-link">#MM</a>
+        <a href="/tags/Error-Handling/" class="print-no-link">#Error Handling</a>
       
-        <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
-      
-        <a href="/tags/%E9%87%87%E8%B4%AD%E5%8F%91%E7%A5%A8/" class="print-no-link">#采购发票</a>
-      
-        <a href="/tags/%E5%8F%91%E7%A5%A8%E9%A2%84%E5%88%B6/" class="print-no-link">#发票预制</a>
-      
-        <a href="/tags/BAPI-INCOMINGINVOICE-PARK/" class="print-no-link">#BAPI_INCOMINGINVOICE_PARK</a>
+        <a href="/tags/HTTP-400/" class="print-no-link">#HTTP 400</a>
       
     </div>
   
@@ -667,8 +556,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用 BAPI_INCOMINGINVOICE_PARK 创建预制采购发票</div>
-      <div>https://claudechan1228.github.io/SAP/ABAP开发/bapi-incominginvoice-park-guide/</div>
+      <div>SAP PO REST Receiver Adapter 处理 HTTP 400 错误返回报文</div>
+      <div>https://claudechan1228.github.io/SAP/PO接口开发/sap-po-rest-receiver-http-400-error-handling/</div>
     </div>
     <div class="license-meta">
       
@@ -680,7 +569,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年6月22日</div>
+          <div>2026年8月17日</div>
         </div>
       
       
@@ -712,18 +601,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/table-tennis-first-competition-reflection/" title="第一次正式业余比赛赛后反思 — 基本功才是比赛胜负的关键">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">第一次正式业余比赛赛后反思 — 基本功才是比赛胜负的关键</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/" title="理解商誉（Goodwill）——从会计到投资">
-                        <span class="hidden-mobile">理解商誉（Goodwill）——从会计到投资</span>
+                      <a href="/%E5%BF%83%E7%90%86%E5%AD%A6/%E7%A4%BE%E4%BC%9A%E5%BF%83%E7%90%86/social-approval-in-internet-communities/" title="互联网社群中的社会认同：从心理机制到行为表演">
+                        <span class="hidden-mobile">互联网社群中的社会认同：从心理机制到行为表演</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
