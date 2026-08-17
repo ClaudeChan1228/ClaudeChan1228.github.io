@@ -26,16 +26,14 @@
 <meta property="og:site_name" content="彼得陈奇的个人博客">
 <meta property="og:description" content="记录 SAP PO 在调用 REST 接口时，对方系统返回 HTTP 400 但同时包含业务错误信息的场景下，如何配置 Error Handling 以正常接收返回报文。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://claudechan1228.github.io/img/sap-po-error-handling.png">
 <meta property="article:published_time" content="2026-08-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-17T07:35:34.216Z">
+<meta property="article:modified_time" content="2026-08-17T07:40:33.919Z">
 <meta property="article:author" content="彼得陈奇">
 <meta property="article:tag" content="SAP PO">
 <meta property="article:tag" content="REST Adapter">
 <meta property="article:tag" content="Error Handling">
 <meta property="article:tag" content="HTTP 400">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://claudechan1228.github.io/img/sap-po-error-handling.png">
   
   
   
@@ -357,7 +355,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          2.5k 字
         
       </span>
     
@@ -368,7 +366,7 @@
         
         
         
-          14 分钟
+          21 分钟
         
       </span>
     
@@ -495,8 +493,18 @@
 <li><p><strong>与第三方系统协调</strong>：从长远看，建议与第三方系统协调，让其遵循标准的 RESTful 设计原则，业务错误返回 200 状态码，通过报文体中的状态码区分成功和失败。</p>
 </li>
 </ol>
-<h2 id="参考配置截图"><a href="#参考配置截图" class="headerlink" title="参考配置截图"></a>参考配置截图</h2><p><img src="/img/sap-po-error-handling.png" srcset="/img/loading.gif" lazyload alt="SAP PO REST Receiver Error Handling 配置"></p>
-<p>配置界面显示了 Error Handling 标签页中 Result Handler 的详细配置，包括 Source 为 Exception，Action 为 Custom Result，Message Content 为 {http_result}。</p>
+<h2 id="配置界面说明"><a href="#配置界面说明" class="headerlink" title="配置界面说明"></a>配置界面说明</h2><p>在 SAP PO Integration Directory 的 Receiver Communication Channel 配置界面中：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs less">┌─────────────────────────────────────────────────────────────┐<br>│ <span class="hljs-selector-tag">Adapter</span> <span class="hljs-selector-tag">Type</span>: <span class="hljs-selector-tag">REST</span>          <span class="hljs-selector-tag">Receiver</span>                        │<br>│ <span class="hljs-selector-tag">Transport</span> <span class="hljs-selector-tag">Protocol</span>: <span class="hljs-selector-tag">HTTP</span>                                     │<br>│ <span class="hljs-selector-tag">Message</span> <span class="hljs-selector-tag">Protocol</span>: <span class="hljs-selector-tag">REST</span>                                       │<br>├─────────────────────────────────────────────────────────────┤<br>│ <span class="hljs-selector-attr">[REST Operation]</span> <span class="hljs-selector-attr">[Data Format]</span> <span class="hljs-selector-attr">[Operation Rules]</span>            │<br>│ <span class="hljs-selector-attr">[Response Determination]</span> <span class="hljs-selector-attr">[HTTP Headers]</span> <span class="hljs-selector-attr">[Error Handling]</span>    │  ◄── 切换到此标签页<br>├─────────────────────────────────────────────────────────────┤<br>│ <span class="hljs-selector-tag">Result</span> <span class="hljs-selector-tag">Handler</span>                                              │<br>│                                                             │<br>│   <span class="hljs-selector-tag">Source</span>:           <span class="hljs-selector-attr">[Exception                        ▼]</span>   │<br>│   □ <span class="hljs-selector-tag">Selection</span> <span class="hljs-selector-tag">does</span> <span class="hljs-selector-tag">NOT</span> <span class="hljs-selector-tag">match</span>                                │<br>│   <span class="hljs-selector-tag">Action</span>:           <span class="hljs-selector-attr">[Custom Result                    ▼]</span>   │<br>│   <span class="hljs-selector-tag">Message</span> <span class="hljs-selector-tag">Content</span>:  ┌─────────────────────────────────┐    │<br>│                     │ &#123;<span class="hljs-selector-tag">http_result</span>&#125;                   │    │<br>│                     │                                 │    │<br>│                     │                                 │    │<br>│                     └─────────────────────────────────┘    │<br>│                                                             │<br>└─────────────────────────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
+<p><strong>关键配置说明：</strong></p>
+<ul>
+<li><strong>Error Handling 标签页</strong>：位于配置界面顶部的标签栏最右侧</li>
+<li><strong>Result Handler 区域</strong>：在 Error Handling 标签页的主要配置区域</li>
+<li><strong>Source 下拉框</strong>：选择 “Exception” 表示处理异常情况</li>
+<li><strong>Selection does NOT match 复选框</strong>：保持不勾选状态</li>
+<li><strong>Action 下拉框</strong>：选择 “Custom Result” 表示自定义结果处理</li>
+<li><strong>Message Content 文本框</strong>：输入 <code>&#123;http_result&#125;</code> 变量</li>
+</ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过在 SAP PO REST Receiver Adapter 的 Error Handling 中配置自定义结果处理器，可以有效解决第三方系统返回 HTTP 错误码但同时包含业务错误信息的场景。这种配置方式在实际项目中非常实用，能够确保错误信息不丢失，提高问题排查效率和业务处理能力。</p>
 
                 
