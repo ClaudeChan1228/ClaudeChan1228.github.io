@@ -19,12 +19,12 @@
   <meta name="author" content="彼得陈奇">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球,心理学">
   
-    <meta name="description" content="引言BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancellat">
+    <meta name="description" content="引言 BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancella">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证">
 <meta property="og:url" content="https://claudechan1228.github.io/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/index.html">
 <meta property="og:site_name" content="彼得陈奇的个人博客">
-<meta property="og:description" content="引言BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancellat">
+<meta property="og:description" content="引言 BAPI_GOODSMVT_CANCEL 是 SAP MM 模块中用于冲销物料凭证（Material Document） 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。 本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。 对应事务码：MBST（整张冲销）或 MIGO → Cancella">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-21T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-06-26T08:56:46.660Z">
@@ -32,9 +32,9 @@
 <meta property="article:tag" content="ABAP">
 <meta property="article:tag" content="BAPI">
 <meta property="article:tag" content="物料凭证">
-<meta property="article:tag" content="冲销">
 <meta property="article:tag" content="MM">
 <meta property="article:tag" content="接口开发">
+<meta property="article:tag" content="冲销">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -420,20 +420,21 @@
             
               <div class="markdown-body">
                 
-                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 是 SAP MM 模块中用于<strong>冲销物料凭证（Material Document）</strong> 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。</p>
+                <h2 id="引言">引言</h2>
+<p><code>BAPI_GOODSMVT_CANCEL</code> 是 SAP MM 模块中用于<strong>冲销物料凭证（Material Document）</strong> 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。</p>
 <p>本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。</p>
 <p>对应事务码：<strong>MBST</strong>（整张冲销）或 <strong>MIGO → Cancellation</strong>（按行冲销）。</p>
 <hr>
-<h2 id="冲销原理"><a href="#冲销原理" class="headerlink" title="冲销原理"></a>冲销原理</h2><p>冲销成功后，SAP 的处理逻辑如下：</p>
+<h2 id="冲销原理">冲销原理</h2>
+<p>冲销成功后，SAP 的处理逻辑如下：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">原物料凭证 5000012345<br>    │<br>    ▼<br>BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>自动生成冲销凭证 5000015678<br>    │<br>    ├─ 原凭证不删除<br>    ├─ 新凭证数量相反（正 → 负，负 → 正）<br>    └─ 库存自动恢复<br></code></pre></td></tr></table></figure>
-
 <p><strong>关键点：</strong> 原物料凭证不会删除，而是生成一张新的冲销物料凭证与原凭证形成冲销关系。两张凭证可通过 <code>MSEG</code> 表关联查询。</p>
 <hr>
-<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs text">已有物料凭证<br>    │<br>    ▼<br>构造需要冲销的行项目（可选）<br>    │<br>    ▼<br>调用 BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>检查 RETURN 是否存在 A/E/X 错误<br>    │<br> ┌──┴──────────┐<br> │             │<br>成功          失败<br> │             │<br> ▼             ▼<br>COMMIT      ROLLBACK<br> │             │<br> ▼             ▼<br>返回新冲     结束<br>销凭证号<br></code></pre></td></tr></table></figure>
-
+<h2 id="整体流程">整体流程</h2>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs text">已有物料凭证<br>    │<br>    ▼<br>构造需要冲销的行项目（可选）<br>    │<br>    ▼<br>调用 BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>检查 RETURN 是否存在 A/E/X 错误<br>    │<br> ┌──┴──────────┐<br> │             │<br>成功          失败<br> │             │<br> ▼             ▼<br>COMMIT      ROLLBACK<br> │             │<br> ▼             ▼<br>返回新冲     结束<br>销凭证号<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="1-定义变量"><a href="#1-定义变量" class="headerlink" title="1. 定义变量"></a>1. 定义变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr,<br>  lv_mjahr   TYPE mjahr.<br></code></pre></td></tr></table></figure>
-
+<h2 id="1-定义变量">1. 定义变量</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr,<br>  lv_mjahr   TYPE mjahr.<br></code></pre></td></tr></table></figure>
 <p>各变量说明：</p>
 <table>
 <thead>
@@ -443,7 +444,8 @@
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>lt_return</code></td>
 <td><code>bapiret2</code></td>
 <td>BAPI 返回消息（内表）</td>
@@ -468,150 +470,161 @@
 <td><code>mjahr</code></td>
 <td>物料凭证年度</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h2 id="2-构造冲销行项目（可选）"><a href="#2-构造冲销行项目（可选）" class="headerlink" title="2. 构造冲销行项目（可选）"></a>2. 构造冲销行项目（可选）</h2><p><code>goodsmvt_matdocitem</code> 是一个<strong>可选参数</strong>。是否传入决定了冲销行为：</p>
+<h2 id="2-构造冲销行项目（可选）">2. 构造冲销行项目（可选）</h2>
+<p><code>goodsmvt_matdocitem</code> 是一个<strong>可选参数</strong>。是否传入决定了冲销行为：</p>
 <table>
 <thead>
 <tr>
 <th>场景</th>
-<th align="center">传值</th>
+<th style="text-align:center">传值</th>
 <th>行为</th>
-<th align="center">对应事务码</th>
+<th style="text-align:center">对应事务码</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>整张冲销</td>
-<td align="center">空</td>
+<td style="text-align:center">空</td>
 <td>冲销整张物料凭证</td>
-<td align="center">MBST</td>
+<td style="text-align:center">MBST</td>
 </tr>
 <tr>
 <td>指定行冲销</td>
-<td align="center">有值</td>
+<td style="text-align:center">有值</td>
 <td>仅冲销指定行项目</td>
-<td align="center">MIGO → Cancellation</td>
+<td style="text-align:center">MIGO → Cancellation</td>
 </tr>
-</tbody></table>
-<h3 id="整张冲销（不传入行项目）"><a href="#整张冲销（不传入行项目）" class="headerlink" title="整张冲销（不传入行项目）"></a>整张冲销（不传入行项目）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument = lv_mblnr<br>    matdocumentyear  = lv_mjahr<br>  TABLES<br>    return           = lt_return.<br></code></pre></td></tr></table></figure>
-
+</tbody>
+</table>
+<h3 id="整张冲销（不传入行项目）">整张冲销（不传入行项目）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument = lv_mblnr<br>    matdocumentyear  = lv_mjahr<br>  TABLES<br>    return           = lt_return.<br></code></pre></td></tr></table></figure>
 <p><code>goodsmvt_matdocitem</code> 为空 → <strong>整张物料凭证全部冲销</strong>。</p>
-<h3 id="指定行项目冲销"><a href="#指定行项目冲销" class="headerlink" title="指定行项目冲销"></a>指定行项目冲销</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0002&#x27; )<br>    ( matdoc_item = &#x27;0005&#x27; )<br>).<br></code></pre></td></tr></table></figure>
-
+<h3 id="指定行项目冲销">指定行项目冲销</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0002&#x27; )<br>    ( matdoc_item = &#x27;0005&#x27; )<br>).<br></code></pre></td></tr></table></figure>
 <p>仅冲销行 <code>0002</code> 和 <code>0005</code>，其他行保持不变。</p>
-<h3 id="从数据源动态构造"><a href="#从数据源动态构造" class="headerlink" title="从数据源动态构造"></a>从数据源动态构造</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    FOR ls_data IN lt_data<br>    (<br>        matdoc_item = ls_data-zeile<br>    )<br>).<br></code></pre></td></tr></table></figure>
-
+<h3 id="从数据源动态构造">从数据源动态构造</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    FOR ls_data IN lt_data<br>    (<br>        matdoc_item = ls_data-zeile<br>    )<br>).<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="3-调用-BAPI"><a href="#3-调用-BAPI" class="headerlink" title="3. 调用 BAPI"></a>3. 调用 BAPI</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br></code></pre></td></tr></table></figure>
-
-<h3 id="主要参数"><a href="#主要参数" class="headerlink" title="主要参数"></a>主要参数</h3><table>
+<h2 id="3-调用-BAPI">3. 调用 BAPI</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br></code></pre></td></tr></table></figure>
+<h3 id="主要参数">主要参数</h3>
+<table>
 <thead>
 <tr>
 <th>参数</th>
-<th align="center">方向</th>
-<th align="center">必填</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">必填</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>MATERIALDOCUMENT</code></td>
-<td align="center">传入</td>
-<td align="center">✅</td>
+<td style="text-align:center">传入</td>
+<td style="text-align:center">✅</td>
 <td>需要冲销的物料凭证号</td>
 </tr>
 <tr>
 <td><code>MATDOCUMENTYEAR</code></td>
-<td align="center">传入</td>
-<td align="center">✅</td>
+<td style="text-align:center">传入</td>
+<td style="text-align:center">✅</td>
 <td>物料凭证年度</td>
 </tr>
 <tr>
 <td><code>GOODSMVT_PSTNG_DATE</code></td>
-<td align="center">传入</td>
-<td align="center"></td>
+<td style="text-align:center">传入</td>
+<td style="text-align:center"></td>
 <td>冲销过账日期（可设为 <code>sy-datum</code>）</td>
 </tr>
 <tr>
 <td><code>GOODSMVT_MATDOCITEM</code></td>
-<td align="center">传入</td>
-<td align="center"></td>
-<td>需要冲销的行项目（为空&#x3D;整张冲销）</td>
+<td style="text-align:center">传入</td>
+<td style="text-align:center"></td>
+<td>需要冲销的行项目（为空=整张冲销）</td>
 </tr>
 <tr>
 <td><code>GOODSMVT_HEADRET</code></td>
-<td align="center">返回</td>
-<td align="center"></td>
+<td style="text-align:center">返回</td>
+<td style="text-align:center"></td>
 <td>新生成的冲销物料凭证号</td>
 </tr>
 <tr>
 <td><code>RETURN</code></td>
-<td align="center">返回</td>
-<td align="center"></td>
+<td style="text-align:center">返回</td>
+<td style="text-align:center"></td>
 <td>BAPI 返回消息</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h2 id="4-判断是否成功"><a href="#4-判断是否成功" class="headerlink" title="4. 判断是否成功"></a>4. 判断是否成功</h2><p>检查 RETURN 中是否存在错误消息：</p>
+<h2 id="4-判断是否成功">4. 判断是否成功</h2>
+<p>检查 RETURN 中是否存在错误消息：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abap">LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br>  RETURN.<br><br>ENDLOOP.<br></code></pre></td></tr></table></figure>
-
-<h3 id="BAPI-返回消息类型速查"><a href="#BAPI-返回消息类型速查" class="headerlink" title="BAPI 返回消息类型速查"></a>BAPI 返回消息类型速查</h3><table>
+<h3 id="BAPI-返回消息类型速查">BAPI 返回消息类型速查</h3>
+<table>
 <thead>
 <tr>
-<th align="center">TYPE</th>
+<th style="text-align:center">TYPE</th>
 <th>说明</th>
 <th>处理</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">S</td>
+<tbody>
+<tr>
+<td style="text-align:center">S</td>
 <td>成功（Success）</td>
 <td>忽略</td>
 </tr>
 <tr>
-<td align="center">W</td>
+<td style="text-align:center">W</td>
 <td>警告（Warning）</td>
 <td>通常可忽略</td>
 </tr>
 <tr>
-<td align="center">I</td>
+<td style="text-align:center">I</td>
 <td>信息（Information）</td>
 <td>忽略</td>
 </tr>
 <tr>
-<td align="center"><strong>E</strong></td>
+<td style="text-align:center"><strong>E</strong></td>
 <td><strong>错误（Error）</strong></td>
 <td>❌ 失败</td>
 </tr>
 <tr>
-<td align="center"><strong>A</strong></td>
+<td style="text-align:center"><strong>A</strong></td>
 <td><strong>终止（Abort）</strong></td>
 <td>❌ 失败</td>
 </tr>
 <tr>
-<td align="center"><strong>X</strong></td>
+<td style="text-align:center"><strong>X</strong></td>
 <td><strong>异常（Exception）</strong></td>
 <td>❌ 失败</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <p><strong>判断逻辑：</strong> 只要 RETURN 中出现 A、E、X 任意一类消息，即视为冲销失败。</p>
 </blockquote>
 <hr>
-<h2 id="5-成功提交"><a href="#5-成功提交" class="headerlink" title="5. 成功提交"></a>5. 成功提交</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
-
+<h2 id="5-成功提交">5. 成功提交</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure>
 <blockquote>
-<p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则冲销不会真正保存到数据库。设置 <code>WAIT = &#39;X&#39;</code> 确保同步提交完成后再执行后续逻辑。</p>
+<p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则冲销不会真正保存到数据库。设置 <code>WAIT = 'X'</code> 确保同步提交完成后再执行后续逻辑。</p>
 </blockquote>
 <hr>
-<h2 id="6-失败回滚"><a href="#6-失败回滚" class="headerlink" title="6. 失败回滚"></a>6. 失败回滚</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure>
-
+<h2 id="6-失败回滚">6. 失败回滚</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure>
 <p>作用：</p>
 <ul>
 <li>回滚整个 LUW（Logical Unit of Work）</li>
 <li>避免数据不一致</li>
 </ul>
 <hr>
-<h2 id="7-获取冲销后的物料凭证"><a href="#7-获取冲销后的物料凭证" class="headerlink" title="7. 获取冲销后的物料凭证"></a>7. 获取冲销后的物料凭证</h2><p>BAPI 成功执行后，<code>GOODSMVT_HEADRET</code> 返回新生成的冲销凭证信息：</p>
+<h2 id="7-获取冲销后的物料凭证">7. 获取冲销后的物料凭证</h2>
+<p>BAPI 成功执行后，<code>GOODSMVT_HEADRET</code> 返回新生成的冲销凭证信息：</p>
 <table>
 <thead>
 <tr>
@@ -619,7 +632,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>MAT_DOC</code></td>
 <td>新生成的冲销物料凭证号</td>
 </tr>
@@ -627,48 +641,55 @@
 <td><code>DOC_YEAR</code></td>
 <td>凭证年度</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure>
-
 <p>示例输出：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns">原凭证：<span class="hljs-number">5000012345</span><br>冲销凭证：<span class="hljs-number">5000015678</span><br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="完整示例代码"><a href="#完整示例代码" class="headerlink" title="完整示例代码"></a>完整示例代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr VALUE &#x27;5000012345&#x27;,<br>  lv_mjahr   TYPE mjahr VALUE &#x27;2026&#x27;.<br><br>&quot; 指定冲销行项目（可为空，表示整张冲销）<br>lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0001&#x27; )<br>    ( matdoc_item = &#x27;0002&#x27; )<br>).<br><br>CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br><br>&quot; 检查错误<br>LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br><br>  &quot; 输出错误信息<br>  LOOP AT lt_return INTO ls_return<br>      WHERE type CA &#x27;AXE&#x27;.<br>    WRITE: / ls_return-id,<br>              ls_return-number,<br>              ls_return-message.<br>  ENDLOOP.<br><br>  RETURN.<br><br>ENDLOOP.<br><br>&quot; 提交<br>CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br><br>WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure>
-
+<h2 id="完整示例代码">完整示例代码</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr VALUE &#x27;5000012345&#x27;,<br>  lv_mjahr   TYPE mjahr VALUE &#x27;2026&#x27;.<br><br>&quot; 指定冲销行项目（可为空，表示整张冲销）<br>lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0001&#x27; )<br>    ( matdoc_item = &#x27;0002&#x27; )<br>).<br><br>CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br><br>&quot; 检查错误<br>LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br><br>  &quot; 输出错误信息<br>  LOOP AT lt_return INTO ls_return<br>      WHERE type CA &#x27;AXE&#x27;.<br>    WRITE: / ls_return-id,<br>              ls_return-number,<br>              ls_return-message.<br>  ENDLOOP.<br><br>  RETURN.<br><br>ENDLOOP.<br><br>&quot; 提交<br>CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br><br>WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="与-BAPI-GOODSMVT-CREATE-的关系"><a href="#与-BAPI-GOODSMVT-CREATE-的关系" class="headerlink" title="与 BAPI_GOODSMVT_CREATE 的关系"></a>与 BAPI_GOODSMVT_CREATE 的关系</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 和 <code>BAPI_GOODSMVT_CREATE</code> 共同构成了物料凭证的完整生命周期：</p>
+<h2 id="与-BAPI-GOODSMVT-CREATE-的关系">与 BAPI_GOODSMVT_CREATE 的关系</h2>
+<p><code>BAPI_GOODSMVT_CANCEL</code> 和 <code>BAPI_GOODSMVT_CREATE</code> 共同构成了物料凭证的完整生命周期：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">BAPI_GOODSMVT_CREATE ──→ 物料凭证<br>                               │<br>                               ├──→ 正常使用<br>                               │<br>                               └──→ BAPI_GOODSMVT_CANCEL<br>                                       │<br>                                       ▼<br>                                  冲销凭证（数量相反）<br></code></pre></td></tr></table></figure>
-
 <table>
 <thead>
 <tr>
 <th>BAPI</th>
-<th align="center">方向</th>
+<th style="text-align:center">方向</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>BAPI_GOODSMVT_CREATE</code></td>
-<td align="center">创建</td>
+<td style="text-align:center">创建</td>
 <td>生成新的物料凭证</td>
 </tr>
 <tr>
 <td><code>BAPI_GOODSMVT_CANCEL</code></td>
-<td align="center">冲销</td>
+<td style="text-align:center">冲销</td>
 <td>生成反向物料凭证，撤销原凭证</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <p>延伸阅读：《<a href="/2026/06/22/bapi-goodsmvt-create-gr-guide/">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</a>》</p>
 </blockquote>
 <hr>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Q1-冲销后原凭证会被删除吗？"><a href="#Q1-冲销后原凭证会被删除吗？" class="headerlink" title="Q1: 冲销后原凭证会被删除吗？"></a>Q1: 冲销后原凭证会被删除吗？</h3><p>不会。冲销会<strong>生成一张新凭证</strong>，数量与原凭证相反。原凭证仍然存在于 MSEG &#x2F; MKPF 表中。</p>
-<h3 id="Q2-可以多次冲销同一张凭证吗？"><a href="#Q2-可以多次冲销同一张凭证吗？" class="headerlink" title="Q2: 可以多次冲销同一张凭证吗？"></a>Q2: 可以多次冲销同一张凭证吗？</h3><p>一般情况下<strong>不能</strong>。一张凭证只能被完整冲销一次。但按行冲销时，不同行可以分批冲销。</p>
-<h3 id="Q3-冲销凭证能再次冲销吗？"><a href="#Q3-冲销凭证能再次冲销吗？" class="headerlink" title="Q3: 冲销凭证能再次冲销吗？"></a>Q3: 冲销凭证能再次冲销吗？</h3><p>理论上可以再次冲销冲销凭证（冲销的冲销 &#x3D; 还原），但在实际业务中通常通过 MBST 反冲。</p>
-<h3 id="Q4-goodsmvt-matdocitem-传入空和传入空行（lt-item-为空内表）效果一样吗？"><a href="#Q4-goodsmvt-matdocitem-传入空和传入空行（lt-item-为空内表）效果一样吗？" class="headerlink" title="Q4: goodsmvt_matdocitem 传入空和传入空行（lt_item 为空内表）效果一样吗？"></a>Q4: <code>goodsmvt_matdocitem</code> 传入空和传入空行（<code>lt_item</code> 为空内表）效果一样吗？</h3><p>一样。两种情况均视为<strong>整张冲销</strong>。</p>
+<h2 id="常见问题">常见问题</h2>
+<h3 id="Q1-冲销后原凭证会被删除吗？">Q1: 冲销后原凭证会被删除吗？</h3>
+<p>不会。冲销会<strong>生成一张新凭证</strong>，数量与原凭证相反。原凭证仍然存在于 MSEG / MKPF 表中。</p>
+<h3 id="Q2-可以多次冲销同一张凭证吗？">Q2: 可以多次冲销同一张凭证吗？</h3>
+<p>一般情况下<strong>不能</strong>。一张凭证只能被完整冲销一次。但按行冲销时，不同行可以分批冲销。</p>
+<h3 id="Q3-冲销凭证能再次冲销吗？">Q3: 冲销凭证能再次冲销吗？</h3>
+<p>理论上可以再次冲销冲销凭证（冲销的冲销 = 还原），但在实际业务中通常通过 MBST 反冲。</p>
+<h3 id="Q4-goodsmvt-matdocitem-传入空和传入空行（lt-item-为空内表）效果一样吗？">Q4: <code>goodsmvt_matdocitem</code> 传入空和传入空行（<code>lt_item</code> 为空内表）效果一样吗？</h3>
+<p>一样。两种情况均视为<strong>整张冲销</strong>。</p>
 <hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 的使用总结如下：</p>
+<h2 id="总结">总结</h2>
+<p><code>BAPI_GOODSMVT_CANCEL</code> 的使用总结如下：</p>
 <table>
 <thead>
 <tr>
@@ -676,7 +697,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>作用</strong></td>
 <td>冲销已过账的物料凭证</td>
 </tr>
@@ -689,7 +711,7 @@
 <td>仅冲销指定行项目</td>
 </tr>
 <tr>
-<td><strong>RETURN 存在 A&#x2F;X&#x2F;E</strong></td>
+<td><strong>RETURN 存在 A/X/E</strong></td>
 <td>冲销失败，执行 ROLLBACK</td>
 </tr>
 <tr>
@@ -700,7 +722,8 @@
 <td><strong>原凭证</strong></td>
 <td>不删除，保留在系统中</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>核心代码流程：</p>
 <ol>
 <li>构造行项目（可选）→ 决定整张冲销还是按行冲销</li>
@@ -756,11 +779,11 @@
       
         <a href="/tags/%E7%89%A9%E6%96%99%E5%87%AD%E8%AF%81/" class="print-no-link">#物料凭证</a>
       
-        <a href="/tags/%E5%86%B2%E9%94%80/" class="print-no-link">#冲销</a>
-      
         <a href="/tags/MM/" class="print-no-link">#MM</a>
       
         <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/" class="print-no-link">#接口开发</a>
+      
+        <a href="/tags/%E5%86%B2%E9%94%80/" class="print-no-link">#冲销</a>
       
     </div>
   
@@ -817,9 +840,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-adapter-module-config/" title="SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南">
+                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南</span>
+                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -885,6 +908,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -1141,6 +1170,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

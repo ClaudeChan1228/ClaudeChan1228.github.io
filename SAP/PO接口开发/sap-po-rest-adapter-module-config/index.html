@@ -19,12 +19,12 @@
   <meta name="author" content="彼得陈奇">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球,心理学">
   
-    <meta name="description" content="引言在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 JSON Root Array 问题。 本文记录了我实际开发中遇到并验证的 setIgnoredElements 配置方案，以及通过资料查询整理的 RESTAdapter">
+    <meta name="description" content="引言 在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 JSON Root Array 问题。 本文记录了我实际开发中遇到并验证的 setIgnoredElements 配置方案，以及通过资料查询整理的 RESTAdapte">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SAP PO REST Adapter Module Configuration —— XML 与 JSON 转换配置指南">
 <meta property="og:url" content="https://claudechan1228.github.io/SAP/PO%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/sap-po-rest-adapter-module-config/index.html">
 <meta property="og:site_name" content="彼得陈奇的个人博客">
-<meta property="og:description" content="引言在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 JSON Root Array 问题。 本文记录了我实际开发中遇到并验证的 setIgnoredElements 配置方案，以及通过资料查询整理的 RESTAdapter">
+<meta property="og:description" content="引言 在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 JSON Root Array 问题。 本文记录了我实际开发中遇到并验证的 setIgnoredElements 配置方案，以及通过资料查询整理的 RESTAdapte">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-06-26T08:56:44.075Z">
@@ -422,25 +422,28 @@
             
               <div class="markdown-body">
                 
-                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 <strong>JSON Root Array</strong> 问题。</p>
+                <h2 id="引言">引言</h2>
+<p>在 SAP PO（Process Orchestration）开发 REST 接口时，XML 与 JSON 之间的自动转换是高频需求。REST Adapter 默认的转换行为有时无法满足第三方系统的接口规范，最常见的场景就是 <strong>JSON Root Array</strong> 问题。</p>
 <p>本文记录了我实际开发中遇到并验证的 <code>setIgnoredElements</code> 配置方案，以及通过资料查询整理的 RESTAdapterBean 常用 Module Configuration 参数速查。</p>
 <blockquote>
 <p><strong>⚠️ 可靠性说明：</strong> <code>setIgnoredElements</code> 参数已经过实际项目验证，确认有效。后续扩展参数来自 GPT 联网搜索结果，尚未逐一实测，使用前建议先在测试环境验证。</p>
 </blockquote>
 <hr>
-<h2 id="一、问题场景：JSON-根数组（Root-Array）"><a href="#一、问题场景：JSON-根数组（Root-Array）" class="headerlink" title="一、问题场景：JSON 根数组（Root Array）"></a>一、问题场景：JSON 根数组（Root Array）</h2><h3 id="典型-XML-结构"><a href="#典型-XML-结构" class="headerlink" title="典型 XML 结构"></a>典型 XML 结构</h3><p>ESR 中定义的 Message Type 通常包含包装节点：</p>
+<h2 id="一、问题场景：JSON-根数组（Root-Array）">一、问题场景：JSON 根数组（Root Array）</h2>
+<h3 id="典型-XML-结构">典型 XML 结构</h3>
+<p>ESR 中定义的 Message Type 通常包含包装节点：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">DT_POSync_Req</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">IT_TAB</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">HEADER_KEY</span>&gt;</span>450000001<span class="hljs-tag">&lt;/<span class="hljs-name">HEADER_KEY</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">EBELN</span>&gt;</span>PO2026001<span class="hljs-tag">&lt;/<span class="hljs-name">EBELN</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">IT_TAB</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">IT_TAB</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">HEADER_KEY</span>&gt;</span>450000002<span class="hljs-tag">&lt;/<span class="hljs-name">HEADER_KEY</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">EBELN</span>&gt;</span>PO2026002<span class="hljs-tag">&lt;/<span class="hljs-name">EBELN</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">IT_TAB</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">DT_POSync_Req</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="默认-JSON-转换结果"><a href="#默认-JSON-转换结果" class="headerlink" title="默认 JSON 转换结果"></a>默认 JSON 转换结果</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;IT_TAB&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="第三方接口实际要求"><a href="#第三方接口实际要求" class="headerlink" title="第三方接口实际要求"></a>第三方接口实际要求</h3><p>很多 REST API（MES、WMS、SpringBoot、FastAPI 等）要求直接返回数据数组：</p>
+<h3 id="默认-JSON-转换结果">默认 JSON 转换结果</h3>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;IT_TAB&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<h3 id="第三方接口实际要求">第三方接口实际要求</h3>
+<p>很多 REST API（MES、WMS、SpringBoot、FastAPI 等）要求直接返回数据数组：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
-
 <p>问题在于<strong>最外层多了 <code>IT_TAB</code> 这个包装节点</strong>。</p>
 <hr>
-<h2 id="二、推荐方案：配置-setIgnoredElements"><a href="#二、推荐方案：配置-setIgnoredElements" class="headerlink" title="二、推荐方案：配置 setIgnoredElements"></a>二、推荐方案：配置 <code>setIgnoredElements</code></h2><p>无需修改 ESR、无需修改 Message Mapping，也无需编写 Java&#x2F;Groovy Mapping。只需在 REST Receiver Communication Channel 中配置一个 Module Parameter。</p>
-<h3 id="配置位置"><a href="#配置位置" class="headerlink" title="配置位置"></a>配置位置</h3><figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs julia">Receiver Communication <span class="hljs-built_in">Channel</span><br>    └── <span class="hljs-built_in">Module</span><br>        └── RESTAdapterBean<br>            └── <span class="hljs-built_in">Module</span> Configuration<br></code></pre></td></tr></table></figure>
-
+<h2 id="二、推荐方案：配置-setIgnoredElements">二、推荐方案：配置 <code>setIgnoredElements</code></h2>
+<p>无需修改 ESR、无需修改 Message Mapping，也无需编写 Java/Groovy Mapping。只需在 REST Receiver Communication Channel 中配置一个 Module Parameter。</p>
+<h3 id="配置位置">配置位置</h3>
+<figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs julia">Receiver Communication <span class="hljs-built_in">Channel</span><br>    └── <span class="hljs-built_in">Module</span><br>        └── RESTAdapterBean<br>            └── <span class="hljs-built_in">Module</span> Configuration<br></code></pre></td></tr></table></figure>
 <p>新增一行：</p>
 <table>
 <thead>
@@ -449,33 +452,33 @@
 <th>Parameter Value</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>setIgnoredElements</td>
 <td>IT_TAB</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>配置示意：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">Module</span><br><span class="hljs-section">------------------------------------------------------</span><br>Module Key : rest<br><br><span class="hljs-section">Parameter Name      Parameter Value</span><br><span class="hljs-section">--------------------------------------------</span><br>setIgnoredElements  IT_TAB<br></code></pre></td></tr></table></figure>
-
-<h3 id="配置效果"><a href="#配置效果" class="headerlink" title="配置效果"></a>配置效果</h3><p>配置后，XML 中的 <code>&lt;IT_TAB&gt;</code> 节点被忽略，输出 JSON 变为：</p>
+<h3 id="配置效果">配置效果</h3>
+<p>配置后，XML 中的 <code>&lt;IT_TAB&gt;</code> 节点被忽略，输出 JSON 变为：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000001&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026001&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;450000002&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EBELN&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PO2026002&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
-
 <p>完美满足第三方接口对根数组的要求。</p>
 <hr>
-<h2 id="三、支持多个节点"><a href="#三、支持多个节点" class="headerlink" title="三、支持多个节点"></a>三、支持多个节点</h2><p><code>setIgnoredElements</code> 支持忽略多个 XML 节点，用逗号或分号分隔：</p>
+<h2 id="三、支持多个节点">三、支持多个节点</h2>
+<p><code>setIgnoredElements</code> 支持忽略多个 XML 节点，用逗号或分号分隔：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">setIgnoredElements</span> = ROOT,IT_TAB<br></code></pre></td></tr></table></figure>
-
 <p>XML：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">ROOT</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">IT_TAB</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">HEADER_KEY</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">HEADER_KEY</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">IT_TAB</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ROOT</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>最终 JSON：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;HEADER_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
-
 <p><code>ROOT</code> 和 <code>IT_TAB</code> 两个包装节点都被移除，只保留真正的数据数组。</p>
 <hr>
-<h2 id="四、适用场景"><a href="#四、适用场景" class="headerlink" title="四、适用场景"></a>四、适用场景</h2><p>此方案适用于各类需要 JSON Root Array 的第三方系统集成：</p>
+<h2 id="四、适用场景">四、适用场景</h2>
+<p>此方案适用于各类需要 JSON Root Array 的第三方系统集成：</p>
 <ul>
-<li>MES &#x2F; WMS &#x2F; SRM &#x2F; OA</li>
+<li>MES / WMS / SRM / OA</li>
 <li>微信小程序、企业微信</li>
 <li>Java SpringBoot</li>
 <li>.NET WebAPI</li>
@@ -483,51 +486,57 @@
 </ul>
 <p>相比修改 ESR Message Type 或 Message Mapping，该方法更加简单优雅，且不影响 XML Schema 结构设计。</p>
 <hr>
-<h2 id="五、RESTAdapterBean-常用-Module-Configuration-参数速查"><a href="#五、RESTAdapterBean-常用-Module-Configuration-参数速查" class="headerlink" title="五、RESTAdapterBean 常用 Module Configuration 参数速查"></a>五、RESTAdapterBean 常用 Module Configuration 参数速查</h2><p>REST Adapter 的 Module Key 为：</p>
+<h2 id="五、RESTAdapterBean-常用-Module-Configuration-参数速查">五、RESTAdapterBean 常用 Module Configuration 参数速查</h2>
+<p>REST Adapter 的 Module Key 为：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sap.com/com<span class="hljs-selector-class">.sap</span><span class="hljs-selector-class">.aii</span><span class="hljs-selector-class">.adapter</span><span class="hljs-selector-class">.rest</span>.app/RESTAdapterBean<br></code></pre></td></tr></table></figure>
-
 <p>以下参数由资料查询整理（<strong>仅 <code>setIgnoredElements</code> 实际验证过</strong>）。</p>
 <hr>
-<h3 id="1-setIgnoredElements-⭐⭐⭐⭐⭐"><a href="#1-setIgnoredElements-⭐⭐⭐⭐⭐" class="headerlink" title="1. setIgnoredElements ⭐⭐⭐⭐⭐"></a>1. setIgnoredElements ⭐⭐⭐⭐⭐</h3><p>忽略 XML 指定节点，去除包装层，输出 Root Array。</p>
+<h3 id="1-setIgnoredElements-⭐⭐⭐⭐⭐">1. setIgnoredElements ⭐⭐⭐⭐⭐</h3>
+<p>忽略 XML 指定节点，去除包装层，输出 Root Array。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: setIgnoredElements = IT_TAB<br><br>XML:<br>&lt;ROOT&gt;&lt;IT_TAB&gt;&lt;ITEM&gt;...&lt;/ITEM&gt;&lt;/IT_TAB&gt;&lt;/ROOT&gt;<br><br>JSON:<br>[&#123; &quot;...&quot; &#125;]<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="2-setIgnoreEmptyArrayValues-⭐⭐⭐⭐⭐"><a href="#2-setIgnoreEmptyArrayValues-⭐⭐⭐⭐⭐" class="headerlink" title="2. setIgnoreEmptyArrayValues ⭐⭐⭐⭐⭐"></a>2. setIgnoreEmptyArrayValues ⭐⭐⭐⭐⭐</h3><p>忽略空数组，精简 JSON 输出。</p>
+<h3 id="2-setIgnoreEmptyArrayValues-⭐⭐⭐⭐⭐">2. setIgnoreEmptyArrayValues ⭐⭐⭐⭐⭐</h3>
+<p>忽略空数组，精简 JSON 输出。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: setIgnoreEmptyArrayValues = true<br><br>默认: &#123; &quot;items&quot;: [] &#125;<br>配置后: &#123;&#125;<br></code></pre></td></tr></table></figure>
-
 <p>适用于第三方接口不允许空数组的场景。</p>
 <hr>
-<h3 id="3-ProceedRedirects-⭐⭐⭐⭐☆"><a href="#3-ProceedRedirects-⭐⭐⭐⭐☆" class="headerlink" title="3. ProceedRedirects ⭐⭐⭐⭐☆"></a>3. ProceedRedirects ⭐⭐⭐⭐☆</h3><p>控制是否自动跟随 HTTP 重定向（301&#x2F;302&#x2F;307）。</p>
+<h3 id="3-ProceedRedirects-⭐⭐⭐⭐☆">3. ProceedRedirects ⭐⭐⭐⭐☆</h3>
+<p>控制是否自动跟随 HTTP 重定向（301/302/307）。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例:<br>  ProceedRedirects = true   (默认，自动跟随)<br>  ProceedRedirects = false  (程序自行处理)<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="4-EncodeURL-⭐⭐⭐⭐☆"><a href="#4-EncodeURL-⭐⭐⭐⭐☆" class="headerlink" title="4. EncodeURL ⭐⭐⭐⭐☆"></a>4. EncodeURL ⭐⭐⭐⭐☆</h3><p>是否自动进行 URL Encode。</p>
+<h3 id="4-EncodeURL-⭐⭐⭐⭐☆">4. EncodeURL ⭐⭐⭐⭐☆</h3>
+<p>是否自动进行 URL Encode。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例:<br>  EncodeURL = true   (默认，&quot;中文&quot; → %E4%B8%AD%E6%96%87)<br>  EncodeURL = false  (目标系统已编码，关闭自动编码)<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="5-errorFormat"><a href="#5-errorFormat" class="headerlink" title="5. errorFormat"></a>5. errorFormat</h3><p>REST Sender 返回异常时的错误信息格式。</p>
+<h3 id="5-errorFormat">5. errorFormat</h3>
+<p>REST Sender 返回异常时的错误信息格式。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: errorFormat = JSON<br><br>默认: XML 格式错误<br>配置后: &#123; &quot;error&quot;: &quot;...&quot; &#125;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="6-escapeNonXML10Symbols"><a href="#6-escapeNonXML10Symbols" class="headerlink" title="6. escapeNonXML10Symbols"></a>6. escapeNonXML10Symbols</h3><p>转义非法 XML 1.0 字符（特殊字符、控制字符、非法 Unicode），避免 XML Parser 报错。</p>
+<h3 id="6-escapeNonXML10Symbols">6. escapeNonXML10Symbols</h3>
+<p>转义非法 XML 1.0 字符（特殊字符、控制字符、非法 Unicode），避免 XML Parser 报错。</p>
 <hr>
-<h3 id="7-escapeRestricted"><a href="#7-escapeRestricted" class="headerlink" title="7. escapeRestricted"></a>7. escapeRestricted</h3><p>自动转义 XML 保留字符（<code>&amp;</code> <code>&lt;</code> <code>&gt;</code>），避免 XML 解析失败。</p>
+<h3 id="7-escapeRestricted">7. escapeRestricted</h3>
+<p>自动转义 XML 保留字符（<code>&amp;</code> <code>&lt;</code> <code>&gt;</code>），避免 XML 解析失败。</p>
 <hr>
-<h3 id="8-addXMLDeclaration"><a href="#8-addXMLDeclaration" class="headerlink" title="8. addXMLDeclaration"></a>8. addXMLDeclaration</h3><p>控制是否输出 XML 声明。</p>
+<h3 id="8-addXMLDeclaration">8. addXMLDeclaration</h3>
+<p>控制是否输出 XML 声明。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: addXMLDeclaration = true<br><br>输出: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="9-setStandaloneNo"><a href="#9-setStandaloneNo" class="headerlink" title="9. setStandaloneNo"></a>9. setStandaloneNo</h3><p>输出 standalone&#x3D;”no” 的 XML 声明。</p>
+<h3 id="9-setStandaloneNo">9. setStandaloneNo</h3>
+<p>输出 standalone=&quot;no&quot; 的 XML 声明。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">SET → 示例: setStandaloneNo = true<br><br>输出: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="10-setRequestXIDynamicHeaders"><a href="#10-setRequestXIDynamicHeaders" class="headerlink" title="10. setRequestXIDynamicHeaders"></a>10. setRequestXIDynamicHeaders</h3><p>控制 Dynamic Header 与 HTTP Header 之间的互相转换。适用于 OAuth Token、自定义 Header 等场景。</p>
+<h3 id="10-setRequestXIDynamicHeaders">10. setRequestXIDynamicHeaders</h3>
+<p>控制 Dynamic Header 与 HTTP Header 之间的互相转换。适用于 OAuth Token、自定义 Header 等场景。</p>
 <hr>
-<h3 id="11-useDefaultCharsetForCustomHandling"><a href="#11-useDefaultCharsetForCustomHandling" class="headerlink" title="11. useDefaultCharsetForCustomHandling"></a>11. useDefaultCharsetForCustomHandling</h3><p>指定默认字符集，常用于解决中文乱码（UTF-8、GBK）。</p>
+<h3 id="11-useDefaultCharsetForCustomHandling">11. useDefaultCharsetForCustomHandling</h3>
+<p>指定默认字符集，常用于解决中文乱码（UTF-8、GBK）。</p>
 <hr>
-<h3 id="12-setIgnoreNamespaces"><a href="#12-setIgnoreNamespaces" class="headerlink" title="12. setIgnoreNamespaces"></a>12. setIgnoreNamespaces</h3><p>忽略 XML Namespace，适用于 JSON Key 不需要 Namespace 前缀的场景。</p>
+<h3 id="12-setIgnoreNamespaces">12. setIgnoreNamespaces</h3>
+<p>忽略 XML Namespace，适用于 JSON Key 不需要 Namespace 前缀的场景。</p>
 <hr>
-<h2 id="六、推荐组合配置（REST-Receiver）"><a href="#六、推荐组合配置（REST-Receiver）" class="headerlink" title="六、推荐组合配置（REST Receiver）"></a>六、推荐组合配置（REST Receiver）</h2><p>对于大多数 REST Receiver 接口，可参考以下组合：</p>
+<h2 id="六、推荐组合配置（REST-Receiver）">六、推荐组合配置（REST Receiver）</h2>
+<p>对于大多数 REST Receiver 接口，可参考以下组合：</p>
 <table>
 <thead>
 <tr>
@@ -536,7 +545,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>setIgnoredElements</td>
 <td>IT_TAB</td>
 <td>去除包装节点，输出 Root Array</td>
@@ -561,9 +571,11 @@
 <td>true</td>
 <td>避免字符集问题</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p><code>RESTAdapterBean</code> 的 Module Configuration 是 SAP PO REST Adapter 中一个非常实用但容易被忽略的高级功能。</p>
+<h2 id="七、总结">七、总结</h2>
+<p><code>RESTAdapterBean</code> 的 Module Configuration 是 SAP PO REST Adapter 中一个非常实用但容易被忽略的高级功能。</p>
 <p>核心要点：</p>
 <table>
 <thead>
@@ -573,7 +585,8 @@
 <th>用途</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>setIgnoredElements</td>
 <td>⭐⭐⭐⭐⭐</td>
 <td>去除包装节点，输出 Root Array</td>
@@ -598,10 +611,12 @@
 <td>⭐⭐⭐⭐☆</td>
 <td>返回 JSON 错误信息</td>
 </tr>
-</tbody></table>
-<p>其中，<strong><code>setIgnoredElements</code> 是开发 REST 接口时最值得掌握的配置</strong>，可在保持 ESR&#x2F;XSD 结构不变的情况下，轻松满足第三方接口对 JSON 根数组格式的要求。</p>
+</tbody>
+</table>
+<p>其中，<strong><code>setIgnoredElements</code> 是开发 REST 接口时最值得掌握的配置</strong>，可在保持 ESR/XSD 结构不变的情况下，轻松满足第三方接口对 JSON 根数组格式的要求。</p>
 <hr>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<h2 id="参考">参考</h2>
+<ul>
 <li>SAP Help Portal — REST Adapter Module Configuration</li>
 <li>实际项目验证：SAP PO 7.5 REST Receiver Channel</li>
 </ul>
@@ -726,8 +741,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/" title="使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证">
-                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证</span>
+                      <a href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/" title="使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账">
+                        <span class="hidden-mobile">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -784,6 +799,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -1040,6 +1061,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

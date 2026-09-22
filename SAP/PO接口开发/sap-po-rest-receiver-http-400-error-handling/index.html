@@ -418,26 +418,33 @@
             
               <div class="markdown-body">
                 
-                <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>在 SAP PO 中配置 SOAP2REST 接口调用第三方系统时，遇到一个特殊场景：</p>
+                <h2 id="问题背景">问题背景</h2>
+<p>在 SAP PO 中配置 SOAP2REST 接口调用第三方系统时，遇到一个特殊场景：</p>
 <ul>
 <li>对方系统在业务处理失败时返回 <strong>HTTP 400</strong> 状态码</li>
 <li>同时在响应报文中返回了详细的错误信息（如错误代码、错误描述等）</li>
 </ul>
 <p>按照标准的 RESTful API 设计原则，业务处理失败应该返回 HTTP 200，然后通过报文体中的业务状态码来标识成功或失败。但实际对接中，有些系统会在请求格式正确但业务校验失败时直接返回 4xx 错误码。</p>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>SAP PO 的默认行为是：</p>
+<h2 id="问题分析">问题分析</h2>
+<p>SAP PO 的默认行为是：</p>
 <ul>
 <li>当接收到 HTTP 4xx 或 5xx 错误状态码时，会将该响应视为<strong>异常</strong></li>
 <li>异常情况下，SAP PO <strong>不会继续解析返回报文</strong></li>
 <li>这导致对方系统返回的业务错误信息<strong>丢失</strong>，无法在 SAP ABAP 程序中获取和处理</li>
 </ul>
 <p>这种情况下，虽然知道接口调用失败了，但无法得知具体的失败原因，给问题排查和业务处理带来困难。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>通过在 <strong>REST Receiver Adapter</strong> 的 <strong>Error Handling</strong> 标签页配置自定义结果处理器，可以将 HTTP 400 响应当作正常报文接收。</p>
-<h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><ol>
-<li><p>打开 SAP PO Integration Directory，进入对应的 Receiver Communication Channel</p>
+<h2 id="解决方案">解决方案</h2>
+<p>通过在 <strong>REST Receiver Adapter</strong> 的 <strong>Error Handling</strong> 标签页配置自定义结果处理器，可以将 HTTP 400 响应当作正常报文接收。</p>
+<h3 id="配置步骤">配置步骤</h3>
+<ol>
+<li>
+<p>打开 SAP PO Integration Directory，进入对应的 Receiver Communication Channel</p>
 </li>
-<li><p>切换到 <strong>Error Handling</strong> 标签页</p>
+<li>
+<p>切换到 <strong>Error Handling</strong> 标签页</p>
 </li>
-<li><p>配置 <strong>Result Handler</strong> 如下：</p>
+<li>
+<p>配置 <strong>Result Handler</strong> 如下：</p>
 <table>
 <thead>
 <tr>
@@ -446,7 +453,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>Source</strong></td>
 <td>Exception</td>
 <td>表示处理异常情况</td>
@@ -461,51 +469,63 @@
 <td><code>&#123;http_result&#125;</code></td>
 <td>使用 HTTP 返回的原始报文作为消息内容</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </li>
-<li><p><strong>不要勾选</strong> “Selection does NOT match” 选项</p>
+<li>
+<p><strong>不要勾选</strong> &quot;Selection does NOT match&quot; 选项</p>
 </li>
 </ol>
-<h3 id="配置效果"><a href="#配置效果" class="headerlink" title="配置效果"></a>配置效果</h3><p>配置完成后：</p>
+<h3 id="配置效果">配置效果</h3>
+<p>配置完成后：</p>
 <ul>
 <li>SAP PO 会将 HTTP 400 响应作为正常消息处理</li>
 <li>返回的报文会按照 ESR 中配置的 <strong>Response Data Type</strong> 进行解析</li>
 <li>在 SAP ABAP 程序中可以通过 Proxy 或 Mapping 正常获取到返回报文内容</li>
 <li>可以从报文中提取业务错误代码、错误描述等信息进行后续处理</li>
 </ul>
-<h2 id="技术要点"><a href="#技术要点" class="headerlink" title="技术要点"></a>技术要点</h2><h3 id="1-http-result-变量"><a href="#1-http-result-变量" class="headerlink" title="1. {http_result} 变量"></a>1. {http_result} 变量</h3><p><code>&#123;http_result&#125;</code> 是 SAP PO 提供的动态变量，表示 HTTP 响应的原始报文内容。在 Error Handling 中使用该变量，可以确保即使 HTTP 状态码为错误码，报文内容也不会丢失。</p>
-<h3 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h3><p>这种配置方式适用于以下场景：</p>
+<h2 id="技术要点">技术要点</h2>
+<h3 id="1-http-result-变量">1. {http_result} 变量</h3>
+<p><code>&#123;http_result&#125;</code> 是 SAP PO 提供的动态变量，表示 HTTP 响应的原始报文内容。在 Error Handling 中使用该变量，可以确保即使 HTTP 状态码为错误码，报文内容也不会丢失。</p>
+<h3 id="2-适用场景">2. 适用场景</h3>
+<p>这种配置方式适用于以下场景：</p>
 <ul>
 <li>对方系统在业务校验失败时返回 4xx 状态码</li>
 <li>错误响应报文结构与正常响应报文结构一致（或者有专门的 Error Response DT）</li>
 <li>需要在 SAP 端解析并处理详细的错误信息</li>
 </ul>
-<h3 id="3-ESR-配置要求"><a href="#3-ESR-配置要求" class="headerlink" title="3. ESR 配置要求"></a>3. ESR 配置要求</h3><p>在 ESR (Enterprise Services Repository) 中需要确保：</p>
+<h3 id="3-ESR-配置要求">3. ESR 配置要求</h3>
+<p>在 ESR (Enterprise Services Repository) 中需要确保：</p>
 <ul>
 <li>Response Message Type 的结构能够包容错误响应的字段</li>
 <li>或者配置独立的 Fault Message Type 来接收错误响应</li>
 </ul>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><p><strong>不要滥用</strong>：这种配置会将 HTTP 错误当作正常消息处理，可能会掩盖真正的网络或服务异常。建议只针对特定的 HTTP 状态码（如 400）配置，不要对所有错误码一刀切。</p>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>
+<p><strong>不要滥用</strong>：这种配置会将 HTTP 错误当作正常消息处理，可能会掩盖真正的网络或服务异常。建议只针对特定的 HTTP 状态码（如 400）配置，不要对所有错误码一刀切。</p>
 </li>
-<li><p><strong>监控和日志</strong>：配置后建议在 Message Mapping 或 ABAP Proxy 中添加日志记录，区分正常响应和错误响应，便于后续监控和问题排查。</p>
+<li>
+<p><strong>监控和日志</strong>：配置后建议在 Message Mapping 或 ABAP Proxy 中添加日志记录，区分正常响应和错误响应，便于后续监控和问题排查。</p>
 </li>
-<li><p><strong>与第三方系统协调</strong>：从长远看，建议与第三方系统协调，让其遵循标准的 RESTful 设计原则，业务错误返回 200 状态码，通过报文体中的状态码区分成功和失败。</p>
+<li>
+<p><strong>与第三方系统协调</strong>：从长远看，建议与第三方系统协调，让其遵循标准的 RESTful 设计原则，业务错误返回 200 状态码，通过报文体中的状态码区分成功和失败。</p>
 </li>
 </ol>
-<h2 id="配置界面说明"><a href="#配置界面说明" class="headerlink" title="配置界面说明"></a>配置界面说明</h2><p>在 SAP PO Integration Directory 的 Receiver Communication Channel 配置界面中：</p>
+<h2 id="配置界面说明">配置界面说明</h2>
+<p>在 SAP PO Integration Directory 的 Receiver Communication Channel 配置界面中：</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs less">┌─────────────────────────────────────────────────────────────┐<br>│ <span class="hljs-selector-tag">Adapter</span> <span class="hljs-selector-tag">Type</span>: <span class="hljs-selector-tag">REST</span>          <span class="hljs-selector-tag">Receiver</span>                        │<br>│ <span class="hljs-selector-tag">Transport</span> <span class="hljs-selector-tag">Protocol</span>: <span class="hljs-selector-tag">HTTP</span>                                     │<br>│ <span class="hljs-selector-tag">Message</span> <span class="hljs-selector-tag">Protocol</span>: <span class="hljs-selector-tag">REST</span>                                       │<br>├─────────────────────────────────────────────────────────────┤<br>│ <span class="hljs-selector-attr">[REST Operation]</span> <span class="hljs-selector-attr">[Data Format]</span> <span class="hljs-selector-attr">[Operation Rules]</span>            │<br>│ <span class="hljs-selector-attr">[Response Determination]</span> <span class="hljs-selector-attr">[HTTP Headers]</span> <span class="hljs-selector-attr">[Error Handling]</span>    │  ◄── 切换到此标签页<br>├─────────────────────────────────────────────────────────────┤<br>│ <span class="hljs-selector-tag">Result</span> <span class="hljs-selector-tag">Handler</span>                                              │<br>│                                                             │<br>│   <span class="hljs-selector-tag">Source</span>:           <span class="hljs-selector-attr">[Exception                        ▼]</span>   │<br>│   □ <span class="hljs-selector-tag">Selection</span> <span class="hljs-selector-tag">does</span> <span class="hljs-selector-tag">NOT</span> <span class="hljs-selector-tag">match</span>                                │<br>│   <span class="hljs-selector-tag">Action</span>:           <span class="hljs-selector-attr">[Custom Result                    ▼]</span>   │<br>│   <span class="hljs-selector-tag">Message</span> <span class="hljs-selector-tag">Content</span>:  ┌─────────────────────────────────┐    │<br>│                     │ &#123;<span class="hljs-selector-tag">http_result</span>&#125;                   │    │<br>│                     │                                 │    │<br>│                     │                                 │    │<br>│                     └─────────────────────────────────┘    │<br>│                                                             │<br>└─────────────────────────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
-
 <p><strong>关键配置说明：</strong></p>
 <ul>
 <li><strong>Error Handling 标签页</strong>：位于配置界面顶部的标签栏最右侧</li>
 <li><strong>Result Handler 区域</strong>：在 Error Handling 标签页的主要配置区域</li>
-<li><strong>Source 下拉框</strong>：选择 “Exception” 表示处理异常情况</li>
+<li><strong>Source 下拉框</strong>：选择 &quot;Exception&quot; 表示处理异常情况</li>
 <li><strong>Selection does NOT match 复选框</strong>：保持不勾选状态</li>
-<li><strong>Action 下拉框</strong>：选择 “Custom Result” 表示自定义结果处理</li>
+<li><strong>Action 下拉框</strong>：选择 &quot;Custom Result&quot; 表示自定义结果处理</li>
 <li><strong>Message Content 文本框</strong>：输入 <code>&#123;http_result&#125;</code> 变量</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过在 SAP PO REST Receiver Adapter 的 Error Handling 中配置自定义结果处理器，可以有效解决第三方系统返回 HTTP 错误码但同时包含业务错误信息的场景。这种配置方式在实际项目中非常实用，能够确保错误信息不丢失，提高问题排查效率和业务处理能力。</p>
+<h2 id="总结">总结</h2>
+<p>通过在 SAP PO REST Receiver Adapter 的 Error Handling 中配置自定义结果处理器，可以有效解决第三方系统返回 HTTP 错误码但同时包含业务错误信息的场景。这种配置方式在实际项目中非常实用，能够确保错误信息不丢失，提高问题排查效率和业务处理能力。</p>
 
                 
               </div>
@@ -677,6 +697,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -933,6 +959,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
