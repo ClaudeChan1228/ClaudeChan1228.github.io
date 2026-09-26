@@ -19,28 +19,29 @@
   <meta name="author" content="彼得陈奇">
   <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球,心理学">
   
-    <meta name="description" content="以长江电力最新行情、2026年中报和机构一致预期为例，完整演示股利贴现、股权自由现金流、相对估值与格雷厄姆公式的使用过程">
+    <meta name="description" content="以长江电力最新行情、2026年中报和机构一致预期为例，完整演示股利贴现、股权自由现金流、企业自由现金流、相对估值与格雷厄姆公式的使用过程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证">
+<meta property="og:title" content="长江电力估值实战：用DDM、FCFE、FCFF与企业价值倍数交叉验证">
 <meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/china-yangtze-power-valuation-case-study/index.html">
 <meta property="og:site_name" content="彼得陈奇的个人博客">
-<meta property="og:description" content="以长江电力最新行情、2026年中报和机构一致预期为例，完整演示股利贴现、股权自由现金流、相对估值与格雷厄姆公式的使用过程">
+<meta property="og:description" content="以长江电力最新行情、2026年中报和机构一致预期为例，完整演示股利贴现、股权自由现金流、企业自由现金流、相对估值与格雷厄姆公式的使用过程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-26T12:25:47.883Z">
+<meta property="article:modified_time" content="2026-09-26T12:56:46.382Z">
 <meta property="article:author" content="彼得陈奇">
 <meta property="article:tag" content="估值">
 <meta property="article:tag" content="PE">
 <meta property="article:tag" content="DDM">
 <meta property="article:tag" content="长江电力">
 <meta property="article:tag" content="FCFE">
+<meta property="article:tag" content="FCFF">
 <meta property="article:tag" content="EV&#x2F;EBITDA">
 <meta property="article:tag" content="案例分析">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证 - 彼得陈奇的个人博客</title>
+  <title>长江电力估值实战：用DDM、FCFE、FCFF与企业价值倍数交叉验证 - 彼得陈奇的个人博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -335,7 +336,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证"></span>
+            <span id="subtitle" data-typed-text="长江电力估值实战：用DDM、FCFE、FCFF与企业价值倍数交叉验证"></span>
           
         </div>
 
@@ -358,7 +359,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.6k 字
+          8.2k 字
         
       </span>
     
@@ -369,7 +370,7 @@
         
         
         
-          56 分钟
+          69 分钟
         
       </span>
     
@@ -408,7 +409,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证</h1>
+            <h1 id="seo-header">长江电力估值实战：用DDM、FCFE、FCFF与企业价值倍数交叉验证</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
@@ -447,9 +448,9 @@
 </ul>
 <p>2026年上半年，公司境内六座梯级电站发电量为1327.44亿千瓦时，同比增长4.81%。但不同流域来水分化明显：乌东德水库来水同比偏枯16.94%，三峡水库来水同比偏丰28.74%。这说明长江电力虽然比单一水电站更分散，仍然不能把发电量当作无波动的固定年金。</p>
 <p>因此，本文采用以下组合：</p>
-<p>$$<br>
-DDM主估值 + FCFE现金流验证 + PE/PB/EV倍数市场验证 + 格雷厄姆公式压力测试<br>
-$$</p>
+<blockquote>
+<p>DDM股东回报验证 + FCFE股权现金流验证 + FCFF企业价值估值 + PE/PB/EV倍数市场验证 + 格雷厄姆公式压力测试</p>
+</blockquote>
 <h2 id="二、估值基准日与核心数据">二、估值基准日与核心数据</h2>
 <h3 id="2-1-市场数据">2.1 市场数据</h3>
 <table>
@@ -582,12 +583,24 @@ $$</p>
 <td style="text-align:right">106.70亿元</td>
 </tr>
 <tr>
+<td>利息费用</td>
+<td style="text-align:right">88.16亿元</td>
+</tr>
+<tr>
+<td>实际所得税率</td>
+<td style="text-align:right">17.14%</td>
+</tr>
+<tr>
 <td>简化FCFE</td>
 <td style="text-align:right">334.17亿元</td>
 </tr>
 <tr>
 <td>简化FCFE/股</td>
 <td style="text-align:right">1.37元</td>
+</tr>
+<tr>
+<td>简化FCFF</td>
+<td style="text-align:right">513.91亿元</td>
 </tr>
 </tbody>
 </table>
@@ -634,7 +647,7 @@ $$</p>
 </table>
 <p>2026E到2028E的两年EPS复合增长率约为：</p>
 <p>$$<br>
-CAGR = \left(\frac{1.57}{1.47}\right)^{1/2} - 1 = 3.35%<br>
+CAGR = \left(\frac{1.57}{1.47}\right)^{1/2} - 1 = 0.0335<br>
 $$</p>
 <p>市场对长江电力的主流预期不是高速成长，而是低个位数的稳定增长。</p>
 <h2 id="三、DDM：最适合长江电力的主估值方法">三、DDM：最适合长江电力的主估值方法</h2>
@@ -725,7 +738,7 @@ $$</p>
 </ul>
 <p>则：</p>
 <p>$$<br>
-V_0 = \frac{1.03}{6.5%-3.0%} = 29.43元<br>
+V_0 = \frac{1.03}{0.065-0.030} = 29.43元<br>
 $$</p>
 <p>与28.36元市价相比，中性戈登模型只给出约3.8%的价值空间，谈不上明显低估。</p>
 <p>反过来计算，在要求收益率为6.5%、当前每股股利为1.00元时，28.36元市价隐含的永续股利增长率约为2.87%。这与机构预计未来两年EPS增长3.35%的水平接近。</p>
@@ -803,8 +816,125 @@ $$</p>
 </ul>
 <p>中性FCFE估值为32.38元，高于市价，但我不会直接把它当作目标价。因为本文使用的是公开报表快速推导的简化FCFE，没有逐项预测未来电站资本开支、债务到期结构、少数股东现金流和境外业务汇率。</p>
 <p>FCFE在这里最重要的作用不是给出32.38元，而是证明：<strong>市场价格对资本开支和净偿债假设非常敏感。</strong></p>
-<h2 id="五、相对估值：市场正在给多少倍数">五、相对估值：市场正在给多少倍数</h2>
-<h3 id="5-1-PE与PB">5.1 PE与PB</h3>
+<h2 id="五、FCFF：从企业整体经营资产出发估值">五、FCFF：从企业整体经营资产出发估值</h2>
+<p>前面的FCFE直接得到股权价值，但长江电力有较高的有息债务，资本结构变化会明显影响FCFE。按照估值框架，对重资产企业还应使用FCFF先评估全部经营资产，再扣除债权人和少数股东对应的价值。</p>
+<h3 id="5-1-从FCFE还原简化FCFF">5.1 从FCFE还原简化FCFF</h3>
+<p>按前文框架，两者的简化关系为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">FCFF ≈ FCFE + 税后利息 - 净借款<br></code></pre></td></tr></table></figure>
+<p>长江电力TTM利息费用约88.16亿元，TTM实际所得税率约17.14%，净借款为-106.70亿元，即公司处于净偿债状态。因此：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">税后利息 = 88.16 × (1 - 17.14%) = 73.04亿元<br>FCFF = 334.17 + 73.04 - (-106.70) = 513.91亿元<br></code></pre></td></tr></table></figure>
+<p>也可以从现金流角度快速核对：经营活动现金流减资本开支为440.87亿元，再加回税后利息73.04亿元，同样得到约513.91亿元。</p>
+<p>这里需要特别区分两个概念：</p>
+<ul>
+<li>FCFE的334.17亿元已经反映过去十二个月净偿债106.70亿元对股东现金流的影响</li>
+<li>FCFF的513.91亿元先忽略债权人与股东之间的分配，衡量经营资产对全部资本提供者产生的现金流</li>
+</ul>
+<h3 id="5-2-WACC的设置">5.2 WACC的设置</h3>
+<p>WACC不能直接使用股权要求收益率。本文按市值权重做一个简化估算：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th style="text-align:right">估算值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>股权市值</td>
+<td style="text-align:right">6939.19亿元</td>
+<td>2026年9月24日收盘价计算</td>
+</tr>
+<tr>
+<td>有息债务</td>
+<td style="text-align:right">2838.89亿元</td>
+<td>2026年6月底简化口径</td>
+</tr>
+<tr>
+<td>股权权重</td>
+<td style="text-align:right">70.97%</td>
+<td>E ÷ (D + E)</td>
+</tr>
+<tr>
+<td>债务权重</td>
+<td style="text-align:right">29.03%</td>
+<td>D ÷ (D + E)</td>
+</tr>
+<tr>
+<td>股权成本</td>
+<td style="text-align:right">6.50%</td>
+<td>与DDM、FCFE中性假设一致</td>
+</tr>
+<tr>
+<td>税前债务成本</td>
+<td style="text-align:right">约3.10%</td>
+<td>TTM利息费用 ÷ 平均有息债务的近似值</td>
+</tr>
+<tr>
+<td>实际所得税率</td>
+<td style="text-align:right">17.14%</td>
+<td>TTM所得税费用 ÷ 税前利润</td>
+</tr>
+<tr>
+<td>机械计算WACC</td>
+<td style="text-align:right">约5.35%</td>
+<td>按市场价值加权</td>
+</tr>
+</tbody>
+</table>
+<p>5.35%只是基于当前利率与资本结构的机械结果。考虑到来水、电价、再投资和长期利率的不确定性，本文不直接使用最低值，而把<strong>6.0%作为中性WACC</strong>，并用5.5%—6.5%做情景测试。</p>
+<h3 id="5-3-FCFF两阶段折现">5.3 FCFF两阶段折现</h3>
+<p>明确预测期设为5年，之后进入永续阶段。估值完成后，按下式从企业价值转换为普通股股权价值：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">股权价值 = 企业价值 - 净债务 - 少数股东权益<br>每股价值 = 股权价值 ÷ 总股本<br></code></pre></td></tr></table></figure>
+<p>本文使用净债务2745.16亿元、少数股东权益119.82亿元和总股本244.68亿股，得到：</p>
+<table>
+<thead>
+<tr>
+<th>情景</th>
+<th style="text-align:right">初始FCFF</th>
+<th style="text-align:right">前5年增长率</th>
+<th style="text-align:right">永续增长率</th>
+<th style="text-align:right">WACC</th>
+<th style="text-align:right">企业价值</th>
+<th style="text-align:right">每股价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保守</td>
+<td style="text-align:right">460亿元</td>
+<td style="text-align:right">1.0%</td>
+<td style="text-align:right">0.5%</td>
+<td style="text-align:right">6.5%</td>
+<td style="text-align:right">7877.90亿元</td>
+<td style="text-align:right">20.49元</td>
+</tr>
+<tr>
+<td>中性</td>
+<td style="text-align:right">513.91亿元</td>
+<td style="text-align:right">2.0%</td>
+<td style="text-align:right">1.0%</td>
+<td style="text-align:right">6.0%</td>
+<td style="text-align:right">10857.60亿元</td>
+<td style="text-align:right">32.67元</td>
+</tr>
+<tr>
+<td>乐观</td>
+<td style="text-align:right">550亿元</td>
+<td style="text-align:right">3.0%</td>
+<td style="text-align:right">1.5%</td>
+<td style="text-align:right">5.5%</td>
+<td style="text-align:right">14939.80亿元</td>
+<td style="text-align:right">49.35元</td>
+</tr>
+</tbody>
+</table>
+<p>中性情景的计算过程为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">企业价值 = 10857.60亿元<br>股权价值 = 10857.60 - 2745.16 - 119.82 = 7992.62亿元<br>每股价值 = 7992.62 ÷ 244.68 = 32.67元<br></code></pre></td></tr></table></figure>
+<p>FCFF中性估值与FCFE中性估值32.38元非常接近，说明在当前简化假设下，两条路径能够互相验证。但这并不代表32元就是精确价值：三个FCFF情景中，终值现值占企业价值约75%—83%，WACC或永续增长率变化0.5个百分点，结果就会明显变化。</p>
+<p>以当前企业价值9804.17亿元和TTM FCFF 513.91亿元反推，如果采用6.0%的WACC，市场隐含的长期稳定增长率约为0.72%。这说明28.36元并非只依赖高增长才能成立，但已经要求经营现金流、资本开支和融资成本长期保持稳定。</p>
+<h2 id="六、相对估值：市场正在给多少倍数">六、相对估值：市场正在给多少倍数</h2>
+<h3 id="6-1-PE与PB">6.1 PE与PB</h3>
 <p>按28.36元股价计算：</p>
 <table>
 <thead>
@@ -861,7 +991,7 @@ $$</p>
 </table>
 <p>因此，历史PE法给出的主要区间约为25.3—30.3元，28.36元处于区间中部偏上。</p>
 <p>PB为3.21倍，看起来不便宜，但长江电力的资产负债表包含大量使用多年、持续折旧的水电资产，账面净资产不能完整代表优质水电站的经济价值。PB需要结合ROE、资产寿命、特许经营条件和重置成本理解，不能单独下结论。</p>
-<h3 id="5-2-EV-EBITDA与EV-EBIT">5.2 EV/EBITDA与EV/EBIT</h3>
+<h3 id="6-2-EV-EBITDA与EV-EBIT">6.2 EV/EBITDA与EV/EBIT</h3>
 <p>截至2026年6月底，按简化口径估算：</p>
 <table>
 <thead>
@@ -920,7 +1050,7 @@ $$</p>
 <li>EV/EBIT虽然扣除了折旧，但会计折旧年限未必等于大坝和机组的经济寿命</li>
 </ul>
 <p>因此，我不会只拿13.55倍EV/EBITDA与同行比较，而会同时看18.46倍EV/EBIT、166.13亿元TTM资本开支和334.17亿元简化FCFE。</p>
-<h2 id="六、格雷厄姆公式：把它当常识检查">六、格雷厄姆公式：把它当常识检查</h2>
+<h2 id="七、格雷厄姆公式：把它当常识检查">七、格雷厄姆公式：把它当常识检查</h2>
 <p>格雷厄姆成长股公式为：</p>
 <p>$$<br>
 V = EPS \times (8.5 + 2g)<br>
@@ -938,7 +1068,7 @@ $$</p>
 <li>企业的债务成本、资本结构和投资收益</li>
 </ul>
 <p>所以22.33元不应被理解为精确内在价值。它更像一个提醒：如果未来增长只有3%左右，当前约19倍PE已经包含了相当程度的质量溢价。</p>
-<h2 id="七、把不同方法放在一起">七、把不同方法放在一起</h2>
+<h2 id="八、把不同方法放在一起">八、把不同方法放在一起</h2>
 <table>
 <thead>
 <tr>
@@ -969,6 +1099,11 @@ $$</p>
 <td>资本开支、净偿债和折现率决定结果</td>
 </tr>
 <tr>
+<td>FCFF折现</td>
+<td style="text-align:right">20.49—49.35元</td>
+<td>WACC、永续增长率和净债务决定结果</td>
+</tr>
+<tr>
 <td>历史PE区间</td>
 <td style="text-align:right">25.28—30.25元</td>
 <td>当前处于历史中间区间偏上</td>
@@ -980,7 +1115,7 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>排除明显过度保守的零增长模型，以及假设较激进的乐观FCFE后，多数结果集中在：</p>
+<p>排除明显过度保守的零增长模型，以及假设较激进的乐观FCFE、FCFF后，多数结果集中在：</p>
 <p>$$<br>
 25元 \sim 30元<br>
 $$</p>
@@ -989,25 +1124,40 @@ $$</p>
 <p>在2025年度每股分红1.00元、未来盈利和分红长期增长约2%—3%、股权要求收益率约6%—7%的假设下，28.36元更接近合理估值，而不是具有明显安全边际的价格。</p>
 </blockquote>
 <p>如果要求15%—20%的安全边际，以27.5元作为中性价值锚点，对应观察价格约为：</p>
-<p>$$<br>
-15%安全边际：27.5 \times 85% = 23.38元<br>
-$$</p>
-<p>$$<br>
-20%安全边际：27.5 \times 80% = 22.00元<br>
-$$</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">安全边际</th>
+<th style="text-align:right">计算过程</th>
+<th style="text-align:right">对应观察价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">15%</td>
+<td style="text-align:right">27.50 × (1 - 15%)</td>
+<td style="text-align:right">23.38元</td>
+</tr>
+<tr>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">27.50 × (1 - 20%)</td>
+<td style="text-align:right">22.00元</td>
+</tr>
+</tbody>
+</table>
 <p>这不是买入建议，而是把“合理价值”和“愿意承担风险的价格”分开。</p>
-<h2 id="八、这次估值最重要的几个认识">八、这次估值最重要的几个认识</h2>
-<h3 id="8-1-高股息不等于便宜">8.1 高股息不等于便宜</h3>
+<h2 id="九、这次估值最重要的几个认识">九、这次估值最重要的几个认识</h2>
+<h3 id="9-1-高股息不等于便宜">9.1 高股息不等于便宜</h3>
 <p>长江电力静态股息率约3.53%，比同期10年期国债收益率1.67%高约1.86个百分点。但股票股利不是无风险票息，仍然受到来水、电价、资本开支、债务和分红政策影响。</p>
-<h3 id="8-2-低利率会显著抬高长久期资产估值">8.2 低利率会显著抬高长久期资产估值</h3>
+<h3 id="9-2-低利率会显著抬高长久期资产估值">9.2 低利率会显著抬高长久期资产估值</h3>
 <p>在戈登模型中，把要求收益率从7.0%降低到6.0%，即使永续增长率不变，估值也会大幅上升。长江电力估值中相当一部分来自低利率和稳定性溢价，而不仅是盈利增长。</p>
-<h3 id="8-3-重资产企业不能只看EV-EBITDA">8.3 重资产企业不能只看EV/EBITDA</h3>
+<h3 id="9-3-重资产企业不能只看EV-EBITDA">9.3 重资产企业不能只看EV/EBITDA</h3>
 <p>长江电力TTM折旧摊销约192亿元。忽略折旧会让经营利润看起来更高，但完全使用会计折旧又可能低估超长寿命水电资产的经济价值。正确做法是把EV/EBITDA、EV/EBIT、资本开支和自由现金流放在一起。</p>
-<h3 id="8-4-DDM和FCFE不一致时，要找原因">8.4 DDM和FCFE不一致时，要找原因</h3>
-<p>DDM使用实际分红，FCFE使用理论可分配现金。长江电力2025年度现金分红244.68亿元，TTM简化FCFE约334.17亿元。两者之间的差额可能用于继续偿债、投资和保留流动性。</p>
-<p>如果直接把全部FCFE都视为未来分红，估值会偏高；如果假设分红永远停留在1.00元，又会忽略留存现金最终回馈股东的可能性。</p>
-<h3 id="8-5-估值分歧本身就是风险提示">8.5 估值分歧本身就是风险提示</h3>
-<p>当零增长DDM给出15元、两阶段DDM给出25元、中性FCFE给出32元时，不能简单求平均。差异来自模型对未来的不同理解：</p>
+<h3 id="9-4-DDM、FCFE和FCFF不一致时，要找原因">9.4 DDM、FCFE和FCFF不一致时，要找原因</h3>
+<p>DDM使用实际分红，FCFE使用理论可分配给股东的现金，FCFF则先计算经营资产对全部资本提供者产生的现金。长江电力2025年度现金分红244.68亿元，TTM简化FCFE约334.17亿元，TTM简化FCFF约513.91亿元。三者的差额来自留存现金、资本开支、税后利息和净借款。</p>
+<p>如果直接把全部FCFE都视为未来分红，估值会偏高；如果把FCFF直接除以股本，又会完全忽略债务和少数股东权益；如果假设分红永远停留在1.00元，则会忽略留存现金最终回馈股东的可能性。</p>
+<h3 id="9-5-估值分歧本身就是风险提示">9.5 估值分歧本身就是风险提示</h3>
+<p>当零增长DDM给出15元、两阶段DDM给出25元、中性FCFE与FCFF给出约32元时，不能简单求平均。差异来自模型对未来的不同理解：</p>
 <ul>
 <li>分红会不会增长？</li>
 <li>资本开支是否可持续下降？</li>
@@ -1016,7 +1166,7 @@ $$</p>
 <li>留存现金能否创造足够回报？</li>
 </ul>
 <p>真正需要跟踪的是这些驱动因素，而不是某个小数点后的目标价。</p>
-<h2 id="九、后续跟踪清单">九、后续跟踪清单</h2>
+<h2 id="十、后续跟踪清单">十、后续跟踪清单</h2>
 <p>以后更新长江电力估值时，我会重点检查：</p>
 <ul class="contains-task-list">
 <li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 六座梯级电站发电量和长江来水变化</li>
@@ -1030,11 +1180,12 @@ $$</p>
 <li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 2026—2028年一致预期EPS是否下修</li>
 <li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 当前价格隐含的长期分红增长率是否仍合理</li>
 </ul>
-<h2 id="十、结论">十、结论</h2>
+<h2 id="十一、结论">十一、结论</h2>
 <p>长江电力很适合用来理解估值方法的边界：</p>
 <ul>
 <li>DDM最贴近稳定分红特征，但对折现率和永续增长率极其敏感</li>
 <li>FCFE能看到经营现金流、资本开支和净偿债，却需要更细致的长期预测</li>
+<li>FCFF能从经营资产整体出发，并明确处理WACC、净债务和少数股东权益，但终值占比很高</li>
 <li>PE适合观察市场定价位置，但不能解释债务和资本开支</li>
 <li>EV/EBITDA容易忽略重资产企业的真实再投资需求</li>
 <li>格雷厄姆公式可以做保守检查，却无法完整反映低利率和稀缺资产溢价</li>
@@ -1059,7 +1210,7 @@ $$</p>
 <ul>
 <li>金额均按公开报表数据换算，四舍五入可能造成尾差</li>
 <li>TTM数据采用“2025年全年 + 2026年上半年 - 2025年上半年”计算</li>
-<li>FCFE、EV、EBIT和EBITDA均为学习用途的简化口径，不等同于公司或专业机构正式估值模型</li>
+<li>FCFE、FCFF、WACC、EV、EBIT和EBITDA均为学习用途的简化口径，不等同于公司或专业机构正式估值模型</li>
 <li>估值基准日为2026年9月24日，市场价格和一致预期会持续变化</li>
 </ul>
 
@@ -1112,6 +1263,8 @@ $$</p>
       
         <a href="/tags/FCFE/" class="print-no-link">#FCFE</a>
       
+        <a href="/tags/FCFF/" class="print-no-link">#FCFF</a>
+      
         <a href="/tags/EV-EBITDA/" class="print-no-link">#EV/EBITDA</a>
       
         <a href="/tags/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="print-no-link">#案例分析</a>
@@ -1126,7 +1279,7 @@ $$</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证</div>
+      <div>长江电力估值实战：用DDM、FCFE、FCFF与企业价值倍数交叉验证</div>
       <div>https://claudechan1228.github.io/投资/理念/china-yangtze-power-valuation-case-study/</div>
     </div>
     <div class="license-meta">
