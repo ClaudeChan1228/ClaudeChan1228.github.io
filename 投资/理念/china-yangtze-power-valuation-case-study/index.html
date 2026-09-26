@@ -1,0 +1,1559 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="彼得陈奇">
+  <meta name="keywords" content="SAP,ERP,ABAP,股票投资,乒乓球,心理学">
+  
+    <meta name="description" content="以长江电力最新行情、2026年中报和机构一致预期为例，完整演示股利贴现、股权自由现金流、相对估值与格雷厄姆公式的使用过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证">
+<meta property="og:url" content="https://claudechan1228.github.io/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/china-yangtze-power-valuation-case-study/index.html">
+<meta property="og:site_name" content="彼得陈奇的个人博客">
+<meta property="og:description" content="以长江电力最新行情、2026年中报和机构一致预期为例，完整演示股利贴现、股权自由现金流、相对估值与格雷厄姆公式的使用过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T12:25:47.883Z">
+<meta property="article:author" content="彼得陈奇">
+<meta property="article:tag" content="估值">
+<meta property="article:tag" content="PE">
+<meta property="article:tag" content="DDM">
+<meta property="article:tag" content="长江电力">
+<meta property="article:tag" content="FCFE">
+<meta property="article:tag" content="EV&#x2F;EBITDA">
+<meta property="article:tag" content="案例分析">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证 - 彼得陈奇的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"claudechan1228.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>彼得陈奇的个人博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/kanban/" target="_self">
+                
+                <span>日程</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/reading/" target="_self">
+                
+                <span>阅读</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/kanban/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>日程</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/reading/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>阅读</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-link-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-26 00:00" pubdate>
+          2026-09-26
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          56 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2026-09-26
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="引言">引言</h2>
+<p>前一篇笔记系统梳理了DDM、DCF、企业价值倍数和格雷厄姆公式。这篇文章不再讨论抽象定义，而是选择长江电力（<a target="_blank" rel="noopener" href="http://600900.SH">600900.SH</a>）做一次完整的估值练习。</p>
+<p>选择长江电力有三个原因：</p>
+<ol>
+<li>它是成熟、稳定分红的公用事业企业，适合使用DDM</li>
+<li>它又是典型重资产企业，必须检查资本开支、债务和自由现金流</li>
+<li>它的增长较慢，正好可以观察不同估值方法为什么会给出不同答案</li>
+</ol>
+<p>本文使用截至<strong>2026年9月24日收盘</strong>的市场数据、2026年半年度报告、2025年年度报告，以及截至2026年9月25日的机构一致预期。</p>
+<blockquote>
+<p>本文是估值方法练习，不构成投资建议。估值结论只对文中的数据日期和假设负责。</p>
+</blockquote>
+<h2 id="一、先理解长江电力是什么样的资产">一、先理解长江电力是什么样的资产</h2>
+<p>长江电力的核心资产是长江干流六座梯级水电站。它的商业模式可以简化为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">长江来水<br>   ↓<br>梯级水库联合调度<br>   ↓<br>水轮发电机组发电<br>   ↓<br>上网电量 × 上网电价<br>   ↓<br>收入与经营现金流<br></code></pre></td></tr></table></figure>
+<p>这类资产的特点是：</p>
+<ul>
+<li>电站前期建设投入巨大，投产后经营寿命很长</li>
+<li>折旧金额大，但现金运营成本相对较低</li>
+<li>发电量受来水影响，年度利润并非完全线性增长</li>
+<li>电价受到政策和电力市场化交易机制影响</li>
+<li>现金流较强，但资产负债率和有息债务也不低</li>
+<li>分红稳定，市场经常将其作为红利资产定价</li>
+</ul>
+<p>2026年上半年，公司境内六座梯级电站发电量为1327.44亿千瓦时，同比增长4.81%。但不同流域来水分化明显：乌东德水库来水同比偏枯16.94%，三峡水库来水同比偏丰28.74%。这说明长江电力虽然比单一水电站更分散，仍然不能把发电量当作无波动的固定年金。</p>
+<p>因此，本文采用以下组合：</p>
+<p>$$<br>
+DDM主估值 + FCFE现金流验证 + PE/PB/EV倍数市场验证 + 格雷厄姆公式压力测试<br>
+$$</p>
+<h2 id="二、估值基准日与核心数据">二、估值基准日与核心数据</h2>
+<h3 id="2-1-市场数据">2.1 市场数据</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值</th>
+<th>口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收盘价</td>
+<td>28.36元</td>
+<td>2026-09-24</td>
+</tr>
+<tr>
+<td>总股本</td>
+<td>244.68亿股</td>
+<td>2026年中报</td>
+</tr>
+<tr>
+<td>总市值</td>
+<td>6939.19亿元</td>
+<td>收盘价 × 总股本</td>
+</tr>
+<tr>
+<td>PE（TTM）</td>
+<td>19.17倍</td>
+<td>腾讯行情</td>
+</tr>
+<tr>
+<td>PB</td>
+<td>3.21倍</td>
+<td>腾讯行情</td>
+</tr>
+<tr>
+<td>2025年度每股股利</td>
+<td>1.00元</td>
+<td>含中期0.21元、末期0.79元</td>
+</tr>
+<tr>
+<td>静态股息率</td>
+<td>3.53%</td>
+<td>1.00 ÷ 28.36</td>
+</tr>
+</tbody>
+</table>
+<p>2025年度每股分红1.00元，分红总额244.68亿元，约占当年归母净利润345.03亿元的70.92%。2026年半年度报告没有提出新的半年度分红预案，因此本文先以已经实现的2025年度每股股利1.00元作为DDM起点，而不把尚未宣布的分红当成确定现金流。</p>
+<h3 id="2-2-2026年上半年经营数据">2.2 2026年上半年经营数据</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align:right">2026年上半年</th>
+<th style="text-align:right">同比变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>营业收入</td>
+<td style="text-align:right">379.29亿元</td>
+<td style="text-align:right">+3.36%</td>
+</tr>
+<tr>
+<td>归母净利润</td>
+<td style="text-align:right">147.56亿元</td>
+<td style="text-align:right">+13.02%</td>
+</tr>
+<tr>
+<td>扣非归母净利润</td>
+<td style="text-align:right">142.94亿元</td>
+<td style="text-align:right">+8.37%</td>
+</tr>
+<tr>
+<td>经营活动现金流净额</td>
+<td style="text-align:right">241.28亿元</td>
+<td style="text-align:right">+0.57%</td>
+</tr>
+<tr>
+<td>资本开支</td>
+<td style="text-align:right">44.35亿元</td>
+<td style="text-align:right">-29.72%</td>
+</tr>
+<tr>
+<td>基本每股收益</td>
+<td style="text-align:right">0.6031元</td>
+<td style="text-align:right">+13.02%</td>
+</tr>
+<tr>
+<td>加权平均ROE</td>
+<td style="text-align:right">6.55%</td>
+<td style="text-align:right">+0.46个百分点</td>
+</tr>
+</tbody>
+</table>
+<p>收入增长3.36%，归母净利润增长13.02%，但经营现金流只增长0.57%。这并不代表利润一定有问题，却提醒我不能只看净利润增速，还要检查营运资金、投资收益、税费和资本开支的变化。</p>
+<h3 id="2-3-滚动十二个月（TTM）数据">2.3 滚动十二个月（TTM）数据</h3>
+<p>滚动口径统一使用：</p>
+<p>$$<br>
+TTM = 2025年全年 + 2026年上半年 - 2025年上半年<br>
+$$</p>
+<p>得到：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align:right">TTM数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>营业收入</td>
+<td style="text-align:right">874.74亿元</td>
+</tr>
+<tr>
+<td>归母净利润</td>
+<td style="text-align:right">362.02亿元</td>
+</tr>
+<tr>
+<td>经营活动现金流净额</td>
+<td style="text-align:right">607.00亿元</td>
+</tr>
+<tr>
+<td>资本开支</td>
+<td style="text-align:right">166.13亿元</td>
+</tr>
+<tr>
+<td>净偿还借款</td>
+<td style="text-align:right">106.70亿元</td>
+</tr>
+<tr>
+<td>简化FCFE</td>
+<td style="text-align:right">334.17亿元</td>
+</tr>
+<tr>
+<td>简化FCFE/股</td>
+<td style="text-align:right">1.37元</td>
+</tr>
+</tbody>
+</table>
+<p>这里的资本开支采用“购建固定资产、无形资产和其他长期资产支付的现金”。</p>
+<p>简化FCFE计算为：</p>
+<p>$$<br>
+FCFE = 经营活动现金流 - 资本开支 + 净借款<br>
+$$</p>
+<p>$$<br>
+FCFE = 607.00 - 166.13 - 106.70 = 334.17亿元<br>
+$$</p>
+<p>长江电力TTM经营现金流很强，但过去十二个月处于净偿债状态。若只计算“经营现金流减资本开支”，会得到440.87亿元；继续扣除净偿债后，真正可归属股东的简化现金流下降到334.17亿元。这个差异说明：<strong>借款不是自由现金流，偿债也不能从股东现金流中消失。</strong></p>
+<h3 id="2-4-机构一致预期">2.4 机构一致预期</h3>
+<p>截至2026年9月25日，近6个月共有21家机构给出2026年盈利预测：</p>
+<table>
+<thead>
+<tr>
+<th>年度</th>
+<th style="text-align:right">预测机构数</th>
+<th style="text-align:right">一致预期EPS</th>
+<th style="text-align:right">一致预期归母净利润</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026E</td>
+<td style="text-align:right">21家</td>
+<td style="text-align:right">1.47元</td>
+<td style="text-align:right">360.43亿元</td>
+</tr>
+<tr>
+<td>2027E</td>
+<td style="text-align:right">21家</td>
+<td style="text-align:right">1.53元</td>
+<td style="text-align:right">374.48亿元</td>
+</tr>
+<tr>
+<td>2028E</td>
+<td style="text-align:right">20家</td>
+<td style="text-align:right">1.57元</td>
+<td style="text-align:right">383.56亿元</td>
+</tr>
+</tbody>
+</table>
+<p>2026E到2028E的两年EPS复合增长率约为：</p>
+<p>$$<br>
+CAGR = \left(\frac{1.57}{1.47}\right)^{1/2} - 1 = 3.35%<br>
+$$</p>
+<p>市场对长江电力的主流预期不是高速成长，而是低个位数的稳定增长。</p>
+<h2 id="三、DDM：最适合长江电力的主估值方法">三、DDM：最适合长江电力的主估值方法</h2>
+<h3 id="3-1-如何设置股权要求收益率">3.1 如何设置股权要求收益率</h3>
+<p>2026年9月24日，中国10年期国债收益率约为1.67%。在此基础上加入股票风险溢价、企业特有风险和机会成本，本文把长江电力的股权要求收益率设置为：</p>
+<ul>
+<li>保守：7.0%</li>
+<li>中性：6.5%</li>
+<li>乐观：6.0%</li>
+</ul>
+<p>6.5%的中性值不是“正确答案”，只是估值锚点。投资者如果要求8%的长期回报，得到的价值会明显更低；如果认为长江电力接近长久期基础设施债券，可以接受6%的回报，估值就会明显提高。</p>
+<h3 id="3-2-零增长DDM">3.2 零增长DDM</h3>
+<p>零增长模型假设未来每年永远分红1.00元：</p>
+<p>$$<br>
+V_0 = \frac{D}{r}<br>
+$$</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">要求收益率</th>
+<th style="text-align:right">零增长价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">6.0%</td>
+<td style="text-align:right">16.67元</td>
+</tr>
+<tr>
+<td style="text-align:right">6.5%</td>
+<td style="text-align:right">15.38元</td>
+</tr>
+<tr>
+<td style="text-align:right">7.0%</td>
+<td style="text-align:right">14.29元</td>
+</tr>
+</tbody>
+</table>
+<p>零增长模型给出的价值远低于28.36元市价。这不等于长江电力一定高估，而是说明市场价格中已经包含了以下预期：</p>
+<ul>
+<li>未来每股股利会增长</li>
+<li>盈利和自由现金流会增长</li>
+<li>留存利润最终能够转化为更高分红</li>
+<li>投资者接受的要求收益率低于普通股票</li>
+</ul>
+<p>零增长模型在这里更像一个“纯债券价值底座”。</p>
+<h3 id="3-3-戈登增长模型">3.3 戈登增长模型</h3>
+<p>戈登模型为：</p>
+<p>$$<br>
+V_0 = \frac{D_1}{r-g}<br>
+$$</p>
+<p>以2025年度每股股利1.00元为基数，下一年股利按照不同永续增长率增长，得到敏感性矩阵：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">永续增长率 \ 要求收益率</th>
+<th style="text-align:right">6.0%</th>
+<th style="text-align:right">6.5%</th>
+<th style="text-align:right">7.0%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">2.0%</td>
+<td style="text-align:right">25.50元</td>
+<td style="text-align:right">22.67元</td>
+<td style="text-align:right">20.40元</td>
+</tr>
+<tr>
+<td style="text-align:right">2.5%</td>
+<td style="text-align:right">29.29元</td>
+<td style="text-align:right">25.62元</td>
+<td style="text-align:right">22.78元</td>
+</tr>
+<tr>
+<td style="text-align:right">3.0%</td>
+<td style="text-align:right">34.33元</td>
+<td style="text-align:right">29.43元</td>
+<td style="text-align:right">25.75元</td>
+</tr>
+</tbody>
+</table>
+<p>如果采用中性假设：</p>
+<ul>
+<li>股权要求收益率：6.5%</li>
+<li>永续股利增长率：3.0%</li>
+<li>下一年每股股利：1.03元</li>
+</ul>
+<p>则：</p>
+<p>$$<br>
+V_0 = \frac{1.03}{6.5%-3.0%} = 29.43元<br>
+$$</p>
+<p>与28.36元市价相比，中性戈登模型只给出约3.8%的价值空间，谈不上明显低估。</p>
+<p>反过来计算，在要求收益率为6.5%、当前每股股利为1.00元时，28.36元市价隐含的永续股利增长率约为2.87%。这与机构预计未来两年EPS增长3.35%的水平接近。</p>
+<p>这意味着当前价格大致在押注：<strong>长期分红能够以接近3%的速度增长。</strong></p>
+<h3 id="3-4-两阶段DDM">3.4 两阶段DDM</h3>
+<p>永远保持3%增长略显僵硬，因此再做一个两阶段模型：</p>
+<ul>
+<li>前5年股利每年增长4%</li>
+<li>第6年以后永续增长2%</li>
+<li>股权要求收益率6.5%</li>
+</ul>
+<p>计算得到每股价值约为：</p>
+<p>$$<br>
+V_0 \approx 24.79元<br>
+$$</p>
+<p>两阶段DDM低于戈登模型，因为它把长期增长率降到了2%。它提醒我：对成熟水电企业而言，增长持续时间比短期增速更重要。</p>
+<p>综合DDM结果，较有参考意义的区间约为：</p>
+<p>$$<br>
+24.8元 \sim 29.4元<br>
+$$</p>
+<h2 id="四、FCFE：检查企业理论上能给股东多少钱">四、FCFE：检查企业理论上能给股东多少钱</h2>
+<h3 id="4-1-为什么不能直接用净利润">4.1 为什么不能直接用净利润</h3>
+<p>TTM归母净利润为362.02亿元，但简化FCFE为334.17亿元。两者接近，却不是同一个概念。</p>
+<p>净利润需要经过以下转换，才能接近股东自由现金流：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">净利润<br>+ 非现金费用<br>± 营运资金变化<br>- 资本开支<br>+ 新增借款<br>- 偿还借款<br>= FCFE<br></code></pre></td></tr></table></figure>
+<p>长江电力是重资产企业，折旧高、资本开支高、有息债务高。如果忽略后两项，只看“利润稳定、现金流好”，很容易高估可以自由分配给股东的金额。</p>
+<h3 id="4-2-FCFE折现情景">4.2 FCFE折现情景</h3>
+<p>本文不把TTM的334.17亿元机械外推，而是设置三个情景：</p>
+<table>
+<thead>
+<tr>
+<th>情景</th>
+<th style="text-align:right">初始FCFE</th>
+<th style="text-align:right">前5年增长率</th>
+<th style="text-align:right">永续增长率</th>
+<th style="text-align:right">股权要求收益率</th>
+<th style="text-align:right">每股价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保守</td>
+<td style="text-align:right">300亿元</td>
+<td style="text-align:right">1.0%</td>
+<td style="text-align:right">1.0%</td>
+<td style="text-align:right">7.5%</td>
+<td style="text-align:right">19.05元</td>
+</tr>
+<tr>
+<td>中性</td>
+<td style="text-align:right">334亿元</td>
+<td style="text-align:right">3.0%</td>
+<td style="text-align:right">2.0%</td>
+<td style="text-align:right">6.5%</td>
+<td style="text-align:right">32.38元</td>
+</tr>
+<tr>
+<td>乐观</td>
+<td style="text-align:right">360亿元</td>
+<td style="text-align:right">5.0%</td>
+<td style="text-align:right">2.5%</td>
+<td style="text-align:right">6.0%</td>
+<td style="text-align:right">48.24元</td>
+</tr>
+</tbody>
+</table>
+<p>FCFE估值范围从19元到48元，跨度极大。原因不是公式失效，而是以下变量会同时放大结果：</p>
+<ul>
+<li>来水和发电量能否长期增长</li>
+<li>市场化电价能否保持稳定</li>
+<li>资本开支是维护性还是扩张性</li>
+<li>公司未来继续净偿债，还是重新增加杠杆</li>
+<li>低利率环境能否长期维持</li>
+<li>永续增长率与要求收益率之间的差值很小</li>
+</ul>
+<p>中性FCFE估值为32.38元，高于市价，但我不会直接把它当作目标价。因为本文使用的是公开报表快速推导的简化FCFE，没有逐项预测未来电站资本开支、债务到期结构、少数股东现金流和境外业务汇率。</p>
+<p>FCFE在这里最重要的作用不是给出32.38元，而是证明：<strong>市场价格对资本开支和净偿债假设非常敏感。</strong></p>
+<h2 id="五、相对估值：市场正在给多少倍数">五、相对估值：市场正在给多少倍数</h2>
+<h3 id="5-1-PE与PB">5.1 PE与PB</h3>
+<p>按28.36元股价计算：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align:right">当前或前向倍数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PE（TTM）</td>
+<td style="text-align:right">19.17倍</td>
+</tr>
+<tr>
+<td>2026E PE</td>
+<td style="text-align:right">19.29倍</td>
+</tr>
+<tr>
+<td>2027E PE</td>
+<td style="text-align:right">18.54倍</td>
+</tr>
+<tr>
+<td>2028E PE</td>
+<td style="text-align:right">18.06倍</td>
+</tr>
+<tr>
+<td>PB</td>
+<td style="text-align:right">3.21倍</td>
+</tr>
+</tbody>
+</table>
+<p>同花顺iFind在2026年9月7日披露的近10年PE区间中，30%分位约为17.20倍，70%分位约为20.58倍。把2026E EPS 1.47元代入：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">PE锚点</th>
+<th style="text-align:right">对应价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">17.20倍</td>
+<td style="text-align:right">25.28元</td>
+</tr>
+<tr>
+<td style="text-align:right">19.00倍</td>
+<td style="text-align:right">27.93元</td>
+</tr>
+<tr>
+<td style="text-align:right">20.58倍</td>
+<td style="text-align:right">30.25元</td>
+</tr>
+</tbody>
+</table>
+<p>因此，历史PE法给出的主要区间约为25.3—30.3元，28.36元处于区间中部偏上。</p>
+<p>PB为3.21倍，看起来不便宜，但长江电力的资产负债表包含大量使用多年、持续折旧的水电资产，账面净资产不能完整代表优质水电站的经济价值。PB需要结合ROE、资产寿命、特许经营条件和重置成本理解，不能单独下结论。</p>
+<h3 id="5-2-EV-EBITDA与EV-EBIT">5.2 EV/EBITDA与EV/EBIT</h3>
+<p>截至2026年6月底，按简化口径估算：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align:right">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有息债务</td>
+<td style="text-align:right">2838.89亿元</td>
+</tr>
+<tr>
+<td>货币资金</td>
+<td style="text-align:right">93.73亿元</td>
+</tr>
+<tr>
+<td>净债务</td>
+<td style="text-align:right">2745.16亿元</td>
+</tr>
+<tr>
+<td>少数股东权益</td>
+<td style="text-align:right">119.82亿元</td>
+</tr>
+<tr>
+<td>企业价值EV</td>
+<td style="text-align:right">9804.17亿元</td>
+</tr>
+<tr>
+<td>TTM EBIT</td>
+<td style="text-align:right">531.08亿元</td>
+</tr>
+<tr>
+<td>TTM EBITDA</td>
+<td style="text-align:right">723.46亿元</td>
+</tr>
+<tr>
+<td>EV/EBIT</td>
+<td style="text-align:right">18.46倍</td>
+</tr>
+<tr>
+<td>EV/EBITDA</td>
+<td style="text-align:right">13.55倍</td>
+</tr>
+</tbody>
+</table>
+<p>企业价值的简化计算为：</p>
+<p>$$<br>
+EV = 总市值 + 有息债务 + 少数股东权益 - 货币资金<br>
+$$</p>
+<p>长江电力的EV/EBITDA明显低于EV/EBIT，差异来自约192亿元TTM折旧摊销。对水电企业而言，这个差异不能被忽略：</p>
+<ul>
+<li>如果折旧远高于维持现有资产所需的真实维护资本开支，EV/EBITDA可能更接近经济现金流</li>
+<li>如果大型机组改造、大坝维护和新项目投入长期不可避免，EV/EBITDA会高估可分配现金</li>
+<li>EV/EBIT虽然扣除了折旧，但会计折旧年限未必等于大坝和机组的经济寿命</li>
+</ul>
+<p>因此，我不会只拿13.55倍EV/EBITDA与同行比较，而会同时看18.46倍EV/EBIT、166.13亿元TTM资本开支和334.17亿元简化FCFE。</p>
+<h2 id="六、格雷厄姆公式：把它当常识检查">六、格雷厄姆公式：把它当常识检查</h2>
+<p>格雷厄姆成长股公式为：</p>
+<p>$$<br>
+V = EPS \times (8.5 + 2g)<br>
+$$</p>
+<p>采用2026E EPS 1.47元，以及2026E—2028E EPS复合增长率3.35：</p>
+<p>$$<br>
+V = 1.47 \times (8.5 + 2 \times 3.35) = 22.33元<br>
+$$</p>
+<p>这个结果低于28.36元市价。</p>
+<p>但格雷厄姆公式没有考虑：</p>
+<ul>
+<li>当前1.67%的低无风险利率</li>
+<li>水电资产的稀缺性和超长寿命</li>
+<li>长江电力稳定分红所获得的确定性溢价</li>
+<li>企业的债务成本、资本结构和投资收益</li>
+</ul>
+<p>所以22.33元不应被理解为精确内在价值。它更像一个提醒：如果未来增长只有3%左右，当前约19倍PE已经包含了相当程度的质量溢价。</p>
+<h2 id="七、把不同方法放在一起">七、把不同方法放在一起</h2>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th style="text-align:right">估值结果</th>
+<th>主要含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零增长DDM</td>
+<td style="text-align:right">14.29—16.67元</td>
+<td>只把股票当固定分红永续债，明显过于保守</td>
+</tr>
+<tr>
+<td>两阶段DDM</td>
+<td style="text-align:right">24.79元</td>
+<td>前5年增长4%，长期回落到2%</td>
+</tr>
+<tr>
+<td>戈登DDM</td>
+<td style="text-align:right">22.67—29.43元</td>
+<td>对要求收益率和永续增长率高度敏感</td>
+</tr>
+<tr>
+<td>FCFE折现</td>
+<td style="text-align:right">19.05—48.24元</td>
+<td>资本开支、净偿债和折现率决定结果</td>
+</tr>
+<tr>
+<td>历史PE区间</td>
+<td style="text-align:right">25.28—30.25元</td>
+<td>当前处于历史中间区间偏上</td>
+</tr>
+<tr>
+<td>格雷厄姆公式</td>
+<td style="text-align:right">22.33元</td>
+<td>低增长下的保守常识检查</td>
+</tr>
+</tbody>
+</table>
+<p>排除明显过度保守的零增长模型，以及假设较激进的乐观FCFE后，多数结果集中在：</p>
+<p>$$<br>
+25元 \sim 30元<br>
+$$</p>
+<p>28.36元处于这个区间内。我的结论不是“长江电力值28.36元”，而是：</p>
+<blockquote>
+<p>在2025年度每股分红1.00元、未来盈利和分红长期增长约2%—3%、股权要求收益率约6%—7%的假设下，28.36元更接近合理估值，而不是具有明显安全边际的价格。</p>
+</blockquote>
+<p>如果要求15%—20%的安全边际，以27.5元作为中性价值锚点，对应观察价格约为：</p>
+<p>$$<br>
+15%安全边际：27.5 \times 85% = 23.38元<br>
+$$</p>
+<p>$$<br>
+20%安全边际：27.5 \times 80% = 22.00元<br>
+$$</p>
+<p>这不是买入建议，而是把“合理价值”和“愿意承担风险的价格”分开。</p>
+<h2 id="八、这次估值最重要的几个认识">八、这次估值最重要的几个认识</h2>
+<h3 id="8-1-高股息不等于便宜">8.1 高股息不等于便宜</h3>
+<p>长江电力静态股息率约3.53%，比同期10年期国债收益率1.67%高约1.86个百分点。但股票股利不是无风险票息，仍然受到来水、电价、资本开支、债务和分红政策影响。</p>
+<h3 id="8-2-低利率会显著抬高长久期资产估值">8.2 低利率会显著抬高长久期资产估值</h3>
+<p>在戈登模型中，把要求收益率从7.0%降低到6.0%，即使永续增长率不变，估值也会大幅上升。长江电力估值中相当一部分来自低利率和稳定性溢价，而不仅是盈利增长。</p>
+<h3 id="8-3-重资产企业不能只看EV-EBITDA">8.3 重资产企业不能只看EV/EBITDA</h3>
+<p>长江电力TTM折旧摊销约192亿元。忽略折旧会让经营利润看起来更高，但完全使用会计折旧又可能低估超长寿命水电资产的经济价值。正确做法是把EV/EBITDA、EV/EBIT、资本开支和自由现金流放在一起。</p>
+<h3 id="8-4-DDM和FCFE不一致时，要找原因">8.4 DDM和FCFE不一致时，要找原因</h3>
+<p>DDM使用实际分红，FCFE使用理论可分配现金。长江电力2025年度现金分红244.68亿元，TTM简化FCFE约334.17亿元。两者之间的差额可能用于继续偿债、投资和保留流动性。</p>
+<p>如果直接把全部FCFE都视为未来分红，估值会偏高；如果假设分红永远停留在1.00元，又会忽略留存现金最终回馈股东的可能性。</p>
+<h3 id="8-5-估值分歧本身就是风险提示">8.5 估值分歧本身就是风险提示</h3>
+<p>当零增长DDM给出15元、两阶段DDM给出25元、中性FCFE给出32元时，不能简单求平均。差异来自模型对未来的不同理解：</p>
+<ul>
+<li>分红会不会增长？</li>
+<li>资本开支是否可持续下降？</li>
+<li>公司会继续偿债还是提高杠杆？</li>
+<li>低利率能持续多久？</li>
+<li>留存现金能否创造足够回报？</li>
+</ul>
+<p>真正需要跟踪的是这些驱动因素，而不是某个小数点后的目标价。</p>
+<h2 id="九、后续跟踪清单">九、后续跟踪清单</h2>
+<p>以后更新长江电力估值时，我会重点检查：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 六座梯级电站发电量和长江来水变化</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 市场化电量占比与平均上网电价</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 年度每股分红和股利支付率</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 经营现金流对净利润的覆盖程度</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 维护性资本开支与扩张性资本开支</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 净债务、融资成本和集中到期压力</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 联营企业投资收益与公允价值变动</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 10年期国债收益率和红利资产机会成本</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 2026—2028年一致预期EPS是否下修</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> 当前价格隐含的长期分红增长率是否仍合理</li>
+</ul>
+<h2 id="十、结论">十、结论</h2>
+<p>长江电力很适合用来理解估值方法的边界：</p>
+<ul>
+<li>DDM最贴近稳定分红特征，但对折现率和永续增长率极其敏感</li>
+<li>FCFE能看到经营现金流、资本开支和净偿债，却需要更细致的长期预测</li>
+<li>PE适合观察市场定价位置，但不能解释债务和资本开支</li>
+<li>EV/EBITDA容易忽略重资产企业的真实再投资需求</li>
+<li>格雷厄姆公式可以做保守检查，却无法完整反映低利率和稀缺资产溢价</li>
+</ul>
+<p>基于本次数据和假设，我把长江电力的中性价值观察区间放在25—30元。28.36元位于区间内，更像“合理价格对应优质资产”，而不是“明显低价对应普通资产”。</p>
+<p>最终决定回报的，不只是它是不是一家好公司，而是：</p>
+<blockquote>
+<p>当前价格已经提前支付了多少稳定性，未来分红增长能否兑现，以及投资者是否为模型误差留下了足够安全边际。</p>
+</blockquote>
+<hr>
+<p><strong>数据来源</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://static.cninfo.com.cn/finalpage/2026-08-31/1225534923.PDF">长江电力2026年半年度报告</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cypc.com.cn/cypc/attachDir/2026/05/2026051815345898336.pdf">长江电力2025年年度报告</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cypc.com.cn/cypc/attachDir/2026/07/2026070717535934489.pdf">长江电力2026年半年度发电量完成情况公告</a></li>
+<li><a target="_blank" rel="noopener" href="https://qt.gtimg.cn/q=sh600900">腾讯财经长江电力行情接口</a></li>
+<li><a target="_blank" rel="noopener" href="https://basic.10jqka.com.cn/new/600900/worth.html">同花顺长江电力盈利预测</a></li>
+<li><a target="_blank" rel="noopener" href="https://asianbondsonline.adb.org/china/">AsianBondsOnline中国债券市场数据</a></li>
+<li><a target="_blank" rel="noopener" href="https://news.10jqka.com.cn/20260908/c679689965.shtml">同花顺iFind长江电力历史PE分位信息</a></li>
+</ul>
+<p><strong>计算说明</strong></p>
+<ul>
+<li>金额均按公开报表数据换算，四舍五入可能造成尾差</li>
+<li>TTM数据采用“2025年全年 + 2026年上半年 - 2025年上半年”计算</li>
+<li>FCFE、EV、EBIT和EBITDA均为学习用途的简化口径，不等同于公司或专业机构正式估值模型</li>
+<li>估值基准日为2026年9月24日，市场价格和一致预期会持续变化</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%95%E8%B5%84/" class="category-chain-item">投资</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/" class="category-chain-item">理念</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BC%B0%E5%80%BC/" class="print-no-link">#估值</a>
+      
+        <a href="/tags/PE/" class="print-no-link">#PE</a>
+      
+        <a href="/tags/DDM/" class="print-no-link">#DDM</a>
+      
+        <a href="/tags/%E9%95%BF%E6%B1%9F%E7%94%B5%E5%8A%9B/" class="print-no-link">#长江电力</a>
+      
+        <a href="/tags/FCFE/" class="print-no-link">#FCFE</a>
+      
+        <a href="/tags/EV-EBITDA/" class="print-no-link">#EV/EBITDA</a>
+      
+        <a href="/tags/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="print-no-link">#案例分析</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>长江电力估值实战：用DDM、FCFE与企业价值倍数交叉验证</div>
+      <div>https://claudechan1228.github.io/投资/理念/china-yangtze-power-valuation-case-study/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>彼得陈奇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/valuation-methods-framework/" title="股票估值方法体系：从理论到实践的完整框架">
+                        <span class="hidden-mobile">股票估值方法体系：从理论到实践的完整框架</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
