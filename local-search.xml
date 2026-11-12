@@ -326,9 +326,9 @@
       
       <tag>读书笔记</tag>
       
-      <tag>霍华德·马克斯</tag>
-      
       <tag>周期</tag>
+      
+      <tag>霍华德·马克斯</tag>
       
       <tag>市场情绪</tag>
       
@@ -431,11 +431,11 @@
       
       <tag>读书笔记</tag>
       
-      <tag>霍华德·马克斯</tag>
+      <tag>投资</tag>
       
       <tag>周期</tag>
       
-      <tag>投资</tag>
+      <tag>霍华德·马克斯</tag>
       
     </tags>
     
@@ -462,9 +462,9 @@
     
     <tags>
       
-      <tag>SAP PO</tag>
-      
       <tag>OAuth</tag>
+      
+      <tag>SAP PO</tag>
       
       <tag>REST API</tag>
       
@@ -610,11 +610,11 @@
       
       <tag>价值投资</tag>
       
-      <tag>安全边际</tag>
-      
       <tag>DCF</tag>
       
       <tag>折现率</tag>
+      
+      <tag>安全边际</tag>
       
     </tags>
     
@@ -649,9 +649,9 @@
       
       <tag>巴菲特</tag>
       
-      <tag>复利</tag>
-      
       <tag>安全边际</tag>
+      
+      <tag>复利</tag>
       
     </tags>
     
@@ -828,6 +828,43 @@
   
   
   <entry>
+    <title>使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证</title>
+    <link href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/"/>
+    <url>/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/</url>
+    
+    <content type="html"><![CDATA[<h2 id="引言">引言</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 是 SAP MM 模块中用于<strong>冲销物料凭证（Material Document）</strong> 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。</p><p>本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。</p><p>对应事务码：<strong>MBST</strong>（整张冲销）或 <strong>MIGO → Cancellation</strong>（按行冲销）。</p><hr><h2 id="冲销原理">冲销原理</h2><p>冲销成功后，SAP 的处理逻辑如下：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">原物料凭证 5000012345<br>    │<br>    ▼<br>BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>自动生成冲销凭证 5000015678<br>    │<br>    ├─ 原凭证不删除<br>    ├─ 新凭证数量相反（正 → 负，负 → 正）<br>    └─ 库存自动恢复<br></code></pre></td></tr></table></figure><p><strong>关键点：</strong> 原物料凭证不会删除，而是生成一张新的冲销物料凭证与原凭证形成冲销关系。两张凭证可通过 <code>MSEG</code> 表关联查询。</p><hr><h2 id="整体流程">整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs text">已有物料凭证<br>    │<br>    ▼<br>构造需要冲销的行项目（可选）<br>    │<br>    ▼<br>调用 BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>检查 RETURN 是否存在 A/E/X 错误<br>    │<br> ┌──┴──────────┐<br> │             │<br>成功          失败<br> │             │<br> ▼             ▼<br>COMMIT      ROLLBACK<br> │             │<br> ▼             ▼<br>返回新冲     结束<br>销凭证号<br></code></pre></td></tr></table></figure><hr><h2 id="1-定义变量">1. 定义变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr,<br>  lv_mjahr   TYPE mjahr.<br></code></pre></td></tr></table></figure><p>各变量说明：</p><table><thead><tr><th>变量</th><th>类型</th><th>作用</th></tr></thead><tbody><tr><td><code>lt_return</code></td><td><code>bapiret2</code></td><td>BAPI 返回消息（内表）</td></tr><tr><td><code>lt_item</code></td><td><code>bapi2017_gm_item_04</code></td><td>需要冲销的行项目（内表）</td></tr><tr><td><code>ls_headret</code></td><td><code>bapi2017_gm_head_ret</code></td><td>返回的新冲销凭证号</td></tr><tr><td><code>lv_mblnr</code></td><td><code>mblnr</code></td><td>需要冲销的物料凭证号</td></tr><tr><td><code>lv_mjahr</code></td><td><code>mjahr</code></td><td>物料凭证年度</td></tr></tbody></table><hr><h2 id="2-构造冲销行项目（可选）">2. 构造冲销行项目（可选）</h2><p><code>goodsmvt_matdocitem</code> 是一个<strong>可选参数</strong>。是否传入决定了冲销行为：</p><table><thead><tr><th>场景</th><th style="text-align:center">传值</th><th>行为</th><th style="text-align:center">对应事务码</th></tr></thead><tbody><tr><td>整张冲销</td><td style="text-align:center">空</td><td>冲销整张物料凭证</td><td style="text-align:center">MBST</td></tr><tr><td>指定行冲销</td><td style="text-align:center">有值</td><td>仅冲销指定行项目</td><td style="text-align:center">MIGO → Cancellation</td></tr></tbody></table><h3 id="整张冲销（不传入行项目）">整张冲销（不传入行项目）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument = lv_mblnr<br>    matdocumentyear  = lv_mjahr<br>  TABLES<br>    return           = lt_return.<br></code></pre></td></tr></table></figure><p><code>goodsmvt_matdocitem</code> 为空 → <strong>整张物料凭证全部冲销</strong>。</p><h3 id="指定行项目冲销">指定行项目冲销</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0002&#x27; )<br>    ( matdoc_item = &#x27;0005&#x27; )<br>).<br></code></pre></td></tr></table></figure><p>仅冲销行 <code>0002</code> 和 <code>0005</code>，其他行保持不变。</p><h3 id="从数据源动态构造">从数据源动态构造</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    FOR ls_data IN lt_data<br>    (<br>        matdoc_item = ls_data-zeile<br>    )<br>).<br></code></pre></td></tr></table></figure><hr><h2 id="3-调用-BAPI">3. 调用 BAPI</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br></code></pre></td></tr></table></figure><h3 id="主要参数">主要参数</h3><table><thead><tr><th>参数</th><th style="text-align:center">方向</th><th style="text-align:center">必填</th><th>说明</th></tr></thead><tbody><tr><td><code>MATERIALDOCUMENT</code></td><td style="text-align:center">传入</td><td style="text-align:center">✅</td><td>需要冲销的物料凭证号</td></tr><tr><td><code>MATDOCUMENTYEAR</code></td><td style="text-align:center">传入</td><td style="text-align:center">✅</td><td>物料凭证年度</td></tr><tr><td><code>GOODSMVT_PSTNG_DATE</code></td><td style="text-align:center">传入</td><td style="text-align:center"></td><td>冲销过账日期（可设为 <code>sy-datum</code>）</td></tr><tr><td><code>GOODSMVT_MATDOCITEM</code></td><td style="text-align:center">传入</td><td style="text-align:center"></td><td>需要冲销的行项目（为空=整张冲销）</td></tr><tr><td><code>GOODSMVT_HEADRET</code></td><td style="text-align:center">返回</td><td style="text-align:center"></td><td>新生成的冲销物料凭证号</td></tr><tr><td><code>RETURN</code></td><td style="text-align:center">返回</td><td style="text-align:center"></td><td>BAPI 返回消息</td></tr></tbody></table><hr><h2 id="4-判断是否成功">4. 判断是否成功</h2><p>检查 RETURN 中是否存在错误消息：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abap">LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br>  RETURN.<br><br>ENDLOOP.<br></code></pre></td></tr></table></figure><h3 id="BAPI-返回消息类型速查">BAPI 返回消息类型速查</h3><table><thead><tr><th style="text-align:center">TYPE</th><th>说明</th><th>处理</th></tr></thead><tbody><tr><td style="text-align:center">S</td><td>成功（Success）</td><td>忽略</td></tr><tr><td style="text-align:center">W</td><td>警告（Warning）</td><td>通常可忽略</td></tr><tr><td style="text-align:center">I</td><td>信息（Information）</td><td>忽略</td></tr><tr><td style="text-align:center"><strong>E</strong></td><td><strong>错误（Error）</strong></td><td>❌ 失败</td></tr><tr><td style="text-align:center"><strong>A</strong></td><td><strong>终止（Abort）</strong></td><td>❌ 失败</td></tr><tr><td style="text-align:center"><strong>X</strong></td><td><strong>异常（Exception）</strong></td><td>❌ 失败</td></tr></tbody></table><blockquote><p><strong>判断逻辑：</strong> 只要 RETURN 中出现 A、E、X 任意一类消息，即视为冲销失败。</p></blockquote><hr><h2 id="5-成功提交">5. 成功提交</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure><blockquote><p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则冲销不会真正保存到数据库。设置 <code>WAIT = 'X'</code> 确保同步提交完成后再执行后续逻辑。</p></blockquote><hr><h2 id="6-失败回滚">6. 失败回滚</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure><p>作用：</p><ul><li>回滚整个 LUW（Logical Unit of Work）</li><li>避免数据不一致</li></ul><hr><h2 id="7-获取冲销后的物料凭证">7. 获取冲销后的物料凭证</h2><p>BAPI 成功执行后，<code>GOODSMVT_HEADRET</code> 返回新生成的冲销凭证信息：</p><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>MAT_DOC</code></td><td>新生成的冲销物料凭证号</td></tr><tr><td><code>DOC_YEAR</code></td><td>凭证年度</td></tr></tbody></table><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure><p>示例输出：</p><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns">原凭证：<span class="hljs-number">5000012345</span><br>冲销凭证：<span class="hljs-number">5000015678</span><br></code></pre></td></tr></table></figure><hr><h2 id="完整示例代码">完整示例代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr VALUE &#x27;5000012345&#x27;,<br>  lv_mjahr   TYPE mjahr VALUE &#x27;2026&#x27;.<br><br>&quot; 指定冲销行项目（可为空，表示整张冲销）<br>lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0001&#x27; )<br>    ( matdoc_item = &#x27;0002&#x27; )<br>).<br><br>CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br><br>&quot; 检查错误<br>LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br><br>  &quot; 输出错误信息<br>  LOOP AT lt_return INTO ls_return<br>      WHERE type CA &#x27;AXE&#x27;.<br>    WRITE: / ls_return-id,<br>              ls_return-number,<br>              ls_return-message.<br>  ENDLOOP.<br><br>  RETURN.<br><br>ENDLOOP.<br><br>&quot; 提交<br>CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br><br>WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure><hr><h2 id="与-BAPI-GOODSMVT-CREATE-的关系">与 BAPI_GOODSMVT_CREATE 的关系</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 和 <code>BAPI_GOODSMVT_CREATE</code> 共同构成了物料凭证的完整生命周期：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">BAPI_GOODSMVT_CREATE ──→ 物料凭证<br>                               │<br>                               ├──→ 正常使用<br>                               │<br>                               └──→ BAPI_GOODSMVT_CANCEL<br>                                       │<br>                                       ▼<br>                                  冲销凭证（数量相反）<br></code></pre></td></tr></table></figure><table><thead><tr><th>BAPI</th><th style="text-align:center">方向</th><th>说明</th></tr></thead><tbody><tr><td><code>BAPI_GOODSMVT_CREATE</code></td><td style="text-align:center">创建</td><td>生成新的物料凭证</td></tr><tr><td><code>BAPI_GOODSMVT_CANCEL</code></td><td style="text-align:center">冲销</td><td>生成反向物料凭证，撤销原凭证</td></tr></tbody></table><blockquote><p>延伸阅读：《<a href="/2026/06/22/bapi-goodsmvt-create-gr-guide/">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</a>》</p></blockquote><hr><h2 id="常见问题">常见问题</h2><h3 id="Q1-冲销后原凭证会被删除吗？">Q1: 冲销后原凭证会被删除吗？</h3><p>不会。冲销会<strong>生成一张新凭证</strong>，数量与原凭证相反。原凭证仍然存在于 MSEG / MKPF 表中。</p><h3 id="Q2-可以多次冲销同一张凭证吗？">Q2: 可以多次冲销同一张凭证吗？</h3><p>一般情况下<strong>不能</strong>。一张凭证只能被完整冲销一次。但按行冲销时，不同行可以分批冲销。</p><h3 id="Q3-冲销凭证能再次冲销吗？">Q3: 冲销凭证能再次冲销吗？</h3><p>理论上可以再次冲销冲销凭证（冲销的冲销 = 还原），但在实际业务中通常通过 MBST 反冲。</p><h3 id="Q4-goodsmvt-matdocitem-传入空和传入空行（lt-item-为空内表）效果一样吗？">Q4: <code>goodsmvt_matdocitem</code> 传入空和传入空行（<code>lt_item</code> 为空内表）效果一样吗？</h3><p>一样。两种情况均视为<strong>整张冲销</strong>。</p><hr><h2 id="总结">总结</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 的使用总结如下：</p><table><thead><tr><th>要点</th><th>说明</th></tr></thead><tbody><tr><td><strong>作用</strong></td><td>冲销已过账的物料凭证</td></tr><tr><td><strong><code>goodsmvt_matdocitem</code> 为空</strong></td><td>整张冲销（等同于 MBST）</td></tr><tr><td><strong><code>goodsmvt_matdocitem</code> 有值</strong></td><td>仅冲销指定行项目</td></tr><tr><td><strong>RETURN 存在 A/X/E</strong></td><td>冲销失败，执行 ROLLBACK</td></tr><tr><td><strong>冲销成功</strong></td><td>必须 COMMIT，从 <code>GOODSMVT_HEADRET-MAT_DOC</code> 获取新凭证号</td></tr><tr><td><strong>原凭证</strong></td><td>不删除，保留在系统中</td></tr></tbody></table><p>核心代码流程：</p><ol><li>构造行项目（可选）→ 决定整张冲销还是按行冲销</li><li>调用 <code>BAPI_GOODSMVT_CANCEL</code></li><li>检查 RETURN → 失败则 ROLLBACK</li><li>成功则 COMMIT → 获取新冲销凭证号</li></ol><p>实际项目开发中建议将该 BAPI 封装为独立的 Function Module 或 Method，统一处理错误逻辑、事务提交和日志记录。</p><p>本文与《<a href="/2026/06/22/bapi-goodsmvt-create-gr-guide/">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</a>》配合，构成了物料凭证的<strong>创建 → 冲销</strong>完整业务处理能力。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>SAP</category>
+      
+      <category>ABAP开发</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ABAP</tag>
+      
+      <tag>BAPI</tag>
+      
+      <tag>物料凭证</tag>
+      
+      <tag>冲销</tag>
+      
+      <tag>MM</tag>
+      
+      <tag>接口开发</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</title>
     <link href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/"/>
     <url>/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-create-gr-guide/</url>
@@ -850,13 +887,13 @@
       
       <tag>BAPI</tag>
       
-      <tag>采购入库</tag>
-      
       <tag>物料凭证</tag>
       
       <tag>MM</tag>
       
       <tag>接口开发</tag>
+      
+      <tag>采购入库</tag>
       
     </tags>
     
@@ -904,6 +941,43 @@
   
   
   <entry>
+    <title>理解商誉（Goodwill）——从会计到投资</title>
+    <link href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/"/>
+    <url>/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。</p></blockquote><hr><h2 id="一、什么是商誉？">一、什么是商誉？</h2><h3 id="1-会计中的商誉（Accounting-Goodwill）">1. 会计中的商誉（Accounting Goodwill）</h3><p>商誉并不是企业自己评估出来的价值，而是<strong>只有在企业并购时才会出现在资产负债表中的一项资产</strong>。</p><p>计算公式非常简单：</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">商誉 <span class="hljs-operator">=</span> 收购价格 - 被收购企业可辨认净资产公允价值<br></code></pre></td></tr></table></figure><p>例如：</p><ul><li>收购价格：100 亿元</li><li>被收购企业：资产 80 亿元，负债 20 亿元</li><li>可辨认净资产：60 亿元</li></ul><p>则：</p><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">商誉 =<span class="hljs-number"> 100 </span>-<span class="hljs-number"> 60 </span>=<span class="hljs-number"> 40 </span>亿元<br></code></pre></td></tr></table></figure><p>资产负债表中会出现：</p><table><thead><tr><th>项目</th><th>金额</th></tr></thead><tbody><tr><td>可辨认净资产</td><td>60 亿元</td></tr><tr><td>商誉</td><td>40 亿元</td></tr></tbody></table><h3 id="2-为什么会愿意支付这-40-亿元？">2. 为什么会愿意支付这 40 亿元？</h3><p>因为购买的不只是工厂、设备、现金等资产。真正购买的是<strong>企业未来持续赚钱的能力</strong>，例如：</p><ul><li>品牌</li><li>客户关系</li><li>管理团队</li><li>企业文化</li><li>市场地位</li><li>技术积累</li><li>网络效应</li><li>协同效应</li></ul><p>这些东西很难单独出售、很难准确估值、无法单独辨认，因此不会单独计入资产，只能统一计入 <strong>商誉（Goodwill）</strong>。</p><hr><h2 id="二、为什么很多优秀企业没有商誉？">二、为什么很多优秀企业没有商誉？</h2><p>这是很多初学者容易误解的地方。</p><p>例如：可口可乐、苹果、贵州茅台——这些企业拥有世界顶级品牌，但资产负债表上的商誉可能很少，甚至没有。</p><p>原因是：</p><blockquote><p>企业自己长期积累形成的品牌价值、管理能力、客户忠诚度等，并不会计入资产负债表。</p></blockquote><p>只有<strong>花钱收购别人时支付的溢价</strong>，才能形成<strong>会计商誉（Accounting Goodwill）</strong>。</p><p>因此：</p><blockquote><p><strong>没有商誉 ≠ 没有竞争优势。</strong></p></blockquote><hr><h2 id="三、经济商誉（Economic-Goodwill）">三、经济商誉（Economic Goodwill）</h2><p>巴菲特更关心的是<strong>经济商誉（Economic Goodwill）</strong>，即企业真正能够长期创造超额利润的能力。</p><p>例如：</p><ul><li>可口可乐品牌</li><li>苹果生态系统</li><li>Costco 会员体系</li><li>茅台品牌</li></ul><p>这些价值虽然不会体现在财务报表中，却是真正决定企业价值的核心。</p><p><strong>企业存在两种商誉：</strong></p><table><thead><tr><th>类型</th><th>来源</th><th style="text-align:center">是否在报表中</th></tr></thead><tbody><tr><td>会计商誉</td><td>企业并购</td><td style="text-align:center">✅</td></tr><tr><td>经济商誉</td><td>长期经营形成的竞争优势</td><td style="text-align:center">❌</td></tr></tbody></table><p>巴菲特真正重视的是：<strong>经济商誉。</strong></p><hr><h2 id="四、商誉是不是无形资产？">四、商誉是不是无形资产？</h2><p>严格来说，<strong>不是</strong>。</p><p>会计上，商誉与无形资产是两个不同科目。</p><p><strong>无形资产</strong>包括：专利、商标、软件、土地使用权等。它们可以辨认、可以出售、可以单独估值。</p><p><strong>商誉</strong>不能单独出售，必须依附整个企业。</p><p>因此，商誉属于：</p><blockquote><p><strong>不可辨认资产（Unidentifiable Asset）</strong></p></blockquote><hr><h2 id="五、商誉可以理解成什么？">五、商誉可以理解成什么？</h2><blockquote><p><strong>商誉 = 企业无法单独辨认的竞争优势以及并购协同效应所形成的未来超额现金流，在收购时支付的现值溢价。</strong></p></blockquote><p>关键词：</p><ul><li>不可辨认竞争优势</li><li>协同效应</li><li>超额现金流</li><li>现值（Present Value）</li></ul><p>这里已经和巴菲特的估值思想完全联系起来了。</p><hr><h2 id="六、商誉是不是未来现金流的折现？">六、商誉是不是未来现金流的折现？</h2><p>可以，但更准确一点：</p><blockquote><p><strong>商誉反映的是未来超额现金流对应的溢价，而不是企业全部未来现金流。</strong></p></blockquote><p>例如：企业未来现金流价值 100 亿元，其中净资产价值 60 亿元，则商誉 40 亿元。</p><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">100 </span>= <span class="hljs-number">60</span> + <span class="hljs-number">40</span><br></code></pre></td></tr></table></figure><p>即：商誉代表那些无法单独辨认、但能够持续创造超额现金流的价值。</p><hr><h2 id="七、为什么要做商誉减值测试？">七、为什么要做商誉减值测试？</h2><p>因为未来可能发生变化。例如：</p><ul><li>品牌影响力下降</li><li>客户流失</li><li>管理团队离开</li><li>技术落后</li><li>行业竞争恶化</li></ul><p>这些都会导致未来现金流下降。如果未来现金流下降，那么原来支付的溢价就可能已经不存在，因此必须重新评估。</p><h3 id="商誉减值测试的本质">商誉减值测试的本质</h3><p>本质只有一句话：</p><blockquote><p><strong>重新估计未来现金流，并折现计算今天值多少钱。</strong></p></blockquote><p>例如：</p><ul><li>收购时预计未来价值：100 亿元</li><li>几年后竞争恶化，重新预测未来价值：65 亿元</li><li>账面价值：100 亿元</li></ul><p>明显 <strong>账面价值 &gt; 实际价值</strong>，必须确认<strong>商誉减值</strong>。</p><p>所以：</p><blockquote><p><strong>商誉减值，本质就是一次重新估值。</strong></p></blockquote><hr><h2 id="八、商誉减值测试为什么不是单独给商誉估值？">八、商誉减值测试为什么不是单独给商誉估值？</h2><p>因为商誉本身不能赚钱。真正赚钱的是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">品牌 + 员工 + 设备 + 渠道 + 管理团队 + 客户<br></code></pre></td></tr></table></figure><p>整个体系一起产生现金流。因此商誉不能单独估值。</p><p>会计准则要求将商誉分配到<strong>现金产生单元（Cash Generating Unit，CGU）</strong>，然后计算整个资产组未来现金流折现价值。</p><p>如果 <strong>未来价值 &lt; 账面价值</strong>，则：</p><ol><li>先减商誉</li><li>商誉减完还不够 → 再减固定资产、无形资产等</li></ol><p>因此，真正接受减值测试的是：<strong>整个赚钱机器，而不是商誉本身。</strong></p><hr><h2 id="九、以前为什么要摊销商誉？">九、以前为什么要摊销商誉？</h2><p>历史上很多国家采用<strong>商誉每年摊销</strong>，例如 20 年平均摊销，每年减少 5 亿元。这种方式类似于固定资产折旧。</p><p>但是很多人认为：优秀品牌并不会随着时间自动贬值。例如可口可乐品牌，20 年以后可能比今天更值钱。</p><p>因此，现在国际主流会计准则：</p><ul><li>❌ 取消了商誉摊销</li><li>✅ 改成<strong>每年做减值测试</strong></li></ul><p>只有价值真的下降，才一次性减值。</p><hr><h2 id="十、投资时怎么看商誉？">十、投资时怎么看商誉？</h2><p>不能简单地认为&quot;商誉高就是坏公司&quot;，也不能认为&quot;商誉低就是好公司&quot;。</p><p>真正应该关注的是：</p><h3 id="第一：为什么会产生这么大的商誉？">第一：为什么会产生这么大的商誉？</h3><p>是否买贵了？行业内卷？管理层激进扩张？</p><h3 id="第二：收购以后有没有兑现预期？">第二：收购以后有没有兑现预期？</h3><p>利润、现金流、ROE、ROIC 有没有持续改善？</p><h3 id="第三：未来现金流有没有恶化？">第三：未来现金流有没有恶化？</h3><p>如果未来赚钱能力下降，那么未来发生商誉减值的概率就会上升。</p><h3 id="第四：连续大额商誉减值意味着什么？">第四：连续大额商誉减值意味着什么？</h3><p>通常意味着当年的收购很可能买贵了，或者管理层高估了未来。连续发生大额商誉减值，通常是一个危险信号。</p><hr><h2 id="十一、巴菲特怎么看商誉？">十一、巴菲特怎么看商誉？</h2><p>巴菲特其实并不太关注财务报表上的商誉数字。他真正关心的是：</p><blockquote><p>企业未来还能创造多少现金流？</p></blockquote><p>他的估值思想：</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">企业价值 <span class="hljs-operator">=</span> 未来现金流折现<br></code></pre></td></tr></table></figure><p>而商誉减值测试的本质也是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">未来现金流折现<br></code></pre></td></tr></table></figure><p>区别只是：</p><ul><li><strong>巴菲特</strong>：用于估值</li><li><strong>会计</strong>：用于检查资产是否高估</li></ul><p>两者底层逻辑其实一致。</p><hr><h2 id="十二、关于商誉最重要的理解">十二、关于商誉最重要的理解</h2><table><thead><tr><th>概念</th><th>核心含义</th></tr></thead><tbody><tr><td><strong>会计商誉</strong></td><td>企业并购时，为未来超额盈利能力支付的溢价</td></tr><tr><td><strong>经济商誉</strong></td><td>企业长期形成、无法单独辨认的竞争优势</td></tr><tr><td><strong>商誉减值</strong></td><td>对未来现金流重新估值</td></tr></tbody></table><p>巴菲特真正关注的，不是财务报表里的商誉，而是企业是否拥有：</p><blockquote><p><strong>持续创造超额现金流的经济商誉。</strong></p></blockquote><hr><h2 id="一句话总结">一句话总结</h2><blockquote><p><strong>会计商誉，是并购交易中形成的资产；经济商誉，是企业竞争优势的体现；两者的共同本质，都是未来能够持续创造超额现金流的能力。巴菲特阅读财务报表时，并不执着于商誉这一会计科目，而是始终回到同一个问题：这家公司未来还能持续产生多少自由现金流？</strong></p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>投资</category>
+      
+      <category>理念</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>财务分析</tag>
+      
+      <tag>价值投资</tag>
+      
+      <tag>商誉</tag>
+      
+      <tag>巴菲特</tag>
+      
+      <tag>会计</tag>
+      
+      <tag>经济商誉</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>第一次正式业余比赛赛后反思 — 基本功才是比赛胜负的关键</title>
     <link href="/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/table-tennis-first-competition-reflection/"/>
     <url>/%E4%B9%92%E4%B9%93%E7%90%83/%E6%AF%94%E8%B5%9B/table-tennis-first-competition-reflection/</url>
@@ -941,80 +1015,6 @@
       <tag>防守</tag>
       
       <tag>比赛口诀</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>使用 BAPI_GOODSMVT_CANCEL 冲销物料凭证</title>
-    <link href="/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/"/>
-    <url>/SAP/ABAP%E5%BC%80%E5%8F%91/bapi-goodsmvt-cancel-guide/</url>
-    
-    <content type="html"><![CDATA[<h2 id="引言">引言</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 是 SAP MM 模块中用于<strong>冲销物料凭证（Material Document）</strong> 的标准 BAPI。当入库、发货或其他物料移动过账后需要撤销时，调用该 BAPI 即可生成一张与原凭证数量相反的新冲销凭证，库存自动恢复。</p><p>本文基于实际接口开发经验，梳理从参数构造到事务提交流程的完整实现。</p><p>对应事务码：<strong>MBST</strong>（整张冲销）或 <strong>MIGO → Cancellation</strong>（按行冲销）。</p><hr><h2 id="冲销原理">冲销原理</h2><p>冲销成功后，SAP 的处理逻辑如下：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">原物料凭证 5000012345<br>    │<br>    ▼<br>BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>自动生成冲销凭证 5000015678<br>    │<br>    ├─ 原凭证不删除<br>    ├─ 新凭证数量相反（正 → 负，负 → 正）<br>    └─ 库存自动恢复<br></code></pre></td></tr></table></figure><p><strong>关键点：</strong> 原物料凭证不会删除，而是生成一张新的冲销物料凭证与原凭证形成冲销关系。两张凭证可通过 <code>MSEG</code> 表关联查询。</p><hr><h2 id="整体流程">整体流程</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs text">已有物料凭证<br>    │<br>    ▼<br>构造需要冲销的行项目（可选）<br>    │<br>    ▼<br>调用 BAPI_GOODSMVT_CANCEL<br>    │<br>    ▼<br>检查 RETURN 是否存在 A/E/X 错误<br>    │<br> ┌──┴──────────┐<br> │             │<br>成功          失败<br> │             │<br> ▼             ▼<br>COMMIT      ROLLBACK<br> │             │<br> ▼             ▼<br>返回新冲     结束<br>销凭证号<br></code></pre></td></tr></table></figure><hr><h2 id="1-定义变量">1. 定义变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr,<br>  lv_mjahr   TYPE mjahr.<br></code></pre></td></tr></table></figure><p>各变量说明：</p><table><thead><tr><th>变量</th><th>类型</th><th>作用</th></tr></thead><tbody><tr><td><code>lt_return</code></td><td><code>bapiret2</code></td><td>BAPI 返回消息（内表）</td></tr><tr><td><code>lt_item</code></td><td><code>bapi2017_gm_item_04</code></td><td>需要冲销的行项目（内表）</td></tr><tr><td><code>ls_headret</code></td><td><code>bapi2017_gm_head_ret</code></td><td>返回的新冲销凭证号</td></tr><tr><td><code>lv_mblnr</code></td><td><code>mblnr</code></td><td>需要冲销的物料凭证号</td></tr><tr><td><code>lv_mjahr</code></td><td><code>mjahr</code></td><td>物料凭证年度</td></tr></tbody></table><hr><h2 id="2-构造冲销行项目（可选）">2. 构造冲销行项目（可选）</h2><p><code>goodsmvt_matdocitem</code> 是一个<strong>可选参数</strong>。是否传入决定了冲销行为：</p><table><thead><tr><th>场景</th><th style="text-align:center">传值</th><th>行为</th><th style="text-align:center">对应事务码</th></tr></thead><tbody><tr><td>整张冲销</td><td style="text-align:center">空</td><td>冲销整张物料凭证</td><td style="text-align:center">MBST</td></tr><tr><td>指定行冲销</td><td style="text-align:center">有值</td><td>仅冲销指定行项目</td><td style="text-align:center">MIGO → Cancellation</td></tr></tbody></table><h3 id="整张冲销（不传入行项目）">整张冲销（不传入行项目）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument = lv_mblnr<br>    matdocumentyear  = lv_mjahr<br>  TABLES<br>    return           = lt_return.<br></code></pre></td></tr></table></figure><p><code>goodsmvt_matdocitem</code> 为空 → <strong>整张物料凭证全部冲销</strong>。</p><h3 id="指定行项目冲销">指定行项目冲销</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0002&#x27; )<br>    ( matdoc_item = &#x27;0005&#x27; )<br>).<br></code></pre></td></tr></table></figure><p>仅冲销行 <code>0002</code> 和 <code>0005</code>，其他行保持不变。</p><h3 id="从数据源动态构造">从数据源动态构造</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abap">lt_item = VALUE #(<br>    FOR ls_data IN lt_data<br>    (<br>        matdoc_item = ls_data-zeile<br>    )<br>).<br></code></pre></td></tr></table></figure><hr><h2 id="3-调用-BAPI">3. 调用 BAPI</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br></code></pre></td></tr></table></figure><h3 id="主要参数">主要参数</h3><table><thead><tr><th>参数</th><th style="text-align:center">方向</th><th style="text-align:center">必填</th><th>说明</th></tr></thead><tbody><tr><td><code>MATERIALDOCUMENT</code></td><td style="text-align:center">传入</td><td style="text-align:center">✅</td><td>需要冲销的物料凭证号</td></tr><tr><td><code>MATDOCUMENTYEAR</code></td><td style="text-align:center">传入</td><td style="text-align:center">✅</td><td>物料凭证年度</td></tr><tr><td><code>GOODSMVT_PSTNG_DATE</code></td><td style="text-align:center">传入</td><td style="text-align:center"></td><td>冲销过账日期（可设为 <code>sy-datum</code>）</td></tr><tr><td><code>GOODSMVT_MATDOCITEM</code></td><td style="text-align:center">传入</td><td style="text-align:center"></td><td>需要冲销的行项目（为空=整张冲销）</td></tr><tr><td><code>GOODSMVT_HEADRET</code></td><td style="text-align:center">返回</td><td style="text-align:center"></td><td>新生成的冲销物料凭证号</td></tr><tr><td><code>RETURN</code></td><td style="text-align:center">返回</td><td style="text-align:center"></td><td>BAPI 返回消息</td></tr></tbody></table><hr><h2 id="4-判断是否成功">4. 判断是否成功</h2><p>检查 RETURN 中是否存在错误消息：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abap">LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br>  RETURN.<br><br>ENDLOOP.<br></code></pre></td></tr></table></figure><h3 id="BAPI-返回消息类型速查">BAPI 返回消息类型速查</h3><table><thead><tr><th style="text-align:center">TYPE</th><th>说明</th><th>处理</th></tr></thead><tbody><tr><td style="text-align:center">S</td><td>成功（Success）</td><td>忽略</td></tr><tr><td style="text-align:center">W</td><td>警告（Warning）</td><td>通常可忽略</td></tr><tr><td style="text-align:center">I</td><td>信息（Information）</td><td>忽略</td></tr><tr><td style="text-align:center"><strong>E</strong></td><td><strong>错误（Error）</strong></td><td>❌ 失败</td></tr><tr><td style="text-align:center"><strong>A</strong></td><td><strong>终止（Abort）</strong></td><td>❌ 失败</td></tr><tr><td style="text-align:center"><strong>X</strong></td><td><strong>异常（Exception）</strong></td><td>❌ 失败</td></tr></tbody></table><blockquote><p><strong>判断逻辑：</strong> 只要 RETURN 中出现 A、E、X 任意一类消息，即视为冲销失败。</p></blockquote><hr><h2 id="5-成功提交">5. 成功提交</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br></code></pre></td></tr></table></figure><blockquote><p><strong>⚠️ 重要：</strong> 必须显式调用 <code>BAPI_TRANSACTION_COMMIT</code>，否则冲销不会真正保存到数据库。设置 <code>WAIT = 'X'</code> 确保同步提交完成后再执行后续逻辑。</p></blockquote><hr><h2 id="6-失败回滚">6. 失败回滚</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abap">CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br></code></pre></td></tr></table></figure><p>作用：</p><ul><li>回滚整个 LUW（Logical Unit of Work）</li><li>避免数据不一致</li></ul><hr><h2 id="7-获取冲销后的物料凭证">7. 获取冲销后的物料凭证</h2><p>BAPI 成功执行后，<code>GOODSMVT_HEADRET</code> 返回新生成的冲销凭证信息：</p><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>MAT_DOC</code></td><td>新生成的冲销物料凭证号</td></tr><tr><td><code>DOC_YEAR</code></td><td>凭证年度</td></tr></tbody></table><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abap">WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure><p>示例输出：</p><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns">原凭证：<span class="hljs-number">5000012345</span><br>冲销凭证：<span class="hljs-number">5000015678</span><br></code></pre></td></tr></table></figure><hr><h2 id="完整示例代码">完整示例代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs abap">DATA:<br>  lt_return  TYPE TABLE OF bapiret2,<br>  lt_item    TYPE TABLE OF bapi2017_gm_item_04,<br>  ls_headret TYPE bapi2017_gm_head_ret,<br>  lv_mblnr   TYPE mblnr VALUE &#x27;5000012345&#x27;,<br>  lv_mjahr   TYPE mjahr VALUE &#x27;2026&#x27;.<br><br>&quot; 指定冲销行项目（可为空，表示整张冲销）<br>lt_item = VALUE #(<br>    ( matdoc_item = &#x27;0001&#x27; )<br>    ( matdoc_item = &#x27;0002&#x27; )<br>).<br><br>CALL FUNCTION &#x27;BAPI_GOODSMVT_CANCEL&#x27;<br>  EXPORTING<br>    materialdocument    = lv_mblnr<br>    matdocumentyear     = lv_mjahr<br>    goodsmvt_pstng_date = sy-datum<br>  IMPORTING<br>    goodsmvt_headret    = ls_headret<br>  TABLES<br>    goodsmvt_matdocitem = lt_item<br>    return              = lt_return.<br><br>&quot; 检查错误<br>LOOP AT lt_return INTO DATA(ls_return)<br>    WHERE type CA &#x27;AXE&#x27;.<br><br>  CALL FUNCTION &#x27;BAPI_TRANSACTION_ROLLBACK&#x27;.<br><br>  &quot; 输出错误信息<br>  LOOP AT lt_return INTO ls_return<br>      WHERE type CA &#x27;AXE&#x27;.<br>    WRITE: / ls_return-id,<br>              ls_return-number,<br>              ls_return-message.<br>  ENDLOOP.<br><br>  RETURN.<br><br>ENDLOOP.<br><br>&quot; 提交<br>CALL FUNCTION &#x27;BAPI_TRANSACTION_COMMIT&#x27;<br>  EXPORTING<br>    wait = &#x27;X&#x27;.<br><br>WRITE: / &#x27;原凭证：&#x27;, lv_mblnr.<br>WRITE: / &#x27;冲销凭证：&#x27;, ls_headret-mat_doc.<br></code></pre></td></tr></table></figure><hr><h2 id="与-BAPI-GOODSMVT-CREATE-的关系">与 BAPI_GOODSMVT_CREATE 的关系</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 和 <code>BAPI_GOODSMVT_CREATE</code> 共同构成了物料凭证的完整生命周期：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">BAPI_GOODSMVT_CREATE ──→ 物料凭证<br>                               │<br>                               ├──→ 正常使用<br>                               │<br>                               └──→ BAPI_GOODSMVT_CANCEL<br>                                       │<br>                                       ▼<br>                                  冲销凭证（数量相反）<br></code></pre></td></tr></table></figure><table><thead><tr><th>BAPI</th><th style="text-align:center">方向</th><th>说明</th></tr></thead><tbody><tr><td><code>BAPI_GOODSMVT_CREATE</code></td><td style="text-align:center">创建</td><td>生成新的物料凭证</td></tr><tr><td><code>BAPI_GOODSMVT_CANCEL</code></td><td style="text-align:center">冲销</td><td>生成反向物料凭证，撤销原凭证</td></tr></tbody></table><blockquote><p>延伸阅读：《<a href="/2026/06/22/bapi-goodsmvt-create-gr-guide/">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</a>》</p></blockquote><hr><h2 id="常见问题">常见问题</h2><h3 id="Q1-冲销后原凭证会被删除吗？">Q1: 冲销后原凭证会被删除吗？</h3><p>不会。冲销会<strong>生成一张新凭证</strong>，数量与原凭证相反。原凭证仍然存在于 MSEG / MKPF 表中。</p><h3 id="Q2-可以多次冲销同一张凭证吗？">Q2: 可以多次冲销同一张凭证吗？</h3><p>一般情况下<strong>不能</strong>。一张凭证只能被完整冲销一次。但按行冲销时，不同行可以分批冲销。</p><h3 id="Q3-冲销凭证能再次冲销吗？">Q3: 冲销凭证能再次冲销吗？</h3><p>理论上可以再次冲销冲销凭证（冲销的冲销 = 还原），但在实际业务中通常通过 MBST 反冲。</p><h3 id="Q4-goodsmvt-matdocitem-传入空和传入空行（lt-item-为空内表）效果一样吗？">Q4: <code>goodsmvt_matdocitem</code> 传入空和传入空行（<code>lt_item</code> 为空内表）效果一样吗？</h3><p>一样。两种情况均视为<strong>整张冲销</strong>。</p><hr><h2 id="总结">总结</h2><p><code>BAPI_GOODSMVT_CANCEL</code> 的使用总结如下：</p><table><thead><tr><th>要点</th><th>说明</th></tr></thead><tbody><tr><td><strong>作用</strong></td><td>冲销已过账的物料凭证</td></tr><tr><td><strong><code>goodsmvt_matdocitem</code> 为空</strong></td><td>整张冲销（等同于 MBST）</td></tr><tr><td><strong><code>goodsmvt_matdocitem</code> 有值</strong></td><td>仅冲销指定行项目</td></tr><tr><td><strong>RETURN 存在 A/X/E</strong></td><td>冲销失败，执行 ROLLBACK</td></tr><tr><td><strong>冲销成功</strong></td><td>必须 COMMIT，从 <code>GOODSMVT_HEADRET-MAT_DOC</code> 获取新凭证号</td></tr><tr><td><strong>原凭证</strong></td><td>不删除，保留在系统中</td></tr></tbody></table><p>核心代码流程：</p><ol><li>构造行项目（可选）→ 决定整张冲销还是按行冲销</li><li>调用 <code>BAPI_GOODSMVT_CANCEL</code></li><li>检查 RETURN → 失败则 ROLLBACK</li><li>成功则 COMMIT → 获取新冲销凭证号</li></ol><p>实际项目开发中建议将该 BAPI 封装为独立的 Function Module 或 Method，统一处理错误逻辑、事务提交和日志记录。</p><p>本文与《<a href="/2026/06/22/bapi-goodsmvt-create-gr-guide/">使用 BAPI_GOODSMVT_CREATE 进行采购入库（101）过账</a>》配合，构成了物料凭证的<strong>创建 → 冲销</strong>完整业务处理能力。</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>SAP</category>
-      
-      <category>ABAP开发</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>ABAP</tag>
-      
-      <tag>BAPI</tag>
-      
-      <tag>物料凭证</tag>
-      
-      <tag>MM</tag>
-      
-      <tag>接口开发</tag>
-      
-      <tag>冲销</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>理解商誉（Goodwill）——从会计到投资</title>
-    <link href="/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/"/>
-    <url>/%E6%8A%95%E8%B5%84/%E7%90%86%E5%BF%B5/understanding-goodwill/</url>
-    
-    <content type="html"><![CDATA[<blockquote><p>阅读《巴菲特致股东的信》时，对商誉（Goodwill）的理解整理。</p></blockquote><hr><h2 id="一、什么是商誉？">一、什么是商誉？</h2><h3 id="1-会计中的商誉（Accounting-Goodwill）">1. 会计中的商誉（Accounting Goodwill）</h3><p>商誉并不是企业自己评估出来的价值，而是<strong>只有在企业并购时才会出现在资产负债表中的一项资产</strong>。</p><p>计算公式非常简单：</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">商誉 <span class="hljs-operator">=</span> 收购价格 - 被收购企业可辨认净资产公允价值<br></code></pre></td></tr></table></figure><p>例如：</p><ul><li>收购价格：100 亿元</li><li>被收购企业：资产 80 亿元，负债 20 亿元</li><li>可辨认净资产：60 亿元</li></ul><p>则：</p><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tap">商誉 =<span class="hljs-number"> 100 </span>-<span class="hljs-number"> 60 </span>=<span class="hljs-number"> 40 </span>亿元<br></code></pre></td></tr></table></figure><p>资产负债表中会出现：</p><table><thead><tr><th>项目</th><th>金额</th></tr></thead><tbody><tr><td>可辨认净资产</td><td>60 亿元</td></tr><tr><td>商誉</td><td>40 亿元</td></tr></tbody></table><h3 id="2-为什么会愿意支付这-40-亿元？">2. 为什么会愿意支付这 40 亿元？</h3><p>因为购买的不只是工厂、设备、现金等资产。真正购买的是<strong>企业未来持续赚钱的能力</strong>，例如：</p><ul><li>品牌</li><li>客户关系</li><li>管理团队</li><li>企业文化</li><li>市场地位</li><li>技术积累</li><li>网络效应</li><li>协同效应</li></ul><p>这些东西很难单独出售、很难准确估值、无法单独辨认，因此不会单独计入资产，只能统一计入 <strong>商誉（Goodwill）</strong>。</p><hr><h2 id="二、为什么很多优秀企业没有商誉？">二、为什么很多优秀企业没有商誉？</h2><p>这是很多初学者容易误解的地方。</p><p>例如：可口可乐、苹果、贵州茅台——这些企业拥有世界顶级品牌，但资产负债表上的商誉可能很少，甚至没有。</p><p>原因是：</p><blockquote><p>企业自己长期积累形成的品牌价值、管理能力、客户忠诚度等，并不会计入资产负债表。</p></blockquote><p>只有<strong>花钱收购别人时支付的溢价</strong>，才能形成<strong>会计商誉（Accounting Goodwill）</strong>。</p><p>因此：</p><blockquote><p><strong>没有商誉 ≠ 没有竞争优势。</strong></p></blockquote><hr><h2 id="三、经济商誉（Economic-Goodwill）">三、经济商誉（Economic Goodwill）</h2><p>巴菲特更关心的是<strong>经济商誉（Economic Goodwill）</strong>，即企业真正能够长期创造超额利润的能力。</p><p>例如：</p><ul><li>可口可乐品牌</li><li>苹果生态系统</li><li>Costco 会员体系</li><li>茅台品牌</li></ul><p>这些价值虽然不会体现在财务报表中，却是真正决定企业价值的核心。</p><p><strong>企业存在两种商誉：</strong></p><table><thead><tr><th>类型</th><th>来源</th><th style="text-align:center">是否在报表中</th></tr></thead><tbody><tr><td>会计商誉</td><td>企业并购</td><td style="text-align:center">✅</td></tr><tr><td>经济商誉</td><td>长期经营形成的竞争优势</td><td style="text-align:center">❌</td></tr></tbody></table><p>巴菲特真正重视的是：<strong>经济商誉。</strong></p><hr><h2 id="四、商誉是不是无形资产？">四、商誉是不是无形资产？</h2><p>严格来说，<strong>不是</strong>。</p><p>会计上，商誉与无形资产是两个不同科目。</p><p><strong>无形资产</strong>包括：专利、商标、软件、土地使用权等。它们可以辨认、可以出售、可以单独估值。</p><p><strong>商誉</strong>不能单独出售，必须依附整个企业。</p><p>因此，商誉属于：</p><blockquote><p><strong>不可辨认资产（Unidentifiable Asset）</strong></p></blockquote><hr><h2 id="五、商誉可以理解成什么？">五、商誉可以理解成什么？</h2><blockquote><p><strong>商誉 = 企业无法单独辨认的竞争优势以及并购协同效应所形成的未来超额现金流，在收购时支付的现值溢价。</strong></p></blockquote><p>关键词：</p><ul><li>不可辨认竞争优势</li><li>协同效应</li><li>超额现金流</li><li>现值（Present Value）</li></ul><p>这里已经和巴菲特的估值思想完全联系起来了。</p><hr><h2 id="六、商誉是不是未来现金流的折现？">六、商誉是不是未来现金流的折现？</h2><p>可以，但更准确一点：</p><blockquote><p><strong>商誉反映的是未来超额现金流对应的溢价，而不是企业全部未来现金流。</strong></p></blockquote><p>例如：企业未来现金流价值 100 亿元，其中净资产价值 60 亿元，则商誉 40 亿元。</p><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">100 </span>= <span class="hljs-number">60</span> + <span class="hljs-number">40</span><br></code></pre></td></tr></table></figure><p>即：商誉代表那些无法单独辨认、但能够持续创造超额现金流的价值。</p><hr><h2 id="七、为什么要做商誉减值测试？">七、为什么要做商誉减值测试？</h2><p>因为未来可能发生变化。例如：</p><ul><li>品牌影响力下降</li><li>客户流失</li><li>管理团队离开</li><li>技术落后</li><li>行业竞争恶化</li></ul><p>这些都会导致未来现金流下降。如果未来现金流下降，那么原来支付的溢价就可能已经不存在，因此必须重新评估。</p><h3 id="商誉减值测试的本质">商誉减值测试的本质</h3><p>本质只有一句话：</p><blockquote><p><strong>重新估计未来现金流，并折现计算今天值多少钱。</strong></p></blockquote><p>例如：</p><ul><li>收购时预计未来价值：100 亿元</li><li>几年后竞争恶化，重新预测未来价值：65 亿元</li><li>账面价值：100 亿元</li></ul><p>明显 <strong>账面价值 &gt; 实际价值</strong>，必须确认<strong>商誉减值</strong>。</p><p>所以：</p><blockquote><p><strong>商誉减值，本质就是一次重新估值。</strong></p></blockquote><hr><h2 id="八、商誉减值测试为什么不是单独给商誉估值？">八、商誉减值测试为什么不是单独给商誉估值？</h2><p>因为商誉本身不能赚钱。真正赚钱的是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">品牌 + 员工 + 设备 + 渠道 + 管理团队 + 客户<br></code></pre></td></tr></table></figure><p>整个体系一起产生现金流。因此商誉不能单独估值。</p><p>会计准则要求将商誉分配到<strong>现金产生单元（Cash Generating Unit，CGU）</strong>，然后计算整个资产组未来现金流折现价值。</p><p>如果 <strong>未来价值 &lt; 账面价值</strong>，则：</p><ol><li>先减商誉</li><li>商誉减完还不够 → 再减固定资产、无形资产等</li></ol><p>因此，真正接受减值测试的是：<strong>整个赚钱机器，而不是商誉本身。</strong></p><hr><h2 id="九、以前为什么要摊销商誉？">九、以前为什么要摊销商誉？</h2><p>历史上很多国家采用<strong>商誉每年摊销</strong>，例如 20 年平均摊销，每年减少 5 亿元。这种方式类似于固定资产折旧。</p><p>但是很多人认为：优秀品牌并不会随着时间自动贬值。例如可口可乐品牌，20 年以后可能比今天更值钱。</p><p>因此，现在国际主流会计准则：</p><ul><li>❌ 取消了商誉摊销</li><li>✅ 改成<strong>每年做减值测试</strong></li></ul><p>只有价值真的下降，才一次性减值。</p><hr><h2 id="十、投资时怎么看商誉？">十、投资时怎么看商誉？</h2><p>不能简单地认为&quot;商誉高就是坏公司&quot;，也不能认为&quot;商誉低就是好公司&quot;。</p><p>真正应该关注的是：</p><h3 id="第一：为什么会产生这么大的商誉？">第一：为什么会产生这么大的商誉？</h3><p>是否买贵了？行业内卷？管理层激进扩张？</p><h3 id="第二：收购以后有没有兑现预期？">第二：收购以后有没有兑现预期？</h3><p>利润、现金流、ROE、ROIC 有没有持续改善？</p><h3 id="第三：未来现金流有没有恶化？">第三：未来现金流有没有恶化？</h3><p>如果未来赚钱能力下降，那么未来发生商誉减值的概率就会上升。</p><h3 id="第四：连续大额商誉减值意味着什么？">第四：连续大额商誉减值意味着什么？</h3><p>通常意味着当年的收购很可能买贵了，或者管理层高估了未来。连续发生大额商誉减值，通常是一个危险信号。</p><hr><h2 id="十一、巴菲特怎么看商誉？">十一、巴菲特怎么看商誉？</h2><p>巴菲特其实并不太关注财务报表上的商誉数字。他真正关心的是：</p><blockquote><p>企业未来还能创造多少现金流？</p></blockquote><p>他的估值思想：</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">企业价值 <span class="hljs-operator">=</span> 未来现金流折现<br></code></pre></td></tr></table></figure><p>而商誉减值测试的本质也是：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">未来现金流折现<br></code></pre></td></tr></table></figure><p>区别只是：</p><ul><li><strong>巴菲特</strong>：用于估值</li><li><strong>会计</strong>：用于检查资产是否高估</li></ul><p>两者底层逻辑其实一致。</p><hr><h2 id="十二、关于商誉最重要的理解">十二、关于商誉最重要的理解</h2><table><thead><tr><th>概念</th><th>核心含义</th></tr></thead><tbody><tr><td><strong>会计商誉</strong></td><td>企业并购时，为未来超额盈利能力支付的溢价</td></tr><tr><td><strong>经济商誉</strong></td><td>企业长期形成、无法单独辨认的竞争优势</td></tr><tr><td><strong>商誉减值</strong></td><td>对未来现金流重新估值</td></tr></tbody></table><p>巴菲特真正关注的，不是财务报表里的商誉，而是企业是否拥有：</p><blockquote><p><strong>持续创造超额现金流的经济商誉。</strong></p></blockquote><hr><h2 id="一句话总结">一句话总结</h2><blockquote><p><strong>会计商誉，是并购交易中形成的资产；经济商誉，是企业竞争优势的体现；两者的共同本质，都是未来能够持续创造超额现金流的能力。巴菲特阅读财务报表时，并不执着于商誉这一会计科目，而是始终回到同一个问题：这家公司未来还能持续产生多少自由现金流？</strong></p></blockquote>]]></content>
-    
-    
-    <categories>
-      
-      <category>投资</category>
-      
-      <category>理念</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>财务分析</tag>
-      
-      <tag>价值投资</tag>
-      
-      <tag>商誉</tag>
-      
-      <tag>巴菲特</tag>
-      
-      <tag>会计</tag>
-      
-      <tag>经济商誉</tag>
       
     </tags>
     
@@ -1119,9 +1119,9 @@
       
       <tag>读书笔记</tag>
       
-      <tag>逆向思维</tag>
-      
       <tag>多元思维模型</tag>
+      
+      <tag>逆向思维</tag>
       
       <tag>人类误判心理学</tag>
       
